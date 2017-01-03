@@ -24,7 +24,7 @@ export function reducerCall(state, action, reducerClass) {
     console.log(method)
     // get all class methods
     const methods = Object.getOwnPropertyNames(reducerClass).filter(name => {
-        console.log(name)
+        //console.log(name)
         if ('length' !== name && 'name' !== name && 'prototype' !== name) {
             return name;
         }

@@ -1,9 +1,10 @@
 import { reducerCall } from './index';
 
 import { urlToBase } from './../util/parseurl.js'
+import { calcBaseProduction } from '../util/production.js'
 
-const initial_state = urlToBase("http://cncopt.com/?map=2|N|N|-fix-|20s37w.38y.50e...26p26p26p26p26p42h47s42h.26p52a26p52a26p42h54s42h.26p26p26p26p26p42h46s42h.26p52a26p50a31p40b...31p35p35p38pc.....cc.c.cc.43f.46d..37q..20sj37s37f37s37f37s37q.l37q37zj37z37z37zk..37q37sj37qll37s..37qh37c37q37c37qjj.37q37s37z37qj37s37q..l37q37q37s37q37zh..37mj37w37w37w37wh.h37w37qh37m37q..k.42l42l43r43r..1q1p.42l43r44r44r..1b..48l48r48r46r.....50m50m43r43r38r....|newEconomy"
-)
+const initial_state = urlToBase("http://cncopt.com/?map=2|N|N|-fix-|20s37w.38y.50e...26p26p26p26p26p42h47s42h.26p52a26p52a26p42h54s42h.26p26p26p26p26p42h46s42h.26p52a26p50a31p40b...31p35p35p38pc.....cc.c.cc.43f.46d..37q..20sj37s37f37s37f37s37q.l37q37zj37z37z37zk..37q37sj37qll37s..37qh37c37q37c37qjj.37q37s37z37qj37s37q..l37q37q37s37q37zh..37mj37w37w37w37wh.h37w37qh37m37q..k.42l42l43r43r..1q1p.42l43r44r44r..1b..48l48r48r46r.....50m50m43r43r38r....|newEconomy")
+
 
 /**
  * Reducer static class
@@ -40,32 +41,34 @@ class reducerClass
     static buildingSelect(new_state, action)
     {
         new_state.buildings[new_state.buildingMenuIsFrom] = {
-            lvl: 38,
+            lvl: 38, //TODO lvl from other state
             name : action.name,
-            slot: 49,
-            type: "p",
-            x: 4.,
+            slot: new_state.buildingMenuIsFrom,   
+            type: action.id,
+            x: 4,       //TODO get x + y from caller
             y: 6
         }
 
+        new_state.production = calcBaseProduction(new_state.buildings)
         return new_state
     }
 
     static buildingDelete(new_state, action)
     {
-        new_state.buildings[action.from] = {}
+        new_state.buildings[action.from] =  {}
+        new_state.production = calcBaseProduction(new_state.buildings)
         return new_state
     }
-   /* static delete(new_state, action)
-     {
-         for (const index in new_state.list) {
-             if (new_state.list[index].id === action.id) {
-                new_state.list.splice(index, 1);
-                 break;
-             }
-         }
-         return new_state;
-     }*/
+
+    static changeBuildingLvl(new_state, action)
+    {
+        console.log(action.lvl)
+        console.log(action.from)
+
+        new_state.buildings[action.from].lvl = action.lvl
+        new_state.production = calcBaseProduction(new_state.buildings)
+        return new_state
+    }
 }
 
 /**
@@ -76,8 +79,8 @@ class reducerClass
  * @returns {*}
  */
 export default function menu(state = initial_state, action) {
-    console.log("****STATE****")
-    console.log(state)
+/*    console.log("****STATE****")
+    console.log(state)*/
     return reducerCall(state, action, reducerClass);
 }
 

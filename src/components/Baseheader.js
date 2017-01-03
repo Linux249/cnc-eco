@@ -1,28 +1,23 @@
-import React from 'react';
-import { Overlay, Image, Popover} from 'react-bootstrap';
+import React from 'react'
+import ProductionInfo from './ProductionInfo'
 
 
 //import App from './Test.js';
 
-const popoverFocus = (
-  <Popover id="popover-trigger-focus" title="Popover bottom">
-    <strong>Holy guacamole!</strong> 
-      Check this info.
-  </Popover>
-);
 
 
 
-var BaseHeader = React.createClass({
-  render: function() {
+
+class BaseHeader extends React.Component
+{
+  render()
+  {
     return (
       <div className="BaseHeader" >
-        <Overlay trigger="focus" placement="bottom" overlay={popoverFocus}>
-          <Image src="img/buildings/crystal01.png" responsive />
-        </Overlay>
+          <ProductionInfo />
       </div>
     )
   }
-});
+}
 
-export default BaseHeader;
+export default BaseHeader

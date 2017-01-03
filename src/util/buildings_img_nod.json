@@ -14,5 +14,7 @@
 "NOD_Support_Ion": "i",
 "NOD_Accumulator": "a",
 "NOD_Support_Air": "x",
-"NOD_Defense Facility": "w"
+"NOD_Defense Facility": "w",
+"tiberium": "t",
+"crystal": "c"
 }

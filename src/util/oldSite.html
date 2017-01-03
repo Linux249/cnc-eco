@@ -1,0 +1,469 @@
+
+<html>
+<head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" href="stylesheet.css">
+
+
+
+    <style>    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: sans-serif;
+        padding: 40px;
+    }
+
+    .range-slider .input-range {
+        -webkit-appearance: none;
+        width: 300px;
+        height: 10px;
+        border-radius: 5px;
+        background: #ccc;
+        outline: none;
+    }
+    .range-slider .input-range::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #353535;
+        cursor: pointer;
+        -webkit-transition: background .15s ease-in-out;
+        transition: background .15s ease-in-out;
+    }
+    .range-slider .input-range::-webkit-slider-thumb:hover {
+        background: #e06161;
+    }
+    .range-slider .input-range:active::-webkit-slider-thumb {
+        background: #e06161;
+    }
+    .range-slider .input-range::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border: 0;
+        border-radius: 50%;
+        background: #353535;
+        cursor: pointer;
+        -webkit-transition: background .15s ease-in-out;
+        transition: background .15s ease-in-out;
+    }
+    .range-slider .input-range::-moz-range-thumb:hover {
+        background: #e06161;
+    }
+    .range-slider .input-range:active::-moz-range-thumb {
+        background: #e06161;
+    }
+    .range-slider .range-value {
+        display: inline-block;
+        position: relative;
+        width: 60px;
+        color: #fff;
+        font-size: 16px;
+        line-height: 20px;
+        text-align: center;
+        border-radius: 3px;
+        background: #353535;
+        padding: 5px 10px;
+        margin-left: 7px;
+    }
+    .range-slider .range-value:after {
+        position: absolute;
+        top: 8px;
+        left: -7px;
+        width: 0;
+        height: 0;
+        border-top: 7px solid transparent;
+        border-right: 7px solid #353535;
+        border-bottom: 7px solid transparent;
+        content: '';
+    }
+
+    ::-moz-range-track {
+        background: #ccc;
+        border: 0;
+    }
+
+    input::-moz-focus-inner {
+        border: 0;
+    }
+    </style>
+
+
+
+    <script type="text/javascript">
+        google.load('visualization', '1.0', {packages: ['corechart', 'line']});
+
+
+        var raf_cost = [2, 4, 6, 8, 40, 220, 720, 2200, 6400, 17600 ,44800, 96000, 126720, 167270, 220797, 291452, 384717, 507826, 670330, 884836, 1167983, 1541738, 2035094, 2686324, 3545948, 4680651 ,6178459, 8155566, 10765348, 14210259, 18757542, 24759955, 32683141, 43141746, 56947105, 75170179, 99224636, 130976519, 172889005, 228213487, 301241803, 397639180, 524883717, 692846507, 914557389, 1207215753, 1593524794, 2103452729, 2776557602, 3665056034, 4837873965, 6385993634, 8429511597, 11126955308, 14687581007, 19387606929, 25591641146, 33780966313, 44590875533, 58859955703, 77695141528, 102557586817, 135376014598, 178696339269, 235879167836];
+
+        var raf_production_perm = [0, 120, 150, 180, 240, 315, 400, 485, 575, 680, 790, 924, 1080, 1350, 1687, 2109, 2636, 3295, 4119, 5149, 6437, 8046, 10058, 12572, 15716, 19645, 24556, 30695, 38369, 47961, 59952, 74940, 93675, 117093, 146367, 182959, 228698, 285873, 357342,
+            446677, 558346, 697933, 872417, 1090521, 1363151, 1703939, 2129924, 2662405, 3328006, 4160008, 5200010,
+            6500013, 8125016, 10156271, 12695338, 15869173, 19836467, 24795583, 30994479, 38743099, 48428874, 60536093,
+            75670117, 94587646, 118234557, 147793197 ];
+
+        var raf_production_pp = [0, 72, 90, 110, 145, 190, 240, 290, 345, 410, 475, 555, 650, 812, 1015, 1269, 1586, 1983, 2479, 3099, 3874, 4842, 6053, 7566, 9458,
+            11823, 14779, 18474, 23092, 28865, 36082, 45102, 56378, 70473, 88091, 110114, 137642, 172053, 215066, 268833,
+            336042, 420052, 525065, 656332, 820415, 1025519, 1281898, 1602373, 2002967, 2503708, 3129636, 3912045, 4890056,
+            6112570, 7640713, 9550891, 11938614, 14923268, 18654085, 23317606, 29147008, 36433760, 45542200, 56927750,
+            71159687, 88949609];
+
+
+
+        var costs_tiberium =  [1, 2, 3, 4, 20, 110, 360, 1100, 3200, 8800, 22400, 48000, 63360, 83635, 110398, 145726, 192358, 253913, 335165, 442418, 583992, 770869, 1017547, 1343162, 1772974, 2340326,
+            3089230, 4077783, 5382674, 7105130, 9378771, 12379978, 16341571, 21570873, 28473552, 37585089, 49612318, 65488260, 86444503, 114106743, 150620901, 198819590, 262441859, 346423253,
+            457278694, 603607877, 796762397, 1051726364, 1388278801, 1832528017, 2418936983, 3192996817, 4214755798, 5563477654, 7343790503, 9693803464, 12795820573, 16890483156, 22295437766,
+            29429977851, 38847570764, 51278793408, 67688007299, 89348169635, 117939583918];
+        var silo_production = [0,72, 90, 125, 170, 220, 275, 335, 400, 460, 530, 610, 710, 887, 1109, 1386, 1733, 2166, 2708, 3385, 4231, 5289, 6612, 8265, 10331,
+            12914, 16143, 20179, 25224, 31530, 39412, 49266, 61582, 76978, 96222, 120278, 150348, 187935, 234919, 293649,
+            367061, 458826, 573533, 716916, 896145, 1120182, 1400228, 1750285, 2187856, 2734820, 3418525, 4273157, 5341446,
+            6676807, 8346009, 10432512, 13040640, 16300800, 20376000, 25470000, 31837501, 39796876, 49746095, 62182619,
+            77728274, 97160342];  //Stufe 12 Silo Produziert array[12] tiberium * Anzahl der Sammler
+        var accu_production = [ 0, 48, 60, 80, 110, 145, 185, 225, 265, 310, 355, 405, 465, 581, 726, 908, 1135, 1419, 1773, 2217, 2771, 3464, 4330, 5413, 6766, 8458,
+            10572, 13216, 16520, 20650, 25812, 32265, 40332, 50415, 63019, 78774, 98467, 123084, 153855, 192319, 240399, 300499,
+            375624, 469530, 586912, 733640, 917050, 1146313, 1432891, 1791114, 2238893, 2798616, 3498271, 4372838, 5466048,
+            6832560, 8540701, 10675876, 13344845, 16681056, 20851321, 26064151, 32580189, 40725236, 50906545, 63633182];
+        var harvest_production_packet = [0, 40, 300, 432, 570, 735, 920, 1120, 1330, 1560, 1800, 2050, 2360, 2950, 3687, 4609, 5761, 7202, 9002, 11253, 14066, 17583,
+            21979, 27474, 34342, 42928, 53660, 67075, 83844, 104805, 131006, 163757, 204697, 255871, 319839, 399799, 499749,
+            624686, 780858, 976073, 1220091, 1525114, 1906392, 2382991, 2978738, 3723423, 4654279, 5817849, 7272311,
+            9090389, 11362986, 14203733, 17754666, 22193333, 27741666, 34677083, 43346354, 54182942, 67728678, 84660848,
+            105826060, 132282575, 165353218, 206691523, 258364404, 322955505];
+
+
+
+
+
+
+        var Tsilos = {
+            level: 20,
+            FuenferSilos: 0,
+            ViererSilos: 5,
+            tib_prod: function () { return silo_production[this.level]*5*this.FuenferSilos + silo_production[this.level-4]*4*this.ViererSilos},    //rechnet
+            tib_cost: function () { return costs_tiberium[this.level]*this.FuenferSilos + costs_tiberium[this.level-4]*this.ViererSilos},
+
+            //Strom
+        };
+
+        var Ksilos = {
+            level: 20,
+            FuenferSilos: 1,
+            ViererSilos: 8,
+            kris_prod: function () { return silo_production[this.level]*5*this.FuenferSilos + silo_production[this.level-4]*4*this.ViererSilos},    //rechnet
+            kris_cost: function () { return costs_tiberium[this.level]*this.FuenferSilos + costs_tiberium[this.level-4]*this.ViererSilos},
+            //Strom
+        };
+
+
+
+
+        function calc_tib_kris() {
+            console.log(silo_production[Tsilos.level])
+            datas = [];
+            time = 0;
+            time2 = 0;
+            Tsilos.level = parseInt(document.getElementById("tib_silo_var").value);
+            Ksilos.level = parseInt(document.getElementById("accu_var").value);
+            for( i = 1; i <100; i++) {
+
+                time = time + (Tsilos.tib_cost() + Ksilos.kris_cost())/Tsilos.tib_prod()/24;
+                datas.push([time, Tsilos.tib_prod(), Ksilos.kris_prod()]);
+                if (Tsilos.level < 46)  {Tsilos.level = Tsilos.level + 1};
+                if (Ksilos.level < 46)  {Ksilos.level = Ksilos.level + 1; time2 = time};
+            }
+            console.log(time2);
+
+            return datas;
+            console.log("test");
+        }
+
+
+
+
+        var harvest_production_perm = silo_production;
+
+        var silo_lvl_var = 12;
+        var silo_lvl_fix;
+        var prod_tib = 1;
+        var costs_tib = 12;
+
+        var accu_lvl_var = 12;
+        var accu_lvl_fix;
+        var prod_power = 1;
+        var costs_power = 1;
+
+        var harv_lvl_var = 12;
+        var harv_lvl_fix;
+
+        var raf_lvl_var = 12;
+        var raf_lvl_fix;
+        var prod_cash = 1;
+
+        var datas = [];
+
+        function calc_data_block()   {
+            datas = [];
+            silo_lvl_var = parseInt(document.getElementById("tib_silo_var").value);
+            accu_lvl_var = parseInt(document.getElementById("accu_var").value);
+            harv_lvl_var = parseInt(document.getElementById("tib_hav_var").value);
+            raf_lvl_var = parseInt(document.getElementById("raf_var").value);
+
+            for (i = 0; i < 10; i++) {
+                prod_tib = (silo_production[silo_lvl_var] + harvest_production_packet[harv_lvl_var] + harvest_production_perm[harv_lvl_var] )*6;
+                prod_power = accu_production[accu_lvl_var]*8;
+                costs_tib = costs_tiberium[silo_lvl_var] + costs_tiberium[accu_lvl_var] +costs_tiberium[harv_lvl_var] + 43*raf_cost[raf_lvl_var-7];
+                costs_power = costs_tiberium[silo_lvl_var]/4 + costs_tiberium[accu_lvl_var]/4 +costs_tiberium[harv_lvl_var]*3/4 + 43*raf_cost[raf_lvl_var-7]/4;
+
+                datas.push([i+1, costs_tib/prod_tib, costs_power/prod_power]);
+            };
+            return datas;
+        };
+
+
+        var chart;
+        var data_line = [];
+
+
+
+        function calc_data_line() {
+            data_line = [];
+            time = 0;
+
+
+            silo_lvl_var = parseInt(document.getElementById("tib_silo_var").value);
+            accu_lvl_var = parseInt(document.getElementById("accu_var").value);
+            harv_lvl_var = parseInt(document.getElementById("tib_hav_var").value);
+            raf_lvl_var = parseInt(document.getElementById("raf_var").value);
+
+            silo_lvl_fix = parseInt(document.getElementById("tib_silo_var").value);
+            accu_lvl_fix = parseInt(document.getElementById("accu_fix").value);
+            harv_lvl_fix = parseInt(document.getElementById("tib_hav_fix").value);
+            raf_lvl_fix = parseInt(document.getElementById("raf_fix").value);
+
+            for ( i = silo_lvl_fix; i <silo_lvl_var; i++) {
+                time = time ;
+            }
+
+
+            prod_tib = (silo_production[silo_lvl_var] + harvest_production_packet[harv_lvl_var] + harvest_production_perm[harv_lvl_var] )*6;   //tib produktion -  ein 6er silo mit sammler
+            prod_power = accu_production[accu_lvl_var]*8;  //Strom Produktion - ein 8er accu
+            prod_cash = 43*(raf_production_perm[raf_lvl_var-7] + raf_production_pp[raf_lvl_var-7]);
+
+            data_line.push([time, prod_tib, prod_power, prod_cash]);
+
+            costs_tib = costs_tiberium[silo_lvl_var] + costs_tiberium[accu_lvl_var] +costs_tiberium[harv_lvl_var] + 43*raf_cost[raf_lvl_var-7];
+            costs_power = costs_tiberium[silo_lvl_var]/4 + costs_tiberium[accu_lvl_var]/4 +costs_tiberium[harv_lvl_var]*3/4 + 43*raf_cost[raf_lvl_var-7]/4;
+
+
+
+            for (i = 1; i <35; i++) {
+                silo_lvl_var += 1;
+                accu_lvl_var += 1;
+                harv_lvl_var += 1;
+                raf_lvl_var += 1;
+
+                prod_tib = (silo_production[silo_lvl_var] + harvest_production_packet[harv_lvl_var] + harvest_production_perm[harv_lvl_var] )*6;
+                prod_power = accu_production[accu_lvl_var]*8;
+                prod_cash = 43*(raf_production_perm[raf_lvl_var-7] + raf_production_pp[raf_lvl_var-7]);
+
+                costs_tib = costs_tiberium[silo_lvl_var] + costs_tiberium[accu_lvl_var] +costs_tiberium[harv_lvl_var] + 43*raf_cost[raf_lvl_var-7];
+                costs_power = costs_tiberium[silo_lvl_var]/4 + costs_tiberium[accu_lvl_var]/4 +costs_tiberium[harv_lvl_var]*3/4 + 43*raf_cost[raf_lvl_var-7]/4;
+
+                if (costs_tib/prod_tib > costs_power/prod_power) {
+                    time = time + costs_tib/prod_tib;
+                } else {time = time + costs_power/prod_power;};
+
+                data_line.push([time/24, prod_tib, prod_power, prod_cash]);
+
+                if (time/24 > 30) {i = 35;};
+
+            }
+
+            return data_line;
+        };
+
+
+        function drawTibKris () {
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'Zeit');
+            data.addColumn('number', 'Tibproduktion');
+            data.addColumn('number', 'Krisproduktion');
+            data.addRows(calc_tib_kris());
+
+            var options = {
+                hAxis: {
+                    title: 'Stufe',
+                    viewWindow:{
+                        min:0,
+                        max:250
+
+                    },
+                },
+                vAxis: {
+                    title: 'Popularity',
+                    viewWindowMode:'explicit',
+
+                },
+                colors: ['#0dff16', '#271ff4'],
+            };
+
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart_tib_kris'));
+            chart.draw(data, options);
+
+        }
+
+
+        function drawTrendlines() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'Level');
+            data.addColumn('number', 'Tiberium');
+            data.addColumn('number', 'Stromkosten');
+            data.addRows(calc_data_block());
+
+            var options = {
+                hAxis: {
+                    title: 'Stufe'
+                },
+                vAxis: {
+                    title: 'Popularity',
+                    viewWindowMode:'explicit',
+                    viewWindow:{
+                        min:0,
+                        max:250
+
+                    },
+                },
+                colors: ['#0dff16', '#271ff4'],
+            };
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+
+        function drawProductionlines() {
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'Zeit');
+            data.addColumn('number', 'Tiberium');
+            data.addColumn('number', 'Strom');
+            data.addColumn('number', 'Cash');
+            data.addRows(calc_data_line());
+
+            var view = new google.visualization.DataView(data);
+            view.setColumns([0, 1,
+                { calc: "stringify",
+                    sourceColumn: 1,
+                    type: "string",
+                    role: "annotation"},
+
+                2,3, { calc: "stringify",
+                    sourceColumn: 3,
+                    type: "string",
+                    role: "annotation"}]);
+
+            var options = {
+                hAxis: {
+                    title: 'Stufe',
+                    viewWindowMode:'explicit',
+                    viewWindow:{
+                        min:0,
+                        max:110
+                    },
+                    gridlines: {
+                        count: 10, color: '#CCC'
+                    }
+                },
+                vAxis: {
+                    format: 'short',
+                    title: 'Popularity',
+                    viewWindow:{
+                        min:0,
+                        max:50000000},
+                },
+
+                colors: ['#0dff16', '#271ff4', '#f41f38'],
+
+            };
+            var chart = new google.visualization.LineChart(document.getElementById('chart_production'));
+            chart.draw(view, options);
+
+        }
+
+        google.load('visualization', '1.0', {packages: ['corechart', 'line']});
+
+        google.setOnLoadCallback(drawTrendlines);
+        google.setOnLoadCallback(drawProductionlines);
+        google.setOnLoadCallback(drawTibKris);
+
+    </script>
+</head>
+
+
+<body>
+<!--Div that will hold the pie chart
+id bei input range fuer auslesen und onchange funktion-->
+<div id="chart_div"> </div>
+<div onchange="drawTibKris()" oninput="drawTibKris()" > <!-- oninput="" onchange="" drawProductionlines(),drawTrendlines()-->
+    <div class="range-slider">Tib Silo 6er
+        <input type="text" class="" id="tib_silo_fix" value="25" onchange="document.getElementById('tib_silo_var').value = this.value;"/>
+        <input id="tib_silo_var" class="input-range" type="range" value="25" min="12" max="65" >
+        <input type="text" class="range-value" />
+    </div>
+    <div class="range-slider">Tib Sammler (6)
+        <input type="text" class="" id="tib_hav_fix" value="25" onchange="document.getElementById('tib_hav_var').value = this.value;"/>
+        <input id="tib_hav_var" class="input-range" type="range" value="25" min="12" max="65">
+        <input type="text" class="range-value" />
+    </div>
+    <div class="range-slider">accu (8)
+        <input type="text" class="" id="accu_fix" value="25" onchange="document.getElementById('accu_var').value = this.value;"/>
+        <input id="accu_var" class="input-range" type="range" value="25" min="12" max="65" >
+        <input type="text" class="range-value" />
+    </div>
+    <div class="range-slider">raf
+        <input type="text" class="" id="raf_fix" value="25" onchange="document.getElementById('raf_var').value = this.value;"/>
+        <input id="raf_var" class="input-range" type="range" value="25" min="12" max="65">
+        <input type="text" class="range-value" />
+    </div>
+</div>
+<button type="button" id="berechnen" onclick="drawTibKris()">draw</button>
+
+
+<div id="chart_production"> </div>
+<div id="chart_tib_kris"> </div>
+
+
+<script type="text/javascript">
+    range = $('.range-slider > .input-range');
+    value = $('.range-slider > .range-value');
+
+    value.val(range.attr('value'));
+
+    range.on('input', function(){
+        //monparent=$(this).parent();
+        monparent=this.parentNode;
+
+        value=$(monparent).find('.range-value');
+        $(value).val(this.value);
+    });
+
+    value.on('input', function(){
+        monparent=this.parentNode;
+        range=$(monparent).find('.input-range');
+        $(range).val(this.value);
+
+    });
+
+
+</script>
+
+</body>
+</html>

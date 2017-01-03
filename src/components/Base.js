@@ -14,7 +14,7 @@ import BuildingMenu from './BuildingMenu.js';
 
 
 
-var nod_buildings_names = {
+/*var nod_buildings_names = {
         "NOD_Refinery": "r",
         "NOD_Power Plant": "p",
         "NOD_Harvester": "h",
@@ -51,8 +51,6 @@ var nod_buildings_names = {
         "x": "NOD_Support_Air",
         "w": "NOD_Defense Facility"
     }
-
-
 var BUILDINGS = [
   {
     name: "NOD_Refinery",
@@ -87,7 +85,7 @@ var BUILDINGS = [
     slot: 70,
   },
   
-];
+];*/
   
 
 
@@ -118,12 +116,7 @@ class Base extends React.Component
     this.setState({base: base});
     console.log(this.state.base.buildings[this.state.buildingMenuCaller]);
   }*/
-  
-/*  toggleMenu(bool, slot) {
-    console.log(slot);
-    this.setState({ showBuildingMenu: bool });
-    this.setState({ buildingMenuCaller: slot });
-  }*/
+
   render() {
       // build all slots
       var slots = [...Array(8).keys()].map(function(y) {
@@ -136,10 +129,10 @@ class Base extends React.Component
                         return <BuildingSlot 
                                   x={x}
                                   y={y}
-                                  key={x+y*9}
+                                  key={x + y*9}
                                   isEmpty={!building}
-                                  buildingName={building ? building.name : "empty"}
-                                  toggleMenu={{/*this.toggleMenu*/}} />;
+                                  buildingName={building.name ? building.name : "empty"}
+                                   />;
                         }.bind(this))
                       }
                     </div>

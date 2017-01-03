@@ -7,7 +7,7 @@ function urlToBase(url) {
   let faction = split[1] // F = forgetten, N = NOD, G = GDI
   let urlString = split[4]
   let slot = 1;
-  var building, unit, lvl;
+  let building, unit, lvl;
 
   let base = {
     nod_buildings_keys: {
@@ -26,7 +26,9 @@ function urlToBase(url) {
       "i": "NOD_Support_Ion",
       "a": "NOD_Accumulator",
       "x": "NOD_Support_Air",
-      "w": "NOD_Defense Facility"
+      "w": "NOD_Defense Facility",
+        "t": "tiberium",
+        "c": "crystal"
     },
     buildings: [],
     defens: [],
@@ -155,19 +157,17 @@ function parseToURL(base) {
 }
 
 //return
-const dumy = "http://cncopt.com/?map=2|N|N|-fix-|20s37w.38y.50e...26p26p26p26p26p42h47s42h.26p52a26p52a26p42h54s42h.26p26p26p26p26p42h46s42h.26p52a26p50a31p40b...31p35p35p38pc.....cc.c.cc.43f.46d..37q..20sj37s37f37s37f37s37q.l37q37zj37z37z37zk..37q37sj37qll37s..37qh37c37q37c37qjj.37q37s37z37qj37s37q..l37q37q37s37q37zh..37mj37w37w37w37wh.h37w37qh37m37q..k.42l42l43r43r..1q1p.42l43r44r44r..1b..48l48r48r46r.....50m50m43r43r38r....|newEconomy"
+const dumy = "http://cncopt.com/?map=2|N|N|-fix-|tc20h20n.50e...26p26p26p26p26p42h47s42h.26p52a26p52a26p42h54s42h.26p26p26p26p26p42h46s42h.26p52a26p50a31p40b...31p35p35p38pc.....cc.c.cc.43f.46d..37q..20sj37s37f37s37f37s37q.l37q37zj37z37z37zk..37q37sj37qll37s..37qh37c37q37c37qjj.37q37s37z37qj37s37q..l37q37q37s37q37zh..37mj37w37w37w37wh.h37w37qh37m37q..k.42l42l43r43r..1q1p.42l43r44r44r..1b..48l48r48r46r.....50m50m43r43r38r....|newEconomy"
 
 let base = urlToBase(dumy);
 let urlString = parseToURL(base);
 let out = "http://cncopt.com/?map=2|N|N|-fix-|" + urlString + "|newEconomy";
 
-// console.log(urlString);
-// console.log((out.localeCompare(dumy)));
-//console.log(dumy);
+ console.log(urlString);
+ console.log((out.localeCompare(dumy)));
+ console.log(dumy);
 
 
-//console.log(base);
-// console.log("TEST");
-
+console.log(base);
 
 export { urlToBase };

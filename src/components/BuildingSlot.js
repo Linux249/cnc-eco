@@ -27,16 +27,19 @@ const nod_buildings_keys = {
 
 
 class BuildingSlot extends React.Component {
-  constructor(props) {
-    super(props);
-    /*this.state = {date: new Date()};
-    this.state.buildingName = this.props.buildingName;
-    this.state.isEmpty = this.props.isEmpty;*/
-      this.buildingMenuShow = this.buildingMenuShow.bind(this)
-      this.buildingMenuHide = this.buildingMenuHide.bind(this)
-      this.buildingDelete = this.buildingDelete.bind(this)
+    constructor(props) {
+        super(props);
+        /*this.state = {date: new Date()};
+        this.state.buildingName = this.props.buildingName;
+        this.state.isEmpty = this.props.isEmpty;*/
+        this.buildingMenuShow = this.buildingMenuShow.bind(this)
+        this.buildingMenuHide = this.buildingMenuHide.bind(this)
+        this.buildingDelete = this.buildingDelete.bind(this)
+        this.changeBuildingLvl = this.changeBuildingLvl.bind(this)
 
-  }
+    }
+
+
 
     // getInitialState: function() {
     //   return {
@@ -64,7 +67,7 @@ class BuildingSlot extends React.Component {
         }
     }*/
    /* //verändert das Bild
-    //TODO menü zur auswahl des gebäudes
+
     handleClick = (e) => {
       //toogle menu
        // this.props.toggleMenu(true);
@@ -93,62 +96,84 @@ class BuildingSlot extends React.Component {
       })
     }
     toggleMenuOf =  () => {
+
+
+
+
+
+
       console.log("falsch");
       this.props.toggleMenu(false);
     }*/
     render() {
+        let key = this.props.x + this.props.y*9
         return  (
-            <span
+            <div
                 ref="target"
                 className="BuildingSlot"
-                key={this.props.x + this.props.y*9}
+                key={key}
                 //x={this.props.x}
                 // y={this.props.y}
                 //z={this.state.buildingName}
                 onClick={this.buildingMenuShow}
                 onContextMenu={this.buildingDelete}
                 //onKeyDown={this.buildingMenuHide}/*this.props.onKeyDown*/
-
                 tabIndex="-1"
                 onFocus={this.buildingMenuShow}
                  //onBlur={this.buildingMenuHide}
             >
-
-              <img
-              src={(this.props.buildingName) ? require("./../img/buildings/NOD/" + this.props.buildingName + ".png"): ""}
-              alt={this.props.buildingName}
-              />
-          </span>
-
+               {/* { this.props.buildings[key].lvl ? */}
+                    <input
+                        className="InputLvl"
+                        type="number"
+                        value={this.props.buildings[key].lvl}
+                        onChange={this.changeBuildingLvl}
+                    />
+                    {/*: null }*/}
+                <img
+                    src={(this.props.buildingName) ? require("./../img/buildings/NOD/" + this.props.buildingName + ".png"): ""}
+                    alt={this.props.buildingName}
+                />
+            </div>
         );
-        //const img = require('./../img/buildings/NOD/' + this.props.buildingName + '.png')
     }
 
     buildingMenuShow(event)
     {
-        const from =  this.props.x + this.props.y*9
         this.props.dispatch({
             type: 'menu.buildingMenuShow',
-            from: from
+            from: this.props.x + this.props.y*9
         })
     }
     buildingMenuHide(event)
     {
-        const from =  this.props.x + this.props.y*9
         this.props.dispatch({
             type: 'menu.buildingMenuHide',
-            from: from
+            from: this.props.x + this.props.y*9
         })
     }
     buildingDelete(event)
     {
-        const from =  this.props.x + this.props.y*9
         this.props.dispatch({
             type: 'menu.buildingDelete',
-            from: from
+            from: this.props.x + this.props.y*9
+        })
+    }
+    changeBuildingLvl(event)
+    {
+        let lvl = event.target.value.match(/^[0-9]+$/)[0]
+        if (lvl.length > 2 ) lvl = lvl.slice(-2) // last 2 numbers
+        lvl = Number(lvl)
+        if (lvl > 65) lvl = 65  //max lvl
+        this.props.dispatch({
+            type: 'menu.changeBuildingLvl',
+            from: this.props.x + this.props.y*9,
+            lvl: lvl
         })
     }
 };
+
+
 
 /*BuildingSlot.propTypes = {
   buildingName: React.PropTypes.string,

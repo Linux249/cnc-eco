@@ -58,13 +58,13 @@ for (var building in GAME_DATA.GAME_DATA.Tech) {
 //Downlaod manuel
 //Tib ground
 url = 'https://eaassets-a.akamaihd.net/cncalliancesgame/cdn/data/4bc5605149c6f6330630e31706b2975d.png';
-filename = '../img/buildings/res_tiberium_01.png';
+filename = '../img/buildings/tiberium.png';
 download(url, filename, function () {
     console.log('done: ' + filename);
 });
 
 url = 'https://eaassets-a.akamaihd.net/cncalliancesgame/cdn/data/c97fc957d031547a131c7730a11b09d2.png';
-filename = '../img/buildings/crystal01.png';
+filename = '../img/buildings/crystal.png';
 download(url, filename, function () {
     console.log('done: ' + filename);
 });

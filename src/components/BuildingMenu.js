@@ -1,31 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-//import * as test_arry from './../img/buildings/NOD'
-//console.log(test_arry)
-//const buildings_png = require.context("../img/buildings/NOD", true, /^\.\/.*\.png$/);
-//import crystal_img from '../img/buildings/crystal01.png'
-
 import buildings_pngs from '../util/buildings_img_nod.json'
-console.log(buildings_pngs);
-var nod_buildings_names = {
-        "NOD_Refinery": "r",
-        "NOD_Power Plant": "p",
-        "NOD_Harvester": "h",
-        "NOD_Construction Yard": "y",
-        "NOD_Airport": "d",
-        "NOD_Defense HQ": "q",
-        "NOD_Barracks": "b",
-        "NOD_Silo": "s",
-        "NOD_Factory": "f",
-        "NOD_Harvester_Crystal": "n",
-        "NOD_Command Post": "e",
-        "NOD_Support_Art": "z",
-        "NOD_Support_Ion": "i",
-        "NOD_Accumulator": "a",
-        "NOD_Support_Air": "x",
-        "NOD_Defense Facility": "w"
-    };
-
 
 class BuildingMenu extends React.Component {
     constructor(props)
@@ -61,8 +36,9 @@ class BuildingMenu extends React.Component {
                         src={img} //NOD GDI variable
                         alt={buildingName}
                         data-name={buildingName}
+                        data-id={buildings_pngs[buildingName]}
                     />
-                    <p>{nod_buildings_names[buildingName]}</p>
+                    <p>{buildings_pngs[buildingName]}</p>
                 </span>
           );
         })}
@@ -74,7 +50,9 @@ class BuildingMenu extends React.Component {
     {
         this.props.dispatch({
             type: 'menu.buildingSelect',
-            name: event.target.dataset.name
+            name: event.target.dataset.name,
+            id: event.target.dataset.id
+
         })
     }
     buildingMenuShow(event)
