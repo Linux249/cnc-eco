@@ -1,0 +1,104 @@
+html {
+  height: 100%;
+}
+
+body {
+  background-color: aqua;
+  height: 1400px;
+}
+
+.row {
+  display: table-row;
+}
+
+
+.BaseHeader {
+  //background-color: black;
+  background-image: url('../../img/background/background_base_top_NOD.png');
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  height: 200px;
+}
+
+.Base {
+  background-image: url('../../img/background/background_base_NOD.jpg');
+  background-repeat: no-repeat;
+  background-position: center top; 
+  
+  height: 1000px
+    
+}
+
+.BaseLayout {
+    display: table;
+  margin: 0 auto;
+  align-self: center;
+  position: relative;
+    justifyContent: 'center';
+}
+
+.BuildingSlot {
+  display: table-cell;
+  border: 0.01em solid grey;
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+
+.BuildingSlot:hover {
+  
+  opacity: 0.75;
+}
+
+.BuildingSlot:focus {
+  opacity: 0.75;
+  outline: 0;
+}
+
+.BuildingSlot img {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  /*  display: flex;
+  margin: auto;*/
+}
+
+.BuildingMenu {
+  //float: right;
+  background-color: white;
+  max-width: 20%;
+  height: auto;
+
+}
+.BuildingMenu .BuildingMenuItem {
+  //border: 1px solid green;
+  display: inline-block;
+  max-width: 25%;
+  //width: 20%;
+  height: auto;
+  align-content: center;
+  //text-align: center;
+  //max-width: 100%;
+  //height: auto;
+  //position: relative;
+  //display: flex;
+}
+
+.BuildingMenu .BuildingMenuItem img {
+  //object-fit: cover;
+  //align: center;
+ // max-width: 50%;
+  height: auto;
+  max-width: 100%;
+  
+  // margin: auto;
+  
+}
+.BuildingMenu .BuildingMenuItem p{
+  text-align: center;
+  color: black;
+}
