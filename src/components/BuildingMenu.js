@@ -8,13 +8,9 @@ class BuildingMenu extends React.Component {
         super(props)
         this.buildingSelect = this.buildingSelect.bind(this)
         this.buildingMenuShow = this.buildingMenuShow.bind(this)
-
     }
   render() {
-    return (
-      <div
-          className="BuildingMenu"
-          style={{
+    const divStyle = {
               position: 'absolute',
               backgroundColor: '#EEE',
               boxShadow: '0 5px 10px rgba(0, 0, 0, 0.2)',
@@ -23,10 +19,15 @@ class BuildingMenu extends React.Component {
               marginLeft: -5,
               marginTop: 5,
               padding: 10,
-            }}
+            }
+    return (
+      <div
+          className="BuildingMenu"
+          style={divStyle}
           onClick={this.buildingMenuShow}
       
       >
+        //buildings in the menu are given through 'buildings_pngs'
         {Object.keys(buildings_pngs).map((buildingName) => {
             const img =  require('./../img/buildings/NOD/' + buildingName + '.png')
             return (
@@ -45,22 +46,27 @@ class BuildingMenu extends React.Component {
       </div>
     );
   }
-
+    
+    //add building to base if selected in menu
     buildingSelect(event)
     {
+        const id = event.target.dataset.id
+        const name = event.target.dataset.name
         this.props.dispatch({
             type: 'menu.buildingSelect',
-            name: event.target.dataset.name,
-            id: event.target.dataset.id
+            name,
+            id
 
         })
     }
+    
+    // keep building menu open while using it 
     buildingMenuShow(event)
     {
         const from =  this.props.x + this.props.y*9
         this.props.dispatch({
             type: 'menu.buildingMenuShow',
-            from: from
+            from // TODO warum braucht er hier nochmal from? 
         })
     }
 
