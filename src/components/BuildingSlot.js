@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import { LvlNumber } from './LvlNumber'
 //import buildings_pngs from '../util/buildings_img_nod.json'
 
 // import BuildingMenu from './BuildingMenu.js';
@@ -122,14 +122,8 @@ class BuildingSlot extends React.Component {
                 onFocus={this.buildingMenuShow}
                  //onBlur={this.buildingMenuHide}
             >
-               {/* { this.props.buildings[key].lvl ? */}
-                    <input
-                        className="InputLvl"
-                        type="number"
-                        value={this.props.buildings[key].lvl}
-                        onChange={this.changeBuildingLvl}
-                    />
-                    {/*: null }*/}
+                <LvlNumber lvl={this.props.buildings[key].lvl} />
+
                 <img
                     src={(this.props.buildingName) ? require("./../img/buildings/NOD/" + this.props.buildingName + ".png"): ""}
                     alt={this.props.buildingName}
@@ -159,6 +153,8 @@ class BuildingSlot extends React.Component {
             from: this.props.x + this.props.y*9
         })
     }
+
+    //TODO wurde beim Input lvl verwendet - wo jetzt dahin?
     changeBuildingLvl(event)
     {
         let lvl = event.target.value.match(/^[0-9]+$/)[0]
