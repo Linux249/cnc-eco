@@ -1,9 +1,18 @@
 import React from 'react';
 
 const style = {
-    font-weight: bold;
+    fontWeight: 'bold',
+    fontSize: "20",
+    fontFamily: "fantasy",
+    color: '#dc2826'
 }
 
 export const LvlNumber = props => (
-    <p style={style}>{props.lvl}</p>
+    <div style={style}>{props.lvl}</div>
 )
+
+
+
+
+
+

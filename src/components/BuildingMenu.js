@@ -10,41 +10,41 @@ class BuildingMenu extends React.Component {
         this.buildingMenuShow = this.buildingMenuShow.bind(this)
 
     }
-  render() {
-    return (
-      <div
-          className="BuildingMenu"
-          style={{
-              position: 'absolute',
-              backgroundColor: '#EEE',
-              boxShadow: '0 5px 10px rgba(0, 0, 0, 0.2)',
-              border: '1px solid #CCC',
-              borderRadius: 3,
-              marginLeft: -5,
-              marginTop: 5,
-              padding: 10,
-            }}
-          onClick={this.buildingMenuShow}
-      
-      >
-        {Object.keys(buildings_pngs).map((buildingName) => {
-            const img =  require('./../img/buildings/NOD/' + buildingName + '.png')
-            return (
-                <span className="BuildingMenuItem">
-                    <img
-                        onClick={this.buildingSelect}
-                        src={img} //NOD GDI variable
-                        alt={buildingName}
-                        data-name={buildingName}
-                        data-id={buildings_pngs[buildingName]}
-                    />
-                    <p>{buildings_pngs[buildingName]}</p>
-                </span>
-          );
-        })}
-      </div>
-    );
-  }
+
+    render() {
+        return (
+            <div
+                className="BuildingMenu"
+                style={{
+                  position: 'absolute',
+                  backgroundColor: '#EEE',
+                  boxShadow: '0 5px 10px rgba(0, 0, 0, 0.2)',
+                  border: '1px solid #CCC',
+                  borderRadius: 3,
+                  marginLeft: -5,
+                  marginTop: 5,
+                  padding: 10,
+                }}
+                onClick={this.buildingMenuShow}
+            >
+            {Object.keys(buildings_pngs).map((buildingName) => {
+                const img =  require('./../img/buildings/NOD/' + buildingName + '.png')
+                return (
+                    <span className="BuildingMenuItem">
+                        <img
+                            onClick={this.buildingSelect}
+                            src={img} //NOD GDI variable
+                            alt={buildingName}
+                            data-name={buildingName}
+                            data-id={buildings_pngs[buildingName]}
+                        />
+                        <p>{buildings_pngs[buildingName]}</p>
+                    </span>
+              );
+            })}
+          </div>
+        );
+    }
 
     buildingSelect(event)
     {
@@ -55,6 +55,7 @@ class BuildingMenu extends React.Component {
 
         })
     }
+
     buildingMenuShow(event)
     {
         const from =  this.props.x + this.props.y*9
