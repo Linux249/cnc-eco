@@ -1,0 +1,23 @@
+{
+  "name": "cnc-web-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Linux249/cnc-web-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Linux249/cnc-web-server/issues"
+  },
+  "homepage": "https://github.com/Linux249/cnc-web-server#readme",
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
