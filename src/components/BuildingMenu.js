@@ -9,24 +9,24 @@ class BuildingMenu extends React.Component {
         this.buildingSelect = this.buildingSelect.bind(this)
         this.buildingMenuShow = this.buildingMenuShow.bind(this)
     }
-  render() {
+
+    render() {
     const divStyle = {
-              position: 'absolute',
-              backgroundColor: '#EEE',
-              boxShadow: '0 5px 10px rgba(0, 0, 0, 0.2)',
-              border: '1px solid #CCC',
-              borderRadius: 3,
-              marginLeft: -5,
-              marginTop: 5,
-              padding: 10,
-            }
+        position: 'absolute',
+        backgroundColor: '#EEE',
+        boxShadow: '0 5px 10px rgba(0, 0, 0, 0.2)',
+        border: '1px solid #CCC',
+        borderRadius: 3,
+        marginLeft: -5,
+        marginTop: 5,
+        padding: 10,
+    }
     return (
-      <div
-          className="BuildingMenu"
-          style={divStyle}
-          onClick={this.buildingMenuShow}
-      
-      >
+        <div
+            className="BuildingMenu"
+            style={divStyle}
+            onClick={this.buildingMenuShow}
+        >
         //buildings in the menu are given through 'buildings_pngs'
         {Object.keys(buildings_pngs).map((buildingName) => {
             const img =  require('./../img/buildings/NOD/' + buildingName + '.png')
@@ -45,7 +45,7 @@ class BuildingMenu extends React.Component {
         })}
       </div>
     );
-  }
+    }
     
     //add building to base if selected in menu
     buildingSelect(event)
@@ -56,7 +56,6 @@ class BuildingMenu extends React.Component {
             type: 'menu.buildingSelect',
             name,
             id
-
         })
     }
     
