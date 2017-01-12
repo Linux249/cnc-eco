@@ -2,7 +2,7 @@
  * Created by Bombassd on 12.01.2017.
  */
 'use-strict'
-const dummy = "http://cncopt.com/?map=2|N|N|-fix-|tc20h20n.50e...26p26p26p26p26p42h47s42h.26p52a26p52a26p42h54s42h.26p26p26p26p26p42h46s42h.26p52a26p50a31p40b...31p35p35p38pc.....cc.c.cc.43f.46d..37q..20sj37s37f37s37f37s37q.l37q37zj37z37z37zk..37q37sj37qll37s..37qh37c37q37c37qjj.37q37s37z37qj37s37q..l37q37q37s37q37zh..37mj37w37w37w37wh.h37w37qh37m37q..k.42l42l43r43r..1q1p.42l43r44r44r..1b..48l48r48r46r.....50m50m43r43r38r....|newEconomy"
+const dummy = "http://cncopt.com/?map=2|N|N|-fix-|.........20p20p20p20p20p20h20s42h.20p20a20p20a20p20h20s20h.20p20p26p20p20p20h20s20h.20p20a20p20a20p....20p20p20p20p20n20s....cc.20n20s20nc..........j37s37f37s37f37s37q.l37q37zj37z37z37zk..37q37sj37qll37s..37qh37c37q37c37qjj.37q37s37z37qj37s37q..l37q37q37s37q37zh..37mj37w37w37w37wh.h37w37qh37m37q..k.42l42l43r43r..1q1p.42l43r44r44r..1b..48l48r48r46r.....50m50m43r43r38r....|newEconomy"
 
 //Url aufteilen
 
@@ -24,7 +24,7 @@ const raf_production_perm = [0, 120, 150, 180, 240, 315, 400, 485, 575, 680, 790
     446677, 558346, 697933, 872417, 1090521, 1363151, 1703939, 2129924, 2662405, 3328006, 4160008, 5200010,
     6500013, 8125016, 10156271, 12695338, 15869173, 19836467, 24795583, 30994479, 38743099, 48428874, 60536093,
     75670117, 94587646, 118234557, 147793197 ]
-var raf_production_pp = [0, 72, 90, 110, 145, 190, 240, 290, 345, 410, 475, 555, 650, 812, 1015, 1269, 1586, 1983, 2479, 3099, 3874, 4842, 6053, 7566, 9458,
+const raf_production_pp = [0, 72, 90, 110, 145, 190, 240, 290, 345, 410, 475, 555, 650, 812, 1015, 1269, 1586, 1983, 2479, 3099, 3874, 4842, 6053, 7566, 9458,
     11823, 14779, 18474, 23092, 28865, 36082, 45102, 56378, 70473, 88091, 110114, 137642, 172053, 215066, 268833,
     336042, 420052, 525065, 656332, 820415, 1025519, 1281898, 1602373, 2002967, 2503708, 3129636, 3912045, 4890056,
     6112570, 7640713, 9550891, 11938614, 14923268, 18654085, 23317606, 29147008, 36433760, 45542200, 56927750,
@@ -40,7 +40,7 @@ const raf_cost = [2, 4, 6, 8, 40, 220, 720, 2200, 6400, 17600 ,44800, 96000, 126
     18757542, 24759955, 32683141, 43141746, 56947105, 75170179, 99224636, 130976519, 172889005, 228213487, 301241803, 397639180, 524883717, 692846507, 914557389, 1207215753, 1593524794, 2103452729, 2776557602, 3665056034, 4837873965, 6385993634, 8429511597, 11126955308, 14687581007, 19387606929, 25591641146, 33780966313, 44590875533, 58859955703, 77695141528, 102557586817, 135376014598, 178696339269, 235879167836];
 
 const calcBaseUpCost = (buildings) => {
-    var costs = {tib:0, power: 0}
+    let costs = {tib:0, power: 0}
     buildings.forEach(function(building){
         if(building.type  && building.lvl < 65) {
             switch(building.type)
@@ -67,7 +67,12 @@ const calcBaseUpCost = (buildings) => {
 }
 
 const calcBaseProduction = (buildings) => {
-    var production = [0,0,0,0]      // [tib, kris, power, credits]
+    let production = {
+        tib: 0,
+        kris: 0,
+        power: 0,
+        credits: 0
+    }
     const neighbours = [-10, -9, -8, -1, 1, 8, 9, 10]
 
 
@@ -75,20 +80,21 @@ const calcBaseProduction = (buildings) => {
     {
         // exist building
         if(building) {
+            //console.log(building.lvl)
             // get tib/kris Silo?
             if (building.type === "s")
             {
                 neighbours.forEach(function(n)
                 {
-                    var j = i + n       // j: neighbour
+                    const j = i + n       // j: neighbour
                     if (0 <= j && j <= 71)
                     {
                         if (buildings[j] && buildings[j].type === "h")     // h = tib
                         {
-                            production[0] += silo_production[building.lvl]       // 0 = tib
+                            production.tib += silo_production[building.lvl]       // 0 = tib
                         } else if (buildings[j] && buildings[j].type === "n")     //n = kris
                         {
-                            production[1] += silo_production[building.lvl]      // 1 = kris
+                            production.kris += silo_production[building.lvl]      // 1 = kris
                         }
 
                     }
@@ -99,12 +105,12 @@ const calcBaseProduction = (buildings) => {
             {
                 neighbours.forEach(function(n)
                 {
-                    var j = i + n       // j: neighbour
+                    const j = i + n       // j: neighbour
                     if (0 <= j && j <= 71)
                     {
                         if (buildings[j] && buildings[j].type === "p")     // p = PowerPlant
                         {
-                            production[2] += accu_production[building.lvl]       // 2 = power
+                            production.power += accu_production[building.lvl]       // 2 = power
                         }
 
 
@@ -112,25 +118,25 @@ const calcBaseProduction = (buildings) => {
                 })
             }
             // get tib/kris harvester Production
-            else if (building.type === "h") production[0] += harvest_production_packet[building.lvl]
-            else if (building.type === "n") production[1] += harvest_production_packet[building.lvl]
+            else if (building.type === "h") production.tib += harvest_production_packet[building.lvl]   // tib harvest
+            else if (building.type === "n") production.kris += harvest_production_packet[building.lvl]  // kris harvest
             // TODO powerplant produktion
 
             //get credits from Rafs
             else if (building.type === "r")
             {
                 // ground credit production
-                production[3] += raf_production_perm[building.lvl]
+                production.credits += raf_production_perm[building.lvl]
                 //count harvester/tib's
                 neighbours.forEach(function(n)
                 {
-                    var j = i + n       // j: neighbour
+                    const j = i + n       // j: neighbour
                     if (0 <= j && j <= 71)
                     {
                         // find harvest/tib
                         if (buildings[j] && ( buildings[j].type === "t" || buildings[j].type === "h"))
                         {
-                            production[3] = production[3] + raf_production_perm[building.lvl]/2 // production[3] = credis
+                            production.credits = production.credits + raf_production_perm[building.lvl]/2 // production[3] = credis
                         }
                         //TODO find powerPlants
 
@@ -140,13 +146,7 @@ const calcBaseProduction = (buildings) => {
         }
     })
     //console.log(production)
-    return {
-        tib: production[0],
-        kris: production[1],
-        power: production[2],
-        credits: production[3],
-    }
-
+    return production
 }
 
 
@@ -195,7 +195,7 @@ const urlToBase = (url = dummy) => {
             base.buildings.push({});
         } else {
             if (!isNaN(urlString[0])) {
-                var num = urlString[0];
+                let num = urlString[0];
                 urlString = urlString.slice(1);
                 if (!isNaN(urlString[0])) {
                     num += urlString[0];
@@ -228,7 +228,7 @@ const urlToBase = (url = dummy) => {
             base.defens.push({});
         } else {
             if (!isNaN(urlString[0])) {
-                var num = urlString[0];
+                let num = urlString[0];
                 urlString = urlString.slice(1);
                 if (!isNaN(urlString[0])) {
                     num += urlString[0];
@@ -259,7 +259,7 @@ const urlToBase = (url = dummy) => {
             base.army.push({});
         } else {
             if (!isNaN(urlString[0])) {
-                var num = urlString[0];
+                let num = urlString[0];
                 urlString = urlString.slice(1);
                 if (!isNaN(urlString[0])) {
                     num += urlString[0];
@@ -318,12 +318,15 @@ const allBuildingLvLUp = (base, lvl = 0) => {
 }
 
 const best = (base) => {
-    var topTib = []
+    let topTib = []
     base.buildings.forEach((building, index, allBuildings) => {
         // upgrade one building
-        if(building.lvl) {
+        if(building.lvl < 65) {
             building.lvl += 1
-            topTib.push(calcBaseProduction(allBuildings))
+            let production = calcBaseProduction(allBuildings)
+           // console.log(building)
+            console.info(production)
+            topTib.push(production)
         }
 
         //console.log(building)
@@ -333,6 +336,23 @@ const best = (base) => {
 }
 
 const productionOverDays = (base, days) => {
+    let prodOverTime = []
+    let limit = days*24
+    let time = 0
+    while(time < limit) {
+        let production = calcBaseProduction(base.buildings)
+        let costs = calcBaseUpCost(base.buildings)
+        prodOverTime.push({
+            production,
+            time
+        })
+        base = allBuildingLvLUp(base, 1)
+        console.log(production.tib)
+        time = time + costs.tib/production.tib
+        console.log(time)
+    }
+
+    return prodOverTime
 
 }
 
