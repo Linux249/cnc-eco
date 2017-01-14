@@ -1,9 +1,7 @@
 //Libs
 import React from 'react';
 import { connect } from 'react-redux';
-
-//css
-//import '.../style/main.css';
+import { LineChart } from './LineChart.js'
 
 
 // Components
@@ -13,11 +11,12 @@ import Base from './Base.js'
 class App extends React.Component
 {
 
-  render()
-  {
+    render()
+    {
     return(
         <div className="app">
-          <Base faction="base.faction" base={this.props.buildings}/>
+            <Base faction="base.faction" base={this.props.buildings}/>
+            <LineChart />
         </div>
     )
   }

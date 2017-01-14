@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { LvlNumber } from './LvlNumber'
+import buildings_pngs from '../util/buildings_img_nod.json'
+
 //import buildings_pngs from '../util/buildings_img_nod.json'
 
 // import BuildingMenu from './BuildingMenu.js';
@@ -36,6 +38,7 @@ class BuildingSlot extends React.Component {
         this.buildingMenuHide = this.buildingMenuHide.bind(this)
         this.buildingDelete = this.buildingDelete.bind(this)
         this.changeBuildingLvl = this.changeBuildingLvl.bind(this)
+        this.handleKeyDown = this.handleKeyDown.bind(this)
 
     }
 
@@ -106,27 +109,28 @@ class BuildingSlot extends React.Component {
       this.props.toggleMenu(false);
     }*/
     render() {
-        let key = this.props.x + this.props.y*9
+        let slot = this.props.slot
+        let name = this.props.buildings[slot].name
         return  (
             <div
                 ref="target"
                 className="BuildingSlot"
-                key={key}
+                slot={slot}
                 //x={this.props.x}
                 // y={this.props.y}
                 //z={this.state.buildingName}
                 onClick={this.buildingMenuShow}
                 onContextMenu={this.buildingDelete}
-                //onKeyDown={this.buildingMenuHide}/*this.props.onKeyDown*/
+                onKeyDown={this.handleKeyDown}
                 tabIndex="-1"
                 onFocus={this.buildingMenuShow}
                  //onBlur={this.buildingMenuHide}
             >
-                <LvlNumber lvl={this.props.buildings[key].lvl} />
+                <LvlNumber lvl={this.props.buildings[slot].lvl} />
 
                 <img
-                    src={(this.props.buildingName) ? require("./../img/buildings/NOD/" + this.props.buildingName + ".png"): ""}
-                    alt={this.props.buildingName}
+                    src={(name) ? require("./../img/buildings/NOD/" + name + ".png"): ""}
+                    alt={name}
                 />
             </div>
         );
@@ -136,21 +140,21 @@ class BuildingSlot extends React.Component {
     {
         this.props.dispatch({
             type: 'menu.buildingMenuShow',
-            from: this.props.x + this.props.y*9
+            from: this.props.slot
         })
     }
     buildingMenuHide(event)
     {
         this.props.dispatch({
             type: 'menu.buildingMenuHide',
-            from: this.props.x + this.props.y*9
+            from: this.props.slot
         })
     }
     buildingDelete(event)
     {
         this.props.dispatch({
             type: 'menu.buildingDelete',
-            from: this.props.x + this.props.y*9
+            from: this.props.slot
         })
     }
 
@@ -163,11 +167,62 @@ class BuildingSlot extends React.Component {
         if (lvl > 65) lvl = 65  //max lvl
         this.props.dispatch({
             type: 'menu.changeBuildingLvl',
-            from: this.props.x + this.props.y*9,
+            from: this.props.slot,
             lvl: lvl
         })
     }
-};
+
+    handleKeyDown(event)
+    {
+        let key = event.key
+        let slot  = this.props.slot
+        console.log("Key Pressed: "+ key)
+        if (key in nod_buildings_keys) {
+            const lvl = this.props.buildings[slot].lvl
+            const name = nod_buildings_keys[key]
+            console.log(nod_buildings_keys[key])
+            const id = key
+            this.props.dispatch({
+                type: 'menu.buildingSelect',
+                name,
+                id,
+                lvl
+            })
+            /*this.setState({
+                buildingName: nod_buildings_keys[key]
+            }, () => {
+                console.log("state geändert: " + this.state.building)
+            })*/
+
+        } else if (key === "+")
+        {
+            let lvl = this.props.buildings[slot].lvl + 1
+            this.props.dispatch({
+                type: 'menu.changeBuildingLvl',
+                lvl,
+                from: slot
+            })
+        } else if (key === "-")
+        {
+            let lvl = this.props.buildings[slot].lvl - 1
+            this.props.dispatch({
+                type: 'menu.changeBuildingLvl',
+                lvl,
+                from: slot
+            })
+        } else if (key.match(/^[0-9]+$/))
+        {
+            let lvl = this.props.buildings[slot].lvl + key
+            if (lvl.length > 2 ) lvl = lvl.slice(-2) // last 2 numbers
+            this.props.dispatch({
+                type: 'menu.changeBuildingLvl',
+                lvl,
+                from: slot
+            })
+
+        }
+    }
+}
 
 
 

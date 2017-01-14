@@ -1,18 +1,9 @@
 //Libs
 import React from 'react';
 import { connect } from 'react-redux';
-
-
-//require('.././main.css');
-
 import BaseHeader from './Baseheader.js';
 import BuildingSlot from './BuildingSlot.js'
 import BuildingMenu from './BuildingMenu.js';
-
-
-//import { Overlay, Image, Popover, Button} from 'react-bootstrap';
-
-
 
 /*var nod_buildings_names = {
         "NOD_Refinery": "r",
@@ -117,27 +108,28 @@ class Base extends React.Component
     console.log(this.state.base.buildings[this.state.buildingMenuCaller]);
   }*/
 
-  render() {
+render()
+{
       // build all slots
       var slots = [...Array(8).keys()].map(function(y) {
-                  return ( 
-                    <div className={"row " + y} > 
-                      {[...Array(9).keys()].map(function(x) {
-                        //get buildings
-                        const building = (this.props.buildings[x+y*9]) ? this.props.buildings[x+y*9]: {}; // warum building.slot?
-                        // return all Slots
-                        return <BuildingSlot 
-                                  x={x}
-                                  y={y}
-                                  key={x + y*9}
-                                  isEmpty={!building}
-                                  buildingName={building.name ? building.name : "empty"}
-                                   />;
-                        }.bind(this))
-                      }
-                    </div>
-                  );
-                }.bind(this));
+
+          return (
+              <div className={"row " + y} >
+                  {[...Array(9).keys()].map(function(x) {
+                      const slot = x+y*9
+                      const building = (this.props.buildings[slot]) ? this.props.buildings[slot]: {}; // warum building.slot?
+                      return <BuildingSlot
+                          x={x}
+                          y={y}
+                          slot={slot}
+                          isEmpty={!building}
+                          buildingName={building.name ? building.name : "empty"}
+                      />
+                  }.bind(this))
+                  }
+              </div>
+          )
+      }.bind(this))
 
       return (
         <div>
