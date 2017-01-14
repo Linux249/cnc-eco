@@ -40,10 +40,11 @@ class reducerClass
 
     static buildingSelect(new_state, action)
     {
-        new_state.buildings[new_state.buildingMenuIsFrom] = {
-            lvl: 38, //TODO lvl from other state
+        const slot = action.slot || new_state.buildingMenuIsFrom
+        new_state.buildings[slot] = {
+            lvl: action.lvl || 38, //TODO lvl from other state
             name : action.name,
-            slot: new_state.buildingMenuIsFrom,   
+            slot,
             type: action.id,
             x: 4,       //TODO get x + y from caller
             y: 6
