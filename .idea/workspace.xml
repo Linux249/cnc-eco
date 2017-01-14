@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7ba2fd5d-2514-487c-8211-0555892c9cbd" name="Default" comment="- add inputLvl  &#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+    <list default="true" id="7ba2fd5d-2514-487c-8211-0555892c9cbd" name="Default" comment="small fixes">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Base.js" afterPath="$PROJECT_DIR$/src/components/Base.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/BuildingMenu.js" afterPath="$PROJECT_DIR$/src/components/BuildingMenu.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/BuildingSlot.js" afterPath="$PROJECT_DIR$/src/components/BuildingSlot.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.js" afterPath="$PROJECT_DIR$/src/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/reducers/menu.js" afterPath="$PROJECT_DIR$/src/reducers/menu.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -440,7 +434,7 @@
       <workItem from="1484178332863" duration="1343000" />
       <workItem from="1484236951859" duration="3544000" />
       <workItem from="1484249005547" duration="599000" />
-      <workItem from="1484335748417" duration="7605000" />
+      <workItem from="1484335748417" duration="7654000" />
     </task>
     <task id="LOCAL-00001" summary="- add ressourceMenu&#10;- add ressource calcolation&#10;- add inputLvl fields &#10;">
       <created>1483481144350</created>
@@ -463,11 +457,18 @@
       <option name="project" value="LOCAL" />
       <updated>1484355726718</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="small fixes">
+      <created>1484356730120</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1484356730120</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="84366000" />
+    <option name="totallyTimeSpent" value="84415000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
@@ -503,7 +504,8 @@
     <MESSAGE value="- add ressourceMenu&#10;- add ressource calcolation&#10;- add inputLvl fields &#10;" />
     <MESSAGE value="update building with keys - Add first chart example" />
     <MESSAGE value="- add inputLvl  &#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="- add inputLvl  &#10;" />
+    <MESSAGE value="small fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="small fixes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
