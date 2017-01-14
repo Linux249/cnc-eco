@@ -8,6 +8,8 @@ class BuildingMenu extends React.Component {
         super(props)
         this.buildingSelect = this.buildingSelect.bind(this)
         this.buildingMenuShow = this.buildingMenuShow.bind(this)
+        this.changeBuildingLvl = this.changeBuildingLvl.bind(this)
+
     }
 
     render() {
@@ -27,7 +29,6 @@ class BuildingMenu extends React.Component {
             style={divStyle}
             onClick={this.buildingMenuShow}
         >
-        //buildings in the menu are given through 'buildings_pngs'
         {Object.keys(buildings_pngs).map((buildingName) => {
             const img =  require('./../img/buildings/NOD/' + buildingName + '.png')
             return (
@@ -62,16 +63,26 @@ class BuildingMenu extends React.Component {
     // keep building menu open while using it 
     buildingMenuShow(event)
     {
-        const from =  this.props.x + this.props.y*9
+        const from =  this.props.slot
         this.props.dispatch({
             type: 'menu.buildingMenuShow',
             from // TODO warum braucht er hier nochmal from? 
         })
     }
 
+    changeBuildingLvl(event)
+    {
+        let lvl = event.target.value.match(/^[0-9]+$/)[0]
+        if (lvl.length > 2 ) lvl = lvl.slice(-2) // last 2 numbers
+        lvl = Number(lvl)
+        if (lvl > 65) lvl = 65  //max lvl
+        this.props.dispatch({
+            type: 'menu.changeBuildingLvl',
+            from: this.props.slot,
+            lvl: lvl
+        })
+    }
+
 }
-
-
-
 
 export default connect()(BuildingMenu);

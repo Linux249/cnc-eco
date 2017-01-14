@@ -20,8 +20,8 @@ class reducerClass
      */
     static buildingMenuShow(new_state, action)
     {
-        new_state.showBuildingMenu = true
-        new_state.buildingMenuIsFrom = action.from ? action.from : new_state.buildingMenuIsFrom
+        new_state.buildingMenu.show = true
+        new_state.buildingMenu.from = action.from ? action.from : new_state.buildingMenu.from
         return new_state;
     }
 
@@ -34,15 +34,15 @@ class reducerClass
      */
     static buildingMenuHide(new_state, action)
     {
-        new_state.showBuildingMenu = false
+        new_state.buildingMenu.show = false
         return new_state;
     }
 
     static buildingSelect(new_state, action)
     {
-        const slot = action.slot || new_state.buildingMenuIsFrom
+        const slot = action.slot || new_state.buildingMenu.from
         new_state.buildings[slot] = {
-            lvl: action.lvl || 38, //TODO lvl from other state
+            lvl: action.lvl || new_state.buildingMenu.lvl, //TODO lvl from other state
             name : action.name,
             slot,
             type: action.id,

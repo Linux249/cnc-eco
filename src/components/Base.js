@@ -119,11 +119,8 @@ render()
                       const slot = x+y*9
                       const building = (this.props.buildings[slot]) ? this.props.buildings[slot]: {}; // warum building.slot?
                       return <BuildingSlot
-                          x={x}
-                          y={y}
                           slot={slot}
                           isEmpty={!building}
-                          buildingName={building.name ? building.name : "empty"}
                       />
                   }.bind(this))
                   }
@@ -148,7 +145,7 @@ render()
 
 function mapStateToProps(state) {
     return ({
-        show: state.showBuildingMenu,
+        show: state.buildingMenu.show,
         buildings: state.buildings
     });
 }

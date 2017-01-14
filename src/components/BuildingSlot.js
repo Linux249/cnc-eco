@@ -37,7 +37,6 @@ class BuildingSlot extends React.Component {
         this.buildingMenuShow = this.buildingMenuShow.bind(this)
         this.buildingMenuHide = this.buildingMenuHide.bind(this)
         this.buildingDelete = this.buildingDelete.bind(this)
-        this.changeBuildingLvl = this.changeBuildingLvl.bind(this)
         this.handleKeyDown = this.handleKeyDown.bind(this)
 
     }
@@ -116,15 +115,11 @@ class BuildingSlot extends React.Component {
                 ref="target"
                 className="BuildingSlot"
                 slot={slot}
-                //x={this.props.x}
-                // y={this.props.y}
-                //z={this.state.buildingName}
                 onClick={this.buildingMenuShow}
                 onContextMenu={this.buildingDelete}
                 onKeyDown={this.handleKeyDown}
                 tabIndex="-1"
                 onFocus={this.buildingMenuShow}
-                 //onBlur={this.buildingMenuHide}
             >
                 <LvlNumber lvl={this.props.buildings[slot].lvl} />
 
@@ -158,19 +153,6 @@ class BuildingSlot extends React.Component {
         })
     }
 
-    //TODO wurde beim Input lvl verwendet - wo jetzt dahin?
-    changeBuildingLvl(event)
-    {
-        let lvl = event.target.value.match(/^[0-9]+$/)[0]
-        if (lvl.length > 2 ) lvl = lvl.slice(-2) // last 2 numbers
-        lvl = Number(lvl)
-        if (lvl > 65) lvl = 65  //max lvl
-        this.props.dispatch({
-            type: 'menu.changeBuildingLvl',
-            from: this.props.slot,
-            lvl: lvl
-        })
-    }
 
     handleKeyDown(event)
     {
