@@ -82,9 +82,9 @@ var BUILDINGS = [
 
 class Base extends React.Component
 {
-    constructor(props){
+    /*constructor(props){
         super(props)
-    }
+    }*/
   /*propTypes() {
     faction: React.PropTypes.string,
     buildingMenuCaller: React.PropTypes.string,

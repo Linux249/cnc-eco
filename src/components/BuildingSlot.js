@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { LvlNumber } from './LvlNumber'
-import buildings_pngs from '../util/buildings_img_nod.json'
+//import buildings_pngs from '../util/buildings_img_nod.json'
 
 //import buildings_pngs from '../util/buildings_img_nod.json'
 

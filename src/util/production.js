@@ -91,7 +91,7 @@ export  function calcBaseProduction(buildings)
                         // find harvest/tib
                         if (buildings[j] && ( buildings[j].type === "t" || buildings[j].type === "h"))
                         {
-                            production[3] = production[3] + raf_production_perm[building.lvl]/2 // production[3] = credis
+                            production[3] += raf_production_perm[building.lvl]/2 // production[3] = credis
                         }
                         //TODO find powerPlants
 
