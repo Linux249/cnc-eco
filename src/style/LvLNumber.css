@@ -1,0 +1,25 @@
+.LvLNumber {
+    text-align: center;
+    padding-top: 4px;
+    padding-left: 2px;
+    display: flex;
+}
+
+.LvLNumber p {
+    font-size: 18px;
+    font-family: fantasy;
+    color: #000000;
+    text-shadow: 1px -1px 1px red;
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding-top: 1px;
+    padding-left: 4px;
+    padding-right: 5px;
+    padding-bottom: 0;
+    background: rgba(255, 255, 255, 0.35);
+}
+
+
+
+
+

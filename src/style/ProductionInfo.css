@@ -1,0 +1,18 @@
+.ProductionInfo {
+    position: relative ;
+    width:1100px;
+    height:100px;
+    background:#063;
+    top: calc(100% - 100px);
+    margin: auto;
+    display: table;
+}
+
+.ProductionInfo div {
+    text-align: center;
+    width: 50%;
+    height: 50%;
+    display: inline-block;
+    background: #656600;
+}
+

@@ -4,30 +4,27 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button, ButtonGroup  } from 'react-bootstrap'
+import './../style/ProductionInfo.css'
 
 class ProductionInfo extends React.Component
 {
+
     render()
     {
+
         return (
             <div className="ProductionInfo">
-                <div >
-                    <ButtonGroup>
-
-                        <Button >{this.props.production.tib}</Button>
-                        <Button >{this.props.production.kris}</Button>
-                        <Button >{this.props.production.power}</Button>
-                        <Button >{this.props.production.credits}</Button>
-                    </ButtonGroup>
-                </div>
+                <div className="Production" >{this.props.production.tib}</div>
+                <div >{this.props.production.kris}</div>
+                <div >{this.props.production.power}</div>
+                <div >{this.props.production.credits}</div>
             </div>
         )
     }
 }
 function mapStateToProps(state) {
-    return ({
 
+    return ({
         production: state.production
     });
 }

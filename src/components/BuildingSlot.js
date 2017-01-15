@@ -121,7 +121,7 @@ class BuildingSlot extends React.Component {
                 tabIndex="-1"
                 onFocus={this.buildingMenuShow}
             >
-                <LvlNumber lvl={this.props.buildings[slot].lvl} />
+                {this.props.buildings[slot].lvl && <LvlNumber lvl={this.props.buildings[slot].lvl} />}
 
                 <img
                     src={(name) ? require("./../img/buildings/NOD/" + name + ".png"): ""}
