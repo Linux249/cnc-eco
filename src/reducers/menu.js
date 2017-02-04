@@ -32,7 +32,7 @@ class reducerClass
      * @param action
      * @returns {*}
      */
-    static buildingMenuHide(new_state, action)
+    static buildingMenuHide(new_state)
     {
         new_state.buildingMenu.show = false
         return new_state;
@@ -63,9 +63,12 @@ class reducerClass
 
     static changeBuildingLvl(new_state, action)
     {
+        console.log("Level geändert - reducers/menu.js")
         console.log(action.lvl)
         console.log(action.from)
-
+        if (action.lvl.length > 2 ) action.lvl = action.lvl.slice(-2) // last 2 numbers
+        if (action.lvl > 65) action.lvl = 65
+        if (action.lvl < 0) action.lvl = "00"
         new_state.buildings[action.from].lvl = action.lvl
         new_state.production = calcBaseProduction(new_state.buildings)
         return new_state

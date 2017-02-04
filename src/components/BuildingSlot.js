@@ -134,21 +134,21 @@ class BuildingSlot extends React.Component {
         );
     }
 
-    buildingMenuShow(event)
+    buildingMenuShow()
     {
         this.props.dispatch({
             type: 'menu.buildingMenuShow',
             from: this.props.slot
         })
     }
-    buildingMenuHide(event)
+    buildingMenuHide()
     {
         this.props.dispatch({
             type: 'menu.buildingMenuHide',
             from: this.props.slot
         })
     }
-    buildingDelete(event)
+    buildingDelete()
     {
         this.props.dispatch({
             type: 'menu.buildingDelete',
@@ -198,7 +198,6 @@ class BuildingSlot extends React.Component {
         } else if (key.match(/^[0-9]+$/))
         {
             let lvl = this.props.buildings[slot].lvl + key
-            if (lvl.length > 2 ) lvl = lvl.slice(-2) // last 2 numbers
             this.props.dispatch({
                 type: 'menu.changeBuildingLvl',
                 lvl,
