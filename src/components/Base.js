@@ -1,7 +1,7 @@
 //Libs
 import React from 'react';
 import { connect } from 'react-redux';
-import BaseHeader from './Baseheader.js';
+import BaseHeader from './BaseHeader.js';
 import BuildingSlot from './BuildingSlot.js'
 import BuildingMenu from './BuildingMenu.js';
 

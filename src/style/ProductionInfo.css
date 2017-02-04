@@ -1,18 +1,44 @@
 .ProductionInfo {
     position: relative ;
+    display: flex;
+    justify-content: space-around;
+    align-content: space-around;
+    flex-wrap: wrap;
+    width:1100px;
+    height:100px;
+    background:#6dd46c;
+    top: calc(100% - 100px);
+
+}
+
+.ProductionInfo div {
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center;
+
+    width: 400px;
+    height: 40%;
+    background: rgba(208, 212, 82, 0.92);
+
+    font-size: 20px;
+    color: #5b0066;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+
+.akkk {
+    position: relative ;
     width:1100px;
     height:100px;
     background:#063;
     top: calc(100% - 100px);
     margin: auto;
     display: table;
-}
 
-.ProductionInfo div {
     text-align: center;
     width: 50%;
     height: 50%;
     display: inline-block;
     background: #656600;
 }
-

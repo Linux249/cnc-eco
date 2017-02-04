@@ -1,0 +1,11 @@
+.BaseHeader{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    background-image: url('../../img/background/background_base_top_NOD.png');
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    height: 200px;
+}
+

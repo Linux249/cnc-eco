@@ -5,7 +5,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import './../style/ProductionInfo.css'
-
+import { shortenNumber } from './../services/menu'
 class ProductionInfo extends React.Component
 {
 
@@ -14,10 +14,10 @@ class ProductionInfo extends React.Component
 
         return (
             <div className="ProductionInfo">
-                <div className="Production" >{this.props.production.tib}</div>
-                <div >{this.props.production.kris}</div>
-                <div >{this.props.production.power}</div>
-                <div >{this.props.production.credits}</div>
+                <div className="Production" >{shortenNumber(this.props.production.tib,2)}</div>
+                <div >{shortenNumber(this.props.production.kris, 2)}</div>
+                <div >{shortenNumber(this.props.production.power, 2)}</div>
+                <div >{shortenNumber(this.props.production.credits, 2)}</div>
             </div>
         )
     }
