@@ -8,7 +8,9 @@ body {
 }
 
 .row {
-  display: table-row;
+  display: flex;
+  align-content: center;
+  justify-items: center;
 }
 
 .Base {
@@ -24,40 +26,10 @@ body {
   margin: 0 auto;
   align-self: center;
   position: relative;
-  justifyContent: 'center';
 }
 
-.BuildingSlot {
-  display: table-cell;
-  border: 0.01em solid grey;
-  width: 100px;
-  height: 100px;
-  position: relative;
-}
 
-.BuildingSlot:hover {
-  
-  opacity: 0.75;
-}
 
-.BuildingSlot:focus {
-  opacity: 0.75;
-  outline: 0;
-}
-
-.BuildingSlot img {
-  //z-index: -1;
-
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  /*  display: flex;
-  margin: auto;*/
-}
 
 .BuildingMenu {
   background-color: white;

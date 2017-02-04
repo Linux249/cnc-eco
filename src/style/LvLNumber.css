@@ -2,7 +2,9 @@
     text-align: center;
     padding-top: 4px;
     padding-left: 2px;
-    display: flex;
+    z-index: 10;
+    width: 30%;
+
 }
 
 .LvLNumber p {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { LvlNumber } from './LvlNumber'
+import './../style/BuildingSlot.css'
 //import buildings_pngs from '../util/buildings_img_nod.json'
 
 //import buildings_pngs from '../util/buildings_img_nod.json'
@@ -123,10 +124,12 @@ class BuildingSlot extends React.Component {
             >
                 {this.props.buildings[slot].lvl && <LvlNumber lvl={this.props.buildings[slot].lvl} />}
 
-                <img
-                    src={(name) ? require("./../img/buildings/NOD/" + name + ".png"): ""}
-                    alt={name}
-                />
+                {name &&
+                    <img
+                        src={require("./../img/buildings/NOD/" + name + ".png")}
+                        alt={name}
+                    />
+                }
             </div>
         );
     }
