@@ -27,15 +27,41 @@ export  function calcBaseProduction(buildings)
         624686, 780858, 976073, 1220091, 1525114, 1906392, 2382991, 2978738, 3723423, 4654279, 5817849, 7272311,
         9090389, 11362986, 14203733, 17754666, 22193333, 27741666, 34677083, 43346354, 54182942, 67728678, 84660848,
         105826060, 132282575, 165353218, 206691523, 258364404, 322955505]
+
     const raf_production_perm = [0, 120, 150, 180, 240, 315, 400, 485, 575, 680, 790, 924, 1080, 1350, 1687, 2109, 2636, 3295, 4119, 5149, 6437, 8046, 10058, 12572, 15716, 19645, 24556, 30695, 38369, 47961, 59952, 74940, 93675, 117093, 146367, 182959, 228698, 285873, 357342,
         446677, 558346, 697933, 872417, 1090521, 1363151, 1703939, 2129924, 2662405, 3328006, 4160008, 5200010,
         6500013, 8125016, 10156271, 12695338, 15869173, 19836467, 24795583, 30994479, 38743099, 48428874, 60536093,
         75670117, 94587646, 118234557, 147793197 ]
+    const raf_production_pp = [0, 72, 90, 110, 145, 190, 240, 290, 345, 410, 475, 555, 650, 812, 1015, 1269, 1586, 1983, 2479, 3099, 3874, 4842, 6053, 7566, 9458,
+        11823, 14779, 18474, 23092, 28865, 36082, 45102, 56378, 70473, 88091, 110114, 137642, 172053, 215066, 268833,
+        336042, 420052, 525065, 656332, 820415, 1025519, 1281898, 1602373, 2002967, 2503708, 3129636, 3912045, 4890056,
+        6112570, 7640713, 9550891, 11938614, 14923268, 18654085, 23317606, 29147008, 36433760, 45542200, 56927750,
+        71159687, 88949609, 111187011, 138983764, 173729706, 217162132, 271452665, 339315832, 424144790, 530180988,
+        662726235, 828407793]
+
+    const pp_production_perm = [ 0, 120, 150, 198, 270, 360, 459, 560, 660, 780, 900, 1025, 1166, 1458, 1822, 2278, 2847, 3559, 4449, 5562, 6952, 8691, 10863, 13579,
+        16974, 21218, 26523, 33153, 41442, 51803, 64753, 80942, 101177, 126472, 158090, 197612, 247015, 308769, 385962,
+        482453, 603066, 753832, 942291, 1177863, 1472329, 1840412, 2300515, 2875644, 3594555, 4493194, 5616493,
+        7020616, 8775770, 10969713, 13712141, 17140177, 21425221, 26781526, 33476908, 41846135, 52307669, 65384586,
+        81730732, 102163416, 127704270, 159630337, 199537922, 249422402, 311778003, 389722504, 487153130,
+        608941412, 761176766, 951470957, 1189338697, 1486673371]
+    const pp_production_accu = [0, 72, 90, 120, 160, 215, 275, 335, 400, 460, 530, 610, 700, 875, 1093, 1367, 1708, 2136, 2670, 3337, 4172, 5215, 6519, 8149, 10186,
+        12732, 15916, 19895, 24868, 31086, 38857, 48572, 60715, 75894, 94867, 118584, 148230, 185288, 231610, 289513,
+        361891, 452364, 565455, 706819, 883524, 1104405, 1380506, 1725633, 2157041, 2696301, 3370377, 4212971, 5266214,
+        6582768, 8228460, 10285575, 12856969, 16071211, 20089014, 25111268, 31389085, 39236357, 49045446, 61306807,
+        76633509, 95791887, 119739859, 149674823, 187093529, 233866912, 292333640, 365417050, 456771312, 570964140,
+        713705176, 892131470]
+    const pp_production_credit= [0, 48, 60, 75, 100, 125, 160, 195, 230, 270, 315, 370, 430, 537, 671, 839, 1049, 1312, 1640, 2050, 2562, 3203, 4004, 5005, 6257, 7821,
+        9777, 12221, 15276, 19095, 23869, 29837, 37296, 46620, 58275, 72844, 91056, 113820, 142275, 177843, 222304, 277880,
+        347351, 434189, 542736, 678420, 848025, 1060031, 1325039, 1656299, 2070374, 2587968, 3234960, 4043700, 5054625,
+        6318282, 7897852, 9872315, 12340394, 15425493, 19281866, 24102333, 30127916, 37659896, 47074870, 58843587,
+        73554484, 91943106, 114928882, 143661103, 179576378, 224470473, 280588092, 350735115, 438418893, 548023617]
 
     buildings.forEach((building, i) =>
     {
         // exist building
         if(building) {
+
             // get tib/kris Silo?
             if (building.type === "s")
             {
@@ -55,7 +81,50 @@ export  function calcBaseProduction(buildings)
                     }
                 })
             }
-            // get power from akku
+
+            // get tib harvester Production
+            else if (building.type === "h")
+            {
+                //chick if silo around exists
+                let hasSilo = false
+                neighbours.forEach((n) =>
+                {
+                    let j = i + n       // j: neighbour
+                    if (0 <= j && j <= 71)
+                    {
+                        // find silo
+                        if (buildings[j] && ( buildings[j].type === "s" ))
+                        {
+                            hasSilo = true  //silo found
+                        }
+                    }
+                })
+                if(hasSilo) production[0] += silo_production[building.lvl]
+                production[0] += harvest_production_packet[building.lvl]
+            }
+
+            // get kris harvester Production
+            else if (building.type === "n")
+            {
+                //chick if silo around exists
+                let hasSilo = false
+                neighbours.forEach((n) =>
+                {
+                    let j = i + n       // j: neighbour
+                    if (0 <= j && j <= 71)
+                    {
+                        // find silo
+                        if (buildings[j] && ( buildings[j].type === "s" ))
+                        {
+                            hasSilo = true  //silo found
+                        }
+                    }
+                })
+                if(hasSilo) production[1] += silo_production[building.lvl]
+                production[1] += harvest_production_packet[building.lvl]
+            }
+
+            // get power from accu
             else if (building.type === "a")
             {
                 neighbours.forEach((n) =>
@@ -72,17 +141,43 @@ export  function calcBaseProduction(buildings)
                     }
                 })
             }
-            // get tib/kris harvester Production
-            else if (building.type === "h") production[0] += harvest_production_packet[building.lvl]
-            else if (building.type === "n") production[1] += harvest_production_packet[building.lvl]
-            // TODO powerplant produktion
+
+            // get power from PowerPlants
+            else if (building.type === "p")
+            {
+                let hasAccu = false
+                neighbours.forEach((n) =>
+                {
+                    let j = i + n       // j: neighbour
+                    if (0 <= j && j <= 71)
+                    {
+                        //find kris fields around
+                        if (buildings[j] && (buildings[j].type === "n" || buildings[j].type === "c"))     // p = PowerPlant
+                        {
+                            production[2] += pp_production_perm[building.lvl]/2       // 2 = power
+                        }
+                        //find 1 accu around
+                        if (buildings[j] && buildings[j].type === "a" )
+                        {
+                            hasAccu = true;
+                        }
+                        //find rafs around
+                        if(buildings[j] && buildings[j].type === "r")
+                        {
+                            production[3] += pp_production_credit[building.lvl]
+                        }
+                    }
+                })
+
+                if (hasAccu) production[2] += pp_production_accu[building.lvl]
+                production[2] += pp_production_perm[building.lvl]
+            }
 
             //get credits from Rafs
             else if (building.type === "r")
             {
-                // ground credit production
-                production[3] += raf_production_perm[building.lvl]
-                //count harvester/tib's
+                let hasPp = false
+                //count harvester/tib's around
                 neighbours.forEach((n) =>
                 {
                     let j = i + n       // j: neighbour
@@ -91,21 +186,28 @@ export  function calcBaseProduction(buildings)
                         // find harvest/tib
                         if (buildings[j] && ( buildings[j].type === "t" || buildings[j].type === "h"))
                         {
+                            console.log("tib gefunden - " + buildings[j].type)
                             production[3] += raf_production_perm[building.lvl]/2 // production[3] = credis
                         }
-                        //TODO find powerPlants
-
+                        //find one PowerPlant
+                        if (buildings[j] && (buildings[j].type === "p"))
+                        {
+                            console.log("HAS POWPER ERERER")
+                            hasPp = true
+                        }
                     }
                 })
+                if(hasPp) production[3] += raf_production_pp[building.lvl]
+                // ground credit production
+                production[3] += raf_production_perm[building.lvl]
             }
         }
     })
-    //console.log(production)
+
     return {
         tib: production[0],
         kris: production[1],
         power: production[2],
         credits: production[3],
     }
-
 }
