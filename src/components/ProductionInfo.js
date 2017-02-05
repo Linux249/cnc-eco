@@ -6,6 +6,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import './../style/ProductionInfo.css'
 import { shortenNumber } from './../services/menu'
+
 class ProductionInfo extends React.Component
 {
 

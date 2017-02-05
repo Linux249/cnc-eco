@@ -67,12 +67,21 @@ class reducerClass
         console.log(action.lvl)
         console.log(action.from)
         if (action.lvl.length > 2 ) action.lvl = action.lvl.slice(-2) // last 2 numbers
+        action.lvl = Number.parseInt(action.lvl)
         if (action.lvl > 65) action.lvl = 65
-        if (action.lvl < 0) action.lvl = "00"
+        if (action.lvl < 1) action.lvl = 1
         new_state.buildings[action.from].lvl = action.lvl
         new_state.production = calcBaseProduction(new_state.buildings)
         return new_state
     }
+
+    static changeBase(new_state, action)
+    {
+        new_state.buildings = action.base.buildings     // TODO read Army, defens url
+        new_state.production = calcBaseProduction(new_state.buildings)
+        return new_state
+    }
+
 }
 
 /**

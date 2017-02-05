@@ -181,7 +181,7 @@ class BuildingSlot extends React.Component {
 
         } else if (key === "+")
         {
-            let lvl = this.props.buildings[slot].lvl + 1
+            let lvl = Number.parseInt(this.props.buildings[slot].lvl) + 1
             this.props.dispatch({
                 type: 'menu.changeBuildingLvl',
                 lvl,
@@ -189,7 +189,7 @@ class BuildingSlot extends React.Component {
             })
         } else if (key === "-")
         {
-            let lvl = this.props.buildings[slot].lvl - 1
+            let lvl = Number.parseInt(this.props.buildings[slot].lvl) - 1
             this.props.dispatch({
                 type: 'menu.changeBuildingLvl',
                 lvl,

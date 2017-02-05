@@ -1,7 +1,6 @@
 //Libs
 import React from 'react';
 import { connect } from 'react-redux';
-import BaseHeader from './BaseHeader.js';
 import BuildingSlot from './BuildingSlot.js'
 import BuildingMenu from './BuildingMenu.js';
 
@@ -130,7 +129,6 @@ render()
 
       return (
         <div>
-          <BaseHeader ref="target"/>
           <div className="Base" /*//style={Style}*/>
                         { this.props.show && <BuildingMenu /*choosenBuilding={this.choosenBuilding} *//> }
 

@@ -61,7 +61,7 @@ class BuildingMenu extends React.Component {
     }
     
     // keep building menu open while using it 
-    buildingMenuShow(event)
+    buildingMenuShow()
     {
         const from =  this.props.slot
         this.props.dispatch({

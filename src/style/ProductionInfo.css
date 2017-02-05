@@ -7,7 +7,7 @@
     width:1100px;
     height:100px;
     background:#6dd46c;
-    top: calc(100% - 100px);
+
 
 }
 
@@ -24,21 +24,4 @@
     color: #5b0066;
     font-weight: bold;
     letter-spacing: 3px;
-}
-
-
-.akkk {
-    position: relative ;
-    width:1100px;
-    height:100px;
-    background:#063;
-    top: calc(100% - 100px);
-    margin: auto;
-    display: table;
-
-    text-align: center;
-    width: 50%;
-    height: 50%;
-    display: inline-block;
-    background: #656600;
 }

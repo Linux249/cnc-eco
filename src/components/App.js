@@ -2,6 +2,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { LineChart } from './LineChart.js'
+import BaseHeader from './BaseHeader.js';
+
 
 
 // Components
@@ -15,6 +17,7 @@ class App extends React.Component
     {
     return(
         <div className="app">
+            <BaseHeader ref="target"/>
             <Base faction="base.faction" base={this.props.buildings}/>
             <LineChart />
         </div>

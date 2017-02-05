@@ -1,8 +1,8 @@
 .BaseHeader{
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-
+    justify-content: flex-end;
+    align-items: center;
+    flex-flow: column;
     background-image: url('../../img/background/background_base_top_NOD.png');
     background-repeat: no-repeat;
     background-position: center bottom;

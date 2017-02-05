@@ -1,13 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import App from './components/App';
 import { createStore } from 'redux'
-//import cncEco from './store/reducer';
 import { reducers } from './reducers/index';
 import { Provider } from 'react-redux';
 
-// style
 import './style/main.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
