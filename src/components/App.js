@@ -1,7 +1,7 @@
 //Libs
 import React from 'react';
 import { connect } from 'react-redux';
-import { LineChart } from './LineChart.js'
+import LineChart from './LineChart.js'
 import BaseHeader from './BaseHeader.js';
 
 

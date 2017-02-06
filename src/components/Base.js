@@ -113,11 +113,12 @@ render()
       var slots = [...Array(8).keys()].map(function(y) {
 
           return (
-              <div className={"row " + y} >
+              <div key={"row " + y} className={"row " + y} >
                   {[...Array(9).keys()].map(function(x) {
                       const slot = x+y*9
                       const building = (this.props.buildings[slot]) ? this.props.buildings[slot]: false; // warum building.slot?
                       return <BuildingSlot
+                          key={slot}
                           slot={slot}
                           isEmpty={!building}
                       />

@@ -14,11 +14,11 @@ body {
 }
 
 .Base {
-  background-image: url('../../img/background/background_base_NOD.jpg');
+ // background-image: url('../../img/background/background_base_NOD.jpg');
   background-repeat: no-repeat;
   background-position: center top; 
-  height: 1000px
-    
+  //height: 900px;
+  background-color: #985f0d;
 }
 
 .BaseLayout {
@@ -27,9 +27,6 @@ body {
   align-self: center;
   position: relative;
 }
-
-
-
 
 .BuildingMenu {
   background-color: white;

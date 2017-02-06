@@ -115,7 +115,6 @@ class BuildingSlot extends React.Component {
             <div
                 ref="target"
                 className="BuildingSlot"
-                slot={slot}
                 onClick={this.buildingMenuShow}
                 onContextMenu={this.buildingDelete}
                 onKeyDown={this.handleKeyDown}
@@ -181,7 +180,7 @@ class BuildingSlot extends React.Component {
 
         } else if (key === "+")
         {
-            let lvl = Number.parseInt(this.props.buildings[slot].lvl) + 1
+            let lvl = Number.parseInt(this.props.buildings[slot].lvl, 10) + 1
             this.props.dispatch({
                 type: 'menu.changeBuildingLvl',
                 lvl,
@@ -189,7 +188,7 @@ class BuildingSlot extends React.Component {
             })
         } else if (key === "-")
         {
-            let lvl = Number.parseInt(this.props.buildings[slot].lvl) - 1
+            let lvl = Number.parseInt(this.props.buildings[slot].lvl, 10) - 1
             this.props.dispatch({
                 type: 'menu.changeBuildingLvl',
                 lvl,

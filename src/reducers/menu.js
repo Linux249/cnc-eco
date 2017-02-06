@@ -1,7 +1,7 @@
 import { reducerCall } from './index';
 
 import { urlToBase } from './../util/parseurl.js'
-import { calcBaseProduction } from '../util/production.js'
+import { calcBaseProduction, productionOverDays } from '../util/production.js'
 
 const initial_state = urlToBase("http://cncopt.com/?map=2|N|N|-fix-|20s37w.38y.50e...26p26p26p26p26p42h47s42h.26p52a26p52a26p42h54s42h.26p26p26p26p26p42h46s42h.26p52a26p50a31p40b...31p35p35p38pc.....cc.c.cc.43f.46d..37q..20sj37s37f37s37f37s37q.l37q37zj37z37z37zk..37q37sj37qll37s..37qh37c37q37c37qjj.37q37s37z37qj37s37q..l37q37q37s37q37zh..37mj37w37w37w37wh.h37w37qh37m37q..k.42l42l43r43r..1q1p.42l43r44r44r..1b..48l48r48r46r.....50m50m43r43r38r....|newEconomy")
 
@@ -67,11 +67,12 @@ class reducerClass
         console.log(action.lvl)
         console.log(action.from)
         if (action.lvl.length > 2 ) action.lvl = action.lvl.slice(-2) // last 2 numbers
-        action.lvl = Number.parseInt(action.lvl)
+        action.lvl = Number.parseInt(action.lvl, 10)
         if (action.lvl > 65) action.lvl = 65
         if (action.lvl < 1) action.lvl = 1
         new_state.buildings[action.from].lvl = action.lvl
         new_state.production = calcBaseProduction(new_state.buildings)
+        new_state.productionOverDays = productionOverDays(new_state, new_state.productionOverDays.days)
         return new_state
     }
 
@@ -79,9 +80,9 @@ class reducerClass
     {
         new_state.buildings = action.base.buildings     // TODO read Army, defens url
         new_state.production = calcBaseProduction(new_state.buildings)
+        new_state.productionOverDays = productionOverDays(new_state, new_state.productionOverDays.days)
         return new_state
     }
-
 }
 
 /**

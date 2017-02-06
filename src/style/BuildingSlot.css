@@ -1,6 +1,7 @@
 .BuildingSlot {
-    height: 100px;
-    width: 105px;
+    height: 80px;
+    width: 85px;
+
     position: relative;
     border-color: rgba(37, 38, 39, 0.25);
     border-style: solid;

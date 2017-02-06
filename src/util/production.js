@@ -3,13 +3,87 @@
  */
 
 
+
+export const calcBaseUpCost = (buildings) => {
+    const costs_tiberium =  [1, 2, 3, 4, 20, 110, 360, 1100, 3200, 8800, 22400, 48000, 63360, 83635, 110398, 145726, 192358, 253913, 335165, 442418, 583992, 770869, 1017547, 1343162, 1772974, 2340326,
+        3089230, 4077783, 5382674, 7105130, 9378771, 12379978, 16341571, 21570873, 28473552, 37585089, 49612318, 65488260, 86444503, 114106743, 150620901, 198819590, 262441859, 346423253,
+        457278694, 603607877, 796762397, 1051726364, 1388278801, 1832528017, 2418936983, 3192996817, 4214755798, 5563477654, 7343790503, 9693803464, 12795820573, 16890483156, 22295437766,
+        29429977851, 38847570764, 51278793408, 67688007299, 89348169635, 117939583918];
+    let costs = {tib:0, power: 0}
+    buildings.forEach(function(building){
+        if(building.type  && building.lvl < 65) {
+            switch(building.type)
+            {
+                case "n":       // kris harvester
+                case "h":       // tib harvester
+                    costs.tib += costs_tiberium[building.lvl]
+                    costs.power += Math.round(costs_tiberium[building.lvl]/4*3 )    //power coosts for a harvester
+                    break
+                case "s":       // silo
+                case "a":       // akku
+                    costs.tib += costs_tiberium[building.lvl]
+                    costs.power += Math.round(costs_tiberium[building.lvl]/4)
+                    break
+                case "r":       // rafenerieeee
+                    costs.tib += costs_tiberium[building.lvl]*2 // dubble costs
+                    costs.power += Math.round(costs_tiberium[building.lvl]/2)       //power costs for a raf
+                    break
+            }
+        }
+
+    })
+    return costs
+}
+
+const allBuildingLvLUp = (base, lvl = 0) => {
+    if(base.buildings) {
+        base.buildings.forEach(function(building){
+            if (building.lvl){
+                building.lvl += lvl     //upgrade building lvl
+                if (building.lvl > 65) building.lvl = 65        // check for max lvl (65)
+            }
+        })
+    }
+    return base
+}
+
+export const productionOverDays = (base, days) => {
+    base = cloneObject(base)
+    let prodOverTime = []
+    let limit = days*24
+    let time = 0
+    while(time < limit) {
+        let production = calcBaseProduction(base.buildings)
+        let costs = calcBaseUpCost(base.buildings)
+        prodOverTime.push({
+            production,
+            time
+        })
+        base = allBuildingLvLUp(base, 1)
+        let cost = 0
+        if (costs.tib/production.tib > costs.power/production.power) cost = costs.tib/production.tib
+        else cost = costs.power/production.power
+        time  +=  cost
+    }
+    let ret = {}
+    ret.days = days
+    ret.time = prodOverTime.map((time) => {return Math.round(time.time*100/24)/100})       //round
+    ret.tib = prodOverTime.map((prod) => {return prod.production.tib})
+    ret.cris = prodOverTime.map((prod) => {return prod.production.cris})
+    ret.power = prodOverTime.map((prod) => {return prod.production.power})
+    ret.credits = prodOverTime.map((prod) => {return prod.production.credits})
+    console.log("DIREKT LÖSCHEN")
+    console.log(ret)
+    return ret
+}
+
+function cloneObject(object) {
+    return JSON.parse(JSON.stringify(object));
+}
 /*
     calc the produktion from Base
  */
-
-
-
-export  function calcBaseProduction(buildings)
+export const calcBaseProduction = (buildings) =>
 {
     let production = [0,0,0,0]      // [tib, kris, power, credits]
     const neighbours = [-10, -9, -8, -1, 1, 8, 9, 10]
@@ -186,13 +260,11 @@ export  function calcBaseProduction(buildings)
                         // find harvest/tib
                         if (buildings[j] && ( buildings[j].type === "t" || buildings[j].type === "h"))
                         {
-                            console.log("tib gefunden - " + buildings[j].type)
                             production[3] += raf_production_perm[building.lvl]/2 // production[3] = credis
                         }
                         //find one PowerPlant
                         if (buildings[j] && (buildings[j].type === "p"))
                         {
-                            console.log("HAS POWPER ERERER")
                             hasPp = true
                         }
                     }
@@ -206,7 +278,7 @@ export  function calcBaseProduction(buildings)
 
     return {
         tib: production[0],
-        kris: production[1],
+        cris: production[1],
         power: production[2],
         credits: production[3],
     }

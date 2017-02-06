@@ -32,7 +32,7 @@ class BuildingMenu extends React.Component {
         {Object.keys(buildings_pngs).map((buildingName) => {
             const img =  require('./../img/buildings/NOD/' + buildingName + '.png')
             return (
-                <span className="BuildingMenuItem">
+                <span className="BuildingMenuItem" key={buildingName}>
                     <img
                         onClick={this.buildingSelect}
                         src={img} //NOD GDI variable
