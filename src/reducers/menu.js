@@ -79,8 +79,21 @@ class reducerClass
     static changeBase(new_state, action)
     {
         new_state.buildings = action.base.buildings     // TODO read Army, defens url
+        console.log("IS THE NEW BASE READED? || reducer/menu/changeBase")
+        console.log(new_state.buildings)
         new_state.production = calcBaseProduction(new_state.buildings)
         new_state.productionOverDays = productionOverDays(new_state, new_state.productionOverDays.days)
+        return new_state
+    }
+
+    static dropBuilding(new_state, action)
+    {
+        console.log("TEST")
+        console.log(action.building.slot)
+        console.log(action.from)
+        new_state.buildings[action.building.slot] =  new_state.buildings[action.from]
+        action.building.slot = action.from
+        new_state.buildings[action.from] = action.building
         return new_state
     }
 }

@@ -4,6 +4,7 @@ import App from './components/App';
 import { createStore } from 'redux'
 import { reducers } from './reducers/index';
 import { Provider } from 'react-redux';
+import { Router, Route, hashHistory } from 'react-router'
 
 import './style/main.css'
 import 'bootstrap/dist/css/bootstrap.css';
@@ -35,5 +36,8 @@ const store = createStore(reducers, initial_state,  window.__REDUX_DEVTOOLS_EXTE
 
 ReactDOM.render(
     <Provider store={store}>
-        <App/>
+        <Router history={hashHistory}>
+            <Route path="/(:param)" component={App}/>
+
+        </Router>
     </Provider>,  document.getElementById('app'));

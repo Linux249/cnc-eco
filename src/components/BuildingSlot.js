@@ -31,14 +31,12 @@ const nod_buildings_keys = {
 
 class BuildingSlot extends React.Component {
     constructor(props) {
-        super(props);
-        /*this.state = {date: new Date()};
-        this.state.buildingName = this.props.buildingName;
-        this.state.isEmpty = this.props.isEmpty;*/
+        super(props)
         this.buildingMenuShow = this.buildingMenuShow.bind(this)
         this.buildingMenuHide = this.buildingMenuHide.bind(this)
         this.buildingDelete = this.buildingDelete.bind(this)
         this.handleKeyDown = this.handleKeyDown.bind(this)
+        this.drop = this.drop.bind(this)
 
     }
 
@@ -111,6 +109,7 @@ class BuildingSlot extends React.Component {
     render() {
         let slot = this.props.slot
         let name = this.props.buildings[slot].name
+        let building = this.props.buildings[slot]
         return  (
             <div
                 ref="target"
@@ -120,18 +119,38 @@ class BuildingSlot extends React.Component {
                 onKeyDown={this.handleKeyDown}
                 tabIndex="-1"
                 onFocus={this.buildingMenuShow}
+                onDrop={this.drop}
+
+                onDragOver={(e) => e.preventDefault()}
             >
                 {this.props.buildings[slot].lvl && <LvlNumber lvl={this.props.buildings[slot].lvl} />}
-
                 {name &&
                     <img
                         src={require("./../img/buildings/NOD/" + name + ".png")}
                         alt={name}
+                        draggable="true"
+                        onDragStart={(e) => e.dataTransfer.setData("building",JSON.stringify(building))}
                     />
                 }
             </div>
         );
     }
+
+    drop(e)
+    {
+        e.preventDefault()
+        const building = JSON.parse(e.dataTransfer.getData("building"))
+        console.log("HALALALLALALALALALAL")
+        console.log(building)
+        console.log({
+        from: this.props.slot})
+        this.props.dispatch({
+            type: 'menu.dropBuilding',
+            building: building,
+            from: this.props.slot
+        })
+    }
+
 
     buildingMenuShow()
     {
@@ -178,7 +197,7 @@ class BuildingSlot extends React.Component {
                 console.log("state geändert: " + this.state.building)
             })*/
 
-        } else if (key === "+")
+        } else if (key === "+")  //builing lvl up
         {
             let lvl = Number.parseInt(this.props.buildings[slot].lvl, 10) + 1
             this.props.dispatch({
@@ -186,7 +205,7 @@ class BuildingSlot extends React.Component {
                 lvl,
                 from: slot
             })
-        } else if (key === "-")
+        } else if (key === "-")     //builing lvl down
         {
             let lvl = Number.parseInt(this.props.buildings[slot].lvl, 10) - 1
             this.props.dispatch({
@@ -194,7 +213,7 @@ class BuildingSlot extends React.Component {
                 lvl,
                 from: slot
             })
-        } else if (key.match(/^[0-9]+$/))
+        } else if (key.match(/^[0-9]+$/))   // new  lvl by number
         {
             let lvl = this.props.buildings[slot].lvl + key
             this.props.dispatch({

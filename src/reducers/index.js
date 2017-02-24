@@ -19,7 +19,7 @@ export const reducers = menu
  */
 export function reducerCall(state, action, reducerClass) {
     // get the action class method
-    console.log("AktionTYPE")
+    console.log("AKTIONTYPE")
     console.log(action.type)
     const [, method] = action.type.split('.');
     console.log(method)
