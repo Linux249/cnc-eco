@@ -39,7 +39,7 @@ class App extends React.Component
 
     changeBase()
     {
-        const base
+        let base
         try {
             base = urlToBase(this.props.params.param)
         } catch(e){
