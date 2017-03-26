@@ -18,7 +18,7 @@ class reducerClass
      * @param action
      * @returns {*}
      */
-    static buildingMenuShow(new_state, action)
+    static bMenuOpenFrom(new_state, action)
     {
         new_state.buildingMenu.show = true
         new_state.buildingMenu.from = action.from ? action.from : new_state.buildingMenu.from
@@ -88,12 +88,19 @@ class reducerClass
 
     static dropBuilding(new_state, action)
     {
-        console.log("TEST")
+        console.log("DROP BUILDING")
         console.log(action.building.slot)
-        console.log(action.from)
-        new_state.buildings[action.building.slot] =  new_state.buildings[action.from]
-        action.building.slot = action.from
-        new_state.buildings[action.from] = action.building
+        //console.log(action.from)
+        new_state.buildings[action.from] =  new_state.dragObject
+        new_state.dragObject = {}
+        return new_state
+    }
+
+    static dragBuilding(new_state, action)
+    {
+        console.log("DRAG START")
+        new_state.dragObject = action.building
+        new_state.buildings[action.from] = {}
         return new_state
     }
 }

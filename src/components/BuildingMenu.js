@@ -65,7 +65,7 @@ class BuildingMenu extends React.Component {
     {
         const from =  this.props.slot
         this.props.dispatch({
-            type: 'menu.buildingMenuShow',
+            type: 'menu.bMenuOpenFrom',
             from // TODO warum braucht er hier nochmal from? 
         })
     }

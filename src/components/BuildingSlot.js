@@ -37,10 +37,17 @@ class BuildingSlot extends React.Component {
         this.buildingDelete = this.buildingDelete.bind(this)
         this.handleKeyDown = this.handleKeyDown.bind(this)
         this.drop = this.drop.bind(this)
-
+        this.drag = this.drag.bind(this)
     }
 
 
+    componentDidMount() {
+       // window.addEventListener('mouseup', this._onDragLeave);
+        window.addEventListener('dragenter', this.drag);
+     //   window.addEventListener('dragover', this._onDragOver);
+        window.addEventListener('drop', this.drop);
+      //  document.getElementById('dragbox').addEventListener('dragleave', this._onDragLeave);
+    }
 
     // getInitialState: function() {
     //   return {
@@ -108,7 +115,6 @@ class BuildingSlot extends React.Component {
     }*/
     render() {
         let slot = this.props.slot
-        let name = this.props.buildings[slot].name
         let building = this.props.buildings[slot]
         return  (
             <div
@@ -124,38 +130,48 @@ class BuildingSlot extends React.Component {
                 onDragOver={(e) => e.preventDefault()}
             >
                 {this.props.buildings[slot].lvl && <LvlNumber lvl={this.props.buildings[slot].lvl} />}
-                {name &&
+                {building.name &&
                     <img
-                        src={require("./../img/buildings/NOD/" + name + ".png")}
-                        alt={name}
+                        src={require("./../img/buildings/NOD/" + building.name + ".png")}
+                        alt={building.name}
                         draggable="true"
-                        onDragStart={(e) => e.dataTransfer.setData("building",JSON.stringify(building))}
+                        onDragStart={this.drag}
                     />
                 }
             </div>
-        );
+        )
     }
 
     drop(e)
     {
+        //e.preventDefault()
         e.preventDefault()
-        const building = JSON.parse(e.dataTransfer.getData("building"))
-        console.log("HALALALLALALALALALAL")
-        console.log(building)
-        console.log({
-        from: this.props.slot})
+        console.log("DROP ELEMENT FROM " + this.props.slot)
         this.props.dispatch({
             type: 'menu.dropBuilding',
-            building: building,
             from: this.props.slot
         })
     }
+
+    drag()
+    {
+        let slot = this.props.slot
+        let building = this.props.buildings[slot]
+       // 'menu.dragBuilding'
+        this.props.dispatch({
+            type: 'menu.dragBuilding',
+            from: this.props.slot,
+            building
+
+        })
+    }
+
 
 
     buildingMenuShow()
     {
         this.props.dispatch({
-            type: 'menu.buildingMenuShow',
+            type: 'menu.bMenuOpenFrom',
             from: this.props.slot
         })
     }

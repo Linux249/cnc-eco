@@ -20,7 +20,7 @@ class reducerClass
      * @returns {*}
      */
 /*
-    static buildingMenuShow(new_state, action)
+    static bMenuOpenFrom(new_state, action)
     {
         new_state.buildingMenu.show = true
         new_state.buildingMenu.from = action.from ? action.from : new_state.buildingMenu.from

@@ -19,10 +19,9 @@ export const reducers = menu
  */
 export function reducerCall(state, action, reducerClass) {
     // get the action class method
-    console.log("AKTIONTYPE")
-    console.log(action.type)
+    console.log("AKTIONTYPE: "+ action.type)
+    //console.log(action.type)
     const [, method] = action.type.split('.');
-    console.log(method)
     // get all class methods
     const methods = Object.getOwnPropertyNames(reducerClass).filter(name => {
         //console.log(name)
