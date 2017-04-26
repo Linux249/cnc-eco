@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
-import { createStore } from 'redux'
-import { reducers } from './reducers/index';
+import configureStore from './configureStore'
 import { Provider } from 'react-redux';
 import { Router, Route, hashHistory } from 'react-router'
 
@@ -32,7 +31,7 @@ console.log(initial_state)
 //console.log("PRODUCTION")
 //console.log()
 
-const store = createStore(reducers, initial_state,  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = configureStore(initial_state);
 
 ReactDOM.render(
     <Provider store={store}>

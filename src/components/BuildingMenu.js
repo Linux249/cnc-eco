@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import buildings_pngs from '../util/buildings_img_nod.json'
 
-class BuildingMenu extends React.Component {
+class BuildingMenu extends Component {
     constructor(props)
     {
         super(props)

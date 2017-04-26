@@ -2,7 +2,7 @@
  * Created by Bombassd on 03.01.2017.
  */
 
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './../style/ProductionInfo.css'
 import icon_tib from './../img/icon/icon_tiberium.png'
@@ -12,7 +12,7 @@ import icon_power from './../img/icon/icon_power.png'
 import icon_credits from './../img/icon/icon_credits.png'
 
 
-class ProductionInfo extends React.Component
+class ProductionInfo extends Component
 {
     render()
     {

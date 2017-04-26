@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { Component } from 'react'
 import ProductionInfo from './ProductionInfo'
 import UrlInfo from './UrlInfo'
 import './../style/BaseHeader.css'
 
 
-class BaseHeader extends React.Component
+class BaseHeader extends Component
 {
     render()
     {

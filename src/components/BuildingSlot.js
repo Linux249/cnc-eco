@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { LvlNumber } from './LvlNumber'
 import './../style/BuildingSlot.css'
@@ -29,7 +29,7 @@ const nod_buildings_keys = {
     };
 
 
-class BuildingSlot extends React.Component {
+class BuildingSlot extends Component {
     constructor(props) {
         super(props)
         this.buildingMenuShow = this.buildingMenuShow.bind(this)

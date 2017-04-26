@@ -1,12 +1,13 @@
 /**
  * Created by Bombassd on 13.01.2017.
  */
-import React from 'react'
+import React, { Component } from 'react'
 import './../style/LineChart.css'
 import { connect } from 'react-redux'
 var Line = require("react-chartjs").Line;
 import { Chart } from 'react-google-charts'
-class LineChart extends React.Component
+
+class LineChart extends Component
 {
     render(){
         let labels = this.props.prod.time

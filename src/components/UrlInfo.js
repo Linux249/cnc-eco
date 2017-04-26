@@ -1,12 +1,12 @@
 /**
  * Created by Bombassd on 05.02.2017.
  */
-import React from 'react'
+import React, { Component } from 'react'
 import './../style/UrlInfo.css'
 import { urlToBase } from './../util/parseurl.js'
 import { connect } from 'react-redux'
 
-class UrlInfo extends React.Component
+class UrlInfo extends Component
 {
     constructor(props)
     {
