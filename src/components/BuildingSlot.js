@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { LvlNumber } from './LvlNumber'
 import './../style/BuildingSlot.css'
+import { showBuildingMenu } from './../actions/menu'
 //import buildings_pngs from '../util/buildings_img_nod.json'
 
 //import buildings_pngs from '../util/buildings_img_nod.json'
@@ -32,12 +33,12 @@ const nod_buildings_keys = {
 class BuildingSlot extends Component {
     constructor(props) {
         super(props)
-        this.buildingMenuShow = this.buildingMenuShow.bind(this)
-        this.buildingMenuHide = this.buildingMenuHide.bind(this)
-        this.buildingDelete = this.buildingDelete.bind(this)
-        this.handleKeyDown = this.handleKeyDown.bind(this)
-        this.drop = this.drop.bind(this)
-        this.drag = this.drag.bind(this)
+        //this.showBuildingMenu = this.showBuildingMenu.bind(this)
+        // this.buildingMenuHide = this.buildingMenuHide.bind(this)
+        // this.buildingDelete = this.buildingDelete.bind(this)
+        // this.handleKeyDown = this.handleKeyDown.bind(this)
+        // this.drop = this.drop.bind(this)
+        // this.drag = this.drag.bind(this)
     }
 
 
@@ -49,197 +50,135 @@ class BuildingSlot extends Component {
       //  document.getElementById('dragbox').addEventListener('dragleave', this._onDragLeave);
     }
 
-    // getInitialState: function() {
-    //   return {
-    //     buildingName: this.props.buildingName,
-    //     isEmpty: this.props.isEmpty,
-    //   }
-    // },
-
-    //Eingabe mit der Tastatur
-    /*  onKeyPress: function (e){
-        console.log("key press");
-        console.log(e.key);
-        //return console.log("wirklich");
-      },*/
-/*    onKeyDown = (e) => {
-        console.log("Key Pressed: "+ e.key);
-        if (e.key in nod_buildings_keys) {
-            this.setState({
-                buildingName: nod_buildings_keys[e.key]
-            }, () => {
-                console.log("state geändert: " + this.state.building);
-            });
-        } else {
-            console.log("ungültiges Zeichen: " + e.key);
-        }
-    }*/
-   /* //verändert das Bild
-
-    handleClick = (e) => {
-      //toogle menu
-       // this.props.toggleMenu(true);
-      //Linksklick != Rechtsklick
-      if (e.type === "click") {
-        //this.props.toggleMenu();
-        
-        this.setState({
-            isEmpty: false,
-            buildingName: "res_tiberium_01"
-        });
-      } else if (e.type === "contextmenu") {
-        e.preventDefault();
-        this.setState({
-            isEmpty: true,
-            buildingName: "empty"
-        });
-      }
-      //  console.log("Click: "+ e.type); // type: right, value - contextmenu
-    }
-    testFunc = () => {
-      console.log("wahrs");
-      this.setState({
-        isEmpty: false,
-        buildingName: "res_tiberium_01"
-      })
-    }
-    toggleMenuOf =  () => {
 
 
-
-
-
-
-      console.log("falsch");
-      this.props.toggleMenu(false);
-    }*/
     render() {
-        let slot = this.props.slot
-        let building = this.props.buildings[slot]
+        const { slot, building, showBuildingMenu} = this.props
+        const buildingName = nod_buildings_keys[building.type]
+        //let building = buildings[slot]
         return  (
             <div
                 ref="target"
                 className="BuildingSlot"
-                onClick={this.buildingMenuShow}
-                onContextMenu={this.buildingDelete}
-                onKeyDown={this.handleKeyDown}
-                tabIndex="-1"
-                onFocus={this.buildingMenuShow}
-                onDrop={this.drop}
+                onClick={() => showBuildingMenu(slot)}
+               // onContextMenu={this.buildingDelete}
+            //    onKeyDown={this.handleKeyDown}
+                //tabIndex="-1"
+                //onFocus={() => showBuildingMenu(slot)}
+                //onDrop={this.drop}
 
-                onDragOver={(e) => e.preventDefault()}
+                //onDragOver={(e) => e.preventDefault()}
             >
-                {this.props.buildings[slot].lvl && <LvlNumber lvl={this.props.buildings[slot].lvl} />}
-                {building.name &&
+                {building.lvl && <LvlNumber lvl={building.lvl} />}
+                {buildingName &&
                     <img
-                        src={require("./../img/buildings/NOD/" + building.name + ".png")}
+                        src={require("./../img/buildings/NOD/" + buildingName + ".png")}
                         alt={building.name}
-                        draggable="true"
-                        onDragStart={this.drag}
+                       // draggable="true"
+                        //onDragStart={this.drag}
                     />
                 }
             </div>
         )
     }
-
-    drop(e)
-    {
-        //e.preventDefault()
-        e.preventDefault()
-        console.log("DROP ELEMENT FROM " + this.props.slot)
-        this.props.dispatch({
-            type: 'menu.dropBuilding',
-            from: this.props.slot
-        })
-    }
-
-    drag()
-    {
-        let slot = this.props.slot
-        let building = this.props.buildings[slot]
-       // 'menu.dragBuilding'
-        this.props.dispatch({
-            type: 'menu.dragBuilding',
-            from: this.props.slot,
-            building
-
-        })
-    }
-
-
-
-    buildingMenuShow()
-    {
-        this.props.dispatch({
-            type: 'menu.bMenuOpenFrom',
-            from: this.props.slot
-        })
-    }
-    buildingMenuHide()
-    {
-        this.props.dispatch({
-            type: 'menu.buildingMenuHide',
-            from: this.props.slot
-        })
-    }
-    buildingDelete()
-    {
-        this.props.dispatch({
-            type: 'menu.buildingDelete',
-            from: this.props.slot
-        })
-    }
-
-
-    handleKeyDown(event)
-    {
-        let key = event.key
-        let slot  = this.props.slot
-        console.log("Key Pressed: "+ key)
-        if (key in nod_buildings_keys) {
-            const lvl = this.props.buildings[slot].lvl
-            const name = nod_buildings_keys[key]
-            console.log(nod_buildings_keys[key])
-            const id = key
-            this.props.dispatch({
-                type: 'menu.buildingSelect',
-                name,
-                id,
-                lvl
-            })
-            /*this.setState({
-                buildingName: nod_buildings_keys[key]
-            }, () => {
-                console.log("state geändert: " + this.state.building)
-            })*/
-
-        } else if (key === "+")  //builing lvl up
-        {
-            let lvl = Number.parseInt(this.props.buildings[slot].lvl, 10) + 1
-            this.props.dispatch({
-                type: 'menu.changeBuildingLvl',
-                lvl,
-                from: slot
-            })
-        } else if (key === "-")     //builing lvl down
-        {
-            let lvl = Number.parseInt(this.props.buildings[slot].lvl, 10) - 1
-            this.props.dispatch({
-                type: 'menu.changeBuildingLvl',
-                lvl,
-                from: slot
-            })
-        } else if (key.match(/^[0-9]+$/))   // new  lvl by number
-        {
-            let lvl = this.props.buildings[slot].lvl + key
-            this.props.dispatch({
-                type: 'menu.changeBuildingLvl',
-                lvl,
-                from: slot
-            })
-
-        }
-    }
+    // drop(e)
+    // {
+    //     //e.preventDefault()
+    //     e.preventDefault()
+    //     console.log("DROP ELEMENT FROM " + this.props.slot)
+    //     this.props.dispatch({
+    //         type: 'menu.dropBuilding',
+    //         from: this.props.slot
+    //     })
+    // }
+    //
+    // drag()
+    // {
+    //     let slot = this.props.slot
+    //     let building = this.props.buildings[slot]
+    //    // 'menu.dragBuilding'
+    //     this.props.dispatch({
+    //         type: 'menu.dragBuilding',
+    //         from: this.props.slot,
+    //         building
+    //
+    //     })
+    // }
+    //
+    //
+    // //
+    // // buildingMenuShow()
+    // // {
+    // //     this.props.dispatch({
+    // //         type: 'menu.bMenuOpenFrom',
+    // //         from: this.props.slot
+    // //     })
+    // // }
+    // buildingMenuHide()
+    // {
+    //     this.props.dispatch({
+    //         type: 'menu.buildingMenuHide',
+    //         from: this.props.slot
+    //     })
+    // }
+    // buildingDelete()
+    // {
+    //     this.props.dispatch({
+    //         type: 'menu.buildingDelete',
+    //         from: this.props.slot
+    //     })
+    // }
+    //
+    //
+    // handleKeyDown(event)
+    // {
+    //     let key = event.key
+    //     let slot  = this.props.slot
+    //     console.log("Key Pressed: "+ key)
+    //     if (key in nod_buildings_keys) {
+    //         const lvl = this.props.buildings[slot].lvl
+    //         const name = nod_buildings_keys[key]
+    //         console.log(nod_buildings_keys[key])
+    //         const id = key
+    //         this.props.dispatch({
+    //             type: 'menu.buildingSelect',
+    //             name,
+    //             id,
+    //             lvl
+    //         })
+    //         /*this.setState({
+    //             buildingName: nod_buildings_keys[key]
+    //         }, () => {
+    //             console.log("state geändert: " + this.state.building)
+    //         })*/
+    //
+    //     } else if (key === "+")  //builing lvl up
+    //     {
+    //         let lvl = Number.parseInt(this.props.buildings[slot].lvl, 10) + 1
+    //         this.props.dispatch({
+    //             type: 'menu.changeBuildingLvl',
+    //             lvl,
+    //             from: slot
+    //         })
+    //     } else if (key === "-")     //builing lvl down
+    //     {
+    //         let lvl = Number.parseInt(this.props.buildings[slot].lvl, 10) - 1
+    //         this.props.dispatch({
+    //             type: 'menu.changeBuildingLvl',
+    //             lvl,
+    //             from: slot
+    //         })
+    //     } else if (key.match(/^[0-9]+$/))   // new  lvl by number
+    //     {
+    //         let lvl = this.props.buildings[slot].lvl + key
+    //         this.props.dispatch({
+    //             type: 'menu.changeBuildingLvl',
+    //             lvl,
+    //             from: slot
+    //         })
+    //
+    //     }
+    // }
 }
 
 
@@ -256,13 +195,19 @@ BuildingSlot.defaultProps = {
   isEmpty: true
 };*/
 
-function mapStateToProps(state) {
+function mapStateToProps(state, props) {
     //console.log("+++++STATE++++++")
     //console.log(state)
 
     return ({
 
-        buildings: state.buildings
+        building: state.buildings[props.slot]
     });
 }
-export default connect(mapStateToProps)(BuildingSlot);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        showBuildingMenu: (from) => dispatch(showBuildingMenu(from)),
+        //  changeBuildingLvl: (event, from) => dispatch(changeBuildingLvl(event, from))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(BuildingSlot)

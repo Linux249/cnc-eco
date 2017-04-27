@@ -3,15 +3,21 @@
  */
 
 const initState = {
-    showMenu: false
+    from: false,
+    lvl: 30
 }
 
 export function menu(state = initState, action) {
     switch (action.type) {
-        case 'TOGGLE_BUILDING_MENU':
+        case 'SHOW_BUILDING_MENU':
             return {
                 ...state,
-                showMenu: !state.showMenu
+                from: action.from
+            }
+        case 'HIDE_BUILDING_MENU':
+            return {
+                ...state,
+                from: false
             }
 
         default:

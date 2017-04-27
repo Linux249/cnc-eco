@@ -1,6 +1,7 @@
 //import { combineReducers } from 'redux';
-
+import { buildings } from './buildings'
 import { menu }from './menu';
+import { production } from './production'
 //
 //
 // /**
@@ -55,6 +56,9 @@ import { menu }from './menu';
 import { combineReducers } from 'redux';
 
 
+
 export default combineReducers({
-    menu
+    menu,
+    buildings,
+    production
 });

@@ -16,14 +16,14 @@ const initial_state = urlToBase("http://cncopt.com/?map=2|N|N|-fix-|.........12p
 console.log("VOR PRODUKTION")
 console.log(initial_state)
 //initial_state.showBuildingMenu = true
-initial_state.buildingMenu = {
-    show: true,
-    from: 0,
-    lvl: 12
-}
-initial_state.buildingMenuIsFrom = 0
-initial_state.production = calcBaseProduction(initial_state.buildings)
-initial_state.productionOverDays = productionOverDays(initial_state, 25)
+// initial_state.buildingMenu = {
+//     show: true,
+//     from: 0,
+//     lvl: 12
+// }
+//initial_state.buildingMenuIsFrom = 0
+//initial_state.production = calcBaseProduction(initial_state.buildings)
+//initial_state.productionOverDays = productionOverDays(initial_state, 25)
 
 
 console.log("INITIAL STATE")

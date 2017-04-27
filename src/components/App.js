@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import LineChart from './LineChart.js'
 import BaseHeader from './BaseHeader.js';
 import { urlToBase } from '../util/parseurl.js'
-
+import { hideBuildingMenu } from './../actions/menu'
 
 
 // Components
@@ -28,8 +28,9 @@ class App extends Component
     //         console.log("This ist the url param: " + this.props.params.param)
     //         this.changeBase()
     //     }
+        const { hideMenu } = this.props
     return(
-        <div className="app">
+        <div className="app" >
             <BaseHeader ref="target"/>
             <Base faction="base.faction" />
             <LineChart />
@@ -71,5 +72,11 @@ function mapStateToProps(state) {
         buildings: state.buildings,
     });
 }
-export default connect(mapStateToProps)(App);
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        hideMenu: () => dispatch(hideBuildingMenu()),
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 

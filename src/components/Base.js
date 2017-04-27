@@ -50,7 +50,7 @@ class Base extends Component
 
 render()
 {
-    const { show, buildings } = this.props
+    const { show } = this.props
       // build all slots
       const slots = [...Array(8).keys()].map(function(y) {
 
@@ -58,11 +58,11 @@ render()
               <div key={"row " + y} className={"row " + y} >
                   {[...Array(9).keys()].map(function(x) {
                       const slot = x+y*9
-                      const building = (buildings[slot]) ? buildings[slot]: false; // warum building.slot?
+                     // const building = (buildings[slot]) ? buildings[slot]: false; // warum building.slot?
                       return <BuildingSlot
                           key={slot}
                           slot={slot}
-                          isEmpty={!building}
+                     //     isEmpty={!building}
                       />
                   })
                   }
@@ -73,7 +73,7 @@ render()
       return (
         <div>
           <div className="Base" /*//style={Style}*/>
-                        { show && <BuildingMenu /*choosenBuilding={this.choosenBuilding} *//> }
+                        { parseInt(show) && <BuildingMenu /*choosenBuilding={this.choosenBuilding} *//> }
 
             <div className="BaseLayout" >
               {slots}
@@ -86,8 +86,8 @@ render()
 
 function mapStateToProps(state) {
     return ({
-        show: state.menu.showMenu,
-        buildings: state.buildings
+        show: state.menu.from,
+       // buildings: state.buildings
     });
 }
 export default connect(mapStateToProps)(Base);

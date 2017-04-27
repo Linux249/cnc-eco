@@ -18,6 +18,7 @@ class ProductionInfo extends Component
     {
         return (
             <div className="ProductionInfo">
+
                 <div>
 
                     {shortenNumber(this.props.production.tib,2)}

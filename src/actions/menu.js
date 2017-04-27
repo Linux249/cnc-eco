@@ -1,6 +1,16 @@
 
-export function toggleBuildingMenu() {
+export function showBuildingMenu(from) {
     return {
-        type: 'TOGGLE_BUILDING_MENU'
+        type: 'SHOW_BUILDING_MENU',
+        from
     }
 }
+
+export function hideBuildingMenu() {
+    return {
+        type: 'HIDE_BUILDING_MENU'
+    }
+}
+
+
+
