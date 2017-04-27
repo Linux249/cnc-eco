@@ -16,28 +16,28 @@ class ProductionInfo extends Component
 {
     render()
     {
-        //const { }
+        const {tib, cris, power, credits } = this.props.production
         return (
             <div className="ProductionInfo">
 
                 <div>
 
-                    {shortenNumber(this.props.production.tib,2)}
+                    {shortenNumber(tib, 2)}
                     <img src={icon_tib} alt={icon_tib} />
                 </div>
                 <div>
 
-                    {shortenNumber(this.props.production.cris, 2)}
+                    {shortenNumber(cris, 2)}
                     <img src={icon_cris} alt={icon_tib} />
                 </div>
                 <div>
 
-                    {shortenNumber(this.props.production.power, 2)}
+                    {shortenNumber(power, 2)}
                     <img src={icon_power} alt={icon_tib} />
                 </div>
                 <div>
 
-                    {shortenNumber(this.props.production.credits, 2)}
+                    {shortenNumber(credits, 2)}
                     <img src={icon_credits} alt={icon_tib} />
                 </div>
             </div>

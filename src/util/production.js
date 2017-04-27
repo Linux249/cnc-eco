@@ -86,7 +86,7 @@ const allBuildingLvLUp = (base, lvl = 0) => {
     return base
 }
 
-export function futureProduction(buildings, days = 90) {
+export function futureProduction(buildings, days = 120) {
     buildings = JSON.parse(JSON.stringify(buildings))
     const data = []
     let time = 0

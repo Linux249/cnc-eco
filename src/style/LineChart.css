@@ -3,3 +3,47 @@
     justify-content: center;
 }
 
+.chart {
+    /*width: 80%;*/
+    display: flex;
+    justify-content: space-between;
+    flex-flow: wrap;
+    flex-basis: 60%;
+
+    border: solid darkgrey 1px;
+    font-size: 16px;
+    color: #5b0066;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.range {
+    display: flex;
+    justify-content: space-around;
+    flex-basis: 100%;
+}
+
+.rangeButton {
+    background-color: #2aabd2;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-basis:10%;
+    margin: 6px;
+    padding: 2px;
+}
+
+.days {
+    display: flex;
+    flex-flow: column;
+    flex-basis: 25%;
+}
+
+.daysButton {
+    background-color: #61b463;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 6px;
+    padding: 5px;
+}
