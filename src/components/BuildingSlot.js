@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import { LvlNumber } from './LvlNumber'
 import './../style/BuildingSlot.css'
 import { showBuildingMenu } from './../actions/menu'
-//import buildings_pngs from '../util/buildings_img_nod.json'
+import { DragDropContext, DragSource } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
-//import buildings_pngs from '../util/buildings_img_nod.json'
 
-// import BuildingMenu from './BuildingMenu.js';
 
 // var counter = 0;
 const nod_buildings_keys = {
@@ -29,98 +28,78 @@ const nod_buildings_keys = {
         "w": "NOD_Defense Facility"
     };
 
+const ItemTypes = {
+    BUILDING: 'building'
+}
 
+const buildingSource = {
+    beginDrag(props) {
+        // Return the data describing the dragged item
+        // const item = { id: props.id };
+        // return item;
+    },
+
+    endDrag(props, monitor, component) {
+        if (!monitor.didDrop()) {
+            return;
+        }
+
+        // When dropped on a compatible target, do something
+        const item = monitor.getItem();
+        const dropResult = monitor.getDropResult();
+        //CardActions.moveCardToList(item.id, dropResult.listId);
+    }
+}
+
+function collect(connect, monitor) {
+    return {
+        connectDragSource: connect.dragSource(),
+        isDragging: monitor.isDragging()
+    }
+}
+
+
+@DragSource('building', buildingSource, collect)
 class BuildingSlot extends Component {
-    constructor(props) {
-        super(props)
-        //this.showBuildingMenu = this.showBuildingMenu.bind(this)
-        // this.buildingMenuHide = this.buildingMenuHide.bind(this)
-        // this.buildingDelete = this.buildingDelete.bind(this)
-        // this.handleKeyDown = this.handleKeyDown.bind(this)
-        // this.drop = this.drop.bind(this)
-        // this.drag = this.drag.bind(this)
-    }
-
-
-    componentDidMount() {
-       // window.addEventListener('mouseup', this._onDragLeave);
-        window.addEventListener('dragenter', this.drag);
-     //   window.addEventListener('dragover', this._onDragOver);
-        window.addEventListener('drop', this.drop);
-      //  document.getElementById('dragbox').addEventListener('dragleave', this._onDragLeave);
-    }
-
 
 
     render() {
-        const { slot, building, showBuildingMenu} = this.props
+        const { slot, building, showBuildingMenu, connectDragSource, isDragging} = this.props
         const buildingName = nod_buildings_keys[building.type]
         //let building = buildings[slot]
         return  (
-            <div
-                ref="target"
-                className="BuildingSlot"
-                onClick={() => showBuildingMenu(slot)}
-               // onContextMenu={this.buildingDelete}
-            //    onKeyDown={this.handleKeyDown}
-                //tabIndex="-1"
-                //onFocus={() => showBuildingMenu(slot)}
-                //onDrop={this.drop}
+            connectDragSource(
+                <div
+                    style={{
+                        opacity: isDragging ? 0.5 : 1
+                    }}
 
-                //onDragOver={(e) => e.preventDefault()}
-            >
-                {building.lvl && <LvlNumber lvl={building.lvl} />}
-                {buildingName &&
-                    <img
-                        src={require("./../img/buildings/NOD/" + buildingName + ".png")}
-                        alt={building.name}
-                       // draggable="true"
-                        //onDragStart={this.drag}
-                    />
-                }
-            </div>
+                    ref="target"
+                    className="BuildingSlot"
+                    onClick={() => showBuildingMenu(slot)}
+                   // onContextMenu={this.buildingDelete}
+                //    onKeyDown={this.handleKeyDown}
+                    //tabIndex="-1"
+                    //onFocus={() => showBuildingMenu(slot)}
+                    //onDrop={this.drop}
+
+                    //onDragOver={(e) => e.preventDefault()}
+                >
+                    {building.lvl && <LvlNumber lvl={building.lvl} />}
+                    {buildingName &&
+                        <img
+                            src={require("./../img/buildings/NOD/" + buildingName + ".png")}
+                            alt={building.name}
+                           // draggable="true"
+                            //onDragStart={this.drag}
+                        />
+                    }
+                </div>
+            )
         )
     }
-    // drop(e)
-    // {
-    //     //e.preventDefault()
-    //     e.preventDefault()
-    //     console.log("DROP ELEMENT FROM " + this.props.slot)
-    //     this.props.dispatch({
-    //         type: 'menu.dropBuilding',
-    //         from: this.props.slot
-    //     })
-    // }
-    //
-    // drag()
-    // {
-    //     let slot = this.props.slot
-    //     let building = this.props.buildings[slot]
-    //    // 'menu.dragBuilding'
-    //     this.props.dispatch({
-    //         type: 'menu.dragBuilding',
-    //         from: this.props.slot,
-    //         building
-    //
-    //     })
-    // }
-    //
-    //
-    // //
-    // // buildingMenuShow()
-    // // {
-    // //     this.props.dispatch({
-    // //         type: 'menu.bMenuOpenFrom',
-    // //         from: this.props.slot
-    // //     })
-    // // }
-    // buildingMenuHide()
-    // {
-    //     this.props.dispatch({
-    //         type: 'menu.buildingMenuHide',
-    //         from: this.props.slot
-    //     })
-    // }
+
+
     // buildingDelete()
     // {
     //     this.props.dispatch({
@@ -210,4 +189,5 @@ const mapDispatchToProps = (dispatch) => {
         //  changeBuildingLvl: (event, from) => dispatch(changeBuildingLvl(event, from))
     }
 }
+//BuildingSlot = DragSource()(BuildingSlot)
 export default connect(mapStateToProps, mapDispatchToProps)(BuildingSlot)
