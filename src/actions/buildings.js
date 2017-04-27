@@ -1,7 +1,7 @@
 /**
  * Created by Bombassd on 27.04.2017.
  */
-
+import { calcProduction } from './production'
 // t is type like a,s, p,c
 export function changeBuilding(t, name) {
 
@@ -9,7 +9,7 @@ export function changeBuilding(t, name) {
     return (dispatch, getState) => {
         const { menu  }= getState()
 
-        return dispatch({
+        dispatch({
             type: 'CHANGE_BUILDING',
             from: menu.from,
             t,
@@ -17,6 +17,22 @@ export function changeBuilding(t, name) {
             lvl: menu.lvl
 
         })
+        dispatch(calcProduction())
+    }
+}
+
+export function switchBuildings(from, to) {
+    return (dispatch, getState) => {
+        const {buildings} = getState()
+        const temp = buildings[from]
+        buildings[from] = buildings[to]
+        buildings[to] = temp
+        dispatch({
+            type: "SWITCH_BUILDINGS",
+            from,
+            to
+        })
+        dispatch(calcProduction())
     }
 }
 

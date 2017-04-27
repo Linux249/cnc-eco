@@ -16,6 +16,7 @@ class ProductionInfo extends Component
 {
     render()
     {
+        //const { }
         return (
             <div className="ProductionInfo">
 
@@ -47,7 +48,7 @@ class ProductionInfo extends Component
 function mapStateToProps(state) {
 
     return ({
-        production: state.production
+        production: state.production.normal
     });
 }
 

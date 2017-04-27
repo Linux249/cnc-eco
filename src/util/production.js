@@ -13,7 +13,7 @@ export const calcBaseUpCost = (buildings) => {
         tib:0,
         power: 0
     }
-    buildings.forEach(function(building){
+    buildings.forEach( building => {
         if(building.type  && building.lvl <= 65) {
             switch(building.type)
             {
@@ -35,10 +35,44 @@ export const calcBaseUpCost = (buildings) => {
         }
 
     })
-
-    console.error("KOMME IC BIS HIER HNI????")
     return costs
 }
+
+function calcBuildingCost(building) {
+    const costs_tiberium =  [1, 2, 3, 4, 20, 110, 360, 1100, 3200, 8800, 22400, 48000, 63360, 83635, 110398, 145726, 192358, 253913, 335165, 442418, 583992, 770869, 1017547, 1343162, 1772974, 2340326,
+        3089230, 4077783, 5382674, 7105130, 9378771, 12379978, 16341571, 21570873, 28473552, 37585089, 49612318, 65488260, 86444503, 114106743, 150620901, 198819590, 262441859, 346423253,
+        457278694, 603607877, 796762397, 1051726364, 1388278801, 1832528017, 2418936983, 3192996817, 4214755798, 5563477654, 7343790503, 9693803464, 12795820573, 16890483156, 22295437766,
+        29429977851, 38847570764, 51278793408, 67688007299, 89348169635, 117939583918, 117939583918]
+    let costs = {
+        tib:0,
+        power: 0
+    }
+
+    if(building.type  && building.lvl <= 65) {
+        switch(building.type)
+        {
+            case "n":       // kris harvester
+            case "h":       // tib harvester
+                costs.tib += costs_tiberium[building.lvl]
+                costs.power += Math.round(costs_tiberium[building.lvl]/4*3 )    //power coosts for a harvester
+                break
+            case "s":       // silo
+            case "a":       // akku
+                costs.tib += costs_tiberium[building.lvl]
+                costs.power += Math.round(costs_tiberium[building.lvl]/4)
+                break
+            case "r":       // rafenerieeee
+                costs.tib += costs_tiberium[building.lvl]*2 // dubble costs
+                costs.power += Math.round(costs_tiberium[building.lvl]/2)       //power costs for a raf
+                break
+        }
+    }
+
+
+    return costs
+
+}
+
 
 const allBuildingLvLUp = (base, lvl = 0) => {
     if(base.buildings) {
@@ -50,6 +84,73 @@ const allBuildingLvLUp = (base, lvl = 0) => {
         })
     }
     return base
+}
+
+export function futureProduction(buildings, days = 90) {
+    buildings = JSON.parse(JSON.stringify(buildings))
+    const data = []
+    let time = 0
+    console.log(days)
+    console.log(typeof days)
+
+    console.log()
+
+    while (time < days) {
+        for(let i in buildings) {
+            if(Object.keys(buildings[i]).length !== 0) {
+                const costs = calcBuildingCost(buildings[i])
+                const prod = calcBaseProduction(buildings)
+                const timeTib = costs.tib / prod.tib
+                const timePower = costs.power / prod.power
+                time += timePower > timeTib ? timePower/24 : timeTib/24 // for days
+
+                // TODO Plants doesnt give cost back - problem also with other buildings with 0 costs
+                if(time > 0) {
+                    data.push({
+                        time: Math.round(time),
+                        prod
+                    })
+                }
+                buildings[i].lvl += 1
+            }
+
+        }
+    }
+
+    const mergedData = [] // array of geglaetteten Daten
+    let i = 0
+
+    while(i < data.length)
+    {
+        const prod = {
+            tib: 0,
+            cris: 0,
+            power: 0,
+            credits: 0
+        }
+        let y = data[i].time  // time for this group
+        let c = 0  //count equal time
+        while(i < data.length && data[i].time === y)
+        {
+            c++
+            prod.tib += data[i].prod.tib
+            prod.cris += data[i].prod.cris
+            prod.power += data[i].prod.power
+            prod.credits += data[i].prod.credits
+            ++i
+        }
+
+        prod.tib = prod.tib/c
+        prod.cris = prod.cris/c
+        prod.power = prod.power/c
+        prod.credits = prod.credits/c
+        mergedData.push({
+            time: y,
+            prod
+        })
+
+    }
+    return mergedData
 }
 
 export const productionOverDays = (base, days) => {

@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { LvlNumber } from './LvlNumber'
 import './../style/BuildingSlot.css'
 import { showBuildingMenu } from './../actions/menu'
-import { DragDropContext, DragSource } from 'react-dnd';
+import { switchBuildings } from './../actions/buildings'
+import { DropTarget, DragSource } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 
@@ -33,20 +34,28 @@ const ItemTypes = {
 }
 
 const buildingSource = {
-    beginDrag(props) {
-        // Return the data describing the dragged item
-        // const item = { id: props.id };
-        // return item;
+    beginDrag({ slot, building}) {
+        console.log("DRAG")
+        console.log(slot)
+        console.log(building)
+        return { from: slot};
     },
 
-    endDrag(props, monitor, component) {
+    endDrag({ switchBuildings }, monitor, component) {
         if (!monitor.didDrop()) {
             return;
         }
+        const from = monitor.getItem().from
+        const to = monitor.getDropResult().slot
 
         // When dropped on a compatible target, do something
-        const item = monitor.getItem();
-        const dropResult = monitor.getDropResult();
+        //const item = monitor.getItem().from;
+        console.log("drop from")
+        console.log(from)
+        //const dropResult = monitor.getDropResult();
+        console.log("DROP RESLUT")
+        console.log(to)
+        switchBuildings(from, to)
         //CardActions.moveCardToList(item.id, dropResult.listId);
     }
 }
@@ -58,23 +67,32 @@ function collect(connect, monitor) {
     }
 }
 
+const buildingTarget = {
+    // extact slot from props in one line
+    drop({ slot }) {
+        console.log("DROP on slot: " + slot)
+        return {
+            slot,
+        }
+    }
+}
 
-@DragSource('building', buildingSource, collect)
+//@DragSource('building', buildingSource, collect)
 class BuildingSlot extends Component {
 
 
     render() {
-        const { slot, building, showBuildingMenu, connectDragSource, isDragging} = this.props
+        const { slot, building, showBuildingMenu, connectDragSource, connectDropTarget , isDragging} = this.props
         const buildingName = nod_buildings_keys[building.type]
         //let building = buildings[slot]
         return  (
-            connectDragSource(
+            connectDropTarget(connectDragSource(
                 <div
                     style={{
                         opacity: isDragging ? 0.5 : 1
                     }}
 
-                    ref="target"
+                    //ref="target"
                     className="BuildingSlot"
                     onClick={() => showBuildingMenu(slot)}
                    // onContextMenu={this.buildingDelete}
@@ -96,7 +114,7 @@ class BuildingSlot extends Component {
                     }
                 </div>
             )
-        )
+        ))
     }
 
 
@@ -186,8 +204,16 @@ function mapStateToProps(state, props) {
 const mapDispatchToProps = (dispatch) => {
     return {
         showBuildingMenu: (from) => dispatch(showBuildingMenu(from)),
+        switchBuildings: (from, to) => dispatch(switchBuildings(from, to))
         //  changeBuildingLvl: (event, from) => dispatch(changeBuildingLvl(event, from))
     }
 }
-//BuildingSlot = DragSource()(BuildingSlot)
+
+BuildingSlot = DropTarget('building', buildingTarget, (connect, monitor) => ({
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver(),
+    canDrop: monitor.canDrop(),
+}))(BuildingSlot);
+
+BuildingSlot = DragSource('building', buildingSource, collect)(BuildingSlot)
 export default connect(mapStateToProps, mapDispatchToProps)(BuildingSlot)

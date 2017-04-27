@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import BuildingSlot from './BuildingSlot.js'
 import BuildingMenu from './BuildingMenu.js';
 
@@ -90,4 +92,6 @@ function mapStateToProps(state) {
        // buildings: state.buildings
     });
 }
+
+Base = DragDropContext(HTML5Backend)(Base)
 export default connect(mapStateToProps)(Base);

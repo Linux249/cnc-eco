@@ -10,46 +10,50 @@ import { Chart } from 'react-google-charts'
 class LineChart extends Component
 {
     render(){
+        const { data } = this.props
+        let labels = data.map(v => v.time) || ["EMPTY"]
+
         // let labels = this.props.prod.time
-        // const data = {
-        //     labels,
-        //     datasets:  [{
-        //         label: "tib",
-        //         fillColor: "rgba(220,220,220,0)",
-        //         strokeColor: "rgba(220,180,0,1)",
-        //         pointColor: "rgba(220,180,0,1)",
-        //         data: this.props.prod.tib
-        //     }, {
-        //         label: "cris",
-        //         fillColor: "rgba(151,187,205,0)",
-        //         strokeColor: "rgba(151,187,205,1)",
-        //         pointColor: "rgba(151,187,205,1)",
-        //         data: this.props.prod.cris
-        //     }, {
-        //         label: "power",
-        //         fillColor: "rgba(151,187,205,0)",
-        //         strokeColor: "rgba(151,187,205,1)",
-        //         pointColor: "rgba(151,187,205,1)",
-        //         data: this.props.prod.power
-        //     },{
-        //         label: "credits",
-        //         fillColor: "rgba(151,187,205,0)",
-        //         strokeColor: "rgba(151,187,205,0)",
-        //         pointColor: "rgba(151,187,205,1)",
-        //         data: this.props.prod.credits
-        //     }]
-        // }
-        //
-        // const option = {
-        //     //scaleOverride : true,
-        //     scaleStartValue : 0,
-        //     scales: {
-        //         xAxes: {
-        //                 max: 35,
-        //                 min: 0,
-        //         }
-        //     }
-        // }
+        const lineData = {
+            labels,
+            datasets:  [{
+                label: "tib",
+                fillColor: "rgba(220,220,220,0)",
+                strokeColor: "rgba(220,180,0,1)",
+                pointColor: "rgba(220,180,0,1)",
+                data: data.map(v => v.prod.tib)
+            }, {
+                label: "cris",
+                fillColor: "rgba(151,187,205,0)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                data: data.map(v => v.prod.cris)
+            }, {
+                label: "power",
+                fillColor: "rgba(151,187,205,0)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                data: data.map(v => v.prod.power)
+            },{
+                label: "credits",
+                fillColor: "rgba(151,187,205,0)",
+                strokeColor: "rgba(151,187,205,0)",
+                pointColor: "rgba(151,187,205,1)",
+                data: data.map(v => v.prod.credits)
+            }]
+        }
+        console.log(lineData)
+
+        const lineOption = {
+            //scaleOverride : true,
+            scaleStartValue : 0,
+            scales: {
+                xAxes: {
+                        max: 35,
+                        min: 0,
+                }
+            }
+        }
 
         // let data2 =  [["Days", "Tib", "Cris", "Power", "Credits"]]
         // console.log("DATA FOR GOOGLE CHART")
@@ -59,14 +63,16 @@ class LineChart extends Component
         //     data2.push([this.props.time,this.props.prod.tib[d],this.props.prod.cris[d],this.props.prod.power[d],this.props.prod.credits[d]])
         // }
         // console.log(data2)
+
+        console.log("")
         return (
             <div className="chart">
-                {/*<Line*/}
-                    {/*data={data}*/}
-                    {/*options={option}*/}
-                    {/*width="800px"*/}
-                    {/*height="400px"*/}
-                {/*/>*/}
+                <Line
+                    data={lineData}
+                    options={lineOption}
+                    width="800px"
+                    height="400px"
+                />
                 {/*<Chart*/}
                     {/*chartType="LineChart"*/}
                     {/*data={data2}*/}
@@ -85,7 +91,7 @@ class LineChart extends Component
 function mapStateToProps(state) {
 
     return ({
-        prod: state.productionOverDays
+        data: state.production.data
     });
 }
 
