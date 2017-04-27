@@ -30,7 +30,6 @@ class BuildingMenu extends Component {
             <div
                 className="BuildingMenu"
                 style={divStyle}
-                //onClick={changeBuilding}
             >
             {Object.keys(buildings_pngs).map((buildingName) => {
                 const img =  require('./../img/buildings/NOD/' + buildingName + '.png')
@@ -38,7 +37,7 @@ class BuildingMenu extends Component {
                     <div
                         className="BuildingMenuItem"
                         key={buildingName}
-                        onClick={() => changeBuild(buildings_pngs[buildingName], buildingName)}
+                        onClick={() => changeBuild(buildings_pngs[buildingName])}
                     >
                         <img
              //  onClick={changeBuild(buildings_pngs[buildingName])}
@@ -84,12 +83,15 @@ class BuildingMenu extends Component {
 
 }
 function mapStateToProps(state) {
-    return {}
+    return {
+        lvl: state.menu.lvl,
+        from: state.menu.from
+    }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, props) => {
     return {
-        changeBuild: (t, name) => dispatch(changeBuilding(t, name)),
+        changeBuild: (t) => dispatch(changeBuilding(props.from, t, props.lvl))
     }
 }
 

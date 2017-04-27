@@ -90,10 +90,6 @@ export function futureProduction(buildings, days = 90) {
     buildings = JSON.parse(JSON.stringify(buildings))
     const data = []
     let time = 0
-    console.log(days)
-    console.log(typeof days)
-
-    console.log()
 
     while (time < days) {
         for(let i in buildings) {

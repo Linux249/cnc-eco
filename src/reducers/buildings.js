@@ -14,19 +14,26 @@ export function buildings(state = initState, action) {
             return state.map((building, i) => {
                 if(i == action.from) return {
                     ...building,
-                    name: action.name,
-                    type: action.t,
-                    lvl: building.lvl || action.lvl
+                   // name: action.name,
+                    type: action.t || building.t,
+                    lvl: action.lvl || building.lvl || 12
                 }
                 else return building
             })
 
-        case 'SWITCH_BUILDINGS':
-            return state.map((building, i, old) => {
-                if(i === action.to) console.log("hier wurde gedrpt")
-                //if(i == action.from) return old[action.to]
-                return building
+        case 'DELETE_BUILDING':
+            return state.map((building, i) => {
+                if(i == action.from) return { }
+                else return building
             })
+
+
+        // case 'SWITCH_BUILDINGS':
+        //     return state.map((building, i, old) => {
+        //         if(i === action.to) console.log("hier wurde gedrpt")
+        //         //if(i == action.from) return old[action.to]
+        //         return building
+        //     })
 
 
         default:
