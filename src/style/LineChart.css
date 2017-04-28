@@ -36,7 +36,7 @@
 .days {
     display: flex;
     flex-flow: column;
-    flex-basis: 25%;
+    flex-basis: 20%;
 }
 
 .daysButton {

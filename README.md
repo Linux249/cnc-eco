@@ -15,6 +15,7 @@ BuildingMenu
 Base
 - [ ] add css for focus element
 - [ ] hide left Menu on focus left
+- [ ] Add GDI/NOD Button
 
 App
 - [ ] css flex structure for Head/Base/Chart rows
