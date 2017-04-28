@@ -28,7 +28,6 @@ class UrlInfo extends Component
     updateBase()
     {
         console.log("REREREREasasasRERERERERER")
-        //const url = "" //get URL from input
         const url = this.refs.url.value
         console.log(url)
         console.log(this)

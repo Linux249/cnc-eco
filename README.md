@@ -11,6 +11,7 @@ LineChart
 
 BuildingMenu
 - [ ] add lvl up/down Buttons
+- [ ] add default lvl input
 
 Base
 - [ ] add css for focus element
