@@ -1,0 +1,38 @@
+
+.BaseRow {
+    display: flex;
+    /*flex-flow: column;*/
+    justify-content: space-between;
+
+
+}
+
+.row {
+    display: flex;
+    width: 100%;
+    /*align-content: center;*/
+    /*justify-items: center;*/
+}
+
+.BaseArea {
+    display: flex;
+    justify-content: center;
+    flex: 1 1;
+}
+.Base {
+    /*// background-image: url('../../img/background/background_base_NOD.jpg');*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: center top;*/
+    width: 800px;
+    background-color: #985f0d;
+    display: flex;
+    flex-flow: wrap;
+    /*align-self: center;*/
+
+    /*align-self: center;*/
+    /*position: relative;*/
+}
+
+.BaseLayout {
+
+}

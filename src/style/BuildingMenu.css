@@ -1,10 +1,41 @@
 .BuildingMenu {
-    position: absolute;
+    /*position: absolute;*/
     background-color: #EEE;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     border: 1px solid #CCC;
     border-radius: 3px;
-    margin-left: -5px;
-    margin-top: 5px;
+    /*margin-left: -5px;*/
+    /*margin-top: 5px;*/
     padding: 10px;
+}
+
+
+
+.BuildingMenu {
+    background-color: white;
+    max-width: 20%;
+    height: auto;
+    /*justify-self: flex-start;*/
+    /*align-self: flex-end;*/
+    /*align-self: flex-end;*/
+
+
+}
+.BuildingMenu .BuildingMenuItem {
+    display: inline-block;
+    max-width: 25%;
+    height: auto;
+    align-content: center;
+}
+
+.BuildingMenu .BuildingMenuItem img {
+    height: auto;
+    max-width: 100%;
+
+}
+
+
+.BuildingMenu .BuildingMenuItem p{
+    text-align: center;
+    color: black;
 }

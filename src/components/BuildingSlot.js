@@ -37,11 +37,8 @@ function collect(connect, monitor) {
 }
 
 const buildingTarget = {
-    // extact slot from props in one line
     drop({ slot }) {
-        return {
-            slot,
-        }
+        return { slot }
     }
 }
 
@@ -59,15 +56,12 @@ class BuildingSlot extends Component {
             isDragging
         } = this.props
         const buildingName = nod_buildings_keys[building.type]
-        //let building = buildings[slot]
         return  (
             connectDropTarget(connectDragSource(
                 <div
                     style={{
                         opacity: isDragging ? 0.5 : 1
                     }}
-
-                    //ref="target"
                     className="BuildingSlot"
                     onClick={() => showBuildingMenu(slot)}
                    // onContextMenu={this.buildingDelete}

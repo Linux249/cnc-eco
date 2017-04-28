@@ -1,17 +1,16 @@
 .BuildingSlot {
     height: 80px;
-    width: 85px;
-
+    display: flex;
+    flex-basis: 11.11%;
     position: relative;
     border-color: rgba(37, 38, 39, 0.25);
     border-style: solid;
     border-width: 1px;
+
 }
 
 .BuildingSlot img {
     position: absolute;
-    top: 0;
-    left: 0;
     height: 100%;
     width: 100%;
 

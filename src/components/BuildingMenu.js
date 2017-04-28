@@ -2,39 +2,36 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import buildings_pngs from '../util/buildings_img_nod.json'
 import { changeBuilding  } from './../actions/buildings'
+import './../style/BuildingMenu.css'
 
 class BuildingMenu extends Component {
 
     render() {
         const { changeBuild, from, lvl } = this.props
-        const divStyle = {
 
-        }
         return (
-            <div
-                className="BuildingMenu"
-            >
-            {Object.keys(buildings_pngs).map((buildingName) => {
-                const img =  require('./../img/buildings/NOD/' + buildingName + '.png')
-                return (
-                    <div
-                        className="BuildingMenuItem"
-                        key={buildingName}
-                        onClick={() => changeBuild(from, buildings_pngs[buildingName], lvl)}
-                    >
-                        <img
-             //  onClick={changeBuild(buildings_pngs[buildingName])}
-                           // onClick={this.buildingSelect}
-                            src={img} //NOD GDI variable
-                            alt={buildingName}
-                            data-name={buildingName}
-                            data-id={buildings_pngs[buildingName]}
-                        />
-                        <p>{buildings_pngs[buildingName]}</p>
-                    </div>
-              )
-            })}
-          </div>
+            <div className="BuildingMenu" >
+                {Object.keys(buildings_pngs).map((buildingName) => {
+                    const img =  require('./../img/buildings/NOD/' + buildingName + '.png')
+                    return (
+                        <div
+                            className="BuildingMenuItem"
+                            key={buildingName}
+                            onClick={() => changeBuild(from, buildings_pngs[buildingName], lvl)}
+                        >
+                            <img
+                 //  onClick={changeBuild(buildings_pngs[buildingName])}
+                               // onClick={this.buildingSelect}
+                                src={img} //NOD GDI variable
+                                alt={buildingName}
+                                data-name={buildingName}
+                                data-id={buildings_pngs[buildingName]}
+                            />
+                            <p>{buildings_pngs[buildingName]}</p>
+                        </div>
+                  )
+                })}
+            </div>
         )
     }
 
