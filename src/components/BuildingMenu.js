@@ -15,7 +15,7 @@ class BuildingMenu extends Component {
     }
 
     render() {
-        const { changeBuild } = this.props
+        const { changeBuild, from, lvl } = this.props
         const divStyle = {
             position: 'absolute',
             backgroundColor: '#EEE',
@@ -37,7 +37,7 @@ class BuildingMenu extends Component {
                     <div
                         className="BuildingMenuItem"
                         key={buildingName}
-                        onClick={() => changeBuild(buildings_pngs[buildingName])}
+                        onClick={() => changeBuild(from, buildings_pngs[buildingName], lvl)}
                     >
                         <img
              //  onClick={changeBuild(buildings_pngs[buildingName])}
@@ -84,14 +84,18 @@ class BuildingMenu extends Component {
 }
 function mapStateToProps(state) {
     return {
-        lvl: state.menu.lvl,
+        lvl: state.buildings[state.menu.from].lvl || state.menu.lvl,
         from: state.menu.from
     }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
+    console.log("WERDEN IM MENÜ DIE RICHRIGEN ÜBERgeBEN?")
+    console.log(props)
+    console.log(props.from)
+    console.log(props.lvl)
     return {
-        changeBuild: (t) => dispatch(changeBuilding(props.from, t, props.lvl))
+        changeBuild: (from, t, lvl) => dispatch(changeBuilding(from, t, lvl))
     }
 }
 

@@ -26,16 +26,6 @@ export function buildings(state = initState, action) {
                 if(i == action.from) return { }
                 else return building
             })
-
-
-        // case 'SWITCH_BUILDINGS':
-        //     return state.map((building, i, old) => {
-        //         if(i === action.to) console.log("hier wurde gedrpt")
-        //         //if(i == action.from) return old[action.to]
-        //         return building
-        //     })
-
-
         default:
             return state
     }

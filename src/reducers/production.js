@@ -9,40 +9,12 @@ const prod = calcBaseProduction(base.buildings)
 const data = futureProduction(base.buildings)
 
 
-//const initState = {}
-
-/*
-function normal(state = prod, action) {
-    switch (action.type) {
-        case 'CALC_PRODUCTION':
-            return action.production
-
-        default:
-            return state
-    }
-}
-
-function data(state = overTime, action ){
-    switch (action.type) {
-        // case 'UPDATE_OVERTIME':
-        //     return action.data
-
-        default:
-            return state
-    }
-
-}*/
-
-
 const initState = {
     normal: prod,
     data
 }
 export function production(state = initState, action){
-    // return {
-    //     normal: normal(state.production, action),
-    //     data: data(state.data, action)
-    // }
+
     switch (action.type) {
         case 'CALC_PRODUCTION':
             return {
