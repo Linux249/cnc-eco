@@ -8,7 +8,8 @@
     display: flex;
     justify-content: space-between;
     flex-flow: wrap;
-    flex-basis: 60%;
+    flex-basis: 820px;
+    margin: 30px;
 
     border: solid darkgrey 1px;
     font-size: 16px;
@@ -24,7 +25,11 @@
 }
 
 .rangeButton {
-    background-color: #2aabd2;
+    background-color: #EEE;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #CCC;
+    border-radius: 3px;
+
     display: flex;
     justify-content: center;
     align-content: center;
@@ -40,7 +45,11 @@
 }
 
 .daysButton {
-    background-color: #61b463;
+    background-color: #EEE;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #CCC;
+    border-radius: 3px;
+
     display: flex;
     justify-content: center;
     align-content: center;
