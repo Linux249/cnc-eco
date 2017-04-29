@@ -7,20 +7,16 @@
     /*margin-left: -5px;*/
     /*margin-top: 5px;*/
     padding: 10px;
-}
 
-
-
-.BuildingMenu {
-    background-color: white;
-    max-width: 20%;
+    max-width: 80%;
     height: auto;
+    flex: 2;
     /*justify-self: flex-start;*/
     /*align-self: flex-end;*/
     /*align-self: flex-end;*/
-
-
 }
+
+
 .BuildingMenu .BuildingMenuItem {
     display: inline-block;
     max-width: 25%;

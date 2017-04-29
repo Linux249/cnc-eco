@@ -20,7 +20,7 @@ class UrlInfo extends Component
             <div className="UrlInfo">
                 <label>CncOpt Url</label>
                 <input type="url" ref="url"/>
-                <button onClick={this.updateBase}> send</button>
+                <div onClick={this.updateBase}> send</div>
             </div>
         )
     }

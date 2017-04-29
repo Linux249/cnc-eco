@@ -14,10 +14,9 @@ class Base extends Component
 render()
 {
     const { show } = this.props
-      // build all slots
     const slots = [...Array(8).keys()].map(function(y) {
         return (
-            <div key={"row " + y} className={"row " + y}>
+            <div key={"rowB " + y} className={"rowB " + y}>
                 {[...Array(9).keys()].map(function(x) {
                   const slot = x+y*9
                   return <BuildingSlot key={slot} slot={slot} />
@@ -29,14 +28,15 @@ render()
 
     return (
         <div className="BaseRow">
-
+            <div className="BaseSide">
                 { parseInt(show) && <BuildingMenu /> }
-            <div className="BaseArea">
+            </div>
+            <div className="BaseMiddle">
                 <div className="Base" >
                     {slots}
                 </div>
             </div>
-            <div >
+            <div className="BaseSide">
             </div>
         </div>
     );
