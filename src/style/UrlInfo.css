@@ -4,12 +4,13 @@
     align-items: center;
 
     background-color: #EEE;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     border: 1px solid #CCC;
     border-radius: 3px;
 
-    width: 820px;
+    width: 880px;
     height: 50px;
+    margin-bottom: 10px;
 
 }
 

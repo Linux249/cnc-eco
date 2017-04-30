@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import LineChart from './LineChart.js'
 import BaseHeader from './BaseHeader.js';
 import { hideBuildingMenu } from './../actions/menu'
-
+import './../style/App.css'
 
 // Components
 import Base from './Base.js'
@@ -19,7 +19,7 @@ class App extends Component
     {
 
         return(
-            <div className="app" >
+            <div className="App" >
                 <BaseHeader ref="target"/>
                 <Base faction="base.faction" />
                 <LineChart />
