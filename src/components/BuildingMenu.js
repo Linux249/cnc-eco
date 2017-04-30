@@ -11,6 +11,15 @@ class BuildingMenu extends Component {
 
         return (
             <div className="BuildingMenu" >
+                <div className="fraction">
+                    <div>
+                        TEST
+                    </div>
+                    <div>
+                        TEST
+                    </div>
+                </div>
+
                 {Object.keys(buildings_pngs).map((buildingName) => {
                     const img =  require('./../img/buildings/NOD/' + buildingName + '.png')
                     return (

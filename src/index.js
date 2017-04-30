@@ -5,9 +5,9 @@ import configureStore from './configureStore'
 import { Provider } from 'react-redux';
 import { Router, Route, hashHistory } from 'react-router'
 
-import './style/main.css'
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
+
+// import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap-theme.css';
 
 import { calcBaseProduction, productionOverDays } from './util/production.js'
 import { urlToBase } from './util/parseurl.js'

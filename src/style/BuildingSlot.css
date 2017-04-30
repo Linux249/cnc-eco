@@ -16,11 +16,11 @@
 
 }
 
-.BuildingSlot:hover {
+.BuildingSlot img:hover {
     opacity: 0.75;
 }
 
 .BuildingSlot:focus {
     opacity: 0.75;
-    outline: 0;
+    background-color: darkgrey;
 }

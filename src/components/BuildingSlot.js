@@ -63,11 +63,12 @@ class BuildingSlot extends Component {
                         opacity: isDragging ? 0.5 : 1
                     }}
                     className="BuildingSlot"
-                    onClick={() => showBuildingMenu(slot)}
+                    //onClick={() => showBuildingMenu(slot)}
                    // onContextMenu={this.buildingDelete}
                     onKeyDown={(e) => handleKeyDown(e, slot, building)}
-                    tabIndex="-1"
+                    tabIndex="0"
                     onFocus={() => showBuildingMenu(slot)}
+                    onBlur={() => showBuildingMenu(-1)}
                 >
                     {building.lvl && <LvlNumber lvl={building.lvl} />}
                     {buildingName &&

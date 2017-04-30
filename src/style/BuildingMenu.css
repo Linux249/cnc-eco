@@ -35,3 +35,7 @@
     text-align: center;
     color: black;
 }
+
+.fraction {
+    display: flex;
+}
