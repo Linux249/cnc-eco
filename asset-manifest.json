@@ -1,13 +1,12 @@
 {
-  "main.css": "static/css/main.c2c16d80.css",
-  "main.css.map": "static/css/main.c2c16d80.css.map",
-  "main.js": "static/js/main.dfecf528.js",
-  "main.js.map": "static/js/main.dfecf528.js.map",
+  "main.css": "static/css/main.82565e8a.css",
+  "main.css.map": "static/css/main.82565e8a.css.map",
+  "main.js": "static/js/main.7fd26e98.js",
+  "main.js.map": "static/js/main.7fd26e98.js.map",
+  "static\\media\\GDI_Support_Air.png": "static/media/GDI_Support_Air.d8b43c52.png",
+  "static\\media\\GDI_Support_Art.png": "static/media/GDI_Support_Art.0a1b661b.png",
+  "static\\media\\GDI_Support_Ion.png": "static/media/GDI_Support_Ion.156b7b2d.png",
   "static\\media\\crystal.png": "static/media/crystal.11218216.png",
-  "static\\media\\glyphicons-halflings-regular.eot": "static/media/glyphicons-halflings-regular.f4769f9b.eot",
-  "static\\media\\glyphicons-halflings-regular.svg": "static/media/glyphicons-halflings-regular.89889688.svg",
-  "static\\media\\glyphicons-halflings-regular.ttf": "static/media/glyphicons-halflings-regular.e18bbf61.ttf",
-  "static\\media\\glyphicons-halflings-regular.woff": "static/media/glyphicons-halflings-regular.fa277232.woff",
-  "static\\media\\glyphicons-halflings-regular.woff2": "static/media/glyphicons-halflings-regular.448c34a5.woff2",
+  "static\\media\\crystal01.png": "static/media/crystal01.11218216.png",
   "static\\media\\tiberium.png": "static/media/tiberium.b43fc7a8.png"
 }
