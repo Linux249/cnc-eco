@@ -2,21 +2,22 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import buildings_pngs from '../util/buildings_img_nod.json'
 import { changeBuilding  } from './../actions/buildings'
+import { changeFraction } from './../actions/menu'
 import './../style/BuildingMenu.css'
 
 class BuildingMenu extends Component {
 
     render() {
-        const { changeBuild, from, lvl } = this.props
+        const { changeBuild, changeFraction, from, lvl } = this.props
 
         return (
             <div className="BuildingMenu" >
                 <div className="fraction">
-                    <div>
-                        TEST
+                    <div className="fractionButton" onClick={() => changeFraction("nod")}>
+                        NOD
                     </div>
-                    <div>
-                        TEST
+                    <div className="fractionButton" onClick={() => changeFraction("gdi")}>
+                        GDI
                     </div>
                 </div>
 
@@ -55,7 +56,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        changeBuild: (from, t, lvl) => dispatch(changeBuilding(from, t, lvl))
+        changeBuild: (from, t, lvl) => dispatch(changeBuilding(from, t, lvl)),
+        changeFraction: fraction => dispatch(changeFraction(fraction))
     }
 }
 

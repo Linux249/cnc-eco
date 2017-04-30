@@ -39,3 +39,15 @@
 .fraction {
     display: flex;
 }
+.fractionButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 20%;
+    height: 30px;
+
+    background-color: #EEE;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #CCC;
+    border-radius: 3px;
+}

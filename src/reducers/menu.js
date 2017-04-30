@@ -4,7 +4,8 @@
 
 const initState = {
     from: false,
-    lvl: 30
+    lvl: 30,
+    faction: "nod"
 }
 
 export function menu(state = initState, action) {
@@ -19,6 +20,12 @@ export function menu(state = initState, action) {
                 ...state,
                 from: false
             }
+        case 'CHANGE_FRACTION':
+            return {
+                ...state,
+                fraction: action.fraction
+            }
+
 
         default:
             return state
