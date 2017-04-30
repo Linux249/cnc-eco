@@ -37,7 +37,7 @@ class BuildingMenu extends Component {
                                 data-name={buildingName}
                                 data-id={buildings_pngs[buildingName]}
                             />
-                            <p>{buildings_pngs[buildingName]}</p>
+                            <div>{buildings_pngs[buildingName]}</div>
                         </div>
                   )
                 })}

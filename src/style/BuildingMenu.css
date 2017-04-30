@@ -22,8 +22,8 @@
     display: inline-block;
     width: 25%;
     height: 15%;
-    /*height: auto;*/
     align-content: center;
+    text-align: center;
 }
 
 .BuildingMenu .BuildingMenuItem img {
@@ -34,10 +34,6 @@
 }
 
 
-.BuildingMenu .BuildingMenuItem p{
-    text-align: center;
-    color: black;
-}
 
 .fraction {
     display: flex;
