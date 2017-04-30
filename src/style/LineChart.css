@@ -8,14 +8,13 @@
     display: flex;
     justify-content: space-between;
     flex-flow: wrap;
-    flex-basis: 820px;
+    flex-basis: 880px;
     margin: 30px;
 
-    border: solid darkgrey 1px;
-    font-size: 16px;
-    color: #5b0066;
-    font-weight: bold;
-    letter-spacing: 2px;
+    background-color: #EEE;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #CCC;
+    border-radius: 3px;
 }
 
 .range {

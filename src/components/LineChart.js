@@ -26,6 +26,7 @@ class LineChart extends Component
             showTrendLine: true,
             options: {
                 title:"Produktion in 120 Tagen",  // TODO X MIT AUSWAHL RECHTS
+                backgroundColor: '#EEE',
 
                 //TODO aktuelle Auswahl oben
                 series: {
@@ -154,7 +155,7 @@ class LineChart extends Component
                                     onClick={() => this.changeDays(n)}
                                     style={ activeDays === n ?{border: 'solid red'} : {} }
                                 >
-                                    {n}
+                                    {n + " Tage"}
                                 </div>
                             ))
                         }

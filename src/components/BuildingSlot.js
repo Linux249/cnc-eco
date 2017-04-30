@@ -87,7 +87,7 @@ class BuildingSlot extends Component {
                     {building.lvl && <LvlNumber lvl={building.lvl} />}
                     {buildingName &&
                         <img
-                            src={fraction === "nod" ? nodIMG: gdiIMG}
+                            src={fraction === "gdi" ? gdiIMG : nodIMG }
                             alt={building.name}
                         />
                     }
