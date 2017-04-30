@@ -16,11 +16,11 @@
 
 }
 
-.BuildingSlot img:hover {
-    opacity: 0.75;
-}
+/*.BuildingSlot img:hover {*/
+    /*opacity: 0.75;*/
+/*}*/
 
-.BuildingSlot:focus {
-    opacity: 0.75;
-    background-color: darkgrey;
-}
+/*.BuildingSlot:focus {*/
+    /*opacity: 0.75;*/
+    /*background-color: darkgrey;*/
+/*}*/

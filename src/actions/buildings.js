@@ -2,6 +2,7 @@
  * Created by Bombassd on 27.04.2017.
  */
 import { calcProduction } from './production'
+import { showBuildingMenu } from './menu'
 import nod_buildings_keys from '../util/nod_buildings_keys.json'
 
 export function deleteBuilding(from)

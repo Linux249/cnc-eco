@@ -6,6 +6,7 @@ import './../style/LineChart.css'
 import { connect } from 'react-redux'
 import { shortenNumber } from './../services/menu'
 import { Chart } from 'react-google-charts'
+import { showBuildingMenu } from './../actions/menu'
 
 // Colors for lines
 const tibColor = '#23ff1d'
@@ -106,7 +107,7 @@ class LineChart extends Component
     }
 
     render(){
-        const { data } = this.props
+        const { data, showBuildingMenu } = this.props
         const { options } = this.state
         const toggleTrendLines = ("trendlines" in options)
         const toogleRealLines = !("lineWidth" in options.series[0])
@@ -119,12 +120,13 @@ class LineChart extends Component
         const ranges = [10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000, 100000000000, 1000000000000]
         const days = [30, 60, 90, 120]
         return (
-            <div className="chartRow">
+            <div className="chartRow" onClick={() => showBuildingMenu(-1)}>
                 <div className="chart">
                     <div className="range">
                         {
                             ranges.map(n => (
                                 <div
+                                    key={n}
                                     className="rangeButton"
                                     onClick={() => this.changeRange(n)}
                                     style={ activeRange === n ?{border: 'solid red'} : {} }
@@ -147,6 +149,7 @@ class LineChart extends Component
                         {
                             days.map(n => (
                                 <div
+                                    key={n}
                                     className="daysButton"
                                     onClick={() => this.changeDays(n)}
                                     style={ activeDays === n ?{border: 'solid red'} : {} }
@@ -179,5 +182,9 @@ function mapStateToProps(state) {
         data: state.production.data
     });
 }
-
-export default connect(mapStateToProps)(LineChart)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        showBuildingMenu: (from) => dispatch(showBuildingMenu(from)),
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(LineChart)

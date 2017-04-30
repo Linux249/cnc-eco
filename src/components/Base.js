@@ -5,6 +5,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import BuildingSlot from './BuildingSlot.js'
 import BuildingMenu from './BuildingMenu.js';
 import './../style/Base.css'
+import { showBuildingMenu } from './../actions/menu'
 
 
 class Base extends Component
@@ -27,7 +28,7 @@ render()
       })
 
     return (
-        <div className="BaseRow">
+        <div className="BaseRow" >
             <div className="BaseSide">
                 { parseInt(show) >= 0 && <BuildingMenu /> }
             </div>
@@ -36,7 +37,7 @@ render()
                     {slots}
                 </div>
             </div>
-            <div className="BaseSide">
+            <div className="BaseSide" >
             </div>
         </div>
     );
@@ -50,5 +51,11 @@ function mapStateToProps(state) {
     });
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        showBuildingMenu: (from) => dispatch(showBuildingMenu(from))
+    }
+}
+
 Base = DragDropContext(HTML5Backend)(Base)
-export default connect(mapStateToProps)(Base);
+export default connect(mapStateToProps, mapDispatchToProps)(Base);

@@ -49,6 +49,7 @@ class BuildingSlot extends Component {
     render() {
         const { slot,
             building,
+            active,
             showBuildingMenu,
             handleKeyDown,
             connectDragSource,
@@ -56,11 +57,13 @@ class BuildingSlot extends Component {
             isDragging
         } = this.props
         const buildingName = nod_buildings_keys[building.type]
+
         return  (
             connectDropTarget(connectDragSource(
                 <div
                     style={{
-                        opacity: isDragging ? 0.5 : 1
+                        opacity: isDragging ? 0.5 : 1,
+                        backgroundColor: active===slot ? 'grey': undefined
                     }}
                     className="BuildingSlot"
                     //onClick={() => showBuildingMenu(slot)}
@@ -68,7 +71,6 @@ class BuildingSlot extends Component {
                     onKeyDown={(e) => handleKeyDown(e, slot, building)}
                     tabIndex="0"
                     onFocus={() => showBuildingMenu(slot)}
-                    onBlur={() => showBuildingMenu(-1)}
                 >
                     {building.lvl && <LvlNumber lvl={building.lvl} />}
                     {buildingName &&
@@ -87,7 +89,8 @@ class BuildingSlot extends Component {
 
 function mapStateToProps(state, props) {
     return ({
-        building: state.buildings[props.slot]
+        building: state.buildings[props.slot],
+        active: state.menu.from,
     }) 
 }
 const mapDispatchToProps = (dispatch) => {
