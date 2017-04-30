@@ -22,7 +22,7 @@ class BuildingMenu extends Component {
                 </div>
 
                 {Object.keys(buildings_pngs).map((buildingName) => {
-                    const img =  require('./../img/buildings/NOD/' + buildingName + '.png')
+                    const img =  require('./../img/buildings/nod/' + buildingName + '.png')
                     return (
                         <div
                             className="BuildingMenuItem"

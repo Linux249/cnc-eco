@@ -13,11 +13,12 @@ BuildingMenu
 - [ ] add lvl up/down Buttons
 - [ ] add default lvl input
 - [ ] change layout (too high)
+- [x] add fractions
 
 Base
 - [x] add css for focus element
 - [x] hide left Menu on focus left
-- [ ] Add GDI/NOD Button
+- [x] add gdi/nod imgs
 - [ ] add contextmenu = delete
 
 App

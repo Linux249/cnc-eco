@@ -10,9 +10,9 @@
 .BaseSide {
     display: flex;
     flex: 2;
-    flex-flow: column;
-    justify-content: center;
-    align-self: center;
+    /*flex-flow: column;*/
+    justify-content: flex-end;
+    /*align-self: center;*/
     /*align-content: center;*/
 }
 
