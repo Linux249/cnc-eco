@@ -1,25 +1,37 @@
 .LvLNumber {
-    text-align: center;
-    padding-top: 4px;
-    padding-left: 2px;
+    display: flex;
+    /*justify-content: flex-end;*/
+    /*text-align: center;*/
+    /*top: 30px;*/
+    /*left: 2px;*/
     z-index: 10;
-    width: 30%;
+    width: 100%;
+
+
 
 }
 
-.LvLNumber p {
-    font-size: 18px;
-    font-family: fantasy;
-    color: #000000;
-    text-shadow: 1px -1px 1px red;
+.LvLNumber div {
+    letter-spacing: 0;
+    max-height: 30%;
+    /*width: 30%;*/
+    /*display: flex;*/
+    /*justify-content: flex-end;*/
+    /*font-size: 18px;*/
+
+    /*color: #000000;*/
+    text-shadow: 1px -1px 4px grey;
     background-color: #ffffff;
     border-radius: 20px;
-    padding-top: 1px;
-    padding-left: 4px;
-    padding-right: 5px;
-    padding-bottom: 0;
-    background: rgba(255, 255, 255, 0.35);
+    /*padding: 0px;*/
+    /*padding-top: 3px;*/
+    padding-left: 3px;
+    padding-right: 4px;
+    /*padding-bottom: -1px;*/
+    background: rgba(255, 255, 255, 0.15);
+
 }
+
 
 
 

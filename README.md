@@ -12,7 +12,7 @@ LineChart
 BuildingMenu
 - [ ] add lvl up/down Buttons
 - [ ] add default lvl input
-- [ ] change layout (too high)
+- [x] change layout (too high)
 - [x] add fractions
 
 Base
@@ -22,7 +22,8 @@ Base
 - [ ] add contextmenu = delete
 
 App
-- [ ] css flex structure for Head/Base/Chart rows
-- [ ] clean css code
+- [x] css flex structure for Head/Base/Chart rows
+- [x] clean css code
+- [x] Lvl css repair
 - [ ] check if one json file could be delete
 
