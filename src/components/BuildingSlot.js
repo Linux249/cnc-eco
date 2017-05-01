@@ -5,17 +5,6 @@ import './../style/BuildingSlot.css'
 import { showBuildingMenu } from './../actions/menu'
 import { switchBuildings, keyInputBase } from './../actions/buildings'
 import { DropTarget, DragSource } from 'react-dnd'
-import nod_buildings_keys from '../util/nod_buildings_keys.json'
-// import './../img/buildings/nod'
-// import './../img/buildings/gdi'
-var requireContext = require.context("./../img/buildings/nod", true, /^\.\/.*\.png$/);
-var requireContext2 = require.context("./../img/buildings/gdi", true, /^\.\/.*\.png$/);
-requireContext.keys().map(requireContext);
-requireContext2.keys().map(requireContext2);
-
-
-
-
 
 
 const buildingSource = {
@@ -62,12 +51,9 @@ class BuildingSlot extends Component {
             connectDropTarget ,
             isDragging
         } = this.props
-        let buildingName = nod_buildings_keys[building.type]
-        let nodIMG = 'undefined'
-        let gdiIMG = 'undefined'
+        let img = 'undefined'
         if(building.type) {
-            nodIMG = require("./../img/buildings/nod/"+ building.type + ".png")
-            gdiIMG = require("./../img/buildings/gdi/" + building.type + ".png")
+            img = require("./../img/buildings/"+fraction+  "/"+ building.type + ".png")
         }
         return  (
             connectDropTarget(connectDragSource(
@@ -83,12 +69,10 @@ class BuildingSlot extends Component {
                     tabIndex="0"
                     onFocus={() => showBuildingMenu(slot)}
                 >
-                    {/*{buildingName && require("./../img/buildings/nod/NOD" + buildingName.slice(3)+ ".png")}*/}
-                    {/*{buildingName && require("./../img/buildings/gdi/GDI" + buildingName.slice(3) + ".png")}*/}
                     {building.lvl && <LvlNumber lvl={building.lvl} />}
-                    {buildingName &&
+                    {building.type &&
                         <img
-                            src={fraction === "gdi" ? gdiIMG : nodIMG }
+                            src={img}
                             alt={building.name}
                         />
                     }
