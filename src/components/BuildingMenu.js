@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import buildings_pngs from '../util/buildings_img_nod.json'
 import { changeBuilding  } from './../actions/buildings'
 import { changeFraction } from './../actions/menu'
 import './../style/BuildingMenu.css'
@@ -8,7 +7,8 @@ import './../style/BuildingMenu.css'
 class BuildingMenu extends Component {
 
     render() {
-        const { changeBuild, changeFraction, from, lvl } = this.props
+        const { changeBuild, changeFraction, fraction, from, lvl } = this.props
+        const buildings = ["t", "c", "h", "n", "s", "r", "a", "p", "y", "d", "b", "f", "q", "w", "e", "z", "x", "i"]
 
         return (
             <div className="BuildingMenu" >
@@ -21,23 +21,16 @@ class BuildingMenu extends Component {
                     </div>
                 </div>
 
-                {Object.keys(buildings_pngs).map((buildingName) => {
-                    const img =  require('./../img/buildings/nod/' + buildingName + '.png')
+                {buildings.map((b) => {
+                    const img = require("./../img/buildings/"+ fraction + "/"+ b + ".png")
                     return (
                         <div
                             className="BuildingMenuItem"
-                            key={buildingName}
-                            onClick={() => changeBuild(from, buildings_pngs[buildingName], lvl)}
+                            key={b}
+                            onClick={() => changeBuild(from, b, lvl)}
                         >
-                            <img
-                 //  onClick={changeBuild(buildings_pngs[buildingName])}
-                               // onClick={this.buildingSelect}
-                                src={img} //NOD GDI variable
-                                alt={buildingName}
-                                data-name={buildingName}
-                                data-id={buildings_pngs[buildingName]}
-                            />
-                            <div>{buildings_pngs[buildingName]}</div>
+                            <img src={img} alt={b} />
+                            <div>{b}</div>
                         </div>
                   )
                 })}
@@ -50,7 +43,8 @@ class BuildingMenu extends Component {
 function mapStateToProps(state) {
     return {
         lvl: state.buildings[state.menu.from].lvl || state.menu.lvl,
-        from: state.menu.from
+        from: state.menu.from,
+        fraction: state.menu.fraction
     }
 }
 

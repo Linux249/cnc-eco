@@ -25,5 +25,5 @@ App
 - [x] css flex structure for Head/Base/Chart rows
 - [x] clean css code
 - [x] Lvl css repair
-- [ ] check if one json file could be delete
+- [x] rename pics for bedder fraction change
 

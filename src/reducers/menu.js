@@ -5,7 +5,7 @@
 const initState = {
     from: false,
     lvl: 30,
-    faction: "nod"
+    fraction: "nod"
 }
 
 export function menu(state = initState, action) {

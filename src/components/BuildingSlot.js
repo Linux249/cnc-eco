@@ -47,8 +47,9 @@ const buildingTarget = {
 }
 
 
-class BuildingSlot extends Component {
+const activeColor = '#b6b6b6'
 
+class BuildingSlot extends Component {
 
     render() {
         const { slot,
@@ -62,18 +63,18 @@ class BuildingSlot extends Component {
             isDragging
         } = this.props
         let buildingName = nod_buildings_keys[building.type]
-        let nodIMG = 'XXXundefined'
-        let gdiIMG = 'XXXundefined'
-        if(buildingName) {
-            nodIMG = require("./../img/buildings/nod/NOD" + buildingName.slice(3)+ ".png")
-            gdiIMG = require("./../img/buildings/gdi/GDI" + buildingName.slice(3)+ ".png")
+        let nodIMG = 'undefined'
+        let gdiIMG = 'undefined'
+        if(building.type) {
+            nodIMG = require("./../img/buildings/nod/"+ building.type + ".png")
+            gdiIMG = require("./../img/buildings/gdi/" + building.type + ".png")
         }
         return  (
             connectDropTarget(connectDragSource(
                 <div
                     style={{
                         opacity: isDragging ? 0.5 : 1,
-                        backgroundColor: active===slot ? 'grey': undefined
+                        backgroundColor: active===slot ? activeColor: undefined
                     }}
                     className="BuildingSlot"
                     //onClick={() => showBuildingMenu(slot)}
