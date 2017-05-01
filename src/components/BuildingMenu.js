@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { changeBuilding  } from './../actions/buildings'
 import { changeFraction } from './../actions/menu'
+import { buildingKeys } from './../services/buildingKeys'
 import './../style/BuildingMenu.css'
+
 
 class BuildingMenu extends Component {
 
     render() {
         const { changeBuild, changeFraction, fraction, from, lvl } = this.props
-        const buildings = ["t", "c", "h", "n", "s", "r", "a", "p", "y", "d", "b", "f", "q", "w", "e", "z", "x", "i"]
 
         return (
             <div className="BuildingMenu" >
@@ -21,7 +22,7 @@ class BuildingMenu extends Component {
                     </div>
                 </div>
 
-                {buildings.map((b) => {
+                {buildingKeys.map((b) => {
                     const img = require("./../img/buildings/"+ fraction + "/"+ b + ".png")
                     return (
                         <div

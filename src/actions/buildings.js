@@ -3,7 +3,7 @@
  */
 import { calcProduction } from './production'
 import { showBuildingMenu } from './menu'
-import nod_buildings_keys from '../util/nod_buildings_keys.json'
+import { buildingKeys } from './../services/buildingKeys'
 
 export function deleteBuilding(from)
 {
@@ -21,7 +21,8 @@ export function keyInputBase(e,from, building)
         console.log({
             building
         })
-        if (key in nod_buildings_keys) {
+        if (key === "t" || key === "c") dispatch(changeBuilding(from, key, -1))
+        else if (buildingKeys.indexOf(key) !== -1) {
             dispatch(changeBuilding(from, key))
         } else if(Object.keys(building).length) {
             if (key === "+")  //builing lvl up
