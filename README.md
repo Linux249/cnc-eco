@@ -28,3 +28,5 @@ App
 - [x] Lvl css repair
 - [x] rename pics for bedder fraction change
 - [ ] add modal to buttons for help informations (or a help sign in the corner?)
+- [ ] fix parse url input
+- [ ] fix url script(link) + ingame butten
