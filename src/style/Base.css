@@ -7,13 +7,15 @@
     /*background-position: center top;*/
 }
 
-.BaseSide {
+.BaseSideLeft {
     display: flex;
     flex: 2;
-    /*flex-flow: column;*/
     justify-content: flex-end;
-    /*align-self: center;*/
-    /*align-content: center;*/
+}
+
+.BaseSideRight {
+    display: flex;
+    flex: 2;
 }
 
 .BaseMiddle {

@@ -4,6 +4,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import BuildingSlot from './BuildingSlot.js'
 import BuildingMenu from './BuildingMenu.js';
+import Details from './Details.js'
 import './../style/Base.css'
 import { showBuildingMenu } from './../actions/menu'
 
@@ -29,7 +30,7 @@ render()
 
     return (
         <div className="BaseRow" >
-            <div className="BaseSide">
+            <div className="BaseSideLeft">
                 { parseInt(show) >= 0 && <BuildingMenu /> }
             </div>
             <div className="BaseMiddle">
@@ -37,7 +38,8 @@ render()
                     {slots}
                 </div>
             </div>
-            <div className="BaseSide" >
+            <div className="BaseSideRight" >
+                <Details />
             </div>
         </div>
     );
