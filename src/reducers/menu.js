@@ -3,6 +3,7 @@
  */
 
 const initState = {
+    //selectedBuilding: {},
     from: false,
     lvl: 30,
     fraction: "nod"

@@ -29,7 +29,7 @@ class Details extends Component {
     }
 
     render() {
-       const { days30, days90, days120 } = this.props
+       const { days30, days90, days120, building } = this.props
 
         return (
                 <div className="Details">
@@ -39,11 +39,19 @@ class Details extends Component {
                     </div>
 
                     {/*die genau produktion in X Zeit könen wir nicht ausrechnen. Ein Gebäude ist in eher +0.03 Tagen erst fertig. Deshalb miteln wir den WErt durch die benötigte zeitvon */}
-                    {this.state.show === 0 &&
+                    {this.state.show === 0 && building &&
                     <div className="buildings">
-                        <div>building info</div>
+                        <div>INFO</div>
+                        {/*<div>building info</div>*/}
+                        <div>name: </div>
+                        <div>prod - now: </div>
+                        <div>UPGRADE</div>
+                        <div>Kosten: X tib Y pow</div>
+                        <div>+production: </div>
+                        <div>kosten/+prod: </div>
                     </div>
                     }
+                    {this.state.show === 0 && !building && <div>Kein Gebude ausgewählt</div> }
 
                     {this.state.show === 1 &&
                     <div className="futureProd">
@@ -118,6 +126,7 @@ function mapStateToProps(state) {
         days30: state.production.data[29],
         days90: state.production.data[89],
         days120: state.production.data[119],
+        building: state.buildings[state.menu.from]|| false
     }
 }
 
