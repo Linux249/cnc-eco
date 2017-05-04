@@ -11,3 +11,51 @@
     flex: 2;
     margin-left: 10px;
 }
+
+.Details > .buttons {
+    display: flex;
+    /*flex-flow: column;*/
+}
+
+.Details > .buttons > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 33%;
+    height: 30px;
+
+    background-color: #EEE;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #CCC;
+    border-radius: 3px;
+    margin: 2px;
+}
+
+.Details > .buttons > div:hover {
+    box-shadow: 0 4px 8px 0 rgba(30, 136, 229, 0.2), 0 6px 20px 0 rgba(30, 136, 229, 0.19);
+}
+
+.Details > .futureProd {
+    display: flex;
+    flex-flow: column;
+}
+
+
+
+/*.Details > .futureProd > .text {*/
+    /*width: 100%;*/
+    /*flex: 1;*/
+/*}*/
+
+.Details > .futureProd > .table {
+    display: flex;
+    justify-content: space-around;
+}
+
+.Details > .futureProd > .table >.column {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+}
+
+

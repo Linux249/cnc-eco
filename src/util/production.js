@@ -86,7 +86,7 @@ const allBuildingLvLUp = (base, lvl = 0) => {
     return base
 }
 
-export function futureProduction(buildings, days = 120) {
+export function futureProduction(buildings, days = 121) {
     buildings = JSON.parse(JSON.stringify(buildings))
     const data = []
     let time = 0
@@ -144,14 +144,14 @@ export function futureProduction(buildings, days = 120) {
 
     //for day in days
     const expData = []
-    for(let d = 1; d<days; d++ ){
+    for(let d = 1; d<=days; d++ ){
         const time = data.find((o, i) => o.time > d ? i: false)
         const i = data.findIndex(o => o === time)
         // console.log(time)
-        console.log(i)
-        console.log(data[i-1].prod)
-        console.log(roundTwoPoints(data[i], data[i-1], d))
-        console.log(data[i].prod)
+        // console.log(i)
+        // console.log(data[i-1].prod)
+        // console.log(roundTwoPoints(data[i], data[i-1], d))
+        // console.log(data[i].prod)
         expData.push({
             prod: roundTwoPoints(data[i], data[i-1], d),
             time: d
