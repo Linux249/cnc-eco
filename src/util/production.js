@@ -103,7 +103,7 @@ export function futureProduction(buildings, days = 120) {
                 // TODO Plants doesnt give cost back - problem also with other buildings with 0 costs
                 if(time > 0) {
                     data.push({
-                        time: Math.round(time),
+                        time,  // time like 4,5,5,6,7,7,8,9,
                         prod
                     })
                 }
@@ -113,9 +113,59 @@ export function futureProduction(buildings, days = 120) {
         }
     }
 
-    const mergedData = [] // array of geglaetteten Daten
-    let i = 0
+    // the two points give the production item around the given day
+    // it returns he calculatet produktion eactly on the given day
+    const roundTwoPoints = (p1, p2, day) => {
+        const prod = {
+            tib: 0,
+            cris: 0,
+            power: 0,
+            credits: 0,
+        }
+        // for each of the 4 productions
+        for(let p in prod){
+            // x is time/days - y the production
+            const x1 = p1.time
+            const y1 = p1.prod[p]
+            const x2 = p2.time
+            const y2 = p2.prod[p]
+            if(y1 === y2) prod[p] =  y2
+            else
+            {
+                const exp1 = (x2-day)/(x2-x1)
+                const exp2 = (day-x1)/(x2-x1)
+                // console.log({x1, y1, x2, y2, exp1, exp2})
+                prod[p] = Math.round(Math.pow(y1, exp1)*Math.pow(y2, exp2))
+            }
+        }
+        return prod
+    }
 
+
+    //for day in days
+    const expData = []
+    for(let d = 1; d<days; d++ ){
+        const time = data.find((o, i) => o.time > d ? i: false)
+        const i = data.findIndex(o => o === time)
+        // console.log(time)
+        console.log(i)
+        console.log(data[i-1].prod)
+        console.log(roundTwoPoints(data[i], data[i-1], d))
+        console.log(data[i].prod)
+        expData.push({
+            prod: roundTwoPoints(data[i], data[i-1], d),
+            time: d
+        })
+
+
+
+
+    }
+
+
+    // hier wurden alle schritte auf tage gerundet und dann wurden die mit den gleichen Tag "geglättet" (addiert und durch # dividiert)
+/*    const mergedData = [] // array of geglaetteten Daten
+    let i = 0
     while(i < data.length)
     {
         const prod = {
@@ -145,8 +195,8 @@ export function futureProduction(buildings, days = 120) {
             prod
         })
 
-    }
-    return mergedData
+    }*/
+    return expData
 }
 
 export const productionOverDays = (base, days) => {

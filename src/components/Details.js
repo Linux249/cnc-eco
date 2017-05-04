@@ -11,13 +11,20 @@ import './../style/Details.css'
 
 class Details extends Component {
 
+
+
+
     render() {
        // const { changeBuild, changeFraction, fraction, from, lvl } = this.props
 
         return (
 
+
+
                 <div className="Details">
-                    Test
+                    iin 30 +produktion/zeit
+                    {/*die genau produktion in X Zeit könen wir nicht ausrechnen. Ein Gebäude ist in eher +0.03 Tagen erst fertig. Deshalb miteln wir den WErt durch die benötigte zeitvon */}
+
                 </div>
             //
             // <div className="BuildingMenu" >

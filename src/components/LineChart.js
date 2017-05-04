@@ -95,7 +95,7 @@ class LineChart extends Component
 
     toogleTrendLine(){
         this.setState(prevState => {
-            console.log(prevState)
+            // console.log(prevState)
             if ("trendlines" in prevState.options) delete prevState.options.trendlines
             else prevState.options.trendlines =  {
                 0: {type: 'exponential', color: tibColor},
