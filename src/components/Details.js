@@ -15,21 +15,37 @@ import './../style/Details.css'
 
 
 class Details extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            show: 1 // 0 = building, 1 = baseProd
+        }
+    }
+
+    toggleDetails(show) {
+        this.setState({
+            show
+        })
+    }
 
     render() {
        const { days30, days90, days120 } = this.props
 
         return (
-
-
-
                 <div className="Details">
-
                     <div className="buttons">
-                        <div>Building</div>
-                        <div>Base Prod.</div>
+                        <div onClick={() => this.toggleDetails(0)}>Building</div>
+                        <div onClick={() => this.toggleDetails(1)}>Base Prod.</div>
                     </div>
+
                     {/*die genau produktion in X Zeit könen wir nicht ausrechnen. Ein Gebäude ist in eher +0.03 Tagen erst fertig. Deshalb miteln wir den WErt durch die benötigte zeitvon */}
+                    {this.state.show === 0 &&
+                    <div className="buildings">
+                        <div>building info</div>
+                    </div>
+                    }
+
+                    {this.state.show === 1 &&
                     <div className="futureProd">
                         <div className="text">Produktion in X Tagen</div>
                         <div className="table">
@@ -62,7 +78,9 @@ class Details extends Component {
                                 <div>{shortenNumber(days120.prod.credits)}</div>
                             </div>
                         </div>
-                    </div>
+                    </div>}
+
+
                 </div>
             //
 

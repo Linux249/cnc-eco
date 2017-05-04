@@ -12,6 +12,7 @@ LineChart
 BuildingMenu
 - [x] change layout (too high)
 - [x] add fractions
+- [ ] refactor from (id) to selectedBuilding(building) witch has building.slot
 - [ ] add lvl up/down Buttons
 - [ ] add default lvl input
 
