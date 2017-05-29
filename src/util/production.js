@@ -76,7 +76,9 @@ const calcBuildingCostAll = (buildings, lvl = 1) => {
     }
     buildings.forEach( building => {
         if (building.lvl){
-            costs += calcBuildingCost(building)
+            const cost = calcBuildingCost(building)
+            costs.tib += cost.tib
+            cost.power += cost.power
             // if (building.lvl > 65) building.lvl = 65        // check for max lvl (65)
         }
     })
@@ -476,6 +478,7 @@ export const calcTimeForAllBuildings = (buildings) => {
         tib: costs.tib/production.tib,
         power: costs.tib/production.power
     }
+    console.log({production, costs, time })
     return time
 }
 

@@ -10,7 +10,7 @@ import icon_power from './../img/icon/icon_power.png'
 import icon_credits from './../img/icon/icon_credits.png'
 // import { changeBuilding  } from './../actions/buildings'
 // import { changeFraction } from './../actions/menu'
-// import { buildingKeys } from './../services/buildingKeys'
+import { calcTimeForAllBuildings } from './../util/production'
 import './../style/Details.css'
 
 
@@ -29,8 +29,9 @@ class Details extends Component {
     }
 
     render() {
-        const { days30, days90, days120, building } = this.props
+        const { days30, days90, days120, building, buildings } = this.props
 
+        const time = calcTimeForAllBuildings(buildings)
         return (
                 <div className="Details">
                     <div className="buttons">
@@ -89,7 +90,7 @@ class Details extends Component {
                     </div>}
 
 
-                    rest
+                    {JSON.stringify(time)}
                 </div>
             //
 
@@ -127,7 +128,8 @@ function mapStateToProps(state) {
         days30: state.production.data[29],
         days90: state.production.data[89],
         days120: state.production.data[119],
-        building: state.buildings[state.menu.from]|| false
+        building: state.buildings[state.menu.from]|| false,
+        buildings: state.buildings,
     }
 }
 
