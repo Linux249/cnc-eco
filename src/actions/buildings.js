@@ -2,7 +2,7 @@
  * Created by Bombassd on 27.04.2017.
  */
 import { calcProduction } from './production'
-import { showBuildingMenu } from './menu'
+//import { showBuildingMenu } from './menu'
 import { buildingKeys } from './../services/buildingKeys'
 
 export function deleteBuilding(from)

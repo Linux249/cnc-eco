@@ -1,44 +1,37 @@
 /**
  * Created by Bombassd on 03.01.2017.
  */
-
-
-
-export const calcBaseUpCost = (buildings) => {
-    const costs_tiberium =  [1, 2, 3, 4, 20, 110, 360, 1100, 3200, 8800, 22400, 48000, 63360, 83635, 110398, 145726, 192358, 253913, 335165, 442418, 583992, 770869, 1017547, 1343162, 1772974, 2340326,
-        3089230, 4077783, 5382674, 7105130, 9378771, 12379978, 16341571, 21570873, 28473552, 37585089, 49612318, 65488260, 86444503, 114106743, 150620901, 198819590, 262441859, 346423253,
-        457278694, 603607877, 796762397, 1051726364, 1388278801, 1832528017, 2418936983, 3192996817, 4214755798, 5563477654, 7343790503, 9693803464, 12795820573, 16890483156, 22295437766,
-        29429977851, 38847570764, 51278793408, 67688007299, 89348169635, 117939583918, 117939583918]
-    let costs = {
-        tib:0,
-        power: 0
-    }
-    buildings.forEach( building => {
-        if(building.type  && building.lvl <= 65) {
-            switch(building.type)
-            {
-                case "n":       // kris harvester
-                case "h":       // tib harvester
-                    costs.tib += costs_tiberium[building.lvl]
-                    costs.power += Math.round(costs_tiberium[building.lvl]/4*3 )    //power coosts for a harvester
-                    break
-                case "s":       // silo
-                case "a":       // akku
-                    costs.tib += costs_tiberium[building.lvl]
-                    costs.power += Math.round(costs_tiberium[building.lvl]/4)
-                    break
-                case "r":       // rafenerieeee
-                    costs.tib += costs_tiberium[building.lvl]*2 // dubble costs
-                    costs.power += Math.round(costs_tiberium[building.lvl]/2)       //power costs for a raf
-                    break
-            }
-        }
-
-    })
-    return costs
+function cloneObject(object) {
+    return JSON.parse(JSON.stringify(object));
 }
 
-function calcBuildingCost(building) {
+const roundTwoPoints = (p1, p2, day) => {
+    const prod = {
+        tib: 0,
+        cris: 0,
+        power: 0,
+        credits: 0,
+    }
+    // for each of the 4 productions
+    for(let p in prod){
+        // x is time/days - y the production
+        const x1 = p1.time
+        const y1 = p1.prod[p]
+        const x2 = p2.time
+        const y2 = p2.prod[p]
+        if(y1 === y2) prod[p] =  y2
+        else
+        {
+            const exp1 = (x2-day)/(x2-x1)
+            const exp2 = (day-x1)/(x2-x1)
+            // console.log({x1, y1, x2, y2, exp1, exp2})
+            prod[p] = Math.round(Math.pow(y1, exp1)*Math.pow(y2, exp2))
+        }
+    }
+    return prod
+}
+
+const calcBuildingCost = (building) => {
     const costs_tiberium =  [1, 2, 3, 4, 20, 110, 360, 1100, 3200, 8800, 22400, 48000, 63360, 83635, 110398, 145726, 192358, 253913, 335165, 442418, 583992, 770869, 1017547, 1343162, 1772974, 2340326,
         3089230, 4077783, 5382674, 7105130, 9378771, 12379978, 16341571, 21570873, 28473552, 37585089, 49612318, 65488260, 86444503, 114106743, 150620901, 198819590, 262441859, 346423253,
         457278694, 603607877, 796762397, 1051726364, 1388278801, 1832528017, 2418936983, 3192996817, 4214755798, 5563477654, 7343790503, 9693803464, 12795820573, 16890483156, 22295437766,
@@ -47,6 +40,7 @@ function calcBuildingCost(building) {
         tib:0,
         power: 0
     }
+    // if (building.lvl > 65) building.lvl = 65
 
     if(building.type  && building.lvl <= 65) {
         switch(building.type)
@@ -65,6 +59,8 @@ function calcBuildingCost(building) {
                 costs.tib += costs_tiberium[building.lvl]*2 // dubble costs
                 costs.power += Math.round(costs_tiberium[building.lvl]/2)       //power costs for a raf
                 break
+            default:
+                break
         }
     }
 
@@ -73,172 +69,24 @@ function calcBuildingCost(building) {
 
 }
 
-
-const allBuildingLvLUp = (base, lvl = 0) => {
-    if(base.buildings) {
-        base.buildings.forEach(function(building){
-            if (building.lvl){
-                building.lvl += lvl     //upgrade building lvl
-                if (building.lvl > 65) building.lvl = 65        // check for max lvl (65)
-            }
-        })
+const calcBuildingCostAll = (buildings, lvl = 1) => {
+    let costs = {
+        tib:0,
+        power: 0
     }
-    return base
+    buildings.forEach( building => {
+        if (building.lvl){
+            costs += calcBuildingCost(building)
+            // if (building.lvl > 65) building.lvl = 65        // check for max lvl (65)
+        }
+    })
+
+    return costs
 }
 
-export function futureProduction(buildings, days = 121) {
-    buildings = JSON.parse(JSON.stringify(buildings))
-    const data = []
-    let time = 0
 
-    while (time < days) {
-        for(let i in buildings) {
-            if(Object.keys(buildings[i]).length !== 0) {
-                const costs = calcBuildingCost(buildings[i])
-                const prod = calcBaseProduction(buildings)
-                const timeTib = costs.tib / prod.tib
-                const timePower = costs.power / prod.power
-                time += timePower > timeTib ? timePower/24 : timeTib/24 // for days
-
-                // TODO Plants doesnt give cost back - problem also with other buildings with 0 costs
-                if(time > 0) {
-                    data.push({
-                        time,  // time like 4,5,5,6,7,7,8,9,
-                        prod
-                    })
-                }
-                buildings[i].lvl += 1
-            }
-
-        }
-    }
-
-    // the two points give the production item around the given day
-    // it returns he calculatet produktion eactly on the given day
-    const roundTwoPoints = (p1, p2, day) => {
-        const prod = {
-            tib: 0,
-            cris: 0,
-            power: 0,
-            credits: 0,
-        }
-        // for each of the 4 productions
-        for(let p in prod){
-            // x is time/days - y the production
-            const x1 = p1.time
-            const y1 = p1.prod[p]
-            const x2 = p2.time
-            const y2 = p2.prod[p]
-            if(y1 === y2) prod[p] =  y2
-            else
-            {
-                const exp1 = (x2-day)/(x2-x1)
-                const exp2 = (day-x1)/(x2-x1)
-                // console.log({x1, y1, x2, y2, exp1, exp2})
-                prod[p] = Math.round(Math.pow(y1, exp1)*Math.pow(y2, exp2))
-            }
-        }
-        return prod
-    }
-
-
-    //for day in days
-    const expData = []
-    for(let d = 1; d<=days; d++ ){
-        const time = data.find((o, i) => o.time > d ? i: false)
-        const i = data.findIndex(o => o === time)
-        // console.log(time)
-        // console.log(i)
-        // console.log(data[i-1].prod)
-        // console.log(roundTwoPoints(data[i], data[i-1], d))
-        // console.log(data[i].prod)
-        expData.push({
-            prod: roundTwoPoints(data[i], data[i-1], d),
-            time: d
-        })
-
-
-
-
-    }
-
-
-    // hier wurden alle schritte auf tage gerundet und dann wurden die mit den gleichen Tag "geglättet" (addiert und durch # dividiert)
-/*    const mergedData = [] // array of geglaetteten Daten
-    let i = 0
-    while(i < data.length)
-    {
-        const prod = {
-            tib: 0,
-            cris: 0,
-            power: 0,
-            credits: 0
-        }
-        let y = data[i].time  // time for this group
-        let c = 0  //count equal time
-        while(i < data.length && data[i].time === y)
-        {
-            c++
-            prod.tib += data[i].prod.tib
-            prod.cris += data[i].prod.cris
-            prod.power += data[i].prod.power
-            prod.credits += data[i].prod.credits
-            ++i
-        }
-
-        prod.tib = prod.tib/c
-        prod.cris = prod.cris/c
-        prod.power = prod.power/c
-        prod.credits = prod.credits/c
-        mergedData.push({
-            time: y,
-            prod
-        })
-
-    }*/
-    return expData
-}
-
-export const productionOverDays = (base, days) => {
-    base = cloneObject(base)
-    let prodOverTime = []
-    let limit = days*24
-    let time = 0
-    while(time < limit) {
-        console.error("WHILE WIRD IMMER WIEDER AUFGERUFEB=??")
-        console.log(time)
-        console.log(limit)
-        let production = calcBaseProduction(base.buildings)
-        let costs = calcBaseUpCost(base.buildings)
-        console.log(production)
-        console.log(costs)
-        prodOverTime.push({
-            production,
-            time
-        })
-        base = allBuildingLvLUp(base, 1)
-        let cost = 0
-        if (costs.tib/production.tib > costs.power/production.power) cost = costs.tib/production.tib
-        else cost = costs.power/production.power
-        time  +=  cost
-    }
-    let ret = {}
-    ret.days = days
-    ret.time = prodOverTime.map((time) => {return Math.round(time.time*100/24)/100})       //round
-    ret.tib = prodOverTime.map((prod) => {return prod.production.tib})
-    ret.cris = prodOverTime.map((prod) => {return prod.production.cris})
-    ret.power = prodOverTime.map((prod) => {return prod.production.power})
-    ret.credits = prodOverTime.map((prod) => {return prod.production.credits})
-    console.log("DIREKT LÖSCHEN")
-    console.log(ret)
-    return ret
-}
-
-function cloneObject(object) {
-    return JSON.parse(JSON.stringify(object));
-}
 /*
-    calc the produktion from Base
+ calc the produktion from Base
  */
 export const calcBaseProduction = (buildings) =>
 {
@@ -301,7 +149,7 @@ export const calcBaseProduction = (buildings) =>
                     let j = i + n       // j: neighbour
                     if (0 <= j && j <= 71)
                     {
-                         if (buildings[j] && buildings[j].type === "h")     // h = tib
+                        if (buildings[j] && buildings[j].type === "h")     // h = tib
                         {
                             production[0] += silo_production[building.lvl]       // 0 = tib
                         } else if (buildings[j] && buildings[j].type === "n")     //n = kris
@@ -440,3 +288,231 @@ export const calcBaseProduction = (buildings) =>
         credits: production[3],
     }
 }
+
+/*
+    full base +1
+ */
+export const calcBaseUpCost = (buildings) => {
+    const costs_tiberium =  [1, 2, 3, 4, 20, 110, 360, 1100, 3200, 8800, 22400, 48000, 63360, 83635, 110398, 145726, 192358, 253913, 335165, 442418, 583992, 770869, 1017547, 1343162, 1772974, 2340326,
+        3089230, 4077783, 5382674, 7105130, 9378771, 12379978, 16341571, 21570873, 28473552, 37585089, 49612318, 65488260, 86444503, 114106743, 150620901, 198819590, 262441859, 346423253,
+        457278694, 603607877, 796762397, 1051726364, 1388278801, 1832528017, 2418936983, 3192996817, 4214755798, 5563477654, 7343790503, 9693803464, 12795820573, 16890483156, 22295437766,
+        29429977851, 38847570764, 51278793408, 67688007299, 89348169635, 117939583918, 117939583918]
+    let costs = {
+        tib:0,
+        power: 0
+    }
+    buildings.forEach( building => {
+        if(building.type  && building.lvl <= 65) {
+            switch(building.type)
+            {
+                case "n":       // kris harvester
+                case "h":       // tib harvester
+                    costs.tib += costs_tiberium[building.lvl]
+                    costs.power += Math.round(costs_tiberium[building.lvl]/4*3 )    //power coosts for a harvester
+                    break
+                case "s":       // silo
+                case "a":       // akku
+                    costs.tib += costs_tiberium[building.lvl]
+                    costs.power += Math.round(costs_tiberium[building.lvl]/4)
+                    break
+                case "r":       // rafenerieeee
+                    costs.tib += costs_tiberium[building.lvl]*2 // dubble costs
+                    costs.power += Math.round(costs_tiberium[building.lvl]/2)       //power costs for a raf
+                    break
+                default:
+                    break
+            }
+        }
+
+    })
+    return costs
+}
+
+export const futureProduction = (buildings, days = 121) => {
+    buildings = cloneObject(buildings)
+    const data = []
+    let tibTimeLeft = 0,
+        powerTimeLeft = 0
+    let time = 0
+
+    // Falls die benöigte Zeit fürs tib änger dauert als fürs Strom (tibTime > powerTime) dann liegt nach überflüssiger Strom rum
+    // dieser wird beim nächsten mal verwendet und die stromkosten verringer sind um den betrag der "rum liegt"
+    // Ist er groß genug um die gesamten kosten zu decken dann bleibt etwas über.
+    // Hinzu kommt dann auch noch weiterer der während des wartens auf tib prouziet wird
+
+    while (time < days)
+    {
+        // todo hier die reinfolge des bauen festlegen
+        for(let i in buildings) {
+            if(Object.keys(buildings[i]).length !== 0) {
+                const costs = calcBuildingCost(buildings[i])
+                const prod = calcBaseProduction(buildings)
+                let tibTime = costs.tib / prod.tib/24 //- tibTimeLeft   // shoud be possible to become negativ
+                let powerTime = costs.power / prod.power/24 //- powerTimeLeft
+                //if (tibTime <= 0) tibTimeLeft = -1*tibTime      // if negativ it means their ist still
+
+                if(tibTimeLeft > 0) {
+                    if (tibTime > tibTimeLeft) {
+                        tibTime -= tibTimeLeft
+                        tibTimeLeft = 0
+                    } else  {
+                        tibTimeLeft -= tibTime
+                        tibTime = 0
+                    }
+
+                }
+                if(powerTimeLeft > 0) {
+                    if (powerTime > powerTimeLeft) {
+                        powerTime -= powerTimeLeft
+                        powerTimeLeft = 0
+                    } else  {
+                        powerTimeLeft -= powerTime
+                        powerTime = 0
+                    }
+
+                }
+
+                //if (powerTime <= 0) powerTimeLeft = -1*powerTime
+                if(powerTime > tibTime) {
+                    time +=  powerTime
+                    tibTimeLeft += powerTime - tibTime
+                    //powerTimeLeft = 0
+                   // tibTimeLeft = 0
+
+                }
+                else {
+                    time += tibTime
+                    powerTimeLeft += tibTime - powerTime
+                   // tibTimeLeft = 0
+                  //  powerTimeLeft = 0
+
+
+                } // for days
+                if (!(buildings[i].lvl %10)) console.log({time, tibTimeLeft, powerTimeLeft}, buildings[i])
+
+                // TODO Plants doesnt give cost back - problem also with other buildings with 0 costs
+                if(time > 0) {
+                    data.push({
+                        time,  // time like 4,5,5,6,7,7,8,9,
+                        prod
+                    })
+                }
+                buildings[i].lvl += 1
+            }
+
+        }
+    }
+
+    // the two points give the production item around the given day
+    // it returns he calculatet produktion eactly on the given day
+
+
+
+    //for day in days
+    const expData = []
+    for(let d = 1; d<=days; d++ ){
+        const time = data.find((o, i) => o.time > d ? i: false)
+        const i = data.findIndex(o => o === time)
+        // console.log(time)
+        // console.log(i)
+        // console.log(data[i-1].prod)
+        // console.log(roundTwoPoints(data[i], data[i-1], d))
+        // console.log(data[i].prod)
+        expData.push({
+            prod: roundTwoPoints(data[i], data[i-1], d),
+            time: d
+        })
+
+
+
+
+    }
+
+
+    // hier wurden alle schritte auf tage gerundet und dann wurden die mit den gleichen Tag "geglättet" (addiert und durch # dividiert)
+/*    const mergedData = [] // array of geglaetteten Daten
+    let i = 0
+    while(i < data.length)
+    {
+        const prod = {
+            tib: 0,
+            cris: 0,
+            power: 0,
+            credits: 0
+        }
+        let y = data[i].time  // time for this group
+        let c = 0  //count equal time
+        while(i < data.length && data[i].time === y)
+        {
+            c++
+            prod.tib += data[i].prod.tib
+            prod.cris += data[i].prod.cris
+            prod.power += data[i].prod.power
+            prod.credits += data[i].prod.credits
+            ++i
+        }
+
+        prod.tib = prod.tib/c
+        prod.cris = prod.cris/c
+        prod.power = prod.power/c
+        prod.credits = prod.credits/c
+        mergedData.push({
+            time: y,
+            prod
+        })
+
+    }*/
+    return expData
+}
+
+
+/*
+
+ */
+export const calcTimeForAllBuildings = (buildings) => {
+    const production = calcBaseProduction(buildings)
+    const costs = calcBuildingCostAll(buildings)
+    const time = {
+        tib: costs.tib/production.tib,
+        power: costs.tib/production.power
+    }
+    return time
+}
+
+
+/*export const productionOverDays = (base, days) => {
+    base = cloneObject(base)
+    let prodOverTime = []
+    let limit = days*24
+    let time = 0
+    while(time < limit) {
+        console.error("WHILE WIRD IMMER WIEDER AUFGERUFEB=??")
+        console.log(time)
+        console.log(limit)
+        let production = calcBaseProduction(base.buildings)
+        let costs = calcBaseUpCost(base.buildings)
+        console.log(production)
+        console.log(costs)
+        prodOverTime.push({
+            production,
+            time
+        })
+        base = allBuildingLvLUp(base, 1)
+        let cost = 0
+        if (costs.tib/production.tib > costs.power/production.power) cost = costs.tib/production.tib
+        else cost = costs.power/production.power
+        time  +=  cost
+    }
+    let ret = {}
+    ret.days = days
+    ret.time = prodOverTime.map((time) => {return Math.round(time.time*100/24)/100})       //round
+    ret.tib = prodOverTime.map((prod) => {return prod.production.tib})
+    ret.cris = prodOverTime.map((prod) => {return prod.production.cris})
+    ret.power = prodOverTime.map((prod) => {return prod.production.power})
+    ret.credits = prodOverTime.map((prod) => {return prod.production.credits})
+    console.log("DIREKT LÖSCHEN")
+    console.log(ret)
+    return ret
+}*/
+
+

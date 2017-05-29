@@ -29,7 +29,7 @@ class Details extends Component {
     }
 
     render() {
-       const { days30, days90, days120, building } = this.props
+        const { days30, days90, days120, building } = this.props
 
         return (
                 <div className="Details">
@@ -89,6 +89,7 @@ class Details extends Component {
                     </div>}
 
 
+                    rest
                 </div>
             //
 

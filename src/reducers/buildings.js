@@ -12,7 +12,7 @@ export function buildings(state = initState, action) {
     switch (action.type) {
         case 'CHANGE_BUILDING':
             return state.map((building, i) => {
-                if(i == action.from) return {
+                if(i === action.from) return {
                     ...building,
                    // name: action.name,
                     type: action.t || building.t,
@@ -23,7 +23,7 @@ export function buildings(state = initState, action) {
 
         case 'DELETE_BUILDING':
             return state.map((building, i) => {
-                if(i == action.from) return { }
+                if(i === action.from) return { }
                 else return building
             })
         default:
