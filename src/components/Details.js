@@ -30,8 +30,9 @@ class Details extends Component {
     }
 
     rand = (buildings) => {
-        const best = findBestToLvlUpNext(buildings)
-        console.log(best)
+        findBestToLvlUpNext(buildings).then(data => console.log({data}))
+        // console.log(await best )
+
     }
 
     render() {

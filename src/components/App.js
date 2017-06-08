@@ -13,12 +13,6 @@ import Base from './Base.js'
 
 class App extends Component
 {
-    constructor(props){
-        super()
-
-    }
-
-
     componentDidMount(){
         console.log("PARAM FROM URL")
         const url = this.props.params.base
