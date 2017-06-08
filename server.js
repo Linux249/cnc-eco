@@ -10,7 +10,7 @@ const server = new Hapi.Server();
 server.connection({
     // host: 'cnc-eco.herokuapp.com',
     port: (process.env.PORT || 8000),
-    routes: { cors: false }
+    routes: { cors: true }
 });
 
 // server.log(['error', 'database', 'read']);
