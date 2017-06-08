@@ -9,6 +9,7 @@ const Hapi = require('hapi');
 const server = new Hapi.Server();
 server.connection({
     // host: 'cnc-eco.herokuapp.com',
+    host: (process.env.HOST || 'localhost'),
     port: (process.env.PORT || 8000),
     routes: { cors: true }
 });
@@ -36,6 +37,27 @@ server.route({
 });
 
 
+var io = require('socket.io')(server.listener, {'pingInterval': 1000});
+io.on('connect', function (socket) {
+
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+    });
+
+    socket.on("buildings", (buildings) => {
+        console.log("ON BUILDING")
+        const best = findBestToLvlUpNext(buildings, (id) => socket.emit("buildings", id))
+        socket.emit("buildings", best)
+
+    })
+
+    console.log("someone conecceted")
+
+});
+
+// io.on("buildings", (buildings) => {
+//     console.log(buildings)
+// })
 // Start the server
 server.start((err) => {
 

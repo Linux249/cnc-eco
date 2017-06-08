@@ -4,15 +4,15 @@
 import { futureProduction } from './production'
 
 // c param how many buildings shoud be lvled for analieze
-export function findBestToLvlUpNext(buildings, c = 3)
+export function findBestToLvlUpNext(buildings, callback,  c = 3)
 {
     let bestTibProd = [] //saves the building
     let maxProd = 0
     const length = buildings.length
 
-    for(let i = 0; i < 40; i++){
+    for(let i = 0; i < 20; i++){
         // LOGGING
-        if (i% 10 === 0)console.log(`run:  + ${i} + \t ${maxProd}`)
+        // if (i% 10 === 0)console.log(`run:  + ${i} + \t ${maxProd}`)
 
         // deep copy
         const copyBuildings = JSON.parse(JSON.stringify(buildings))
@@ -37,6 +37,8 @@ export function findBestToLvlUpNext(buildings, c = 3)
             if (tibProd > maxProd) {
                 maxProd = tibProd   // for compare with future results
                 bestTibProd = randoms   //save best results - array of slots
+                console.log(`New Best: run:  + ${i} + \t ${maxProd} \t ${bestTibProd}`)
+                if(callback) callback(bestTibProd)
             }
         }
     }
