@@ -8,7 +8,7 @@ const Hapi = require('hapi');
 // Create a server with a host and port
 const server = new Hapi.Server();
 server.connection({
-    host: 'cnc-eco.herokuapp.com',
+    // host: 'cnc-eco.herokuapp.com',
     port: (process.env.PORT || 8000),
     routes: { cors: false }
 });
