@@ -24,7 +24,7 @@ class App extends Component
         const url = this.props.params.base
         // console.info(param)
         console.log("update buildings in store")
-        this.props.updateBase(url)
+        if(url) this.props.updateBase(url)
 
 
     }

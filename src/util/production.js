@@ -390,7 +390,7 @@ export const futureProduction = (buildings, days = 121) => {
 
 
                 } // for days
-                if (!(buildings[i].lvl %10)) console.log({time, tibTimeLeft, powerTimeLeft}, buildings[i])
+                // if (!(buildings[i].lvl %10)) console.log({time, tibTimeLeft, powerTimeLeft}, buildings[i])
 
                 // TODO Plants doesnt give cost back - problem also with other buildings with 0 costs
                 if(time > 0) {
