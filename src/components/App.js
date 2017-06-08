@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import LineChart from './LineChart.js'
 import BaseHeader from './BaseHeader.js';
 import { hideBuildingMenu } from './../actions/menu'
+import { updateBuildingsFromURL } from './../actions/buildings'
 import './../style/App.css'
 
 // Components
@@ -12,11 +13,26 @@ import Base from './Base.js'
 
 class App extends Component
 {
+    constructor(props){
+        super()
+
+    }
 
 
+    componentDidMount(){
+        console.log("PARAM FROM URL")
+        const url = this.props.params.base
+        // console.info(param)
+        console.log("update buildings in store")
+        this.props.updateBase(url)
+
+
+    }
 
     render()
     {
+
+
 
         return(
             <div className="App" >
@@ -39,6 +55,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = (dispatch) => {
     return {
         hideMenu: () => dispatch(hideBuildingMenu()),
+        updateBase: (url) => dispatch(updateBuildingsFromURL(url))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);

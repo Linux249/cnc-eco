@@ -26,6 +26,11 @@ export function buildings(state = initState, action) {
                 if(i === action.from) return { }
                 else return building
             })
+        case 'UPDATE_ALL_BUILDINGS':
+            console.log("reducer")
+            console.log(action.buildings)
+            return action.buildings
+
         default:
             return state
     }
