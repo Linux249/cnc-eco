@@ -36,7 +36,6 @@ server.route({
 });
 
 
-
 // Start the server
 server.start((err) => {
 
