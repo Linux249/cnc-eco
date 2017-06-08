@@ -17,11 +17,11 @@ server.connection({
 
 // Add the route
 server.route({
-    method: 'POST',
-    path:'/hello',
+    method: 'GET',
+    path:'/',
     handler: function (request, reply) {
-        console.error("haloo")
-        return reply(request.payload);
+        // console.error("haloo")
+        return reply("hello");
     }
 });
 

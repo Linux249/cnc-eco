@@ -10,7 +10,7 @@ export function findBestToLvlUpNext(buildings, c = 3)
     let maxProd = 0
     const length = buildings.length
 
-    for(let i = 0; i < 15; i++){
+    for(let i = 0; i < 40; i++){
         // LOGGING
         if (i% 10 === 0)console.log(`run:  + ${i} + \t ${maxProd}`)
 
@@ -22,7 +22,7 @@ export function findBestToLvlUpNext(buildings, c = 3)
         while(randoms.length < c)
         {
             const random = Math.floor(Math.random()*length)
-            if (buildings[random].lvl) randoms.push(random)
+            if (buildings[random].lvl && buildings[random].type !== "p") randoms.push(random)
         }
 
         // upgrade these random buildings
