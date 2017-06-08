@@ -20,7 +20,7 @@ class Details extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: 1 // 0 = building, 1 = baseProd, 2 = random
+            show: 2 // 0 = building, 1 = baseProd, 2 = random
         }
     }
 

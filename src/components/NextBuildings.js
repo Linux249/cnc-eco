@@ -1,22 +1,25 @@
 /**
  * Created by Bombassd on 08.06.2017.
  */
-
-
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { shortenNumber } from './../services/menu'
-import icon_tib from './../img/icon/icon_tiberium.png'
-import icon_cris from './../img/icon/icon_crystal.png'
-import icon_power from './../img/icon/icon_power.png'
-import icon_credits from './../img/icon/icon_credits.png'
-// import { changeBuilding  } from './../actions/buildings'
-// import { changeFraction } from './../actions/menu'
-import { calcTimeForAllBuildings } from './../util/production'
-import { findBestToLvlUpNext } from './../util/performance'
-import './../style/Details.css'
+import styled from 'styled-components';
+// import './../style/Details.css'
+const ListItem = styled.div`
+  display: flex;
+  flex-flow: column;
+  width: 50%
+  border-radius: 3px;
+  padding: 0.25em 1em;
+  margin: 0 1em;
+  background: transparent;
+  color: palevioletred;
+  border: 2px solid palevioletred;
+`
 
+const Row = styled.div`
+    display: flex;
+`
 
 class NextBuildings extends Component {
     constructor(props) {
@@ -24,7 +27,7 @@ class NextBuildings extends Component {
         this.state = {
             show: 1, // 0 = building, 1 = baseProd, 2 = random
             loading: true,
-            buildings: []
+            buildings: [21, 23, 24]
         }
     }
 
@@ -44,10 +47,10 @@ class NextBuildings extends Component {
         // console.log(await best )
 
     }
-    componentDidMount(){
-
-        this.getNextBuildings(this.props.buildings)
-    }
+    // componentDidMount(){
+    //
+    //     this.getNextBuildings(this.props.buildings)
+    // }
 
     render() {
         const { buildings } = this.props
@@ -57,14 +60,14 @@ class NextBuildings extends Component {
             <div className="NextBuildings">
                 {this.state.loading && "loading"}
                 {this.state.buildings.map((building, i) =>
-                    <div className="ListItem"
+                    <ListItem className="ListItem"
                         key={i}
                     >
-                        {buildings[building].type}
-                        {buildings[building].lvl}
-                        Slot: {building}
+                        <Row >Type: {buildings[building].type}</Row>
+                        <Row >Level: {buildings[building].lvl}</Row>
+                        <Row >Slot: {building} </Row>
 
-                    </div>
+                    </ListItem>
                 )}
 
             </div>
