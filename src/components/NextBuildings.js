@@ -4,21 +4,40 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components';
+import { changeBuilding  } from './../actions/buildings'
+
 // import './../style/Details.css'
 const ListItem = styled.div`
   display: flex;
   flex-flow: column;
-  width: 50%
-  border-radius: 3px;
-  padding: 0.25em 1em;
-  margin: 0 1em;
-  background: transparent;
-  color: palevioletred;
-  border: 2px solid palevioletred;
+ 
+  
+  margin: 2px 0;
+
+  background: white;
+  
 `
 
 const Row = styled.div`
     display: flex;
+    
+`
+const Button = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 33%;
+    height: 30px;
+
+    background-color: #EEE;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #CCC;
+    border-radius: 3px;
+    margin: 2px;
+    ${props => props.loading && `
+		background: grey;
+		color: white;
+	`}
 `
 
 class NextBuildings extends Component {
@@ -26,42 +45,63 @@ class NextBuildings extends Component {
         super(props);
         this.state = {
             show: 1, // 0 = building, 1 = baseProd, 2 = random
-            loading: true,
-            buildings: [21, 23, 24]
+            loading: false,
+            buildings: [33],
+            error: false
         }
+    }
+
+    removeFromList(index) {
+        console.log(index)
+        this.setState(prevState => ({
+                buildings: prevState.buildings.filter((_, i) => i !== index)
+        }))
+
     }
 
 
     getNextBuildings = (buildings) => {
-        // this.toggleDetails(2)
-        fetch("http://localhost:8000/optimize", {
-            method: "POST",
-            body: JSON.stringify(buildings)
-        }).then(res => res.json())
-            .then(data => {
-                this.setState({loading: false})
-                this.setState({buildings: data})
-                console.log(data)
+        if(!this.state.loading)     //prevent for too many clicks/loads
+        {
+            this.setState({loading: true})
+            // this.toggleDetails(2)
+            fetch("http://localhost:8000/optimize", {
+                method: "POST",
+                body: JSON.stringify(buildings)
             })
-        // findBestToLvlUpNext(buildings).then(data => console.log({data}))
-        // console.log(await best )
-
+                .then(res => res.json())
+                .then(data => {
+                    this.setState({loading: false})
+                    this.setState({buildings: data})
+                    console.log(data)
+                })
+                .catch(e => this.setState({error: true, loading: false}))
+        }
     }
-    // componentDidMount(){
-    //
-    //     this.getNextBuildings(this.props.buildings)
-    // }
+    componentDidMount(){
+        this.getNextBuildings(this.props.buildings)
+    }
 
     render() {
-        const { buildings } = this.props
-
+        const { buildings, changeBuild} = this.props
+        const { loading } = this.state
 
         return (
             <div className="NextBuildings">
-                {this.state.loading && "loading"}
+                <Button
+                    loading={loading}
+                    onClick={() => this.getNextBuildings(buildings)}
+                >
+                    {loading ? "loading": "Schuffle"}
+                </Button>
+
                 {this.state.buildings.map((building, i) =>
-                    <ListItem className="ListItem"
+                    <ListItem
                         key={i}
+                        onClick={() => {
+                            this.removeFromList(i)
+                            changeBuild(building, buildings[building].type , buildings[building].lvl + 1 )
+                        }}
                     >
                         <Row >Type: {buildings[building].type}</Row>
                         <Row >Level: {buildings[building].lvl}</Row>
@@ -69,6 +109,7 @@ class NextBuildings extends Component {
 
                     </ListItem>
                 )}
+                {this.state.error && "FEHLER"}
 
             </div>
             //
@@ -109,10 +150,14 @@ function mapStateToProps(state) {
         // days120: state.production.data[119],
         // building: state.buildings[state.menu.from]|| false,
         buildings: state.buildings,
+
+
     }
 }
 
-const mapDispatchToProps = (dispatch) => { return {}
+const mapDispatchToProps = (dispatch) => { return {
+        changeBuild: (from, t, lvl) => dispatch(changeBuilding(from, t, lvl)),
+    }
     // return {
     //     changeBuild: (from, t, lvl) => dispatch(changeBuilding(from, t, lvl)),
     //     changeFraction: fraction => dispatch(changeFraction(fraction))

@@ -105,8 +105,7 @@ class Details extends Component {
                     </div>}
                     {
                         this.state.show === 2 &&
-                        <NextBuildings
-                        buildings={buildings}/>
+                        <NextBuildings />
 
                     }
 
