@@ -4,6 +4,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { shortenNumber } from './../services/menu'
+import NextBuildings from './NextBuildings'
 import icon_tib from './../img/icon/icon_tiberium.png'
 import icon_cris from './../img/icon/icon_crystal.png'
 import icon_power from './../img/icon/icon_power.png'
@@ -19,7 +20,7 @@ class Details extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: 1 // 0 = building, 1 = baseProd
+            show: 1 // 0 = building, 1 = baseProd, 2 = random
         }
     }
 
@@ -30,7 +31,13 @@ class Details extends Component {
     }
 
     rand = (buildings) => {
-        findBestToLvlUpNext(buildings).then(data => console.log({data}))
+        this.toggleDetails(2)
+        fetch("http://localhost:8000/optimize", {
+            method: "POST",
+            body: JSON.stringify(buildings)
+        }).then(res => res.json())
+            .then(data => console.log(data))
+        // findBestToLvlUpNext(buildings).then(data => console.log({data}))
         // console.log(await best )
 
     }
@@ -96,7 +103,12 @@ class Details extends Component {
                             </div>
                         </div>
                     </div>}
+                    {
+                        this.state.show === 2 &&
+                        <NextBuildings
+                        buildings={buildings}/>
 
+                    }
 
                     {JSON.stringify(time)}
                 </div>

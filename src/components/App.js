@@ -10,7 +10,6 @@ import './../style/App.css'
 // Components
 import Base from './Base.js'
 
-
 class App extends Component
 {
     componentDidMount(){
@@ -19,15 +18,10 @@ class App extends Component
         // console.info(param)
         console.log("update buildings in store")
         if(url) this.props.updateBase(url)
-
-
     }
 
     render()
     {
-
-
-
         return(
             <div className="App" >
                 <BaseHeader ref="target"/>
@@ -35,15 +29,13 @@ class App extends Component
                 <LineChart />
             </div>
         )
-  }
+    }
 
 }
 
 
 function mapStateToProps(state) {
-    return ({
-
-    })
+    return ({})
 }
 
 const mapDispatchToProps = (dispatch) => {
