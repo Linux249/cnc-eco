@@ -5,13 +5,18 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components';
 import { changeBuilding  } from './../actions/buildings'
+import FlipMove from 'react-flip-move'
+const io = require('socket.io-client')
+const socket = io("http://localhost:8000")
+
+
+
 
 // import './../style/Details.css'
 const ListItem = styled.div`
   display: flex;
   flex-flow: column;
- 
-  
+
   margin: 2px 0;
 
   background: white;
@@ -46,7 +51,7 @@ class NextBuildings extends Component {
         this.state = {
             show: 1, // 0 = building, 1 = baseProd, 2 = random
             loading: false,
-            buildings: [33],
+            buildings: [],
             error: false
         }
     }
@@ -61,25 +66,83 @@ class NextBuildings extends Component {
 
 
     getNextBuildings = (buildings) => {
-        if(!this.state.loading)     //prevent for too many clicks/loads
+        console.log("sart socket")
+        socket.emit("buildings", buildings);
+        socket.on("buildings", (data) => {
+            console.log("New data: " + data)
+            this.setState({buildings: data})
+        }  )
+
+        /*if(!this.state.loading)     //prevent for too many clicks/loads
         {
-            this.setState({loading: true})
-            // this.toggleDetails(2)
-            fetch("http://localhost:8000/optimize", {
+            this.setState({loading: true})  //start loading
+            this.setState({error: false})  // reset error
+            this.setState({buildings: []})  // delete old items
+            // call new items/buildings from server
+            fetch("https://cnc-eco.herokuapp.com/optimize", {
+                method: "POST",
+                body: JSON.stringify(buildings)
+            }).then(response => {
+                // response.body is a readable stream.
+                // Calling getReader() gives us exclusive access to
+                // the stream's content
+                var reader = response.body.getReader();
+                var bytesReceived = 0;
+
+                // read() returns a promise that resolves
+                // when a value has been received
+                reader.read().then(function processResult(result) {
+                    // Result objects contain two properties:
+                    // done  - true if the stream has already given
+                    //         you all its data.
+                    // value - some data. Always undefined when
+                    //         done is true.
+                    if (result.done) {
+                        console.log("Fetch complete");
+                        return;
+                    }
+
+                    // result.value for fetch streams is a Uint8Array
+                    bytesReceived += result.value.length;
+                    console.log('Received', bytesReceived, 'bytes of data so far');
+
+                    // Read some more, and call this function again
+                    return reader.read().then(processResult);
+                });
+            });
+
+           /!* fetch("https://cnc-eco.herokuapp.com/optimize", {
                 method: "POST",
                 body: JSON.stringify(buildings)
             })
-                .then(res => res.json())
-                .then(data => {
-                    this.setState({loading: false})
-                    this.setState({buildings: data})
-                    console.log(data)
+                .then(res => res.arrayBuffer()/!*{
+                    console.log("RESP")
+                    const buffer = res.body
+                    buffer.read().then(function(result) {
+                        // array of cell values for the first row
+                        console.log(result.value);
+                    });
+                    // console.log(buffer.json())
+                    // return res.json()
+                }*!/)
+                .then(blob => {
+                    console.log(blob.read())
+                    const out = blob.slice()
+                    console.log(out)
                 })
-                .catch(e => this.setState({error: true, loading: false}))
-        }
+                // .then(data => {
+                //     this.setState({loading: false})     //finish loading
+                //     this.setState({buildings: data})    // update List
+                //     console.log(data)
+                // })
+                .catch(e => this.setState({error: true, loading: false}))*!/
+        }*/
     }
     componentDidMount(){
-        this.getNextBuildings(this.props.buildings)
+        socket.emit("connect", function(data){
+            console.log(data);
+        });
+        // this.getNextBuildings(this.props.buildings)
     }
 
     render() {
@@ -95,20 +158,28 @@ class NextBuildings extends Component {
                     {loading ? "loading": "Schuffle"}
                 </Button>
 
-                {this.state.buildings.map((building, i) =>
-                    <ListItem
-                        key={i}
-                        onClick={() => {
-                            this.removeFromList(i)
-                            changeBuild(building, buildings[building].type , buildings[building].lvl + 1 )
-                        }}
-                    >
-                        <Row >Type: {buildings[building].type}</Row>
-                        <Row >Level: {buildings[building].lvl}</Row>
-                        <Row >Slot: {building} </Row>
+                <FlipMove duration={250} easing="ease-out"
+                          staggerDurationBy="30"
+                          // duration={500}
+                          enterAnimation="accordianVertical"
+                          leaveAnimation="accordianVertical"
+                          // typeName=""
+                >
+                    {this.state.buildings.map((building, i) =>
+                        <ListItem
+                            key={i}
+                            onClick={() => {
+                                this.removeFromList(i)
+                                changeBuild(building, buildings[building].type , buildings[building].lvl + 1 )
+                            }}
+                        >
+                            <Row >Type: {buildings[building].type}</Row>
+                            <Row >Level: {buildings[building].lvl}</Row>
+                            <Row >Slot: {building} </Row>
 
-                    </ListItem>
-                )}
+                        </ListItem>
+                    )}
+                </FlipMove>
                 {this.state.error && "FEHLER"}
 
             </div>
