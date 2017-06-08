@@ -10,7 +10,7 @@ const server = new Hapi.Server();
 server.connection({
     host: 'localhost',
     port: 8000,
-    routes: { cors: true }
+    routes: { cors: false }
 });
 
 // server.log(['error', 'database', 'read']);
