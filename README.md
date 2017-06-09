@@ -25,6 +25,7 @@ Base
 
 Details
 - [x] add future produktion
+- [x] add random next best building 
 - [ ] add building infos
 App
 - [x] css flex structure for Head/Base/Chart rows
@@ -35,3 +36,8 @@ App
 - [ ] add modal to buttons for help informations (or a help sign in the corner?)
 - [ ] fix parse url input
 - [ ] fix url script(link) + ingame butten
+
+
+TODO
+- [] fading out/in lvl on change https://codesandbox.io/s/qxWllkMJ2
+
