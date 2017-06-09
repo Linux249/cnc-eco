@@ -22,6 +22,8 @@
     "nodemon": "^1.11.0"
   },
   "dependencies": {
+    "S": "0.0.1",
+    "async": "^2.4.1",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",

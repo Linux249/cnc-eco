@@ -37,23 +37,41 @@ server.route({
 });
 
 
-var io = require('socket.io')(server.listener, {'pingInterval': 1000});
+let io = require('socket.io')(server.listener, {'pingInterval': 1000});
 io.on('connect', function (socket) {
-
-    socket.on('disconnect', function(){
-        console.log('user disconnected');
-    });
-
-    socket.on("buildings", (buildings) => {
-        console.log("ON BUILDING")
-        const best = findBestToLvlUpNext(buildings, (id) => socket.emit("buildings", id))
-        socket.emit("buildings", best)
-
-    })
 
     console.log("someone conecceted")
 
+    socket.on("buildings", (buildings) => {
+        console.log("buildings emited - start searching")
+        findBestToLvlUpNext(buildings, foundNewBest )
+        // const interv = setInterval((i)=> {
+        //     console.log("interval " + i)
+        //     socket.emit("buildings", [ 32,16,16])
+        // }, 1000)
+
+        socket.on('disconnect', function(){
+            // clearInterval(interv)
+            console.log('user disconnected');
+        });
+
+        function foundNewBest(id) {
+            socket.emit("buildings", id)
+        }
+    })
+
+    // socket.on("buildings", (buildings) => {
+    //     console.log("ON BUILDING")
+    //     //
+    //
+    //
+    // })
+
+
+
+
 });
+
 
 // io.on("buildings", (buildings) => {
 //     console.log(buildings)
