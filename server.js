@@ -3,7 +3,9 @@
  */
 'use strict';
 import { findBestToLvlUpNext } from './src/performance'
-const Hapi = require('hapi');
+import Path from 'path'
+import Inert from 'inert'
+import Hapi from 'hapi'
 
 // Create a server with a host and port
 const server = new Hapi.Server();
@@ -11,20 +13,36 @@ server.connection({
     // host: 'cnc-eco.herokuapp.com',
     // host: (process.env.HOST || 'localhost'),
     port: (process.env.PORT || 8000),
-    routes: { cors: true }
+    routes: {
+        cors: true,
+        files: {
+            relativeTo: Path.join(__dirname, 'cnc-eco')
+        }
+    }
 });
 
+server.register(Inert, () => {});
+
+server.route({
+    method: 'GET',
+    path: '/{param*}',
+    handler: {
+        directory: {
+            path: "."
+        }
+    }
+});
 // server.log(['error', 'database', 'read']);
 
 // Add the route
-server.route({
-    method: 'GET',
-    path:'/',
-    handler: function (request, reply) {
-        // console.error("haloo")
-        return reply("hello");
-    }
-});
+// server.route({
+//     method: 'GET',
+//     path:'/',
+//     handler: function (request, reply) {
+//         // console.error("haloo")
+//         return reply("hello");
+//     }
+// });
 
 server.route({
     method: 'POST',
@@ -60,9 +78,6 @@ io.on('connect', function (socket) {
 });
 
 
-// io.on("buildings", (buildings) => {
-//     console.log(buildings)
-// })
 // Start the server
 server.start((err) => {
 
