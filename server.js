@@ -44,11 +44,7 @@ io.on('connect', function (socket) {
 
     socket.on("buildings", (buildings) => {
         console.log("buildings emited - start searching")
-        findBestToLvlUpNext(buildings, foundNewBest )
-        // const interv = setInterval((i)=> {
-        //     console.log("interval " + i)
-        //     socket.emit("buildings", [ 32,16,16])
-        // }, 1000)
+        findBestToLvlUpNext(buildings, foundNewBest)
 
         socket.on('disconnect', function(){
             // clearInterval(interv)
@@ -57,18 +53,9 @@ io.on('connect', function (socket) {
 
         function foundNewBest(id) {
             socket.emit("buildings", id)
+
         }
     })
-
-    // socket.on("buildings", (buildings) => {
-    //     console.log("ON BUILDING")
-    //     //
-    //
-    //
-    // })
-
-
-
 
 });
 
