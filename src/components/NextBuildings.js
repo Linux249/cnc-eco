@@ -7,7 +7,8 @@ import styled from 'styled-components';
 import { changeBuilding  } from './../actions/buildings'
 import FlipMove from 'react-flip-move'
 const io = require('socket.io-client')
-const socket = io("http://localhost:8000")
+const socketURL = `http://cnc-eco.herokuapp.com`
+const socket = io(socketURL)
 
 
 
@@ -64,7 +65,7 @@ class NextBuildings extends Component {
 
     }
 
-    toogleLoading(buildings) {
+    toogleLoading(buildings = []) {
         if(!this.state.loading) {
             socket.connect()
             socket.emit("buildings", buildings);
@@ -80,7 +81,7 @@ class NextBuildings extends Component {
 
 
     getNextBuildings = (buildings) => {
-        this.toogleLoading(buildings)
+        if(!this.state.loading) this.toogleLoading(buildings)
         console.log("button clicked")
         // socket.close();
         // socket.connect();
@@ -157,7 +158,8 @@ class NextBuildings extends Component {
     componentDidMount(){
         socket.on("buildings", data => {
             console.log(data)
-            this.setState({buildings: data})
+            if(data) this.setState({buildings: data})
+            else this.toogleLoading()
         })
 
         // socket.emit("connect", function(data){

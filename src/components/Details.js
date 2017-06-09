@@ -37,8 +37,6 @@ class Details extends Component {
             body: JSON.stringify(buildings)
         }).then(res => res.json())
             .then(data => console.log(data))
-        // findBestToLvlUpNext(buildings).then(data => console.log({data}))
-        // console.log(await best )
 
     }
 
