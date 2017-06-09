@@ -64,14 +64,30 @@ class NextBuildings extends Component {
 
     }
 
+    toogleLoading(buildings) {
+        if(!this.state.loading) {
+            socket.connect()
+            socket.emit("buildings", buildings);
+
+        } else {
+            socket.close()
+        }
+        this.setState(prevState => {
+            return {loading: !prevState.loading}
+        })
+
+    }
+
 
     getNextBuildings = (buildings) => {
-        console.log("sart socket")
-        socket.emit("buildings", buildings);
-        socket.on("buildings", (data) => {
-            console.log("New data: " + data)
-            this.setState({buildings: data})
-        }  )
+        this.toogleLoading(buildings)
+        console.log("button clicked")
+        // socket.close();
+        // socket.connect();
+
+
+
+
 
         /*if(!this.state.loading)     //prevent for too many clicks/loads
         {
@@ -139,9 +155,14 @@ class NextBuildings extends Component {
         }*/
     }
     componentDidMount(){
-        socket.emit("connect", function(data){
-            console.log(data);
-        });
+        socket.on("buildings", data => {
+            console.log(data)
+            this.setState({buildings: data})
+        })
+
+        // socket.emit("connect", function(data){
+        //     console.log(data);
+        // });
         // this.getNextBuildings(this.props.buildings)
     }
 
