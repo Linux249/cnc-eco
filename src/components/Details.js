@@ -4,6 +4,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import NextBuildings from './NextBuildings'
+import styled from 'styled-components';
 
 import { shortenNumber } from './../services/menu'
 import { calcBuildingCost } from './../util/production'
@@ -19,13 +20,17 @@ import icon_credits from './../img/icon/icon_credits.png'
 //  import { calcTimeForAllBuildings } from './../util/production'
 // import { findBestToLvlUpNext } from './../util/performance'
 import './../style/Details.css'
-
+const Row = styled.div`
+    display: flex;
+    align-content: center;
+    align-items: center;
+`
 
 class Details extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: 2 // 0 = building, 1 = baseProd, 2 = random
+            show: 0 // 0 = building, 1 = baseProd, 2 = random
         }
     }
 
@@ -62,15 +67,14 @@ class Details extends Component {
                     {/*die genau produktion in X Zeit könen wir nicht ausrechnen. Ein Gebäude ist in eher +0.03 Tagen erst fertig. Deshalb miteln wir den WErt durch die benötigte zeitvon */}
                     {this.state.show === 0 && building &&
                         <div className="buildings">
-                            <div>INFO</div>
-                            {/*<div>building info</div>*/}
-                            <div>{buildingNames[building.type]}</div>
-                            <div>prod - now: </div>
-                            <div>UPGRADE</div>
-                            <div><img src={icon_tib} alt={icon_tib} />{buildingProd.tib} tib Y pow</div>
-                            <div><img src={icon_power} alt={icon_tib} />{buildingProd.power} pow</div>
-                            <div>+production: </div>
-                            <div>kosten/+prod: </div>
+
+                            <Row>Name: {buildingNames[building.type]}</Row>
+                            <Row>Production: (arrowUp) </Row>
+                            <Row>Upgrade costs: </Row>
+                            <Row>{shortenNumber(buildingProd.tib, 2)}{' '}<img src={icon_tib} alt={icon_tib} /></Row>
+                            <Row>{shortenNumber(buildingProd.power, 2)}{' '}<img src={icon_power} alt={icon_tib} /></Row>
+                            {/*<div>+production: </div>*/}
+                            {/*<div>kosten/+prod: </div>*/}
                         </div>
                     }
                     {this.state.show === 0 && !building && <div>Kein Gebude ausgewählt</div> }
