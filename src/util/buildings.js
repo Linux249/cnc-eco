@@ -17,6 +17,25 @@ export const nod_buildings = {
     "w": "NOD_Defense Facility"
 }
 
+export const buildings = {
+    "r": "Refinery",
+    "p": "Power Plant",
+    "h": "Harvester",
+    "y": "Construction Yard",
+    "d": "Airport",
+    "q": "Defense HQ",
+    "b": "Barracks",
+    "s": "Silo",
+    "f": "Factory",
+    "n": "Harvester_Crystal",
+    "e": "Command Post",
+    "z": "Support_Art",
+    "i": "Support_Ion",
+    "a": "Accumulator",
+    "x": "Support_Air",
+    "w": "Defense Facility"
+}
+
 
 /*var nod_buildings_names = {
  "NOD_Refinery": "r",
