@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components';
 import { changeBuilding  } from './../actions/buildings'
+import { showBuildingMenu  } from './../actions/menu'
 import FlipMove from 'react-flip-move'
 const io = require('socket.io-client')
 const socketURL = `http://cnc-eco.herokuapp.com`
@@ -169,7 +170,7 @@ class NextBuildings extends Component {
     }
 
     render() {
-        const { buildings, changeBuild} = this.props
+        const { buildings, changeBuild, selectSlot} = this.props
         const { loading } = this.state
 
         return (
@@ -188,19 +189,29 @@ class NextBuildings extends Component {
                           leaveAnimation="accordianVertical"
                           // typeName=""
                 >
-                    {this.state.buildings.map((building, i) =>
-                        <ListItem
-                            key={i}
-                            onClick={() => {
-                                this.removeFromList(i)
-                                changeBuild(building, buildings[building].type , buildings[building].lvl + 1 )
-                            }}
-                        >
-                            <Row >Type: {buildings[building].type}</Row>
-                            <Row >Level: {buildings[building].lvl}</Row>
-                            <Row >Slot: {building} </Row>
+                    {this.state.buildings.map((slot, i) =>{
+                        const building = buildings[slot]
+                        img = require("./../img/buildings/"+fraction+  "/"+ building.type + ".png")
 
-                        </ListItem>
+
+                        return (
+                            <ListItem
+                                onMouseEnter={() => selectSlot(slot)}
+                                onMouseLeave={() => selectSlot(-1)}
+
+
+                                key={i}
+                                onClick={() => {
+                                    this.removeFromList(i)
+                                    changeBuild(slot, building.type , building.lvl + 1 )
+                                }}
+                            >
+                                <Row >Type: {building.type}</Row>
+                                <Row >Level: {building.lvl}</Row>
+                                <Row >Slot: {slot} </Row>
+
+                            </ListItem>)
+                    }
                     )}
                 </FlipMove>
                 {this.state.error && "FEHLER"}
@@ -251,6 +262,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => { return {
         changeBuild: (from, t, lvl) => dispatch(changeBuilding(from, t, lvl)),
+        selectSlot: (from) => dispatch(showBuildingMenu(from)),
     }
     // return {
     //     changeBuild: (from, t, lvl) => dispatch(changeBuilding(from, t, lvl)),
