@@ -22,11 +22,18 @@ Base
 - [x] add gdi/nod imgs
 - [ ] add contextmenu = delete
 - [ ] fix lvl for t/c pic
+- [ ] animate lvl up/down (old slide up, down)
 
 Details
-- [x] add future produktion
-- [x] add random next best building 
+- Building
 - [ ] add building infos
+- Production
+- [x] add future produktion
+- [ ] add chart comparing time for all buildings in tib/power
+- Random
+- [x] add random next best building 
+
+
 App
 - [x] css flex structure for Head/Base/Chart rows
 - [x] clean css code
@@ -34,8 +41,8 @@ App
 - [x] rename pics for bedder fraction change
 - [ ] add languages (flag symbol/ text)
 - [ ] add modal to buttons for help informations (or a help sign in the corner?)
-- [ ] fix parse url input
-- [ ] fix url script(link) + ingame butten
+- [x] fix parse url input
+- [x] fix url script(link) + ingame butten
 
 
 TODO
