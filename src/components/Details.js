@@ -3,8 +3,13 @@
  */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { shortenNumber } from './../services/menu'
 import NextBuildings from './NextBuildings'
+
+import { shortenNumber } from './../services/menu'
+import { calcBuildingCost } from './../util/production'
+import { buildings as buildingNames } from '../util/buildings'
+
+
 import icon_tib from './../img/icon/icon_tiberium.png'
 import icon_cris from './../img/icon/icon_crystal.png'
 import icon_power from './../img/icon/icon_power.png'
@@ -42,7 +47,8 @@ class Details extends Component {
     // }
 
     render() {
-        const { days30, days90, days120, building, buildings } = this.props
+        const { days30, days90, days120, building } = this.props
+        const buildingProd = calcBuildingCost(building)
 
         // const time = calcTimeForAllBuildings(buildings)
         return (
@@ -55,16 +61,17 @@ class Details extends Component {
 
                     {/*die genau produktion in X Zeit könen wir nicht ausrechnen. Ein Gebäude ist in eher +0.03 Tagen erst fertig. Deshalb miteln wir den WErt durch die benötigte zeitvon */}
                     {this.state.show === 0 && building &&
-                    <div className="buildings">
-                        <div>INFO</div>
-                        {/*<div>building info</div>*/}
-                        <div>name: </div>
-                        <div>prod - now: </div>
-                        <div>UPGRADE</div>
-                        <div>Kosten: X tib Y pow</div>
-                        <div>+production: </div>
-                        <div>kosten/+prod: </div>
-                    </div>
+                        <div className="buildings">
+                            <div>INFO</div>
+                            {/*<div>building info</div>*/}
+                            <div>{buildingNames[building.type]}</div>
+                            <div>prod - now: </div>
+                            <div>UPGRADE</div>
+                            <div><img src={icon_tib} alt={icon_tib} />{buildingProd.tib} tib Y pow</div>
+                            <div><img src={icon_power} alt={icon_tib} />{buildingProd.power} pow</div>
+                            <div>+production: </div>
+                            <div>kosten/+prod: </div>
+                        </div>
                     }
                     {this.state.show === 0 && !building && <div>Kein Gebude ausgewählt</div> }
 
@@ -147,7 +154,6 @@ function mapStateToProps(state) {
         days90: state.production.data[89],
         days120: state.production.data[119],
         building: state.buildings[state.menu.from]|| false,
-        buildings: state.buildings,
     }
 }
 

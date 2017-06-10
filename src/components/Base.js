@@ -31,7 +31,7 @@ render()
     return (
         <div className="BaseRow" >
             <div className="BaseSideLeft">
-                { parseInt(show) >= 0 && <BuildingMenu /> }
+                { parseInt(show, 10) >= 0 && <BuildingMenu /> }
             </div>
             <div className="BaseMiddle">
                 <div className="Base" >
