@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { changeBuilding  } from './../actions/buildings'
 import { changeFraction } from './../actions/menu'
-import { buildingKeys } from './../services/buildingKeys'
+import { buildingKeys } from './../util/buildings'
 import './../style/BuildingMenu.css'
 
 

@@ -4,10 +4,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components';
+import FlipMove from 'react-flip-move'
+
 import { changeBuilding  } from './../actions/buildings'
 import { showBuildingMenu  } from './../actions/menu'
-import FlipMove from 'react-flip-move'
-const io = require('socket.io-client')
+import { buildings as buildingNames } from '../util/buildings'
+import  io from 'socket.io-client'
 const socketURL = `http://cnc-eco.herokuapp.com`
 const socket = io(socketURL)
 
@@ -17,17 +19,16 @@ const socket = io(socketURL)
 // import './../style/Details.css'
 const ListItem = styled.div`
   display: flex;
-  flex-flow: column;
-
+  justify-content: space-around;
+  align-items: center;
   margin: 2px 0;
-
   background: white;
-  
+  height: 80px;
 `
 
-const Row = styled.div`
+const Column = styled.div`
     display: flex;
-    
+    flex-flow: column;
 `
 const Button = styled.div`
     display: flex;
@@ -53,7 +54,7 @@ class NextBuildings extends Component {
         this.state = {
             show: 1, // 0 = building, 1 = baseProd, 2 = random
             loading: false,
-            buildings: [],
+            buildings: [24, 10],
             error: false
         }
     }
@@ -170,7 +171,7 @@ class NextBuildings extends Component {
     }
 
     render() {
-        const { buildings, changeBuild, selectSlot} = this.props
+        const { buildings, fraction, changeBuild, selectSlot} = this.props
         const { loading } = this.state
 
         return (
@@ -191,8 +192,7 @@ class NextBuildings extends Component {
                 >
                     {this.state.buildings.map((slot, i) =>{
                         const building = buildings[slot]
-                        img = require("./../img/buildings/"+fraction+  "/"+ building.type + ".png")
-
+                        const img = require("./../img/buildings/"+fraction+  "/"+ building.type + ".png")
 
                         return (
                             <ListItem
@@ -206,9 +206,18 @@ class NextBuildings extends Component {
                                     changeBuild(slot, building.type , building.lvl + 1 )
                                 }}
                             >
-                                <Row >Type: {building.type}</Row>
-                                <Row >Level: {building.lvl}</Row>
-                                <Row >Slot: {slot} </Row>
+
+                                <img
+                                    height="80%"
+                                    src={img}
+                                    alt={building.type}
+                                />
+                                <Column >
+                                    {buildingNames[building.type]}<br/>
+                                    Level: {building.lvl}<br/>
+                                    Slot: {slot}
+                                </Column>
+
 
                             </ListItem>)
                     }
@@ -250,12 +259,8 @@ class NextBuildings extends Component {
 }
 function mapStateToProps(state) {
     return {
-        // days30: state.production.data[29],
-        // days90: state.production.data[89],
-        // days120: state.production.data[119],
-        // building: state.buildings[state.menu.from]|| false,
         buildings: state.buildings,
-
+        fraction: state.menu.fraction
 
     }
 }

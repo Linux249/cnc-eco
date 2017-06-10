@@ -1,3 +1,6 @@
+export const buildingKeys = ["t", "c", "h", "n", "s", "r", "a", "p", "y", "d", "b", "f", "q", "w", "e", "z", "x", "i"]
+
+
 export const nod_buildings = {
     "r": "NOD_Refinery",
     "p": "NOD_Power Plant",
@@ -75,3 +78,5 @@ export const buildings = {
  "w": "NOD_Defense Facility"
  }
  */
+
+
