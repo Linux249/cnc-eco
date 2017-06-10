@@ -85,6 +85,7 @@ class Details extends Component {
                         <div className="table">
                             <div className="column">
                                <br/>
+                               <br/>
                                 <img src={icon_tib} alt={icon_tib} />
                                 <img src={icon_cris} alt={icon_tib} />
                                 <img src={icon_power} alt={icon_tib} />
