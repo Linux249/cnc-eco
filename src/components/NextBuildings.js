@@ -176,6 +176,18 @@ class NextBuildings extends Component {
 
         return (
             <div className="NextBuildings">
+
+                <Button
+                    loading={true}
+                >
+                    Delete Buildings
+                </Button>
+                <Button>
+                    Place Silos/raffs/akku
+                </Button>
+                <Button>
+                    All lvl 30
+                </Button>
                 <Button
                     loading={loading}
                     onClick={() => this.getNextBuildings(buildings)}
