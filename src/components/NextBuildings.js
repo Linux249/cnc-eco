@@ -60,7 +60,6 @@ class NextBuildings extends Component {
     }
 
     removeFromList(index) {
-        console.log(index)
         this.setState(prevState => ({
                 buildings: prevState.buildings.filter((_, i) => i !== index)
         }))
@@ -215,7 +214,7 @@ class NextBuildings extends Component {
                                 key={i}
                                 onClick={() => {
                                     this.removeFromList(i)
-                                    changeBuild(slot, building.type , building.lvl + 1 )
+                                    changeBuild(slot, building.type , building.lvl - 1 )
                                 }}
                             >
 
