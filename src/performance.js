@@ -78,7 +78,7 @@ function* gen(buildings){
     const end = 1000
     while(i < end){
         const randoms = getRandomBuildings(buildings)
-        const copyBuildings= getUpgradedBase(buildings, randoms)
+        const copyBuildings= getDowngradeBase(buildings, randoms)
         const tibProd = futureProduction(copyBuildings)[119].prod.tib
 
         // if bedder results founded
@@ -107,10 +107,20 @@ function getRandomBuildings(buildings)
     return randoms
 }
 
+// upgrade bases given the slots in randoms (they are all broved buidlings)
 function getUpgradedBase(buildings, randoms)
 {
     const copyBuildings = JSON.parse(JSON.stringify(buildings))
     randoms.map(slot => copyBuildings[slot].lvl += 1)
+    return copyBuildings
+}
+
+
+// upgrade bases given the slots in randoms (they are all broved buidlings)
+function getDowngradeBase(buildings, randoms)
+{
+    const copyBuildings = JSON.parse(JSON.stringify(buildings))
+    randoms.map(slot => copyBuildings[slot].lvl -= 1)
     return copyBuildings
 }
 
