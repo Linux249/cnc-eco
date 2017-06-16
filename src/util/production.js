@@ -93,6 +93,27 @@ const calcBuildingCostAll = (buildings, lvl = 1) => {
 export const calcBaseProduction = (buildings) =>
 {
     let production = [0,0,0,0]      // [tib, kris, power, credits]
+
+
+    buildings.forEach((building, i) =>
+    {
+        const prod = calcBuildingProduction(buildings, i)
+        production.map((_, i, production) => production[i] += prod[i])
+        // exist building
+
+    })
+
+    return {
+        tib: production[0],
+        cris: production[1],
+        power: production[2],
+        credits: production[3],
+    }
+}
+
+
+export const calcBuildingProduction = (buildings, i) => {
+    let production = [0,0,0,0]
     const neighbours = [-10, -9, -8, -1, 1, 8, 9, 10]
     const silo_production = [0,72, 90, 125, 170, 220, 275, 335, 400, 460, 530, 610, 710, 887, 1109, 1386, 1733, 2166, 2708, 3385, 4231, 5289, 6612, 8265, 10331,
         12914, 16143, 20179, 25224, 31530, 39412, 49266, 61582, 76978, 96222, 120278, 150348, 187935, 234919, 293649,
@@ -138,158 +159,151 @@ export const calcBaseProduction = (buildings) =>
         6318282, 7897852, 9872315, 12340394, 15425493, 19281866, 24102333, 30127916, 37659896, 47074870, 58843587,
         73554484, 91943106, 114928882, 143661103, 179576378, 224470473, 280588092, 350735115, 438418893, 548023617]
 
-    buildings.forEach((building, i) =>
-    {
-        // exist building
-        if(building) {
-            if(building.lvl > 65) building.lvl = 65
-            // get tib/kris Silo?
-            if (building.type === "s")
+    const building = buildings[i]
+    if(building) {
+        if(building.lvl > 65) building.lvl = 65
+        // calcBuildingProduction()
+        // get tib/kris Silo?
+        if (building.type === "s")
+        {
+            neighbours.forEach((n) =>
             {
-                neighbours.forEach((n) =>
+                let j = i + n       // j: neighbour
+                if (0 <= j && j <= 71)
                 {
-                    let j = i + n       // j: neighbour
-                    if (0 <= j && j <= 71)
+                    if (buildings[j] && buildings[j].type === "h")     // h = tib
                     {
-                        if (buildings[j] && buildings[j].type === "h")     // h = tib
-                        {
-                            production[0] += silo_production[building.lvl]       // 0 = tib
-                        } else if (buildings[j] && buildings[j].type === "n")     //n = kris
-                        {
-                            production[1] += silo_production[building.lvl]      // 1 = kris
-                        }
-
-                    }
-                })
-            }
-
-            // get tib harvester Production
-            else if (building.type === "h")
-            {
-                //chick if silo around exists
-                let hasSilo = false
-                neighbours.forEach((n) =>
-                {
-                    let j = i + n       // j: neighbour
-                    if (0 <= j && j <= 71)
+                        production[0] += silo_production[building.lvl]       // 0 = tib
+                    } else if (buildings[j] && buildings[j].type === "n")     //n = kris
                     {
-                        // find silo
-                        if (buildings[j] && ( buildings[j].type === "s" ))
-                        {
-                            hasSilo = true  //silo found
-                        }
+                        production[1] += silo_production[building.lvl]      // 1 = kris
                     }
-                })
-                if(hasSilo) production[0] += silo_production[building.lvl]
-                production[0] += harvest_production_packet[building.lvl]
-            }
 
-            // get kris harvester Production
-            else if (building.type === "n")
-            {
-                //chick if silo around exists
-                let hasSilo = false
-                neighbours.forEach((n) =>
-                {
-                    let j = i + n       // j: neighbour
-                    if (0 <= j && j <= 71)
-                    {
-                        // find silo
-                        if (buildings[j] && ( buildings[j].type === "s" ))
-                        {
-                            hasSilo = true  //silo found
-                        }
-                    }
-                })
-                if(hasSilo) production[1] += silo_production[building.lvl]
-                production[1] += harvest_production_packet[building.lvl]
-            }
-
-            // get power from accu
-            else if (building.type === "a")
-            {
-                neighbours.forEach((n) =>
-                {
-                    let j = i + n       // j: neighbour
-                    if (0 <= j && j <= 71)
-                    {
-                        if (buildings[j] && buildings[j].type === "p")     // p = PowerPlant
-                        {
-                            production[2] += accu_production[building.lvl]       // 2 = power
-                        }
-
-
-                    }
-                })
-            }
-
-            // get power from PowerPlants
-            else if (building.type === "p")
-            {
-                let hasAccu = false
-                neighbours.forEach((n) =>
-                {
-                    let j = i + n       // j: neighbour
-                    if (0 <= j && j <= 71)
-                    {
-                        //find kris fields around
-                        if (buildings[j] && (buildings[j].type === "n" || buildings[j].type === "c"))     // p = PowerPlant
-                        {
-                            production[2] += pp_production_perm[building.lvl]/2       // 2 = power
-                        }
-                        //find 1 accu around
-                        if (buildings[j] && buildings[j].type === "a" )
-                        {
-                            hasAccu = true;
-                        }
-                        //find rafs around
-                        if(buildings[j] && buildings[j].type === "r")
-                        {
-                            production[3] += pp_production_credit[building.lvl]
-                        }
-                    }
-                })
-
-                if (hasAccu) production[2] += pp_production_accu[building.lvl]
-                production[2] += pp_production_perm[building.lvl]
-            }
-
-            //get credits from Rafs
-            else if (building.type === "r")
-            {
-                let hasPp = false
-                //count harvester/tib's around
-                neighbours.forEach((n) =>
-                {
-                    let j = i + n       // j: neighbour
-                    if (0 <= j && j <= 71)
-                    {
-                        // find harvest/tib
-                        if (buildings[j] && ( buildings[j].type === "t" || buildings[j].type === "h"))
-                        {
-                            production[3] += raf_production_perm[building.lvl]/2 // production[3] = credis
-                        }
-                        //find one PowerPlant
-                        if (buildings[j] && (buildings[j].type === "p"))
-                        {
-                            hasPp = true
-                        }
-                    }
-                })
-                if(hasPp) production[3] += raf_production_pp[building.lvl]
-                // ground credit production
-                production[3] += raf_production_perm[building.lvl]
-            }
+                }
+            })
         }
-    })
 
-    return {
-        tib: production[0],
-        cris: production[1],
-        power: production[2],
-        credits: production[3],
+        // get tib harvester Production
+        else if (building.type === "h")
+        {
+            //chick if silo around exists
+            let hasSilo = false
+            neighbours.forEach((n) =>
+            {
+                let j = i + n       // j: neighbour
+                if (0 <= j && j <= 71)
+                {
+                    // find silo
+                    if (buildings[j] && ( buildings[j].type === "s" ))
+                    {
+                        hasSilo = true  //silo found
+                    }
+                }
+            })
+            if(hasSilo) production[0] += silo_production[building.lvl]
+            production[0] += harvest_production_packet[building.lvl]
+        }
+
+        // get kris harvester Production
+        else if (building.type === "n")
+        {
+            //chick if silo around exists
+            let hasSilo = false
+            neighbours.forEach((n) =>
+            {
+                let j = i + n       // j: neighbour
+                if (0 <= j && j <= 71)
+                {
+                    // find silo
+                    if (buildings[j] && ( buildings[j].type === "s" ))
+                    {
+                        hasSilo = true  //silo found
+                    }
+                }
+            })
+            if(hasSilo) production[1] += silo_production[building.lvl]
+            production[1] += harvest_production_packet[building.lvl]
+        }
+
+        // get power from accu
+        else if (building.type === "a")
+        {
+            neighbours.forEach((n) =>
+            {
+                let j = i + n       // j: neighbour
+                if (0 <= j && j <= 71)
+                {
+                    if (buildings[j] && buildings[j].type === "p")     // p = PowerPlant
+                    {
+                        production[2] += accu_production[building.lvl]       // 2 = power
+                    }
+
+
+                }
+            })
+        }
+
+        // get power from PowerPlants
+        else if (building.type === "p")
+        {
+            let hasAccu = false
+            neighbours.forEach((n) =>
+            {
+                let j = i + n       // j: neighbour
+                if (0 <= j && j <= 71)
+                {
+                    //find kris fields around
+                    if (buildings[j] && (buildings[j].type === "n" || buildings[j].type === "c"))     // p = PowerPlant
+                    {
+                        production[2] += pp_production_perm[building.lvl]/2       // 2 = power
+                    }
+                    //find 1 accu around
+                    if (buildings[j] && buildings[j].type === "a" )
+                    {
+                        hasAccu = true;
+                    }
+                    //find rafs around
+                    if(buildings[j] && buildings[j].type === "r")
+                    {
+                        production[3] += pp_production_credit[building.lvl]
+                    }
+                }
+            })
+
+            if (hasAccu) production[2] += pp_production_accu[building.lvl]
+            production[2] += pp_production_perm[building.lvl]
+        }
+
+        //get credits from Rafs
+        else if (building.type === "r")
+        {
+            let hasPp = false
+            //count harvester/tib's around
+            neighbours.forEach((n) =>
+            {
+                let j = i + n       // j: neighbour
+                if (0 <= j && j <= 71)
+                {
+                    // find harvest/tib
+                    if (buildings[j] && ( buildings[j].type === "t" || buildings[j].type === "h"))
+                    {
+                        production[3] += raf_production_perm[building.lvl]/2 // production[3] = credis
+                    }
+                    //find one PowerPlant
+                    if (buildings[j] && (buildings[j].type === "p"))
+                    {
+                        hasPp = true
+                    }
+                }
+            })
+            if(hasPp) production[3] += raf_production_pp[building.lvl]
+            // ground credit production
+            production[3] += raf_production_perm[building.lvl]
+        }
     }
+    return production
 }
+
 
 /*
     full base +1

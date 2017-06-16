@@ -55,6 +55,7 @@ class Details extends Component {
         const { days30, days90, days120, building } = this.props
         const buildingProd = calcBuildingCost(building)
 
+        const showNextBuildings = (this.state.show === 2)
         // const time = calcTimeForAllBuildings(buildings)
         return (
                 <div className="Details">
@@ -115,7 +116,7 @@ class Details extends Component {
                         </div>
                     </div>}
                     {
-                        this.state.show === 2 &&
+                        showNextBuildings &&
                         <NextBuildings />
 
                     }
