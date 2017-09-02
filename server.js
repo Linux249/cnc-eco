@@ -54,6 +54,16 @@ server.route({
     }
 });
 
+server.route({
+    method: 'POST',
+    path:'/layout',
+    handler: function (request, reply) {
+        const layouts = JSON.parse(request.payload)
+        console.log(layouts)
+        return reply(layouts);
+    }
+});
+
 
 let io = require('socket.io')(server.listener, {'pingInterval': 1000});
 io.on('connect', function (socket) {
