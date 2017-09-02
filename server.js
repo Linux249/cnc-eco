@@ -64,6 +64,14 @@ server.route({
     }
 });
 
+server.route({
+    method: 'GET',
+    path:'/layout',
+    handler: function (request, reply) {
+
+        return reply("Hallo World");
+    }
+});
 
 let io = require('socket.io')(server.listener, {'pingInterval': 1000});
 io.on('connect', function (socket) {
