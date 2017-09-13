@@ -1,252 +1,118 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import { connect } from 'react-redux' 
 import { LvlNumber } from './LvlNumber'
 import './../style/BuildingSlot.css'
-//import buildings_pngs from '../util/buildings_img_nod.json'
-
-//import buildings_pngs from '../util/buildings_img_nod.json'
-
-// import BuildingMenu from './BuildingMenu.js';
-
-// var counter = 0;
-const nod_buildings_keys = {
-        "r": "NOD_Refinery",
-        "p": "NOD_Power Plant",
-        "h": "NOD_Harvester",
-        "y": "NOD_Construction Yard",
-        "d": "NOD_Airport",
-        "q": "NOD_Defense HQ",
-        "b": "NOD_Barracks",
-        "s": "NOD_Silo",
-        "f": "NOD_Factory",
-        "n": "NOD_Harvester_Crystal",
-        "e": "NOD_Command Post",
-        "z": "NOD_Support_Art",
-        "i": "NOD_Support_Ion",
-        "a": "NOD_Accumulator",
-        "x": "NOD_Support_Air",
-        "w": "NOD_Defense Facility"
-    };
+import { showBuildingMenu } from './../actions/menu'
+import { switchBuildings, keyInputBase, deleteBuilding } from './../actions/buildings'
+import { DropTarget, DragSource } from 'react-dnd'
 
 
-class BuildingSlot extends React.Component {
-    constructor(props) {
-        super(props)
-        this.buildingMenuShow = this.buildingMenuShow.bind(this)
-        this.buildingMenuHide = this.buildingMenuHide.bind(this)
-        this.buildingDelete = this.buildingDelete.bind(this)
-        this.handleKeyDown = this.handleKeyDown.bind(this)
-        this.drop = this.drop.bind(this)
+const buildingSource = {
+    beginDrag({ slot }) {
+        return { from: slot} 
+    },
 
-    }
-
-
-
-    // getInitialState: function() {
-    //   return {
-    //     buildingName: this.props.buildingName,
-    //     isEmpty: this.props.isEmpty,
-    //   }
-    // },
-
-    //Eingabe mit der Tastatur
-    /*  onKeyPress: function (e){
-        console.log("key press");
-        console.log(e.key);
-        //return console.log("wirklich");
-      },*/
-/*    onKeyDown = (e) => {
-        console.log("Key Pressed: "+ e.key);
-        if (e.key in nod_buildings_keys) {
-            this.setState({
-                buildingName: nod_buildings_keys[e.key]
-            }, () => {
-                console.log("state geändert: " + this.state.building);
-            });
-        } else {
-            console.log("ungültiges Zeichen: " + e.key);
+    endDrag({ switchBuildings }, monitor, component) {
+        if (!monitor.didDrop()) {
+            return 
         }
-    }*/
-   /* //verändert das Bild
-
-    handleClick = (e) => {
-      //toogle menu
-       // this.props.toggleMenu(true);
-      //Linksklick != Rechtsklick
-      if (e.type === "click") {
-        //this.props.toggleMenu();
-        
-        this.setState({
-            isEmpty: false,
-            buildingName: "res_tiberium_01"
-        });
-      } else if (e.type === "contextmenu") {
-        e.preventDefault();
-        this.setState({
-            isEmpty: true,
-            buildingName: "empty"
-        });
-      }
-      //  console.log("Click: "+ e.type); // type: right, value - contextmenu
+        const from = monitor.getItem().from
+        const to = monitor.getDropResult().slot
+        switchBuildings(from, to)
     }
-    testFunc = () => {
-      console.log("wahrs");
-      this.setState({
-        isEmpty: false,
-        buildingName: "res_tiberium_01"
-      })
+}
+
+function collect(connect, monitor) {
+    return {
+        connectDragSource: connect.dragSource(),
+        isDragging: monitor.isDragging()
     }
-    toggleMenuOf =  () => {
+}
 
-
-
-
-
-
-      console.log("falsch");
-      this.props.toggleMenu(false);
-    }*/
-    render() {
-        let slot = this.props.slot
-        let name = this.props.buildings[slot].name
-        let building = this.props.buildings[slot]
-        return  (
-            <div
-                ref="target"
-                className="BuildingSlot"
-                onClick={this.buildingMenuShow}
-                onContextMenu={this.buildingDelete}
-                onKeyDown={this.handleKeyDown}
-                tabIndex="-1"
-                onFocus={this.buildingMenuShow}
-                onDrop={this.drop}
-
-                onDragOver={(e) => e.preventDefault()}
-            >
-                {this.props.buildings[slot].lvl && <LvlNumber lvl={this.props.buildings[slot].lvl} />}
-                {name &&
-                    <img
-                        src={require("./../img/buildings/NOD/" + name + ".png")}
-                        alt={name}
-                        draggable="true"
-                        onDragStart={(e) => e.dataTransfer.setData("building",JSON.stringify(building))}
-                    />
-                }
-            </div>
-        );
+const buildingTarget = {
+    drop({ slot }) {
+        return { slot }
     }
+}
 
-    drop(e)
-    {
+
+const activeColor = '#b6b6b6'
+
+class BuildingSlot extends Component {
+
+
+    contextClick = (e, from) => {
         e.preventDefault()
-        const building = JSON.parse(e.dataTransfer.getData("building"))
-        console.log("HALALALLALALALALALAL")
-        console.log(building)
-        console.log({
-        from: this.props.slot})
-        this.props.dispatch({
-            type: 'menu.dropBuilding',
-            building: building,
-            from: this.props.slot
-        })
+        this.props.deleteBuilding(from)
     }
 
-
-    buildingMenuShow()
-    {
-        this.props.dispatch({
-            type: 'menu.buildingMenuShow',
-            from: this.props.slot
-        })
-    }
-    buildingMenuHide()
-    {
-        this.props.dispatch({
-            type: 'menu.buildingMenuHide',
-            from: this.props.slot
-        })
-    }
-    buildingDelete()
-    {
-        this.props.dispatch({
-            type: 'menu.buildingDelete',
-            from: this.props.slot
-        })
-    }
-
-
-    handleKeyDown(event)
-    {
-        let key = event.key
-        let slot  = this.props.slot
-        console.log("Key Pressed: "+ key)
-        if (key in nod_buildings_keys) {
-            const lvl = this.props.buildings[slot].lvl
-            const name = nod_buildings_keys[key]
-            console.log(nod_buildings_keys[key])
-            const id = key
-            this.props.dispatch({
-                type: 'menu.buildingSelect',
-                name,
-                id,
-                lvl
-            })
-            /*this.setState({
-                buildingName: nod_buildings_keys[key]
-            }, () => {
-                console.log("state geändert: " + this.state.building)
-            })*/
-
-        } else if (key === "+")  //builing lvl up
-        {
-            let lvl = Number.parseInt(this.props.buildings[slot].lvl, 10) + 1
-            this.props.dispatch({
-                type: 'menu.changeBuildingLvl',
-                lvl,
-                from: slot
-            })
-        } else if (key === "-")     //builing lvl down
-        {
-            let lvl = Number.parseInt(this.props.buildings[slot].lvl, 10) - 1
-            this.props.dispatch({
-                type: 'menu.changeBuildingLvl',
-                lvl,
-                from: slot
-            })
-        } else if (key.match(/^[0-9]+$/))   // new  lvl by number
-        {
-            let lvl = this.props.buildings[slot].lvl + key
-            this.props.dispatch({
-                type: 'menu.changeBuildingLvl',
-                lvl,
-                from: slot
-            })
-
+    render() {
+        const { slot,
+            building,
+            active,
+            fraction,
+            showBuildingMenu,
+            handleKeyDown,
+            connectDragSource,
+            connectDropTarget ,
+            isDragging
+        } = this.props
+        let img = 'undefined'
+        if(building.type) {
+            img = require("./../img/buildings/"+fraction+  "/"+ building.type + ".png")
         }
+        return  (
+            connectDropTarget(connectDragSource(
+                <div
+                    style={{
+                        opacity: isDragging ? 0.5 : 1,
+                        backgroundColor: active===slot ? activeColor: undefined
+                    }}
+                    className="BuildingSlot"
+                    //onClick={() => showBuildingMenu(slot)}
+                   // onContextMenu={this.buildingDelete}
+                    onKeyDown={(e) => handleKeyDown(e, slot, building)}
+                    tabIndex="0"
+                    onFocus={() => showBuildingMenu(slot)}
+                    onContextMenu={(e) => this.contextClick(e, slot)}
+
+                >
+                    {building.lvl && <LvlNumber lvl={building.lvl} />}
+                    {building.type &&
+                        <img
+                            src={img}
+                            alt={building.name}
+                        />
+                    }
+                </div>
+            )
+        ))
     }
 }
 
 
 
-/*BuildingSlot.propTypes = {
-  buildingName: React.PropTypes.string,
-  isEmpty: React.PropTypes.bool,
-  x: React.PropTypes.number,
-  y: React.PropTypes.number,
-};
-
-BuildingSlot.defaultProps = {
-  buildingName: "empty",
-  isEmpty: true
-};*/
-
-function mapStateToProps(state) {
-    //console.log("+++++STATE++++++")
-    //console.log(state)
-
+function mapStateToProps(state, props) {
     return ({
-
-        buildings: state.buildings
-    });
+        building: state.buildings[props.slot],
+        active: state.menu.from,
+        fraction: state.menu.fraction
+    }) 
 }
-export default connect(mapStateToProps)(BuildingSlot);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        showBuildingMenu: (from) => dispatch(showBuildingMenu(from)),
+        switchBuildings: (from, to) => dispatch(switchBuildings(from, to)),
+        handleKeyDown: (e, from, building) => dispatch(keyInputBase(e, from, building)),
+        deleteBuilding: (from) => dispatch(deleteBuilding(from))
+    }
+}
+
+BuildingSlot = DropTarget('building', buildingTarget, (connect, monitor) => ({
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver(),
+    canDrop: monitor.canDrop(),
+}))(BuildingSlot) 
+
+BuildingSlot = DragSource('building', buildingSource, collect)(BuildingSlot)
+export default connect(mapStateToProps, mapDispatchToProps)(BuildingSlot)

@@ -1,13 +1,19 @@
 .ProductionInfo {
+    background: #EEE;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #CCC;
+    border-radius: 3px;
+
     position: relative ;
     display: flex;
     justify-content: space-around;
     align-content: space-around;
     flex-wrap: wrap;
-    width:1100px;
-    height:100px;
-    background:#6dd46c;
 
+    width: 880px;
+    height: 100px;
+
+    margin-bottom: 10px;
 
 }
 
@@ -16,12 +22,20 @@
     justify-content: center; /* align horizontal */
     align-items: center;
 
-    width: 400px;
-    height: 40%;
-    background: rgba(208, 212, 82, 0.92);
+    width: 300px;
+    height: 35%;
+    background-color: #EEE;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid #CCC;
+    border-radius: 3px;
 
-    font-size: 20px;
-    color: #5b0066;
-    font-weight: bold;
-    letter-spacing: 3px;
+
+}
+
+.ProductionInfo div img {
+    margin-left: 5px;
+}
+
+.ProductionInfo > div:hover {
+    box-shadow: 0 4px 8px 0 rgba(30, 136, 229, 0.2), 0 6px 20px 0 rgba(30, 136, 229, 0.19);
 }

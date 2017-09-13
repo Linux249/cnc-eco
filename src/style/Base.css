@@ -1,0 +1,51 @@
+
+.BaseRow {
+    display: flex;
+    /*justify-content: space-between;*/
+    /*background-image: url('../../img/background/background_base_NOD.jpg');*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: center top;*/
+}
+
+.BaseSideLeft {
+    display: flex;
+    flex: 2;
+    justify-content: flex-end;
+}
+
+.BaseSideRight {
+    display: flex;
+    flex: 2;
+}
+
+.BaseMiddle {
+    display: flex;
+    justify-content: center;
+    /*flex: 2;*/
+}
+.Base {
+    background-color: #EEE;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #CCC;
+    border-radius: 3px;
+
+    max-width: 820px;
+
+    display: flex;
+    flex-flow: wrap;
+    /*max-height: 800px;*/
+    /*margin: -20px;*/
+
+    padding: 30px;
+    /*padding-right: 30px;*/
+    /*margin: -30px;*/
+    /*margin-right: -30px;*/
+}
+
+.rowB {
+    display: flex;
+    width: 100%;
+    /*margin: 5px;*/
+    /*align-content: center;*/
+    /*justify-items: center;*/
+}

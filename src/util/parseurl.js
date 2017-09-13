@@ -64,12 +64,12 @@ function urlToBase(url)
             building = urlString[0]
             urlString = urlString.slice(1)
             base.buildings.push({
-                name: base.nod_buildings_keys[building],
+            //name: base.nod_buildings_keys[building],
                 type: building,
                 lvl: lvl,
                 slot: slot,
-                x: slot % 9,
-                y: Math.ceil(slot / 9)
+              //  x: slot % 9,
+               // y: Math.ceil(slot / 9)
             })
         }
         slot++

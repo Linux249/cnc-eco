@@ -1,4 +1,57 @@
-.chart {
+.chartRow {
     display: flex;
     justify-content: center;
+}
+
+.chart {
+    /*width: 80%;*/
+    display: flex;
+    justify-content: space-between;
+    flex-flow: wrap;
+    flex-basis: 880px;
+    margin: 30px;
+
+    background-color: #EEE;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #CCC;
+    border-radius: 3px;
+}
+
+.range {
+    display: flex;
+    justify-content: space-around;
+    flex-basis: 100%;
+}
+
+.rangeButton {
+    background-color: #EEE;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #CCC;
+    border-radius: 3px;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-basis:10%;
+    margin: 6px;
+    padding: 2px;
+}
+
+.days {
+    display: flex;
+    flex-flow: column;
+    flex-basis: 20%;
+}
+
+.daysButton {
+    background-color: #EEE;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #CCC;
+    border-radius: 3px;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 6px;
+    padding: 5px;
 }

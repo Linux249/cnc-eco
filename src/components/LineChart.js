@@ -1,81 +1,177 @@
 /**
  * Created by Bombassd on 13.01.2017.
  */
-import React from 'react'
+import React, { Component } from 'react'
 import './../style/LineChart.css'
 import { connect } from 'react-redux'
-var Line = require("react-chartjs").Line;
+import { shortenNumber } from './../services/menu'
 import { Chart } from 'react-google-charts'
-class LineChart extends React.Component
-{
-    render(){
-        let labels = this.props.prod.time
-        const data = {
-            labels,
-            datasets:  [{
-                label: "tib",
-                fillColor: "rgba(220,220,220,0)",
-                strokeColor: "rgba(220,180,0,1)",
-                pointColor: "rgba(220,180,0,1)",
-                data: this.props.prod.tib
-            }, {
-                label: "cris",
-                fillColor: "rgba(151,187,205,0)",
-                strokeColor: "rgba(151,187,205,1)",
-                pointColor: "rgba(151,187,205,1)",
-                data: this.props.prod.cris
-            }, {
-                label: "power",
-                fillColor: "rgba(151,187,205,0)",
-                strokeColor: "rgba(151,187,205,1)",
-                pointColor: "rgba(151,187,205,1)",
-                data: this.props.prod.power
-            },{
-                label: "credits",
-                fillColor: "rgba(151,187,205,0)",
-                strokeColor: "rgba(151,187,205,0)",
-                pointColor: "rgba(151,187,205,1)",
-                data: this.props.prod.credits
-            }]
-        }
+import { showBuildingMenu } from './../actions/menu'
 
-        const option = {
-            //scaleOverride : true,
-            scaleStartValue : 0,
-            scales: {
-                xAxes: {
-                        max: 35,
-                        min: 0,
+// Colors for lines
+const tibColor = '#23ff1d'
+const crisColor = '#0000f1'
+const powerColor = '#99bbf1'
+const creditsColor = '#ffdb32'
+
+class LineChart extends Component
+{
+
+
+    constructor(props) {
+        super(props);
+        //this.changeRange = this.changeRange.bind(this)
+        this.state = {
+            showRealLine: true,
+            showTrendLine: true,
+            options: {
+                title:"Produktion in 120 Tagen",  // TODO X MIT AUSWAHL RECHTS
+                backgroundColor: '#EEE',
+
+                //TODO aktuelle Auswahl oben
+                series: {
+                    0: {color: tibColor, targetAxisIndex: 1},
+                    1: {color: crisColor, targetAxisIndex: 1},
+                    2: {color: powerColor, targetAxisIndex: 1},
+                    3: {color: creditsColor, targetAxisIndex: 1}
+                },
+                trendlines: {
+                    0: {type: 'exponential', color: tibColor},
+                    1: {type: 'exponential', color: crisColor},
+                    2: {type: 'exponential', color: powerColor},
+                    3: {type: 'exponential', color: creditsColor},
+                },
+                curveType: 'function',
+                vAxes: {
+                    1: {
+                        viewWindow: {
+                            max:10000000,
+                            min:0
+                        }
+                    }
+                },
+                hAxis: {
+                    title: 'Tage',
+                    viewWindow: {
+                        max:120,
+                        min:0
+                    }
                 }
             }
         }
+    }
 
-        let data2 =  [["Days", "Tib", "Cris", "Power", "Credits"]]
-        console.log("DATA FOR GOOGLE CHART")
-        console.log(data2)
-        for (let d = 0; d < this.props.prod.time.length; d++)
-        {
-            data2.push([this.props.time,this.props.prod.tib[d],this.props.prod.cris[d],this.props.prod.power[d],this.props.prod.credits[d]])
-        }
-        console.log(data2)
+    changeRange(range) {
+        this.setState(prevState => {
+            prevState.options.vAxes[1].viewWindow.max =  range
+            return { ...prevState}
+        })
+    }
+
+    changeDays(days) {
+        this.setState(prevState => {
+            prevState.options.title = "Produktion in " +  days + " Tagen"
+            prevState.options.hAxis.viewWindow.max =  days
+            return {...prevState}
+        })
+    }
+    toogleRealLine(){
+        this.setState(prevState => {
+            if (!("lineWidth" in prevState.options.series[0])) prevState.options.series =  {
+                0: {color: tibColor, targetAxisIndex: 1, lineWidth: 0 },
+                1: {color: crisColor, targetAxisIndex: 1, lineWidth: 0 },
+                2: {color: powerColor, targetAxisIndex: 1, lineWidth: 0 },
+                3: {color: creditsColor, targetAxisIndex: 1, lineWidth: 0 }
+            }
+            else prevState.options.series =  {
+                    0: {color: tibColor, targetAxisIndex: 1},
+                    1: {color: crisColor, targetAxisIndex: 1},
+                    2: {color: powerColor, targetAxisIndex: 1},
+                    3: {color: creditsColor, targetAxisIndex: 1}
+            }
+            return {...prevState}
+        })
+    }
+
+    toogleTrendLine(){
+        this.setState(prevState => {
+            // console.log(prevState)
+            if ("trendlines" in prevState.options) delete prevState.options.trendlines
+            else prevState.options.trendlines =  {
+                0: {type: 'exponential', color: tibColor},
+                1: {type: 'exponential', color: crisColor},
+                2: {type: 'exponential', color: powerColor},
+                3: {type: 'exponential', color: creditsColor}
+            }
+            return {...prevState}
+        })
+    }
+
+    render(){
+        const { data, showBuildingMenu } = this.props
+        const { options } = this.state
+        const toggleTrendLines = ("trendlines" in options)
+        const toogleRealLines = !("lineWidth" in options.series[0])
+        const activeRange = options.vAxes[1].viewWindow.max
+        const activeDays = options.hAxis.viewWindow.max
+
+        const data2 =  [["Days", "Tib", "Cris", "Power", "Credits"]]
+        data.map(data => data2.push([data.time, data.prod.tib, data.prod.cris, data.prod.power, data.prod.credits]))
+
+        const ranges = [10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000, 100000000000, 1000000000000]
+        const days = [30, 60, 90, 120]
         return (
-            <div className="chart">
-                <Line
-                    data={data}
-                    options={option}
-                    width="800px"
-                    height="400px"
-                />
-                <Chart
-                    chartType="LineChart"
-                    data={data2}
-                    options={{}}
-                    graph_id="LineChart"
-                    width="100%"
-                    height="400px"
+            <div className="chartRow" onClick={() => showBuildingMenu(-1)}>
+                <div className="chart">
+                    <div className="range">
+                        {
+                            ranges.map(n => (
+                                <div
+                                    key={n}
+                                    className="rangeButton"
+                                    onClick={() => this.changeRange(n)}
+                                    style={ activeRange === n ?{border: 'solid red'} : {} }
+                                >
+                                    {shortenNumber(n)}
+                                    </div>
+                                )
+                            )
+                        }
+                    </div>
+                    <Chart
+                        chartType="LineChart"
+                        data={data2}
+                        options={this.state.options}
+                        graph_id="LineChart"
+                        width="80%"
+                        legend_toggle
+                    />
+                    <div className="days">
+                        {
+                            days.map(n => (
+                                <div
+                                    key={n}
+                                    className="daysButton"
+                                    onClick={() => this.changeDays(n)}
+                                    style={ activeDays === n ?{border: 'solid red'} : {} }
+                                >
+                                    {n + " Tage"}
+                                </div>
+                            ))
+                        }
+                        <div
+                            className="daysButton"
+                            onClick={() => this.toogleRealLine()}
+                            style={toogleRealLines ? {border: 'solid red'} : {}}
+                        >Real Line</div>
+                        <div
+                            className="daysButton"
+                            onClick={() => this.toogleTrendLine()}
+                            style={toggleTrendLines ? {border: 'solid red'} : {}}
+                        >Trend Line</div>
+                    </div>
 
-                    legend_toggle
-                />
+                </div>
             </div>
         )
     }
@@ -84,8 +180,12 @@ class LineChart extends React.Component
 function mapStateToProps(state) {
 
     return ({
-        prod: state.productionOverDays
+        data: state.production.data
     });
 }
-
-export default connect(mapStateToProps)(LineChart)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        showBuildingMenu: (from) => dispatch(showBuildingMenu(from)),
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(LineChart)

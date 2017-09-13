@@ -1,75 +1,48 @@
 //Libs
-import React from 'react';
+import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import LineChart from './LineChart.js'
 import BaseHeader from './BaseHeader.js';
-import { urlToBase } from '../util/parseurl.js'
-
-
+import { hideBuildingMenu } from './../actions/menu'
+import { updateBuildingsFromURL } from './../actions/buildings'
+import './../style/App.css'
 
 // Components
 import Base from './Base.js'
 
-
-class App extends React.Component
+class App extends Component
 {
-    constructor(props)
-    {
-        super(props)
-        this.changeBase = this.changeBase.bind(this)
-
+    componentDidMount(){
+        console.log("PARAM FROM URL")
+        const url = this.props.params.base
+        // console.info(param)
+        console.log("update buildings in store")
+        if(url) this.props.updateBase(url)
     }
 
     render()
     {
-        if (this.props.params.param)
-        {
-            console.log("INSIDE APP")
-            console.log("This ist the url param: " + this.props.params.param)
-            this.changeBase()
-        }
-    return(
-        <div className="app">
-            <BaseHeader ref="target"/>
-            <Base faction="base.faction" />
-            <LineChart />
-        </div>
-    )
-  }
-
-    changeBase()
-    {
-        let base
-        try {
-            base = urlToBase(this.props.params.param)
-        } catch(e){
-            console.error("Paramter von URL konnte nicht geparst werden")
-        }
-        console.log("is a right Base getting to the ")
-        console.log("BASE BASE BASE")
-        console.log(base)
-
-        if (base)
-        {
-            const nwe = JSON.stringify(base.buildings)
-            const old = JSON.stringify(this.props.buildings)
-            if (nwe != old) {
-                console.error("Base wird über URL geupdated ")
-                this.props.dispatch({
-                    type: "menu.changeBase",
-                    base: base
-                })
-
-            }
-        }
+        return(
+            <div className="App" >
+                <BaseHeader ref="target"/>
+                <Base faction="base.faction" />
+                <LineChart />
+            </div>
+        )
     }
+
 }
 
 
 function mapStateToProps(state) {
-    return ({
-        buildings: state.buildings,
-    });
+    return ({})
 }
-export default connect(mapStateToProps)(App);
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        hideMenu: () => dispatch(hideBuildingMenu()),
+        updateBase: (url) => dispatch(updateBuildingsFromURL(url))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 

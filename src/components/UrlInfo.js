@@ -1,12 +1,12 @@
 /**
  * Created by Bombassd on 05.02.2017.
  */
-import React from 'react'
+import React, { Component } from 'react'
 import './../style/UrlInfo.css'
 import { urlToBase } from './../util/parseurl.js'
 import { connect } from 'react-redux'
 
-class UrlInfo extends React.Component
+class UrlInfo extends Component
 {
     constructor(props)
     {
@@ -20,7 +20,7 @@ class UrlInfo extends React.Component
             <div className="UrlInfo">
                 <label>CncOpt Url</label>
                 <input type="url" ref="url"/>
-                <button onClick={this.updateBase}> send</button>
+                <div onClick={this.updateBase}> send</div>
             </div>
         )
     }
@@ -28,7 +28,6 @@ class UrlInfo extends React.Component
     updateBase()
     {
         console.log("REREREREasasasRERERERERER")
-        //const url = "" //get URL from input
         const url = this.refs.url.value
         console.log(url)
         console.log(this)
