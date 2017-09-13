@@ -51,3 +51,7 @@ TODO
 BUGS: 
 - [] lvl state is string? after differ with numbers the + raise lvl to 65 instantly
 - [] production crash app if lvl is <10 , maybe is its string "09"
+
+
+Links: 
+- deploying with backend to heroku: https://github.com/fullstackreact/food-lookup-demo

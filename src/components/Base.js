@@ -4,7 +4,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import BuildingSlot from './BuildingSlot.js'
 import BuildingMenu from './BuildingMenu.js';
-import Details from './Details.js'
+//import Details from './Details.js'
 import './../style/Base.css'
 import { showBuildingMenu } from './../actions/menu'
 
@@ -39,7 +39,7 @@ render()
                 </div>
             </div>
             <div className="BaseSideRight" >
-                <Details />
+                {/*<Details />*/}
             </div>
         </div>
     );
