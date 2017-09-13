@@ -92,29 +92,38 @@ const calcBuildingCostAll = (buildings, lvl = 1) => {
  */
 export const calcBaseProduction = (buildings) =>
 {
-    let production = [0,0,0,0]      // [tib, kris, power, credits]
+    let production = {
+        tib: 0,
+        kris: 0,
+        power: 0,
+        credits: 0
+    }      // [tib, kris, power, credits]
 
 
     buildings.forEach((building, i) =>
     {
         const prod = calcBuildingProduction(buildings, i)
-        production.map((_, i, production) => production[i] += prod[i])
+        production.tib += prod.tib
+        production.kirs += prod.kris
+        production.power += prod.power
+        production.credits += prod.credits
         // exist building
 
     })
 
-    return {
-        tib: production[0],
-        cris: production[1],
-        power: production[2],
-        credits: production[3],
-    }
+    return production
 }
 
 
 export const calcBuildingProduction = (buildings, i) => {
-    let production = [0,0,0,0]
-    const neighbours = [-10, -9, -8, -1, 1, 8, 9, 10]
+    let production = {
+        tib: 0,
+        kris: 0,
+        power: 0,
+        credits: 0
+    }
+    const neighbours = [-10, -9, -8, -1, 1, 8, 9, 10] // alle neighburs
+
     const silo_production = [0,72, 90, 125, 170, 220, 275, 335, 400, 460, 530, 610, 710, 887, 1109, 1386, 1733, 2166, 2708, 3385, 4231, 5289, 6612, 8265, 10331,
         12914, 16143, 20179, 25224, 31530, 39412, 49266, 61582, 76978, 96222, 120278, 150348, 187935, 234919, 293649,
         367061, 458826, 573533, 716916, 896145, 1120182, 1400228, 1750285, 2187856, 2734820, 3418525, 4273157, 5341446,
@@ -161,22 +170,26 @@ export const calcBuildingProduction = (buildings, i) => {
 
     const building = buildings[i]
     if(building) {
-        if(building.lvl > 65) building.lvl = 65
-        // calcBuildingProduction()
-        // get tib/kris Silo?
+
+        if(building.lvl > 65) {
+            building.lvl = 65
+            console.error("Gebäude lvl über 65", {building})    //sollte niemals vorkommen
+        }
+
+        // Silo production
         if (building.type === "s")
         {
-            neighbours.forEach((n) =>
+            neighbours.forEach((n) =>       // schaut nach angeschlossenen sammlern
             {
                 let j = i + n       // j: neighbour
                 if (0 <= j && j <= 71)
                 {
                     if (buildings[j] && buildings[j].type === "h")     // h = tib
                     {
-                        production[0] += silo_production[building.lvl]       // 0 = tib
+                        production.tib+= silo_production[building.lvl]       // 0 = tib
                     } else if (buildings[j] && buildings[j].type === "n")     //n = kris
                     {
-                        production[1] += silo_production[building.lvl]      // 1 = kris
+                        production.kris += silo_production[building.lvl]      // 1 = kris
                     }
 
                 }
@@ -200,8 +213,8 @@ export const calcBuildingProduction = (buildings, i) => {
                     }
                 }
             })
-            if(hasSilo) production[0] += silo_production[building.lvl]
-            production[0] += harvest_production_packet[building.lvl]
+            if(hasSilo) production.tib += silo_production[building.lvl]  // if silo exists harvest get extra prod
+            production.tib += harvest_production_packet[building.lvl]
         }
 
         // get kris harvester Production
@@ -221,8 +234,8 @@ export const calcBuildingProduction = (buildings, i) => {
                     }
                 }
             })
-            if(hasSilo) production[1] += silo_production[building.lvl]
-            production[1] += harvest_production_packet[building.lvl]
+            if(hasSilo) production.kris += silo_production[building.lvl]
+            production.kris += harvest_production_packet[building.lvl]
         }
 
         // get power from accu
@@ -235,10 +248,8 @@ export const calcBuildingProduction = (buildings, i) => {
                 {
                     if (buildings[j] && buildings[j].type === "p")     // p = PowerPlant
                     {
-                        production[2] += accu_production[building.lvl]       // 2 = power
+                        production.power += accu_production[building.lvl]       // 2 = power
                     }
-
-
                 }
             })
         }
@@ -252,10 +263,10 @@ export const calcBuildingProduction = (buildings, i) => {
                 let j = i + n       // j: neighbour
                 if (0 <= j && j <= 71)
                 {
-                    //find kris fields around
+                    //find kris fields around, harvest 'n' or pure 'c'
                     if (buildings[j] && (buildings[j].type === "n" || buildings[j].type === "c"))     // p = PowerPlant
                     {
-                        production[2] += pp_production_perm[building.lvl]/2       // 2 = power
+                        production.power += pp_production_perm[building.lvl]/2       // 2 = power
                     }
                     //find 1 accu around
                     if (buildings[j] && buildings[j].type === "a" )
@@ -265,13 +276,13 @@ export const calcBuildingProduction = (buildings, i) => {
                     //find rafs around
                     if(buildings[j] && buildings[j].type === "r")
                     {
-                        production[3] += pp_production_credit[building.lvl]
+                        production.credits += pp_production_credit[building.lvl]
                     }
                 }
             })
 
-            if (hasAccu) production[2] += pp_production_accu[building.lvl]
-            production[2] += pp_production_perm[building.lvl]
+            if (hasAccu) production.power += pp_production_accu[building.lvl]
+            production.power += pp_production_perm[building.lvl]
         }
 
         //get credits from Rafs
@@ -287,7 +298,7 @@ export const calcBuildingProduction = (buildings, i) => {
                     // find harvest/tib
                     if (buildings[j] && ( buildings[j].type === "t" || buildings[j].type === "h"))
                     {
-                        production[3] += raf_production_perm[building.lvl]/2 // production[3] = credis
+                        production.credits += raf_production_perm[building.lvl]/2 // production[3] = credis
                     }
                     //find one PowerPlant
                     if (buildings[j] && (buildings[j].type === "p"))
@@ -296,9 +307,9 @@ export const calcBuildingProduction = (buildings, i) => {
                     }
                 }
             })
-            if(hasPp) production[3] += raf_production_pp[building.lvl]
+            if(hasPp) production.credits += raf_production_pp[building.lvl]
             // ground credit production
-            production[3] += raf_production_perm[building.lvl]
+            production.credits += raf_production_perm[building.lvl]
         }
     }
     return production
