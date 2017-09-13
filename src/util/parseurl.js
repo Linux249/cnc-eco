@@ -3,6 +3,8 @@
 //Url aufteilen
 function urlToBase(url)
 {
+    // Todo doku wie der string aussehen sollte
+    // Todo was passiert wen string anders aussieht?
     let split = url.split("|")
     let baseName = split[3]
     let faction = split[1] // F = forgetten, N = NOD, G = GDI

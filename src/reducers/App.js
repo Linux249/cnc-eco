@@ -1,10 +1,10 @@
 /**
  * Created by Bombassd on 24.02.2017.
  */
-import { reducerCall } from './index';
+import { reducerCall } from './index'
 
-import { urlToBase } from './../util/parseurl.js'
-import { calcBaseProduction, productionOverDays } from '../util/production.js'
+//import { urlToBase } from './../util/parseurl.js'
+//import { calcBaseProduction, productionOverDays } from '../util/production.js'
 
 
 /**
@@ -40,6 +40,6 @@ class reducerClass
 export default function app(state = initial_state, action) {
     /*    console.log("****STATE****")
      console.log(state)*/
-    return reducerCall(state, action, reducerClass);
+    return reducerCall(state, action, reducerClass)
 }
 

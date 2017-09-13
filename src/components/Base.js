@@ -110,7 +110,7 @@ class Base extends React.Component
 render()
 {
       // build all slots
-      var slots = [...Array(8).keys()].map(function(y) {
+      const slots = [...Array(8).keys()].map(function(y) {
 
           return (
               <div key={"row " + y} className={"row " + y} >
