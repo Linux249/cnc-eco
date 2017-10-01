@@ -32,3 +32,28 @@ const findBest = (buildings, times, type = "tib") => {
     }
 
 }
+
+export const base = (url = false) => {
+
+
+    // constructor
+    if(url) this.builings =  urlToBase(url)
+    else this.buildings = [] // TODO check if array length should be 64
+
+    // url -> update from url
+    // else return
+    this.base = (url = false) => {
+        if(url) this.builings =  urlToBase(url)
+        return this
+    }
+
+
+    return this
+}
+
+export const building = () => {
+    const building = {}
+    building.slot = undefined
+    building.lvl = -1
+
+}
