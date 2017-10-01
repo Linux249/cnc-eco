@@ -1,9 +1,7 @@
 /**
  * Created by Bombassd on 03.01.2017.
  */
-function cloneObject(object) {
-    return JSON.parse(JSON.stringify(object));
-}
+import { copyObj } from './service'
 
 const roundTwoPoints = (p1, p2, day) => {
     const prod = {
@@ -356,7 +354,7 @@ export const calcBaseUpCost = (buildings) => {
 }
 
 export const futureProduction = (buildings, days = 121) => {
-    buildings = cloneObject(buildings)
+    buildings = copyObj(buildings)
     const data = []
     let tibTimeLeft = 0,
         powerTimeLeft = 0
@@ -509,7 +507,7 @@ export const calcTimeForAllBuildings = (buildings) => {
 
 
 /*export const productionOverDays = (base, days) => {
-    base = cloneObject(base)
+    base = copyObj(base)
     let prodOverTime = []
     let limit = days*24
     let time = 0
