@@ -1,7 +1,6 @@
 //import { combineReducers } from 'redux';
 import { base } from './base'
 import { menu }from './menu';
-import { production } from './production'
 //
 //
 // /**
@@ -59,6 +58,5 @@ import { combineReducers } from 'redux';
 
 export default combineReducers({
     menu,
-    base,
-    production
+    base
 });

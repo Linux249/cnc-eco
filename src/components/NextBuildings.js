@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import styled from 'styled-components';
 import FlipMove from 'react-flip-move'
 
-import { changeBuilding  } from './../actions/buildings'
 import { showBuildingMenu  } from './../actions/menu'
 import { buildings as buildingNames } from '../util/buildings'
 import  io from 'socket.io-client'
@@ -170,7 +169,7 @@ class NextBuildings extends Component {
     }
 
     render() {
-        const { buildings, fraction, changeBuild, selectSlot} = this.props
+        const { buildings, fraction, selectSlot} = this.props
         const { loading } = this.state
 
         return (
@@ -214,7 +213,7 @@ class NextBuildings extends Component {
                                 key={i}
                                 onClick={() => {
                                     this.removeFromList(i)
-                                    changeBuild(slot, building.type , building.lvl - 1 )
+                                    //changeBuild(slot, building.type , building.lvl - 1 )
                                 }}
                             >
 
@@ -277,7 +276,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => { return {
-        changeBuild: (from, t, lvl) => dispatch(changeBuilding(from, t, lvl)),
+       // changeBuild: (from, t, lvl) => dispatch(changeBuilding(from, t, lvl)),
         selectSlot: (from) => dispatch(showBuildingMenu(from)),
     }
     // return {

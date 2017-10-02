@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-
+import { focusColor, hoverColor } from './constants'
 export default styled.div`
     height: 80px;
     display: flex;
@@ -13,5 +13,12 @@ export default styled.div`
         position: absolute;
         height: 100%;
         width: 100%;
+    }
+    
+    &:hover {
+      background-color: ${hoverColor};
+    }
+    &:focus {
+      background-color: ${focusColor};
     }
 `

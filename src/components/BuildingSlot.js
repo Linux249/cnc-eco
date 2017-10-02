@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux' 
 import { LvlNumber } from './LvlNumber'
-import { keyInputBase} from './../actions/buildings'
 import { DropTarget, DragSource } from 'react-dnd'
 import {removeBuilding, replaceBuilding } from '../actions/base'
 import Slot from '../style/BuildingSlot'
+import { buildingKeys } from './../util/buildings'
 
 
 
-const activeColor = '#b6b6b6'
 
 class BuildingSlot extends Component {
 
@@ -20,13 +19,21 @@ class BuildingSlot extends Component {
         this.props.replaceBuilding({slot})
     }
 
+    handleKeyDown = (e, building) => {
+        e.preventDefault()
+        const { key } = e
+        console.log("key down")
+        console.log(key)
+        if(buildingKeys.includes(key)) {
+            building.type = key
+            this.props.replaceBuilding(building)
+
+        }
+    }
+
     render() {
-        const { slot,
+        const {
             building,
-            active,
-            faction,
-            showBuildingMenu,
-            handleKeyDown,
             connectDragSource,
             connectDropTarget ,
             isDragging,
@@ -45,15 +52,8 @@ class BuildingSlot extends Component {
                         connectDropTarget(findDOMNode(instance))
                         connectDragSource(findDOMNode(instance))
                     }}
-                    style={{
-                        opacity: isDragging ? 0.5 : 1,
-                        backgroundColor: active===slot ? activeColor: undefined
-                    }}
-                    //onClick={() => showBuildingMenu(slot)}
-                   // onContextMenu={this.buildingDelete}
-                    //onKeyDown={(e) => handleKeyDown(e, slot, building)}
+                    onKeyDown={(e) => this.handleKeyDown(e, building)}
                     tabIndex="0"
-                    //onFocus={() => showBuildingMenu(slot)}
                     onContextMenu={(e) => this.contextClick(e, building)}
 
                 >
@@ -76,14 +76,12 @@ class BuildingSlot extends Component {
 function mapStateToProps(state, props) {
     return ({
         building: state.base.buildings[props.slot],
-        active: state.menu.from,
         faction: state.base.faction
     }) 
 }
 const mapDispatchToProps = (dispatch) => {
     return {
         replaceBuilding: (building) => dispatch(replaceBuilding(building)),
-        handleKeyDown: (e, from, building) => dispatch(keyInputBase(e, from, building)),
     }
 }
 

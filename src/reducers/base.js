@@ -11,7 +11,6 @@ export function base(state = initBase, action) {
     switch (action.type) {
         case REPLACE_BUILDING:
             const building = action.building
-            console.log({building})
             return update(state, {buildings: {[building.slot]: {$set: building}}})
         case REPLACE_ALL_BASE:
             return update(state, {$set: action.base})
