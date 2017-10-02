@@ -9,7 +9,7 @@ function urlToBase(url)
     let baseName = split[3]
     let faction = split[1] // F = forgetten, N = NOD, G = GDI
     let urlString = split[4]
-    let slot = 1
+    let slot = 0
     let building, unit, lvl
 
     let base = {
@@ -41,7 +41,7 @@ function urlToBase(url)
     }
 
     //Gebäude auslesen - 72 slots
-    while (slot <= 72)
+    while (slot <= 71)
     {
         //building,
         lvl = false
@@ -76,8 +76,8 @@ function urlToBase(url)
     }
 
     //Armee defens - 72 slots
-    slot = 1 //reset
-    while (slot <= 72)
+    slot = 0 //reset
+    while (slot <= 71)
     {
         unit = false
         lvl = false
@@ -111,8 +111,8 @@ function urlToBase(url)
     }
 
   //unit army - 36 slots
-    slot = 1 //reset
-    while (slot <= 36)
+    slot = 0 //reset
+    while (slot <= 35)
     {
         unit = false
         lvl = false
