@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import './../style/UrlInfo.css'
 import { urlToBase } from './../util/parseurl.js'
 import { connect } from 'react-redux'
+import { replaceAllBuildings } from '../actions/base'
 
 class UrlInfo extends Component
 {
@@ -27,19 +28,12 @@ class UrlInfo extends Component
     updateBase = () =>
     {
         const url = this.refs.url.value
-        console.log(url)
-        console.log(this)
         try {
-            const base = urlToBase(url)
-            console.log(base)
-            this.props.dispatch({
-                type: "menu.changeBase",
-                base
-            })
+            const { buildings } = urlToBase(url)
+            this.props.dispatch(replaceAllBuildings(buildings))
         } catch (e) {
-            console.log(e)
+            this.refs.url.value = "Fehler"
         }
-        return 0
     }
 }
 
