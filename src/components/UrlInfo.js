@@ -4,8 +4,7 @@
 import React, { Component } from 'react'
 import './../style/UrlInfo.css'
 import { urlToBase } from './../util/parseurl.js'
-import { connect } from 'react-redux'
-import { replaceAllBuildings } from '../actions/base'
+import { replaceAllBase } from '../actions/base'
 
 class UrlInfo extends Component
 {
@@ -29,12 +28,12 @@ class UrlInfo extends Component
     {
         const url = this.refs.url.value
         try {
-            const { buildings } = urlToBase(url)
-            this.props.dispatch(replaceAllBuildings(buildings))
+            const base = urlToBase(url)
+            this.props.dispatch(replaceAllBase(base))
         } catch (e) {
             this.refs.url.value = "Fehler"
         }
     }
 }
 
-export default connect()(UrlInfo);
+export default UrlInfo
