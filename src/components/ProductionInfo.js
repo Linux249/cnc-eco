@@ -6,6 +6,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './../style/ProductionInfo.css'
 import { shortenNumber } from './../services/menu'
+import { calcProduction } from './../util/production'
 import icon_tib from './../img/icon/icon_tiberium.png'
 import icon_cris from './../img/icon/icon_crystal.png'
 import icon_power from './../img/icon/icon_power.png'
@@ -16,7 +17,9 @@ class ProductionInfo extends Component
 {
     render()
     {
-        const {tib, cris, power, credits } = this.props.production
+        const { buildings } = this.props
+        const {tib, cris, power, credits } = calcProduction(buildings)
+
         return (
             <div className="ProductionInfo">
 
@@ -46,9 +49,8 @@ class ProductionInfo extends Component
     }
 }
 function mapStateToProps(state) {
-
     return ({
-        production: state.production.normal
+        buildings: state.base.buildings
     });
 }
 

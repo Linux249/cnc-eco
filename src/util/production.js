@@ -88,7 +88,7 @@ const calcBuildingCostAll = (buildings, lvl = 1) => {
 /*
  calc the produktion from Base
  */
-export const calcBaseProduction = (buildings) =>
+export const calcProduction = (buildings) =>
 {
     let production = {
         tib: 0,
@@ -371,7 +371,7 @@ export const futureProduction = (buildings, days = 121) => {
         for(let i in buildings) {
             if(Object.keys(buildings[i]).length !== 0) {
                 const costs = calcBuildingCost(buildings[i])
-                const prod = calcBaseProduction(buildings)
+                const prod = calcProduction(buildings)
                 let tibTime = costs.tib / prod.tib/24 //- tibTimeLeft   // shoud be possible to become negativ
                 let powerTime = costs.power / prod.power/24 //- powerTimeLeft
                 //if (tibTime <= 0) tibTimeLeft = -1*tibTime      // if negativ it means their ist still
@@ -495,7 +495,7 @@ export const futureProduction = (buildings, days = 121) => {
 
  */
 export const calcTimeForAllBuildings = (buildings) => {
-    const production = calcBaseProduction(buildings)
+    const production = calcProduction(buildings)
     const costs = calcBuildingCostAll(buildings)
     const time = {
         tib: costs.tib/production.tib,
