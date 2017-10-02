@@ -11,11 +11,10 @@ class UrlInfo extends Component
     constructor(props)
     {
         super(props)
-        this.updateBase = this.updateBase.bind(this)
     }
 
-    render ()
-    {
+    render () {
+
         return(
             <div className="UrlInfo">
                 <label>CncOpt Url</label>
@@ -25,9 +24,8 @@ class UrlInfo extends Component
         )
     }
 
-    updateBase()
+    updateBase = () =>
     {
-        console.log("REREREREasasasRERERERERER")
         const url = this.refs.url.value
         console.log(url)
         console.log(this)

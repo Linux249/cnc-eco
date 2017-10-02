@@ -119,7 +119,7 @@ function urlToBase(url)
         if (urlString[0] === ".")
         {
             urlString = urlString.slice(1)
-            base.army.push({slot})
+            base.army.push({})
         } else {
             if (!isNaN(urlString[0])) {
                 let num = urlString[0]

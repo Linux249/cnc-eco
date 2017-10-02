@@ -6,7 +6,6 @@ import './../style/LineChart.css'
 import { connect } from 'react-redux'
 import { shortenNumber } from './../services/menu'
 import { Chart } from 'react-google-charts'
-import { showBuildingMenu } from './../actions/menu'
 
 // Colors for lines
 const tibColor = '#23ff1d'
@@ -108,7 +107,7 @@ class LineChart extends Component
     }
 
     render(){
-        const { data, showBuildingMenu } = this.props
+        const { data } = this.props
         const { options } = this.state
         const toggleTrendLines = ("trendlines" in options)
         const toogleRealLines = !("lineWidth" in options.series[0])
@@ -121,7 +120,7 @@ class LineChart extends Component
         const ranges = [10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000, 100000000000, 1000000000000]
         const days = [30, 60, 90, 120]
         return (
-            <div className="chartRow" onClick={() => showBuildingMenu(-1)}>
+            <div className="chartRow" >
                 <div className="chart">
                     <div className="range">
                         {
@@ -178,14 +177,9 @@ class LineChart extends Component
 }
 
 function mapStateToProps(state) {
-
     return ({
         data: state.production.data
     });
 }
-const mapDispatchToProps = (dispatch) => {
-    return {
-        showBuildingMenu: (from) => dispatch(showBuildingMenu(from)),
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(LineChart)
+
+export default connect(mapStateToProps)(LineChart)

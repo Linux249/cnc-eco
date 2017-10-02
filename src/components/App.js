@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import LineChart from './LineChart.js'
 import BaseHeader from './BaseHeader.js';
-import { hideBuildingMenu } from './../actions/menu'
 import { updateBuildingsFromURL } from './../actions/buildings'
 import './../style/App.css'
 
@@ -40,7 +39,6 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        hideMenu: () => dispatch(hideBuildingMenu()),
         updateBase: (url) => dispatch(updateBuildingsFromURL(url))
     }
 }

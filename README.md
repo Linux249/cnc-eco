@@ -55,3 +55,9 @@ BUGS:
 
 Links: 
 - deploying with backend to heroku: https://github.com/fullstackreact/food-lookup-demo
+
+
+Todo:
+- change fraction
+- Production - onClick open modal on side
+- buildingslot - onlick modal + key input
