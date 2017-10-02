@@ -95,7 +95,7 @@ class BuildingSlot extends Component {
 
 function mapStateToProps(state, props) {
     return ({
-        building: state.buildings[props.slot],
+        building: state.base.buildings[props.slot],
         active: state.menu.from,
         fraction: state.menu.fraction
     }) 
