@@ -4,7 +4,6 @@ export const REPLACE_BUILDING = "REPLACE_BUILDING" // ad a new building a curren
 export const REPLACE_ALL_BASE = "REPLACE_ALL_BASE" // ad a new building a current location
 export const CHANGE_FRACTION = "CHANGE_FRACTION"
 
-
 // number where the building is set is inside building.slot
 export function replaceBuilding(building) {
     return {

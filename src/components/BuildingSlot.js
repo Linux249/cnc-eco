@@ -58,6 +58,7 @@ class BuildingSlot extends Component {
     render() {
         const {
             building,
+            faction,
             connectDragSource,
             connectDropTarget ,
             isDragging,
@@ -65,7 +66,8 @@ class BuildingSlot extends Component {
         } = this.props
         let img = 'undefined'
         if(building.type) {
-            img = require(`../img/buildings/N/${building.type}.png`)    // TODO add fraction from base
+            img = require("./../img/buildings/"+ faction + "/"+ building.type + ".png")
+
         }
 
         return  (
