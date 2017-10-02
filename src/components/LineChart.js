@@ -6,6 +6,7 @@ import './../style/LineChart.css'
 import { connect } from 'react-redux'
 import { shortenNumber } from './../services/menu'
 import { Chart } from 'react-google-charts'
+import { futureProduction } from '../util/production.js'
 
 // Colors for lines
 const tibColor = '#23ff1d'
@@ -107,15 +108,17 @@ class LineChart extends Component
     }
 
     render(){
-        const { data } = this.props
+        const { buildings } = this.props
+        const data = futureProduction(buildings)
+        console.log({data})
         const { options } = this.state
         const toggleTrendLines = ("trendlines" in options)
         const toogleRealLines = !("lineWidth" in options.series[0])
         const activeRange = options.vAxes[1].viewWindow.max
         const activeDays = options.hAxis.viewWindow.max
 
-        const data2 =  [["Days", "Tib", "Cris", "Power", "Credits"]]
-        data.map(data => data2.push([data.time, data.prod.tib, data.prod.cris, data.prod.power, data.prod.credits]))
+        const data2 =  [["Days", "Tib", "Kris", "Power", "Credits"]]
+        data.map(data => data2.push([data.time, data.prod.tib, data.prod.kris, data.prod.power, data.prod.credits]))
 
         const ranges = [10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000, 100000000000, 1000000000000]
         const days = [30, 60, 90, 120]
@@ -178,7 +181,7 @@ class LineChart extends Component
 
 function mapStateToProps(state) {
     return ({
-        data: state.production.data
+        buildings: state.base.buildings
     });
 }
 

@@ -6,7 +6,7 @@ import { copyObj } from './service'
 const roundTwoPoints = (p1, p2, day) => {
     const prod = {
         tib: 0,
-        cris: 0,
+        kris: 0,
         power: 0,
         credits: 0,
     }
@@ -22,7 +22,6 @@ const roundTwoPoints = (p1, p2, day) => {
         {
             const exp1 = (x2-day)/(x2-x1)
             const exp2 = (day-x1)/(x2-x1)
-            // console.log({x1, y1, x2, y2, exp1, exp2})
             prod[p] = Math.round(Math.pow(y1, exp1)*Math.pow(y2, exp2))
         }
     }
@@ -372,7 +371,6 @@ export const futureProduction = (buildings, days = 121) => {
             if(Object.keys(buildings[i]).length !== 0) {
                 const costs = calcBuildingCost(buildings[i])
                 const prod = calcProduction(buildings)
-                console.log(prod)
                 let tibTime = costs.tib / prod.tib/24 //- tibTimeLeft   // shoud be possible to become negativ
                 let powerTime = costs.power / prod.power/24 //- powerTimeLeft
                 //if (tibTime <= 0) tibTimeLeft = -1*tibTime      // if negativ it means their ist still
@@ -414,7 +412,6 @@ export const futureProduction = (buildings, days = 121) => {
 
 
                 } // for days
-                // if (!(buildings[i].lvl %10)) console.log({time, tibTimeLeft, powerTimeLeft}, buildings[i])
 
                 // TODO Plants doesnt give cost back - problem also with other buildings with 0 costs
                 if(time > 0) {
@@ -466,40 +463,5 @@ export const calcTimeForAllBuildings = (buildings) => {
     return time
 }
 
-
-/*export const productionOverDays = (base, days) => {
-    base = copyObj(base)
-    let prodOverTime = []
-    let limit = days*24
-    let time = 0
-    while(time < limit) {
-        console.error("WHILE WIRD IMMER WIEDER AUFGERUFEB=??")
-        console.log(time)
-        console.log(limit)
-        let production = calcBaseProduction(base.buildings)
-        let costs = calcBaseUpCost(base.buildings)
-        console.log(production)
-        console.log(costs)
-        prodOverTime.push({
-            production,
-            time
-        })
-        base = allBuildingLvLUp(base, 1)
-        let cost = 0
-        if (costs.tib/production.tib > costs.power/production.power) cost = costs.tib/production.tib
-        else cost = costs.power/production.power
-        time  +=  cost
-    }
-    let ret = {}
-    ret.days = days
-    ret.time = prodOverTime.map((time) => {return Math.round(time.time*100/24)/100})       //round
-    ret.tib = prodOverTime.map((prod) => {return prod.production.tib})
-    ret.cris = prodOverTime.map((prod) => {return prod.production.cris})
-    ret.power = prodOverTime.map((prod) => {return prod.production.power})
-    ret.credits = prodOverTime.map((prod) => {return prod.production.credits})
-    console.log("DIREKT LÖSCHEN")
-    console.log(ret)
-    return ret
-}*/
 
 
