@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { changeBuilding  } from './../actions/buildings'
+import { replaceBuilding  } from './../actions/base'
 import { changeFraction } from './../actions/menu'
 import { buildingKeys } from './../util/buildings'
 import './../style/BuildingMenu.css'
@@ -9,7 +9,7 @@ import './../style/BuildingMenu.css'
 class BuildingMenu extends Component {
 
     render() {
-        const { changeBuild, changeFraction, faction, from } = this.props
+        const { changeFraction, faction } = this.props
 
         return (
             <div className="BuildingMenu" >
@@ -44,14 +44,13 @@ class BuildingMenu extends Component {
 function mapStateToProps(state) {
     return {
        // lvl: state.buildings[state.menu.from].lvl || state.menu.lvl,
-        from: state.menu.from,
         faction: state.base.faction
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        changeBuild: (from, t, lvl) => dispatch(changeBuilding(from, t, lvl)),
+        replaceBuilding: (building) => dispatch(replaceBuilding(building)),
         changeFraction: fraction => dispatch(changeFraction(fraction))
     }
 }

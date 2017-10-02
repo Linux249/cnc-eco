@@ -5,7 +5,7 @@ import { LvlNumber } from './LvlNumber'
 import { showBuildingMenu } from './../actions/menu'
 import { keyInputBase} from './../actions/buildings'
 import { DropTarget, DragSource } from 'react-dnd'
-import {removeBuilding, switchBuildings} from '../actions/base'
+import {removeBuilding, replaceBuilding } from '../actions/base'
 import Slot from '../style/BuildingSlot'
 
 
@@ -15,9 +15,10 @@ const activeColor = '#b6b6b6'
 class BuildingSlot extends Component {
 
 
-    contextClick = (e, from) => {
+    contextClick = (e, building) => {
         e.preventDefault()
-        this.props.removeBuilding(from)
+        const { slot } = building
+        this.props.replaceBuilding({slot})
     }
 
     render() {
@@ -54,7 +55,7 @@ class BuildingSlot extends Component {
                     //onKeyDown={(e) => handleKeyDown(e, slot, building)}
                     tabIndex="0"
                     //onFocus={() => showBuildingMenu(slot)}
-                    onContextMenu={(e) => this.contextClick(e, slot)}
+                    onContextMenu={(e) => this.contextClick(e, building)}
 
                 >
                         {building.lvl && <LvlNumber lvl={building.lvl} />}
@@ -82,7 +83,7 @@ function mapStateToProps(state, props) {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        switchBuildings: (from, to) => dispatch(switchBuildings(from, to)),
+        replaceBuilding: (from, to) => dispatch(replaceBuilding(from, to)),
         handleKeyDown: (e, from, building) => dispatch(keyInputBase(e, from, building)),
         removeBuilding: (from) => dispatch(removeBuilding(from))
     }
@@ -93,20 +94,24 @@ const buildingSource = {
     beginDrag({building}) {
         return { building }
     },
-    endDrag({ switchBuildings }, monitor) {
+    endDrag({ replaceBuilding }, monitor) {
         if (!monitor.didDrop()) {
             return
         }
-        const from = monitor.getItem()
-        const to = monitor.getDropResult()
-        switchBuildings(from.building, to.building)
-    }
-}
+        const from = monitor.getItem().building
+        const to = monitor.getDropResult().building
+        console.log({from, to})
+        if(from.slot) {
+            const tempSlot = from.slot
+            from.slot = to.slot
+            to.slot = tempSlot
+            replaceBuilding(from)
+            replaceBuilding(to)
+        } else {
+            from.slot = to.slot
+            replaceBuilding(from)
+        }
 
-function collect(connect, monitor) {
-    return {
-        connectDragSource: connect.dragSource(),
-        isDragging: monitor.isDragging()
     }
 }
 
