@@ -84,7 +84,7 @@ class BuildingSlot extends Component {
 
                 >
                         {building.lvl && <LvlNumber lvl={building.lvl} />}
-                        {(building.slot || building.slot === 0)&& <LvlNumber lvl={building.slot} />}
+                        {/*{(building.slot || building.slot === 0)&& <LvlNumber lvl={building.slot} />}*/}
                         {building.type &&
                             <img
                                 src={img}
