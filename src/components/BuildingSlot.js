@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 import { LvlNumber } from './LvlNumber'
 import './../style/BuildingSlot.css'
 import { showBuildingMenu } from './../actions/menu'
-import { switchBuildings, keyInputBase, deleteBuilding } from './../actions/buildings'
+import { switchBuildings, keyInputBase} from './../actions/buildings'
 import { DropTarget, DragSource } from 'react-dnd'
+import {removeBuilding} from '../actions/base'
 
 
 const buildingSource = {
@@ -104,7 +105,7 @@ const mapDispatchToProps = (dispatch) => {
         showBuildingMenu: (from) => dispatch(showBuildingMenu(from)),
         switchBuildings: (from, to) => dispatch(switchBuildings(from, to)),
         handleKeyDown: (e, from, building) => dispatch(keyInputBase(e, from, building)),
-        deleteBuilding: (from) => dispatch(deleteBuilding(from))
+        deleteBuilding: (from) => dispatch(removeBuilding(from))
     }
 }
 
