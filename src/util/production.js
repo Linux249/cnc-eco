@@ -372,6 +372,7 @@ export const futureProduction = (buildings, days = 121) => {
             if(Object.keys(buildings[i]).length !== 0) {
                 const costs = calcBuildingCost(buildings[i])
                 const prod = calcProduction(buildings)
+                console.log(prod)
                 let tibTime = costs.tib / prod.tib/24 //- tibTimeLeft   // shoud be possible to become negativ
                 let powerTime = costs.power / prod.power/24 //- powerTimeLeft
                 //if (tibTime <= 0) tibTimeLeft = -1*tibTime      // if negativ it means their ist still
@@ -438,55 +439,15 @@ export const futureProduction = (buildings, days = 121) => {
     for(let d = 1; d<=days; d++ ){
         const time = data.find((o, i) => o.time > d ? i: false)
         const i = data.findIndex(o => o === time)
-        // console.log(time)
-        // console.log(i)
-        // console.log(data[i-1].prod)
-        // console.log(roundTwoPoints(data[i], data[i-1], d))
-        // console.log(data[i].prod)
+
         expData.push({
             prod: roundTwoPoints(data[i], data[i-1], d),
             time: d
         })
 
-
-
-
     }
 
 
-    // hier wurden alle schritte auf tage gerundet und dann wurden die mit den gleichen Tag "geglättet" (addiert und durch # dividiert)
-/*    const mergedData = [] // array of geglaetteten Daten
-    let i = 0
-    while(i < data.length)
-    {
-        const prod = {
-            tib: 0,
-            cris: 0,
-            power: 0,
-            credits: 0
-        }
-        let y = data[i].time  // time for this group
-        let c = 0  //count equal time
-        while(i < data.length && data[i].time === y)
-        {
-            c++
-            prod.tib += data[i].prod.tib
-            prod.cris += data[i].prod.cris
-            prod.power += data[i].prod.power
-            prod.credits += data[i].prod.credits
-            ++i
-        }
-
-        prod.tib = prod.tib/c
-        prod.cris = prod.cris/c
-        prod.power = prod.power/c
-        prod.credits = prod.credits/c
-        mergedData.push({
-            time: y,
-            prod
-        })
-
-    }*/
     return expData
 }
 

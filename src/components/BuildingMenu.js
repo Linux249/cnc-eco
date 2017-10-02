@@ -43,7 +43,7 @@ class BuildingMenu extends Component {
 function mapStateToProps(state) {
     return {
         faction: state.base.faction,
-        lvl: state.base.defaultBuildingLvl
+        lvl: state.menu.lvl
     }
 }
 

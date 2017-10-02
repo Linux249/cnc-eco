@@ -4,7 +4,7 @@
 
 const initState = {
     //selectedBuilding: {},
-    lvl: 30,
+    lvl: 22,
     help: true      // Toggle for showing help everywhere or not
 }
 

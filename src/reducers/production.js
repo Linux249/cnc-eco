@@ -10,7 +10,7 @@ const data = futureProduction(base.buildings)
 
 
 const initState = {
-    normal: prod,
+   // normal: prod,
     data
 }
 export function production(state = initState, action){
