@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux' 
 import { LvlNumber } from './LvlNumber'
-import { showBuildingMenu } from './../actions/menu'
 import { keyInputBase} from './../actions/buildings'
 import { DropTarget, DragSource } from 'react-dnd'
 import {removeBuilding, replaceBuilding } from '../actions/base'
@@ -59,7 +58,7 @@ class BuildingSlot extends Component {
 
                 >
                         {building.lvl && <LvlNumber lvl={building.lvl} />}
-                        {building.slot && <LvlNumber lvl={building.slot} />}
+                        {(building.slot || building.slot === 0)&& <LvlNumber lvl={building.slot} />}
                         {building.type &&
                             <img
                                 src={img}
@@ -83,15 +82,15 @@ function mapStateToProps(state, props) {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        replaceBuilding: (from, to) => dispatch(replaceBuilding(from, to)),
+        replaceBuilding: (building) => dispatch(replaceBuilding(building)),
         handleKeyDown: (e, from, building) => dispatch(keyInputBase(e, from, building)),
-        removeBuilding: (from) => dispatch(removeBuilding(from))
     }
 }
 
 
 const buildingSource = {
     beginDrag({building}) {
+        console.log("begin")
         return { building }
     },
     endDrag({ replaceBuilding }, monitor) {

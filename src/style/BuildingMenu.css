@@ -18,20 +18,7 @@
 }
 
 
-.BuildingMenu .BuildingMenuItem {
-    display: inline-block;
-    width: 25%;
-    height: 15%;
-    align-content: center;
-    text-align: center;
-}
 
-.BuildingMenu .BuildingMenuItem img {
-    /*height: auto;*/
-    max-width: 100%;
-    max-height: 100%;
-
-}
 
 
 

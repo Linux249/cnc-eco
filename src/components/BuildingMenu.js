@@ -1,16 +1,25 @@
 import React, { Component } from 'react'
+import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux'
 import { replaceBuilding  } from './../actions/base'
 import { changeFraction } from './../actions/menu'
 import { buildingKeys } from './../util/buildings'
 import './../style/BuildingMenu.css'
+import BuildingMenuItem from './BuildingMenuItem'
+
+import { DropTarget, DragSource } from 'react-dnd'
+
 
 
 class BuildingMenu extends Component {
 
     render() {
-        const { changeFraction, faction } = this.props
+        const { changeFraction, faction, lvl } = this.props
+        const items = buildingKeys.map((type) => {
+            const img = require("./../img/buildings/"+ faction + "/"+ type + ".png")
+            return <BuildingMenuItem img={img} type={type} building={{type, lvl}} key={type}/>
 
+        })
         return (
             <div className="BuildingMenu" >
                 <div className="fraction">
@@ -22,19 +31,7 @@ class BuildingMenu extends Component {
                     </div>
                 </div>
 
-                {buildingKeys.map((b) => {
-                    const img = require("./../img/buildings/"+ faction + "/"+ b + ".png")
-                    return (
-                        <div
-                            className="BuildingMenuItem"
-                            key={b}
-                         //   onClick={() => changeBuild(from, b, lvl)}
-                        >
-                            <img src={img} alt={b} />
-                            <div>{b}</div>
-                        </div>
-                  )
-                })}
+                { items }
             </div>
         )
     }
@@ -43,8 +40,8 @@ class BuildingMenu extends Component {
 }
 function mapStateToProps(state) {
     return {
-       // lvl: state.buildings[state.menu.from].lvl || state.menu.lvl,
-        faction: state.base.faction
+        faction: state.base.faction,
+        lvl: state.base.defaultBuildingLvl
     }
 }
 

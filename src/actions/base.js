@@ -31,14 +31,3 @@ export function removeBuilding(slot) {
     }
 }
 
-export function switchBuildings(dragged, drop) {
-    console.log({dragged, drop})
-    return (dispatch) => {
-        const tempSlot = dragged.slot
-        dragged.slot = drop.slot
-        drop.slot = tempSlot
-        dispatch(replaceBuilding(dragged))
-        dispatch(replaceBuilding(drop))
-    }
-
-}

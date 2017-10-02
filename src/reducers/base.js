@@ -17,8 +17,9 @@ export function base(state = initBase, action) {
     //newState[newState.menu.from].type = action.t
     switch (action.type) {
         case REPLACE_BUILDING:
-            const slot = action.building.slot
-            return update(state, {buildings: {[slot]: {$set: action.building}}})
+            const building = action.building
+            console.log({building})
+            return update(state, {buildings: {[building.slot]: {$set: building}}})
         // case REMOVE_BUILDING:
         //     return update(state, {buildings: {[action.slot]: {$set: {} }}})
         case REPLACE_ALL_BUILDINGS:
