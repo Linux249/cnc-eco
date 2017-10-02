@@ -18,8 +18,9 @@ class ProductionInfo extends Component
     render()
     {
         const { buildings } = this.props
-        const {tib, cris, power, credits } = calcProduction(buildings)
-
+        const production = calcProduction(buildings)
+        const {tib, kris, power, credits } = production
+        console.log({production})
         return (
             <div className="ProductionInfo">
 
@@ -30,7 +31,7 @@ class ProductionInfo extends Component
                 </div>
                 <div>
 
-                    {shortenNumber(cris, 2)}
+                    {shortenNumber(kris, 2)}
                     <img src={icon_cris} alt={icon_tib} />
                 </div>
                 <div>

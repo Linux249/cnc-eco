@@ -102,7 +102,7 @@ export const calcProduction = (buildings) =>
     {
         const prod = calcBuildingProduction(buildings, i)
         production.tib += prod.tib
-        production.kirs += prod.kris
+        production.kris += prod.kris
         production.power += prod.power
         production.credits += prod.credits
         // exist building
