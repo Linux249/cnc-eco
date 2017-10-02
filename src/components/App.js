@@ -13,15 +13,12 @@ import Base from './Base.js'
 class App extends Component
 {
     componentDidMount(){
-        console.log("PARAM FROM URL")
         const url = this.props.params.base
-        console.info(url)
-        console.log("update buildings in store")
         try {
             const base = urlToBase(url)
             this.props.replaceAllBase(base)
         } catch (e) {
-            console.log("Fehler beim Barsen der URL")
+            console.warn("Fehler beim Barsen der URL", url)
         }
     }
 
@@ -38,15 +35,10 @@ class App extends Component
 
 }
 
-
-function mapStateToProps(state) {
-    return ({})
-}
-
 const mapDispatchToProps = (dispatch) => {
     return {
         replaceAllBase: (url) => dispatch(replaceAllBase(url))
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
 

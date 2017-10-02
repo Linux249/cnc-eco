@@ -20,7 +20,6 @@ class ProductionInfo extends Component
         const { buildings } = this.props
         const production = calcProduction(buildings)
         const {tib, kris, power, credits } = production
-        console.log({production})
         return (
             <div className="ProductionInfo">
 

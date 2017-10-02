@@ -110,7 +110,6 @@ class LineChart extends Component
     render(){
         const { buildings } = this.props
         const data = futureProduction(buildings)
-        console.log({data})
         const { options } = this.state
         const toggleTrendLines = ("trendlines" in options)
         const toogleRealLines = !("lineWidth" in options.series[0])
