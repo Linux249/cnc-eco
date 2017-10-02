@@ -1,4 +1,4 @@
-import { copyObj } from '../services/util'
+import {copyObj} from '../services/util'
 
 export const REPLACE_BUILDING = "REPLACE_BUILDING" // ad a new building a current location
 export const REPLACE_ALL_BUILDINGS = "REPLACE_ALL_BUILDINGS" // ad a new building a current location
@@ -28,5 +28,14 @@ export function removeBuilding(slot) {
     return {
         type: REMOVE_BUILDING,
         slot
+    }
+}
+
+export function switchBuildings(dragged, drop) {
+    console.log({dragged, drop})
+    return {
+        type: SWITCH_BUILDINGS,
+        from: dragged,
+        to: drop
     }
 }

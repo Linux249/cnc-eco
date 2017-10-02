@@ -3,9 +3,9 @@ import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux' 
 import { LvlNumber } from './LvlNumber'
 import { showBuildingMenu } from './../actions/menu'
-import { switchBuildings, keyInputBase} from './../actions/buildings'
+import { keyInputBase} from './../actions/buildings'
 import { DropTarget, DragSource } from 'react-dnd'
-import {removeBuilding} from '../actions/base'
+import {removeBuilding, switchBuildings} from '../actions/base'
 import Slot from '../style/BuildingSlot'
 
 
@@ -58,6 +58,7 @@ class BuildingSlot extends Component {
 
                 >
                         {building.lvl && <LvlNumber lvl={building.lvl} />}
+                        {building.slot && <LvlNumber lvl={building.slot} />}
                         {building.type &&
                             <img
                                 src={img}
@@ -89,20 +90,16 @@ const mapDispatchToProps = (dispatch) => {
 
 
 const buildingSource = {
-    beginDrag({ slot }) {
-        console.log({begin: slot})
-        return { from: slot}
+    beginDrag({building}) {
+        return { building }
     },
-
-    endDrag({ switchBuildings }, monitor, component) {
-        console.log("end")
+    endDrag({ switchBuildings }, monitor) {
         if (!monitor.didDrop()) {
             return
         }
-        const from = monitor.getItem().from
-        const to = monitor.getDropResult().slot
-        console.log({begin: from, end: to})
-        switchBuildings(from, to)
+        const from = monitor.getItem()
+        const to = monitor.getDropResult()
+        switchBuildings(from.building, to.building)
     }
 }
 
@@ -114,11 +111,8 @@ function collect(connect, monitor) {
 }
 
 const buildingTarget = {
-
-    drop(props) {
-        console.log("drop")
-        console.log({props})
-        return  props.building
+    drop({building}) {
+        return {building}
     }
 }
 
@@ -128,7 +122,10 @@ BuildingSlot = DropTarget('building', buildingTarget, (connect, monitor) => ({
     canDrop: monitor.canDrop(),
 }))(BuildingSlot) 
 
-BuildingSlot = DragSource('building', buildingSource, collect)(BuildingSlot)
+BuildingSlot = DragSource('building', buildingSource, (connect, monitor) => ({
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
+}))(BuildingSlot)
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(BuildingSlot)

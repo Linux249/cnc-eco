@@ -68,19 +68,4 @@ export function changeBuilding(from, t, lvl) {
     }
 }
 
-export function switchBuildings(from, to) {
-    return (dispatch, getState) => {
-        // const {buildings} = getState()
-        // const temp = buildings[from]
-        // buildings[from] = buildings[to]
-        // buildings[to] = temp
-        // dispatch({
-        //     type: "SWITCH_BUILDINGS",
-        //     from,
-        //     to
-        // })
-        //dispatch(calcProduction())
-    }
-}
-
 
