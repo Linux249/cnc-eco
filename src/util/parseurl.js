@@ -184,4 +184,4 @@ console.log(dumy)
 
 console.log(base)
 
-export { urlToBase }
+export default urlToBase

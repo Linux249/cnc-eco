@@ -1,8 +1,7 @@
 import update from 'immutability-helper'
-import {urlToBase} from './../util/parseurl.js'
+import urlToBase from './../util/parseurl'
 import {
     REPLACE_BUILDING,
-    REMOVE_BUILDING,
     REPLACE_ALL_BASE
 } from '../actions/base'
 
@@ -13,30 +12,13 @@ initBase.defaultBuildingLvl = 25
 
 
 export function base(state = initBase, action) {
-
-    //newState[newState.menu.from].type = action.t
     switch (action.type) {
         case REPLACE_BUILDING:
             const building = action.building
             console.log({building})
             return update(state, {buildings: {[building.slot]: {$set: building}}})
-        // case REMOVE_BUILDING:
-        //     return update(state, {buildings: {[action.slot]: {$set: {} }}})
         case REPLACE_ALL_BASE:
             return update(state, {$set: action.base})
-        /*case "EEE":
-            const {from, to} = action
-            const slot_from = from.slot
-            const slot_to = to.slot
-            from.slot = slot_to
-            to.slot = slot_from
-            return update(state, {
-                buildings: {
-                    [slot_from]: { $set: to},
-                    [slot_to]: {$set: from}
-                }
-            })*/
-
         default:
             return state
     }

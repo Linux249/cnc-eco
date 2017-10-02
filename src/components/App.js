@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import LineChart from './LineChart.js'
 import BaseHeader from './BaseHeader.js';
-import { updateBuildingsFromURL } from './../actions/buildings'
+import { replaceAllBase } from './../actions/base'
+import urlToBase from'../util/parseurl'
 import './../style/App.css'
 
 // Components
@@ -14,9 +15,14 @@ class App extends Component
     componentDidMount(){
         console.log("PARAM FROM URL")
         const url = this.props.params.base
-        // console.info(param)
+        console.info(url)
         console.log("update buildings in store")
-        if(url) this.props.updateBase(url)
+        try {
+            const base = urlToBase(url)
+            this.props.replaceAllBase(base)
+        } catch (e) {
+            console.log("Fehler beim Barsen der URL")
+        }
     }
 
     render()
@@ -39,7 +45,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateBase: (url) => dispatch(updateBuildingsFromURL(url))
+        replaceAllBase: (url) => dispatch(replaceAllBase(url))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);

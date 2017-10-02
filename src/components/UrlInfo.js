@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react'
 import './../style/UrlInfo.css'
-import { urlToBase } from './../util/parseurl.js'
+import urlToBase from './../util/parseurl.js'
 import { replaceAllBase } from '../actions/base'
 
 class UrlInfo extends Component
