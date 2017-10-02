@@ -10,12 +10,6 @@ const initState = {
 
 export function menu(state = initState, action) {
     switch (action.type) {
-        case 'CHANGE_FRACTION':
-            return {
-                ...state,
-                fraction: action.fraction
-            }
-
 
         default:
             return state

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { replaceBuilding  } from './../actions/base'
-import { changeFraction } from './../actions/menu'
+import { changeFraction } from '../actions/base'
 import { buildingKeys } from './../util/buildings'
 import Menu from './../style/BuildingMenu'
 import Button from './../style/Button'
@@ -24,11 +24,11 @@ class BuildingMenu extends Component {
         })
         return (
             <Menu>
-                <Row className="fraction">
-                    <Button className="fractionButton" onClick={() => changeFraction("nod")}>
+                <Row>
+                    <Button onClick={() => changeFraction("N")}>
                         NOD
                     </Button>
-                    <Button className="fractionButton" onClick={() => changeFraction("gdi")}>
+                    <Button onClick={() => changeFraction("G")}>
                         GDI
                     </Button>
                 </Row>
