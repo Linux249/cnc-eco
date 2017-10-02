@@ -48,7 +48,7 @@ function urlToBase(url)
         if (urlString[0] === ".")
         {
             urlString = urlString.slice(1)
-            base.buildings.push({})
+            base.buildings.push({slot})
         } else {
             if (!isNaN(urlString[0]))
             {
@@ -84,7 +84,7 @@ function urlToBase(url)
         if (urlString[0] === ".")
         {
             urlString = urlString.slice(1)
-            base.defens.push({})
+            base.defens.push({slot})
         } else {
             if (!isNaN(urlString[0]))
             {
@@ -119,7 +119,7 @@ function urlToBase(url)
         if (urlString[0] === ".")
         {
             urlString = urlString.slice(1)
-            base.army.push({})
+            base.army.push({slot})
         } else {
             if (!isNaN(urlString[0])) {
                 let num = urlString[0]
