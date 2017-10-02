@@ -9,7 +9,7 @@ import './../style/BuildingMenu.css'
 class BuildingMenu extends Component {
 
     render() {
-        const { changeBuild, changeFraction, fraction, from, lvl } = this.props
+        const { changeBuild, changeFraction, faction, from } = this.props
 
         return (
             <div className="BuildingMenu" >
@@ -23,12 +23,12 @@ class BuildingMenu extends Component {
                 </div>
 
                 {buildingKeys.map((b) => {
-                    const img = require("./../img/buildings/"+ fraction + "/"+ b + ".png")
+                    const img = require("./../img/buildings/"+ faction + "/"+ b + ".png")
                     return (
                         <div
                             className="BuildingMenuItem"
                             key={b}
-                            onClick={() => changeBuild(from, b, lvl)}
+                         //   onClick={() => changeBuild(from, b, lvl)}
                         >
                             <img src={img} alt={b} />
                             <div>{b}</div>
@@ -43,9 +43,9 @@ class BuildingMenu extends Component {
 }
 function mapStateToProps(state) {
     return {
-        lvl: state.buildings[state.menu.from].lvl || state.menu.lvl,
+       // lvl: state.buildings[state.menu.from].lvl || state.menu.lvl,
         from: state.menu.from,
-        fraction: state.menu.fraction
+        faction: state.base.faction
     }
 }
 

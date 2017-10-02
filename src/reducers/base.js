@@ -24,7 +24,7 @@ export function base(state = initBase, action) {
             return update(state, {buildings: {[action.slot]: {$set: {} }}})
         case REPLACE_ALL_BUILDINGS:
             return update(state, {buildings: {$set: action.buildings}})
-        case SWITCH_BUILDINGS:
+        /*case "EEE":
             const {from, to} = action
             const slot_from = from.slot
             const slot_to = to.slot
@@ -35,7 +35,7 @@ export function base(state = initBase, action) {
                     [slot_from]: { $set: to},
                     [slot_to]: {$set: from}
                 }
-            })
+            })*/
 
         default:
             return state

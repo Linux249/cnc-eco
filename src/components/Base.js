@@ -31,7 +31,7 @@ render()
     return (
         <div className="BaseRow" >
             <div className="BaseSideLeft">
-                { parseInt(show, 10) >= 0 && <BuildingMenu /> }
+               <BuildingMenu />
             </div>
             <div className="BaseMiddle">
                 <div className="Base" >
@@ -55,7 +55,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        showBuildingMenu: (from) => dispatch(showBuildingMenu(from))
+
     }
 }
 
