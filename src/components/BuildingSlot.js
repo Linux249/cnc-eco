@@ -1,40 +1,13 @@
 import React, { Component } from 'react'
+import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux' 
 import { LvlNumber } from './LvlNumber'
-import './../style/BuildingSlot.css'
 import { showBuildingMenu } from './../actions/menu'
 import { switchBuildings, keyInputBase} from './../actions/buildings'
 import { DropTarget, DragSource } from 'react-dnd'
 import {removeBuilding} from '../actions/base'
+import Slot from '../style/BuildingSlot'
 
-
-const buildingSource = {
-    beginDrag({ slot }) {
-        return { from: slot} 
-    },
-
-    endDrag({ switchBuildings }, monitor, component) {
-        if (!monitor.didDrop()) {
-            return 
-        }
-        const from = monitor.getItem().from
-        const to = monitor.getDropResult().slot
-        switchBuildings(from, to)
-    }
-}
-
-function collect(connect, monitor) {
-    return {
-        connectDragSource: connect.dragSource(),
-        isDragging: monitor.isDragging()
-    }
-}
-
-const buildingTarget = {
-    drop({ slot }) {
-        return { slot }
-    }
-}
 
 
 const activeColor = '#b6b6b6'
@@ -44,7 +17,7 @@ class BuildingSlot extends Component {
 
     contextClick = (e, from) => {
         e.preventDefault()
-        this.props.deleteBuilding(from)
+        this.props.removeBuilding(from)
     }
 
     render() {
@@ -56,7 +29,8 @@ class BuildingSlot extends Component {
             handleKeyDown,
             connectDragSource,
             connectDropTarget ,
-            isDragging
+            isDragging,
+            ...rest
         } = this.props
         let img = 'undefined'
         if(building.type) {
@@ -64,31 +38,35 @@ class BuildingSlot extends Component {
         }
 
         return  (
-            connectDropTarget(connectDragSource(
-                <div
+
+                <Slot
+                    {...rest}
+                    ref={instance => {
+                        connectDropTarget(findDOMNode(instance))
+                        connectDragSource(findDOMNode(instance))
+                    }}
                     style={{
                         opacity: isDragging ? 0.5 : 1,
                         backgroundColor: active===slot ? activeColor: undefined
                     }}
-                    className="BuildingSlot"
                     //onClick={() => showBuildingMenu(slot)}
                    // onContextMenu={this.buildingDelete}
-                    onKeyDown={(e) => handleKeyDown(e, slot, building)}
+                    //onKeyDown={(e) => handleKeyDown(e, slot, building)}
                     tabIndex="0"
-                    onFocus={() => showBuildingMenu(slot)}
+                    //onFocus={() => showBuildingMenu(slot)}
                     onContextMenu={(e) => this.contextClick(e, slot)}
 
                 >
-                    {building.lvl && <LvlNumber lvl={building.lvl} />}
-                    {building.type &&
-                        <img
-                            src={img}
-                            alt={building.name}
-                        />
-                    }
-                </div>
-            )
-        ))
+                        {building.lvl && <LvlNumber lvl={building.lvl} />}
+                        {building.type &&
+                            <img
+                                src={img}
+                                alt={building.name}
+                            />
+                        }
+                </Slot>
+
+        )
     }
 }
 
@@ -103,10 +81,44 @@ function mapStateToProps(state, props) {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        showBuildingMenu: (from) => dispatch(showBuildingMenu(from)),
         switchBuildings: (from, to) => dispatch(switchBuildings(from, to)),
         handleKeyDown: (e, from, building) => dispatch(keyInputBase(e, from, building)),
-        deleteBuilding: (from) => dispatch(removeBuilding(from))
+        removeBuilding: (from) => dispatch(removeBuilding(from))
+    }
+}
+
+
+const buildingSource = {
+    beginDrag({ slot }) {
+        console.log({begin: slot})
+        return { from: slot}
+    },
+
+    endDrag({ switchBuildings }, monitor, component) {
+        console.log("end")
+        if (!monitor.didDrop()) {
+            return
+        }
+        const from = monitor.getItem().from
+        const to = monitor.getDropResult().slot
+        console.log({begin: from, end: to})
+        switchBuildings(from, to)
+    }
+}
+
+function collect(connect, monitor) {
+    return {
+        connectDragSource: connect.dragSource(),
+        isDragging: monitor.isDragging()
+    }
+}
+
+const buildingTarget = {
+
+    drop(props) {
+        console.log("drop")
+        console.log({props})
+        return  props.building
     }
 }
 
@@ -117,4 +129,6 @@ BuildingSlot = DropTarget('building', buildingTarget, (connect, monitor) => ({
 }))(BuildingSlot) 
 
 BuildingSlot = DragSource('building', buildingSource, collect)(BuildingSlot)
+
+
 export default connect(mapStateToProps, mapDispatchToProps)(BuildingSlot)
