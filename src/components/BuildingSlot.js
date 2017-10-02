@@ -90,7 +90,6 @@ const mapDispatchToProps = (dispatch) => {
 
 const buildingSource = {
     beginDrag({building}) {
-        console.log("begin")
         return { building }
     },
     endDrag({ replaceBuilding }, monitor) {
@@ -99,8 +98,7 @@ const buildingSource = {
         }
         const from = monitor.getItem().building
         const to = monitor.getDropResult().building
-        console.log({from, to})
-        if(from.slot) {
+        if(from.slot !== undefined) {
             const tempSlot = from.slot
             from.slot = to.slot
             to.slot = tempSlot
