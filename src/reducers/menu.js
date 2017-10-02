@@ -4,23 +4,12 @@
 
 const initState = {
     //selectedBuilding: {},
-    from: false,
     lvl: 30,
-    fraction: "nod"
+    help: true      // Toggle for showing help everywhere or not
 }
 
 export function menu(state = initState, action) {
     switch (action.type) {
-        case 'SHOW_BUILDING_MENU':
-            return {
-                ...state,
-                from: action.from
-            }
-        case 'HIDE_BUILDING_MENU':
-            return {
-                ...state,
-                from: false
-            }
         case 'CHANGE_FRACTION':
             return {
                 ...state,

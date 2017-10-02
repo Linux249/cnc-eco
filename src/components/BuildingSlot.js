@@ -51,7 +51,7 @@ class BuildingSlot extends Component {
         const { slot,
             building,
             active,
-            fraction,
+            faction,
             showBuildingMenu,
             handleKeyDown,
             connectDragSource,
@@ -60,8 +60,9 @@ class BuildingSlot extends Component {
         } = this.props
         let img = 'undefined'
         if(building.type) {
-            img = require("./../img/buildings/"+fraction+  "/"+ building.type + ".png")
+            img = require(`../img/buildings/N/${building.type}.png`)    // TODO add fraction from base
         }
+
         return  (
             connectDropTarget(connectDragSource(
                 <div
@@ -97,7 +98,7 @@ function mapStateToProps(state, props) {
     return ({
         building: state.base.buildings[props.slot],
         active: state.menu.from,
-        fraction: state.menu.fraction
+        faction: state.base.faction
     }) 
 }
 const mapDispatchToProps = (dispatch) => {
