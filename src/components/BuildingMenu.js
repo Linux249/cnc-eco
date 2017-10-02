@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
-import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux'
 import { replaceBuilding  } from './../actions/base'
 import { changeFraction } from './../actions/menu'
 import { buildingKeys } from './../util/buildings'
-import './../style/BuildingMenu.css'
+import Menu from './../style/BuildingMenu'
+import Button from './../style/Button'
 import BuildingMenuItem from './BuildingMenuItem'
-
-import { DropTarget, DragSource } from 'react-dnd'
-
+import Row from './../style/Row'
 
 
 class BuildingMenu extends Component {
@@ -17,22 +15,26 @@ class BuildingMenu extends Component {
         const { changeFraction, faction, lvl } = this.props
         const items = buildingKeys.map((type) => {
             const img = require("./../img/buildings/"+ faction + "/"+ type + ".png")
-            return <BuildingMenuItem img={img} type={type} building={{type, lvl}} key={type}/>
+            const building = {
+                type,
+                lvl: (type !== "t" && type!=="c" ) ? lvl : undefined
+            }
+            return <BuildingMenuItem img={img} type={type} building={building} key={type}/>
 
         })
         return (
-            <div className="BuildingMenu" >
-                <div className="fraction">
-                    <div className="fractionButton" onClick={() => changeFraction("nod")}>
+            <Menu>
+                <Row className="fraction">
+                    <Button className="fractionButton" onClick={() => changeFraction("nod")}>
                         NOD
-                    </div>
-                    <div className="fractionButton" onClick={() => changeFraction("gdi")}>
+                    </Button>
+                    <Button className="fractionButton" onClick={() => changeFraction("gdi")}>
                         GDI
-                    </div>
-                </div>
+                    </Button>
+                </Row>
 
                 { items }
-            </div>
+            </Menu>
         )
     }
 
