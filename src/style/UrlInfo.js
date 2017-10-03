@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export default styled.div`
     display: flex;
     width: 600px;
-    height: 30px;
+    height: 25px;
     
     
     & > input{

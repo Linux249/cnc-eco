@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { focusColor, hoverColor } from './constants'
+import { backgroundColorHeader, border} from './constants'
+
 export default styled.div`
 
     height: 50px;
@@ -7,13 +8,13 @@ export default styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    //align-items: center;
-    //flex-flow: column;
     
-    background-color: aquamarine;
+    background-color: ${backgroundColorHeader};
     
     padding: 0 20px;
     margin-bottom: 5px;
+    
+    border-bottom: ${border};
 
 `
 

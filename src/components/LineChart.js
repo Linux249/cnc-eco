@@ -4,6 +4,7 @@
 import React, { Component } from 'react'
 import '../style/LineChart'
 import Button from './../style/Button'
+import { backgroundColor } from './../style/constants'
 import Row from './../style/Row'
 import ChartS from './../style/LineChart'
 import Column from './../style/Column'
@@ -30,7 +31,7 @@ class LineChart extends Component
             showTrendLine: true,
             options: {
                 title:"Produktion in 120 Tagen",  // TODO X MIT AUSWAHL RECHTS
-                backgroundColor: '#EEE',
+                backgroundColor: backgroundColor,
 
                 //TODO aktuelle Auswahl oben
                 series: {
