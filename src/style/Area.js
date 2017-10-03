@@ -1,17 +1,12 @@
 import styled from 'styled-components'
+import { shadow, backgroundColor, border } from './constants'
 
 export default styled.div`
     display: flex;
     flex-flow: column;
     //flex-wrap: wrap;
     
-    /*position: absolute;*/
-    background-color: #EEE;
-    //box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    border: 1px solid #CCC;
-    border-radius: 3px;
-    /*margin-left: -5px;*/
-    /*margin-top: 5px;*/
+    ${ shadow + border + backgroundColor }
     padding: 10px;
 
     max-width: 250px;

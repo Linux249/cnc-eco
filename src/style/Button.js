@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { shadow, backgroundColor, border } from './constants'
 
 export default styled.div`
     display: flex;
@@ -7,10 +8,8 @@ export default styled.div`
     flex-basis: 20%;
     height: 30px;
 
-    background-color: #EEE;
-    //box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    border: 1px solid #CCC;
-    border-radius: 3px;
+    ${ shadow + border + backgroundColor }
+    
     margin: 2px;
     
     &:hover {
