@@ -6,12 +6,13 @@ export default styled.div`
 
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     //align-items: center;
     //flex-flow: column;
     
     background-color: aquamarine;
     
+    padding: 0 20px;
     margin-bottom: 5px;
 
 `

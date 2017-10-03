@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { shadow, backgroundColor, border } from './constants'
 
 export default styled.div`
     font-family: Helvetica Neue,Helvetica, Hiragino Kaku Gothic Pro, Meiryo, MS PGothic,sans-serif;

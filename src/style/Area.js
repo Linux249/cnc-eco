@@ -1,12 +1,14 @@
 import styled from 'styled-components'
-import { shadow, backgroundColor, border } from './constants'
+import { shadow, backgroundColor, border, borderRadius } from './constants'
 
 export default styled.div`
     display: flex;
     flex-flow: column;
     //flex-wrap: wrap;
-    
-    ${ shadow + border + backgroundColor }
+    background-color: ${backgroundColor};
+    border: ${border};
+    border-radius: ${ borderRadius  };    
+    box-shadow: ${ shadow  };    
 
     height: 100%;
     
