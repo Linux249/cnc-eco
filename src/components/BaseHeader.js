@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
 import ProductionInfo from './ProductionInfo'
 import UrlInfo from './UrlInfo'
-import './../style/BaseHeader.css'
+import Header from '../style/BaseHeader'
 
 class BaseHeader extends Component
 {
     render()
     {
         return (
-            <div className="BaseHeader" >
+            <Header>
                 <UrlInfo />
                 <ProductionInfo />
-            </div>
+            </Header>
         )
   }
 }
