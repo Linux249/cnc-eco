@@ -3,7 +3,7 @@ import { focusColor, hoverColor } from './constants'
 export default styled.div`
     height: 70px;
     display: flex;
-    width: 76px;
+    width: 77px;
     //flex-basis: 11.11%;
     position: relative;
     border-color: rgba(37, 38, 39, 0.10);

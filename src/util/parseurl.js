@@ -177,11 +177,11 @@ let base = urlToBase(dumy)
 let urlString = parseToURL(base)
 let out = "http://cncopt.com/?map=2|N|N|-fix-|" + urlString + "|newEconomy"
 
-console.log(urlString)
-console.log((out.localeCompare(dumy)))
-console.log(dumy)
+//console.log(urlString)
+//console.log((out.localeCompare(dumy)))
+//console.log(dumy)
 
 
-console.log(base)
+//console.log(base)
 
 export default urlToBase
