@@ -2,7 +2,11 @@
  * Created by Bombassd on 13.01.2017.
  */
 import React, { Component } from 'react'
-import './../style/LineChart.css'
+import '../style/LineChart'
+import Button from './../style/Button'
+import Row from './../style/Row'
+import ChartS from './../style/LineChart'
+import Column from './../style/Column'
 import { connect } from 'react-redux'
 import { shortenNumber } from './../services/menu'
 import { Chart } from 'react-google-charts'
@@ -122,57 +126,66 @@ class LineChart extends Component
         const ranges = [10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000, 100000000000, 1000000000000]
         const days = [30, 60, 90, 120]
         return (
-            <div className="chartRow" >
-                <div className="chart">
-                    <div className="range">
-                        {
-                            ranges.map(n => (
-                                <div
-                                    key={n}
-                                    className="rangeButton"
-                                    onClick={() => this.changeRange(n)}
-                                    style={ activeRange === n ?{border: 'solid red'} : {} }
-                                >
-                                    {shortenNumber(n)}
-                                    </div>
-                                )
-                            )
-                        }
-                    </div>
-                    <Chart
-                        chartType="LineChart"
-                        data={data2}
-                        options={this.state.options}
-                        graph_id="LineChart"
-                        width="80%"
-                        legend_toggle
-                    />
-                    <div className="days">
-                        {
-                            days.map(n => (
-                                <div
-                                    key={n}
-                                    className="daysButton"
-                                    onClick={() => this.changeDays(n)}
-                                    style={ activeDays === n ?{border: 'solid red'} : {} }
-                                >
-                                    {n + " Tage"}
-                                </div>
-                            ))
-                        }
-                        <div
-                            className="daysButton"
-                            onClick={() => this.toogleRealLine()}
-                            style={toogleRealLines ? {border: 'solid red'} : {}}
-                        >Real Line</div>
-                        <div
-                            className="daysButton"
-                            onClick={() => this.toogleTrendLine()}
-                            style={toggleTrendLines ? {border: 'solid red'} : {}}
-                        >Trend Line</div>
-                    </div>
+            <div>
 
-                </div>
+                <Row>
+                    {
+                        ranges.map(n => (
+                            <Button
+                                key={n}
+                                onClick={() => this.changeRange(n)}
+                                active={(activeRange === n)}
+                            >
+                                {shortenNumber(n)}
+                            </Button>
+                            )
+                        )
+                    }
+                </Row>
+                <Row>
+                    {
+
+                        days.map(n => (
+                            <Button
+                                key={n}
+                                onClick={() => this.changeDays(n)}
+                                active={(activeDays === n)}
+                            >
+                                {n + " Tage"}
+                            </Button>
+                        ))
+                    }
+
+
+                    <Button
+                        onClick={() => this.toogleRealLine()}
+                        active={(toogleRealLines)}
+                    >
+                        Real Line
+                    </Button>
+                    <Button
+                        onClick={() => this.toogleTrendLine()}
+                        active={(toggleTrendLines)}
+                    >
+                        Trend Line
+                    </Button>
+                </Row>
+                <Row>
+                    <ChartS>
+                        <Chart
+                            chartType="LineChart"
+                            data={data2}
+                            options={this.state.options}
+                            graph_id="LineChart"
+                            width="100%"
+                            legend_toggle
+                        />
+                    </ChartS>
+                    <Column>
+
+                    </Column>
+
+                </Row>
             </div>
         )
     }
