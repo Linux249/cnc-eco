@@ -6,9 +6,10 @@ export const CHANGE_FRACTION = "CHANGE_FRACTION"
 
 // number where the building is set is inside building.slot
 export function replaceBuilding(building) {
+    building =  copyObj(building)
     return {
         type: REPLACE_BUILDING,
-        building: copyObj(building)
+        building
     }
 }
 

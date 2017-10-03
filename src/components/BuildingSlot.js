@@ -7,9 +7,6 @@ import {removeBuilding, replaceBuilding } from '../actions/base'
 import Slot from '../style/BuildingSlot'
 import { buildingKeys } from './../util/buildings'
 
-
-
-
 class BuildingSlot extends Component {
 
 

@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux';
-
+//import { connect } from 'react-redux';
 import BuildingSlot from './BuildingSlot.js'
-import BuildingMenu from './BuildingMenu.js';
 //import Details from './Details.js'
-import '../style/Base'
 import Area from '../style/Area'
 import BaseStyle from '../style/Base'
 
@@ -38,17 +35,7 @@ class Base extends Component
     }
 }
 
-function mapStateToProps(state) {
-    return ({
-        show: state.menu.from,
-       // buildings: state.buildings
-    });
-}
 
-const mapDispatchToProps = (dispatch) => {
-    return {
 
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Base);
+export default Base;
