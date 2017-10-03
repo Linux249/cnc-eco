@@ -35,7 +35,6 @@ const buildingSource = {
         }
         const from = monitor.getItem().building
         const to = monitor.getDropResult().building
-        console.log({from, to})
         if(from.slot) {
             const tempSlot = from.slot
             from.slot = to.slot
