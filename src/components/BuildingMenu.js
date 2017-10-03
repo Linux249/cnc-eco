@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { replaceBuilding  } from './../actions/base'
 import { changeFraction } from '../actions/base'
 import { buildingKeys } from './../util/buildings'
-import Menu from './../style/BuildingMenu'
+import Menu from '../style/BuildingMenu'
+import Area from '../style/Area'
 import Button from './../style/Button'
 import BuildingMenuItem from './BuildingMenuItem'
 import Row from './../style/Row'
@@ -23,7 +24,7 @@ class BuildingMenu extends Component {
 
         })
         return (
-            <Menu>
+            <Area>
                 <Row>
                     <Button onClick={() => changeFraction("N")}>
                         NOD
@@ -32,9 +33,10 @@ class BuildingMenu extends Component {
                         GDI
                     </Button>
                 </Row>
-
-                { items }
-            </Menu>
+                <Menu>
+                    { items }
+                </Menu>
+            </Area>
         )
     }
 

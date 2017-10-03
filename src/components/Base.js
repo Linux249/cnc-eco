@@ -7,7 +7,7 @@ import BuildingMenu from './BuildingMenu.js';
 //import Details from './Details.js'
 import './../style/Base.css'
 import { showBuildingMenu } from './../actions/menu'
-
+import Row from '../style/Row'
 
 class Base extends Component
 {
@@ -29,10 +29,8 @@ render()
       })
 
     return (
-        <div className="BaseRow" >
-            <div className="BaseSideLeft">
+        <Row>
                <BuildingMenu />
-            </div>
             <div className="BaseMiddle">
                 <div className="Base" >
                     {slots}
@@ -41,7 +39,7 @@ render()
             <div className="BaseSideRight" >
                 {/*<Details />*/}
             </div>
-        </div>
+        </Row>
     );
   }
 }
