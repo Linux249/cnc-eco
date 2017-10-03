@@ -4,7 +4,8 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import './../style/ProductionInfo.css'
+import Button from './../style/Button'
+import Info from './../style/ProductionInfo'
 import { shortenNumber } from './../services/menu'
 import { calcProduction } from './../util/production'
 import icon_tib from './../img/icon/icon_tiberium.png'
@@ -21,29 +22,29 @@ class ProductionInfo extends Component
         const production = calcProduction(buildings)
         const {tib, kris, power, credits } = production
         return (
-            <div className="ProductionInfo">
+            <Info>
 
-                <div>
+                <Button>
 
                     {shortenNumber(tib, 2)}
                     <img src={icon_tib} alt={icon_tib} />
-                </div>
-                <div>
+                </Button>
+                <Button>
 
                     {shortenNumber(kris, 2)}
                     <img src={icon_cris} alt={icon_tib} />
-                </div>
-                <div>
+                </Button>
+                <Button>
 
                     {shortenNumber(power, 2)}
                     <img src={icon_power} alt={icon_tib} />
-                </div>
-                <div>
+                </Button>
+                <Button>
 
                     {shortenNumber(credits, 2)}
                     <img src={icon_credits} alt={icon_tib} />
-                </div>
-            </div>
+                </Button>
+            </Info>
         )
 
     }

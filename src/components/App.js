@@ -27,7 +27,7 @@ class App extends Component
         return(
             <div className="App" >
                 <BaseHeader ref="target"/>
-                <Base faction="base.faction" />
+                <Base />
                 <LineChart />
             </div>
         )

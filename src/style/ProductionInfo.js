@@ -1,0 +1,22 @@
+import styled from 'styled-components'
+import { shadow, backgroundColor, border } from './constants'
+
+export default styled.div`
+${ shadow + border + backgroundColor }
+
+//    position: relative ;
+    display: flex;
+    //justify-content: space-around;
+    //align-content: space-around;
+    //flex-wrap: wrap;
+
+    margin-bottom: 10px;
+
+    & > div > img {
+        margin-left: 5px;
+    }
+    
+    & > div:hover {
+        box-shadow: 0 4px 8px 0 rgba(30, 136, 229, 0.2), 0 6px 20px 0 rgba(30, 136, 229, 0.19);
+    }
+`

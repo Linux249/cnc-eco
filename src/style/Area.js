@@ -7,11 +7,10 @@ export default styled.div`
     //flex-wrap: wrap;
     
     ${ shadow + border + backgroundColor }
-    padding: 10px;
 
-    max-width: 250px;
-    height: 450px;
+    height: 100%;
     
+    padding: 10px;
     margin-right: 10px;
    
 

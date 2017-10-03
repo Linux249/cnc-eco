@@ -4,7 +4,8 @@ export default styled.div`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-
-    padding: 10px;
-    margin-right: 10px;
+     
+    max-width: 250px;
+    height: 450px;
+    
 `

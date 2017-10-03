@@ -6,9 +6,11 @@ import BuildingSlot from './BuildingSlot.js'
 import BuildingMenu from './BuildingMenu.js';
 //import Details from './Details.js'
 import '../style/Base'
-import { showBuildingMenu } from './../actions/menu'
 import Row from '../style/Row'
+import Area from '../style/Area'
 import BaseStyle from '../style/Base'
+import ProductionInfo from './ProductionInfo'
+import UrlInfo from './UrlInfo'
 
 class Base extends Component
 {
@@ -31,12 +33,16 @@ render()
 
     return (
         <Row>
-               <BuildingMenu />
-            <div className="BaseMiddle">
-                <BaseStyle className="Base" >
+            <BuildingMenu />
+            <Area>
+                <BaseStyle>
                     {slots}
                 </BaseStyle>
-            </div>
+            </Area>
+            <Area>
+                <UrlInfo />
+                <ProductionInfo />
+            </Area>
             <div className="BaseSideRight" >
                 {/*<Details />*/}
             </div>
