@@ -5,9 +5,10 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import BuildingSlot from './BuildingSlot.js'
 import BuildingMenu from './BuildingMenu.js';
 //import Details from './Details.js'
-import './../style/Base.css'
+import '../style/Base'
 import { showBuildingMenu } from './../actions/menu'
 import Row from '../style/Row'
+import BaseStyle from '../style/Base'
 
 class Base extends Component
 {
@@ -32,9 +33,9 @@ render()
         <Row>
                <BuildingMenu />
             <div className="BaseMiddle">
-                <div className="Base" >
+                <BaseStyle className="Base" >
                     {slots}
-                </div>
+                </BaseStyle>
             </div>
             <div className="BaseSideRight" >
                 {/*<Details />*/}

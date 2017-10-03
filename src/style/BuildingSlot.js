@@ -1,11 +1,12 @@
 import styled from 'styled-components'
 import { focusColor, hoverColor } from './constants'
 export default styled.div`
-    height: 80px;
+    height: 70px;
     display: flex;
-    flex-basis: 11.11%;
+    width: 80px;
+    //flex-basis: 11.11%;
     position: relative;
-    border-color: rgba(37, 38, 39, 0.25);
+    border-color: rgba(37, 38, 39, 0.10);
     border-style: solid;
     border-width: 1px;
 
