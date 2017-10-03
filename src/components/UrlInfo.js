@@ -3,6 +3,9 @@
  */
 import React, { Component } from 'react'
 import Info from '../style/UrlInfo'
+import Area from '../style/Area'
+import Row from '../style/Row'
+import Button from '../style/Button'
 import urlToBase from './../util/parseurl.js'
 import { replaceAllBase } from '../actions/base'
 
@@ -26,11 +29,13 @@ class UrlInfo extends Component
 
     render () {
         return(
-            <Info>
+            <Area>
                 <label>CncOpt Url</label>
-                <input type="url" ref="url"/>
-                <div onClick={this.updateBase}> send</div>
-            </Info>
+                <Info>
+                    <input type="url" ref="url"/>
+                    <Button onClick={this.updateBase}> send</Button>
+                </Info>
+            </Area>
         )
     }
 }

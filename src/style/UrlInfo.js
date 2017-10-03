@@ -2,10 +2,13 @@ import styled from 'styled-components'
 
 export default styled.div`
     display: flex;
-
+    
+    & > input{
+        flex-grow: 1;
+    }
 
     //justify-content: space-around;
-    align-items: center;
+    //align-items: center;
 
     //background-color: #EEE;
     //box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
