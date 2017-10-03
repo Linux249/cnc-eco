@@ -10,8 +10,6 @@ const initial_state = urlToBase("map=2|N|N|-fix-|.........12p12p12p.14r20h20s20h
 
 console.log("INITIAL STATE - FROM URL")
 console.log({initial_state})
-//console.log("PRODUCTION")
-//console.log()
 
 const store = configureStore(initial_state);
 
