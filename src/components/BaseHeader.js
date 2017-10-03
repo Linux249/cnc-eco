@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Header from '../style/BaseHeader'
+import UrlInfo from './UrlInfo'
 
 class BaseHeader extends Component
 {
@@ -7,6 +8,7 @@ class BaseHeader extends Component
     {
         return (
             <Header>
+                <UrlInfo />
 
             </Header>
         )

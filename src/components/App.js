@@ -5,16 +5,12 @@ import LineChart from './LineChart.js'
 import BaseHeader from './BaseHeader.js';
 import { replaceAllBase } from './../actions/base'
 import urlToBase from'../util/parseurl'
-import '../style/App'
-
-// Components
 import Base from './Base.js'
+import BuildingMenu from './BuildingMenu'
+import ProductionInfo from './ProductionInfo'
 import AppS from '../style/App'
 import Body from '../style/Body'
 import Area from '../style/Area'
-import BuildingMenu from './BuildingMenu'
-import ProductionInfo from './ProductionInfo'
-import UrlInfo from './UrlInfo'
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
@@ -39,7 +35,7 @@ class App extends Component
                     <BuildingMenu />
                     <Base />
                     <Area>
-                        <UrlInfo />
+
                         <ProductionInfo />
                         <LineChart />
                     </Area>

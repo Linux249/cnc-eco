@@ -2,6 +2,9 @@ import styled from 'styled-components'
 
 export default styled.div`
     display: flex;
+    width: 600px;
+    height: 30px;
+    
     
     & > input{
         flex-grow: 1;

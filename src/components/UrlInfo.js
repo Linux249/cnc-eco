@@ -6,6 +6,7 @@ import Info from '../style/UrlInfo'
 import Area from '../style/Area'
 import Row from '../style/Row'
 import Button from '../style/Button'
+import Label from '../style/Label'
 import urlToBase from './../util/parseurl.js'
 import { replaceAllBase } from '../actions/base'
 
@@ -29,13 +30,13 @@ class UrlInfo extends Component
 
     render () {
         return(
-            <Area>
-                <label>CncOpt Url</label>
+            <Row>
                 <Info>
+                    <Label>CncOpt Url</Label>
                     <input type="url" ref="url"/>
                     <Button onClick={this.updateBase}> send</Button>
                 </Info>
-            </Area>
+            </Row>
         )
     }
 }
