@@ -11,7 +11,7 @@ export default styled.div`
     padding: 10px;
 
     max-width: 50%;
-    height: 660px;
+    height: 450px;
     flex: 2;
     margin-right: 10px;
    

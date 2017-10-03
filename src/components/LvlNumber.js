@@ -1,8 +1,8 @@
 import React from 'react';
-import './../style/LvLNumber.css'
+import Number from '../style/LvLNumber'
 
 export const LvlNumber = props => (
-    <div className="LvLNumber"><div> {props.lvl}</div></div>
+    <Number><div> {props.lvl}</div></Number>
 )
 
 

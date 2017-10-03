@@ -1,4 +1,7 @@
-.LvLNumber {
+import styled from 'styled-components'
+import { focusColor, hoverColor } from './constants'
+export default styled.div`
+
     display: flex;
     /*justify-content: flex-end;*/
     /*text-align: center;*/
@@ -7,11 +10,7 @@
     z-index: 10;
     width: 100%;
 
-
-
-}
-
-.LvLNumber div {
+    & > div {
     letter-spacing: 0;
     max-height: 30%;
     /*width: 30%;*/
@@ -29,11 +28,4 @@
     padding-right: 4px;
     /*padding-bottom: -1px;*/
     background: rgba(255, 255, 255, 0.15);
-
-}
-
-
-
-
-
-
+`
