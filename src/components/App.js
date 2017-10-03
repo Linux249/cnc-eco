@@ -5,10 +5,18 @@ import LineChart from './LineChart.js'
 import BaseHeader from './BaseHeader.js';
 import { replaceAllBase } from './../actions/base'
 import urlToBase from'../util/parseurl'
-import './../style/App.css'
+import '../style/App'
 
 // Components
 import Base from './Base.js'
+import AppS from '../style/App'
+import Body from '../style/Body'
+import Area from '../style/Area'
+import BuildingMenu from './BuildingMenu'
+import ProductionInfo from './ProductionInfo'
+import UrlInfo from './UrlInfo'
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 class App extends Component
 {
@@ -25,11 +33,18 @@ class App extends Component
     render()
     {
         return(
-            <div className="App" >
+            <AppS >
                 <BaseHeader ref="target"/>
-                <Base />
-                <LineChart />
-            </div>
+                <Body>
+                    <BuildingMenu />
+                    <Base />
+                    <Area>
+                        <UrlInfo />
+                        <ProductionInfo />
+                    </Area>
+                    <LineChart />
+                </Body>
+            </AppS>
         )
     }
 
@@ -40,5 +55,8 @@ const mapDispatchToProps = (dispatch) => {
         replaceAllBase: (url) => dispatch(replaceAllBase(url))
     }
 }
+
+App = DragDropContext(HTML5Backend)(App)
+
 export default connect(null, mapDispatchToProps)(App);
 
