@@ -41,8 +41,9 @@ class App extends Component
                     <Area>
                         <UrlInfo />
                         <ProductionInfo />
+                        <LineChart />
                     </Area>
-                    <LineChart />
+
                 </Body>
             </AppS>
         )

@@ -2,7 +2,7 @@
  * Created by Bombassd on 05.02.2017.
  */
 import React, { Component } from 'react'
-import './../style/UrlInfo.css'
+import Info from '../style/UrlInfo'
 import urlToBase from './../util/parseurl.js'
 import { replaceAllBase } from '../actions/base'
 
@@ -11,17 +11,6 @@ class UrlInfo extends Component
     constructor(props)
     {
         super(props)
-    }
-
-    render () {
-
-        return(
-            <div className="UrlInfo">
-                <label>CncOpt Url</label>
-                <input type="url" ref="url"/>
-                <div onClick={this.updateBase}> send</div>
-            </div>
-        )
     }
 
     updateBase = () =>
@@ -33,6 +22,16 @@ class UrlInfo extends Component
         } catch (e) {
             this.refs.url.value = "Fehler"
         }
+    }
+
+    render () {
+        return(
+            <Info>
+                <label>CncOpt Url</label>
+                <input type="url" ref="url"/>
+                <div onClick={this.updateBase}> send</div>
+            </Info>
+        )
     }
 }
 
