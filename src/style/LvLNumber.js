@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { focusColor, hoverColor } from './constants'
+
 export default styled.div`
 
     display: flex;

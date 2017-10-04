@@ -3,7 +3,6 @@
  */
 import React, { Component } from 'react'
 import Info from '../style/UrlInfo'
-import Area from '../style/Area'
 import Row from '../style/Row'
 import Button from '../style/Button'
 import Label from '../style/Label'

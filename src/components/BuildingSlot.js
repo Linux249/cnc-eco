@@ -16,9 +16,9 @@ class BuildingSlot extends Component {
         this.props.replaceBuilding({slot})
     }
 
-    handleKeyDown = (e, building) => {
-        e.preventDefault()
-        const { key } = e
+    handleKeyDown = (event, building) => {
+        event.preventDefault()
+        const { key } = event  // get pressed key
 
         //change building
         if(buildingKeys.includes(key)) {
@@ -59,35 +59,29 @@ class BuildingSlot extends Component {
             connectDragSource,
             connectDropTarget ,
             isDragging,
-            ...rest
         } = this.props
+        const { type, slot, lvl} = building
         let img = 'undefined'
-        if(building.type) {
-            img = require("./../img/buildings/"+ faction + "/"+ building.type + ".png")
+        if(type) {
+            img = require("./../img/buildings/"+ faction + "/"+ type + ".png")
 
         }
 
         return  (
 
                 <Slot
-                    {...rest}
                     ref={instance => {
                         connectDropTarget(findDOMNode(instance))
                         connectDragSource(findDOMNode(instance))
                     }}
+                    key={slot}
                     onKeyDown={(e) => this.handleKeyDown(e, building)}
                     tabIndex="0"
                     onContextMenu={(e) => this.contextClick(e, building)}
-
                 >
-                        {building.lvl && <LvlNumber lvl={building.lvl} />}
-                        {/*{(building.slot || building.slot === 0)&& <LvlNumber lvl={building.slot} />}*/}
-                        {building.type &&
-                            <img
-                                src={img}
-                                alt={building.name}
-                            />
-                        }
+                    {lvl && <LvlNumber lvl={lvl} />}
+                    {/*{(building.slot || building.slot === 0)&& <LvlNumber lvl={building.slot} />}*/}
+                    {type && <img src={img} alt={type} />}
                 </Slot>
 
         )
