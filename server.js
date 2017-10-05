@@ -6,6 +6,22 @@ import { findBestToLvlUpNext } from './src/performance'
 import Path from 'path'
 import Inert from 'inert'
 import Hapi from 'hapi'
+const mongoose = require("mongoose")
+
+// DB
+mongoose.connect(process.env.MONGODB_URI)
+const db = mongoose.connection //simplification
+
+//falls Fehler kommen so ausgeben
+db.on("error", (err) => {
+	console.error("Fehler von DB:", err)
+})
+
+//nach erfolgreichem verbinden
+db.once("open", () => {
+	console.log("db connection succesful")
+})
+
 
 // Create a server with a host and port
 const server = new Hapi.Server();
