@@ -29,6 +29,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "hapi": "^16.4.2",
     "inert": "^4.2.0",
-    "socket.io": "^2.0.2"
+    "socket.io": "^2.0.2",
+    "mongoose": "^4.12.0"
   }
 }
