@@ -75,7 +75,9 @@ server.route({
     path:'/layout',
     handler: function (request, reply) {
         const layouts = JSON.parse(request.payload)
+	const { pl, w, a} = request.params.query
         console.log(layouts)
+	console.log({ pl, w, a})	    
         return reply(layouts);
     }
 });
