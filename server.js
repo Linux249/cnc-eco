@@ -48,6 +48,9 @@ server.route({
         }
     }
 });
+
+
+
 // server.log(['error', 'database', 'read']);
 
 // Add the route
@@ -75,9 +78,9 @@ server.route({
     path:'/layout',
     handler: function (request, reply) {
         const layouts = JSON.parse(request.payload)
-	const { pl, w, a} = request.params.query
+	    const { pl, w, a} = request.params.query
         console.log(layouts)
-	console.log({ pl, w, a})	    
+	    console.log({ pl, w, a})
         return reply(layouts);
     }
 });
@@ -88,6 +91,17 @@ server.route({
     handler: function (request, reply) {
 
         return reply("Hallo World");
+    }
+});
+
+server.route({
+    method: 'POST',
+    path: '/*',
+    handler: (request, reply) => {
+        const body = JSON.parse(request.payload)
+        const params = request.params.query
+        console.log(body)
+        console.log(params)
     }
 });
 

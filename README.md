@@ -74,3 +74,40 @@ export only schema - make model from schema in route handler
   }
 ```
   
+- Login system
+- Payment system
+  - credits for money (List to choose)
+
+Ingame cliackable List of saved games (mini preview of layout)
+- list is sorted: newest + saved bases
+- save Bases to account 
+  - api: GET /user/base get list of bases 
+  - api: POST /user/base/    save the Base to a list (max 100, new first)
+  - api: GET /user/base/:id  get single base
+  - api: PUT /user/base/:id  save single base (first of list)   
+
+- create Base from url-param
+  - api:/getBaseFromGame get Base from server 
+  
+## Credit system
+- report interactions 
+  - Document interaktion points
+  
+  idee: 
+  
+  - gebäude classe 
+    - methoden:
+       - cunstructor(url || empty )  
+       - replaceBuilding(building)
+       - removeBuilding(index)
+       - lvlBuildingUp(index)
+       - lvlBuildingDown(index)
+       - setBuildingLvl(index, lvl)
+       - switchBuildings(i1, i2) //i2 empty means is
+       - production()
+       -  
+       
+       
+### API: 
+ - calcFutureProd(base/buildings)
+ - 
