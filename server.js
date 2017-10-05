@@ -9,7 +9,7 @@ import Hapi from 'hapi'
 const mongoose = require("mongoose")
 
 // DB
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true, promiseLibrary: global.Promise })
 const db = mongoose.connection //simplification
 
 //falls Fehler kommen so ausgeben
