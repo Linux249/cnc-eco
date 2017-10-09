@@ -6,7 +6,8 @@
   "scripts": {
     "start": "babel-node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "git push heroku master"
+    "deploy": "git push heroku master",
+    "dev": "nodemon ./server.js --exec babel-node"
   },
   "repository": {
     "type": "git",

@@ -6,10 +6,13 @@ import { findBestToLvlUpNext } from './src/performance'
 import Path from 'path'
 import Inert from 'inert'
 import Hapi from 'hapi'
+import layouts from './src/routes/layouts'
 const mongoose = require("mongoose")
 
 // DB
-mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true, promiseLibrary: global.Promise })
+const mongo_uri = process.env.MONGODB_URI ? process.env.MONGODB_URI : "mongodb://localhost:27017/cnc"
+console.log({mongo_uri})
+mongoose.connect(mongo_uri, { useMongoClient: true, promiseLibrary: global.Promise })
 const db = mongoose.connection //simplification
 
 //falls Fehler kommen so ausgeben
@@ -27,7 +30,7 @@ db.once("open", () => {
 const server = new Hapi.Server();
 server.connection({
     // host: 'cnc-eco.herokuapp.com',
-    // host: (process.env.HOST || 'localhost'),
+    host: (process.env.HOST || 'localhost'),
     port: (process.env.PORT || 8000),
     routes: {
         cors: true,
@@ -73,17 +76,7 @@ server.route({
     }
 });
 
-server.route({
-    method: 'POST',
-    path:'/layout',
-    handler: function (request, reply) {
-        const layouts = JSON.parse(request.payload)
-	    const { pl, w, a} = request.params.query
-        console.log(layouts)
-	    console.log({ pl, w, a})
-        return reply(layouts);
-    }
-});
+server.route(layouts);
 
 server.route({
     method: 'GET',
