@@ -6,6 +6,7 @@ import BaseHeader from './BaseHeader.js';
 import { replaceAllBase } from './../actions/base'
 import Bases from './Bases.js'
 import Scripts from './Scripts.js'
+import Layouts from './Layouts.js'
 
 import AppS from '../style/App'
 import { DragDropContext } from 'react-dnd';
@@ -30,9 +31,9 @@ class App extends Component
             <Router>
                 <AppS >
                     <BaseHeader ref="target"/>
-                    <Route path="/" component={Bases}/>
+                    <Route path="/bases" component={Bases}/>
                     <Route path="/scripts" component={Scripts}/>
-                    <Route path="/layouts" component={Bases}/>
+                    <Route path="/layouts" component={Layouts}/>
                 </AppS>
             </Router>
         )
