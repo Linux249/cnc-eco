@@ -13,16 +13,17 @@
   "dependencies": {
     "immutability-helper": "^2.4.0",
     "react": "^16.0.0",
-    "react-dnd": "^2.5.3",
-    "react-dnd-html5-backend": "^2.5.3",
+    "react-dnd": "^2.5.4",
+    "react-dnd-html5-backend": "^2.5.4",
     "react-dom": "^16.0.0",
     "react-google-charts": "^1.5.5",
-    "redux": "^3.7.2",
     "react-redux": "^5.0.6",
-    "react-router": "^3.2.0",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "socket.io-client": "^2.0.3",
-    "styled-components": "^2.2.0"
+    "styled-components": "^2.2.1"
   },
   "scripts": {
     "start": "react-scripts start",

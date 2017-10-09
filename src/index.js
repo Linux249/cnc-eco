@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import configureStore from './configureStore'
 import { Provider } from 'react-redux';
-import { Router, Route, hashHistory } from 'react-router'
 import urlToBase from './util/parseurl'
 if (process.env.NODE_ENV !== 'production') {
     const {whyDidYouUpdate} = require('why-did-you-update')
@@ -18,8 +17,5 @@ const store = configureStore(initial_state);
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router history={hashHistory}>
-            <Route path="/(:base)" component={App}/>
-
-        </Router>
+        <App/>
     </Provider>,  document.getElementById('app'));
