@@ -4,7 +4,7 @@ import Body from '../style/Body'
 import Title from '../style/Title'
 import Button from '../style/Button'
 import Row from '../style/Row'
-import UrlInfo from './UrlInfo'
+import Layout from './Layout'
 import Login from './Login'
 
 class BaseHeader extends Component
@@ -19,15 +19,20 @@ class BaseHeader extends Component
         //get layouts from api
         fetch(" http://cnc-eco.herokuapp.com/api/v1/layouts?pl=linux249&w=373&a=126")
             .then(res => res.json())
-            .then(layouts => console.log(layouts))
-        //console.log(layouts)
-        //this.setState = { layouts }
+            .then(layouts => {
+                console.log(layouts)
+                console.log(layouts)
+                this.setState({ layouts })
+            })
     }
     render()
     {
+        const { layouts } = this.state
         return (
             <Body>
-                <Title>{this.state.layouts.length}</Title>
+                <Title>{layouts.length}</Title>
+                {layouts.map((layout, i) => <Layout key={i} layout={layout}/>)}
+
 
             </Body>
         )
