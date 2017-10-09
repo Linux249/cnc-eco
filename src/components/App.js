@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import BaseHeader from './BaseHeader.js';
 import { replaceAllBase } from './../actions/base'
 import Bases from './Bases.js'
+import Scripts from './Scripts.js'
 
 import AppS from '../style/App'
 import { DragDropContext } from 'react-dnd';
@@ -30,7 +31,7 @@ class App extends Component
                 <AppS >
                     <BaseHeader ref="target"/>
                     <Route path="/" component={Bases}/>
-                    <Route path="/scripts" component={Bases}/>
+                    <Route path="/scripts" component={Scripts}/>
                     <Route path="/layouts" component={Bases}/>
                 </AppS>
             </Router>
