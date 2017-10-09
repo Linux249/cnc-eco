@@ -51,9 +51,12 @@ class Layout extends React.Component {
         //rect({ctx, x: 110, y: 110, width: 20, height: 20});
     }
     render() {
+        const { layout } = this.props
         return (
             <Area>
+                <div>{`T: ${layout.tib}    - K: ${layout.cris}`}</div>
                 <canvas ref="canvas" width={180} height={160}/>
+                <div>{`${layout.x} : ${layout.y}`}</div>
             </Area>
         );
     }
