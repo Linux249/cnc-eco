@@ -1,11 +1,6 @@
-// import mongoose, { Schema }  from 'mongoose'
-// import World from '../model/World'
-// import Player from '../model/Player'
-// import layoutSchema from '../model/Layout'
-const MongoClient = require('mongodb').MongoClient;
-
-
 'use strict'
+import MongoClient from 'mongodb'
+import { layoutStats } from '../utils/layout'
 import { Router } from "express"
 const router = Router()
 
@@ -38,6 +33,7 @@ router.post("/layouts", (req, res, next) => {
         if (err) throw err;
         const layouts = Object.keys(body).map(key => {
             const [x, y] = key.split(":")
+            const {tib, cris} = layoutStats(body[key].layout)
             const layout = {
                 x,
                 y,
@@ -46,10 +42,12 @@ router.post("/layouts", (req, res, next) => {
                 world: body[key].world,
                 player: body[key].player,
                 layout: body[key].layout,
+                tib,
+                cris
             }
             db.collection(`_${w}`).update({x, y}, layout, { upsert: true }).catch(e => console.log("Fehler beim Speichern eines Layouts", e))
+            return layout
         })
-
 
         res.json(layouts)
         db.close();
