@@ -33,7 +33,8 @@ router.post("/layouts", (req, res, next) => {
         if (err) throw err;
         const layouts = Object.keys(body).map(key => {
             const [x, y] = key.split(":")
-            const {tib, cris} = layoutStats(body[key].layout)
+            const layoutString = body[key].layout.slice(0, 71)
+            const {tib, cris} = layoutStats(layoutString)
             const layout = {
                 x,
                 y,
@@ -41,7 +42,7 @@ router.post("/layouts", (req, res, next) => {
                 alliance: body[key].alliance,
                 world: body[key].world,
                 player: body[key].player,
-                layout: body[key].layout,
+                layout: layoutString,
                 tib,
                 cris
             }
