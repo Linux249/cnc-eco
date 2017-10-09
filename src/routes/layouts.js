@@ -1,14 +1,37 @@
-import mongoose, { Schema }  from 'mongoose'
-import World from '../model/World'
-import Player from '../model/Player'
-import layoutSchema from '../model/Layout'
+// import mongoose, { Schema }  from 'mongoose'
+// import World from '../model/World'
+// import Player from '../model/Player'
+// import layoutSchema from '../model/Layout'
 
-export default {
+
+'use strict'
+import { Router } from "express"
+const router = Router()
+
+
+
+//POST /api/v1/Archiv
+router.post("/layouts", function(req, res, next) {
+    const {query, param} = req
+    console.log({query, param})
+})
+
+export default router
+
+
+
+
+
+
+
+
+
+const delete1 =  {
     method: 'POST',
     path:'/layout',
     handler: function (request, reply) {
         const newLayouts = JSON.parse(request.payload)
-        console.log(request)
+        //console.log(request)
         console.log(request.params)
         const { pl, w, a} = request.params.query
         console.log(newLayouts)
