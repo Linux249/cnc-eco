@@ -2,18 +2,69 @@
 // import World from '../model/World'
 // import Player from '../model/Player'
 // import layoutSchema from '../model/Layout'
+const MongoClient = require('mongodb').MongoClient;
 
 
 'use strict'
 import { Router } from "express"
 const router = Router()
 
-
+const mongo_uri = process.env.MONGODB_URI ? process.env.MONGODB_URI : "mongodb://localhost:27017/cnc"
 
 //POST /api/v1/Archiv
-router.post("/layouts", function(req, res, next) {
-    const {query, param} = req
-    console.log({query, param})
+router.get("/layouts", (req, res, next) => {
+    const { a, w } = req.query
+    // TODO auth require
+    MongoClient.connect(mongo_uri, (err, db) => {
+        if (err) throw err;
+        console.log("Database created!");
+        db.collection(`_${w}`).find({alliance: a}).toArray(
+            (err, layouts) => {
+                if(err) next(err)
+                console.log(layouts)
+                res.json(layouts)
+            }
+        )
+
+    })
+})
+
+
+
+//POST /api/v1/layouts
+router.post("/layouts", (req, res, next) => {
+    const {body, query} = req
+    const { w } = query
+    console.log({body, query})
+
+    MongoClient.connect(mongo_uri, (err, db) => {
+        if (err) throw err;
+        console.log("Database created!");
+
+        const layouts = Object.keys(body).map(key => {
+            const [x, y] = key.split(":")
+            const layout = {
+                x,
+                y,
+                level: body[key].level,
+                alliance: body[key].alliance,
+                world: body[key].world,
+                player: body[key].player,
+                layout: body[key].layout,
+
+            }
+
+            console.log(layout)
+
+            db.collection(`_${w}`).update({x, y}, layout, { upsert: true }).catch(e => console.log("Fehler beim Speichern eines Layouts", e))
+            return layout
+            // check collection for this world
+        })
+
+
+        res.json(layouts)
+        db.close("db close");
+    });
 })
 
 export default router

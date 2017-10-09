@@ -6,7 +6,6 @@ const jsonParser = require("body-parser").json
 //const mongoose = require("mongoose")
 import apiRouter from "./routes/index"
 //const config = require('./env.json')[process.env.NODE_ENV || 'development']
-const MongoClient = require('mongodb').MongoClient;
 
 
 /*import test from './test/Literatur'
@@ -26,15 +25,9 @@ const app = express()
 app.use(jsonParser())
 
 //die Verbindung wird async aufgebaut, allerdings 'speichert' mongoose anfragen falls die app schneller läuft und Anfragen bekommt als die Verbindugn zur DB aufgebaut wird.
-const mongo_uri = process.env.MONGODB_URI ? process.env.MONGODB_URI : "mongodb://localhost:27017/cnc"
 
-//mongoose.connect(mongo_uri, { useMongoClient: true, promiseLibrary: global.Promise })
-//const db = mongoose.connection //simplification
-MongoClient.connect(mongo_uri, function(err, db) {
-    if (err) throw err;
-    console.log("Database created!");
-    db.close();
-});
+
+// DB cleaner thats delete old layouts
 
 
 //falls Fehler kommen so ausgeben
