@@ -17,11 +17,9 @@ router.get("/layouts", (req, res, next) => {
     // TODO auth require
     MongoClient.connect(mongo_uri, (err, db) => {
         if (err) throw err;
-        console.log("Database created!");
         db.collection(`_${w}`).find({alliance: a}).toArray(
             (err, layouts) => {
                 if(err) next(err)
-                console.log(layouts)
                 res.json(layouts)
             }
         )
@@ -35,12 +33,9 @@ router.get("/layouts", (req, res, next) => {
 router.post("/layouts", (req, res, next) => {
     const {body, query} = req
     const { w } = query
-    console.log({body, query})
 
     MongoClient.connect(mongo_uri, (err, db) => {
         if (err) throw err;
-        console.log("Database created!");
-
         const layouts = Object.keys(body).map(key => {
             const [x, y] = key.split(":")
             const layout = {
@@ -51,19 +46,13 @@ router.post("/layouts", (req, res, next) => {
                 world: body[key].world,
                 player: body[key].player,
                 layout: body[key].layout,
-
             }
-
-            console.log(layout)
-
             db.collection(`_${w}`).update({x, y}, layout, { upsert: true }).catch(e => console.log("Fehler beim Speichern eines Layouts", e))
-            return layout
-            // check collection for this world
         })
 
 
         res.json(layouts)
-        db.close("db close");
+        db.close();
     });
 })
 
