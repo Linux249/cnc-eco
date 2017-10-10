@@ -11,7 +11,6 @@ router.get("/layouts", (req, res, next) => {
     // TODO auth require
 
     const collection = req.db.collection(`_${w}`)
-
     collection.find().toArray(
         (err, layouts) => {
             if(err) {
@@ -22,14 +21,12 @@ router.get("/layouts", (req, res, next) => {
             res.json(layouts)
         }
     )
-
-
 })
-
 
 
 //POST /api/v1/layouts
 router.post("/layouts", async (req, res, next) => {
+    res.send()
     let {db, body, headers, query} = req
     const { w } = query
     if(headers['content-type'].includes("text")) body = JSON.parse(body)
@@ -63,9 +60,6 @@ router.post("/layouts", async (req, res, next) => {
         })
     })
     //npm console.log(layouts)
-    res.json(layouts)
-
-
 
 })
 
