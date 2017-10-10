@@ -22,7 +22,7 @@ class Layout extends React.Component {
         let x = 0,
             y = 0
         layout.layout.split("").map((slot, i) => {
-            console.log({i, x, y})
+            //console.log({i, x, y})
             const color = slot === "." ? "white" : slot === "t" ? "green" : "blue"
             ctx.fillStyle = color
             ctx.fillRect(x, y, 20, 20);
