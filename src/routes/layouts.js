@@ -12,7 +12,7 @@ router.get("/layouts", (req, res, next) => {
 
     const collection = req.db.collection(`_${w}`)
     console.log(collection.namespace)
-    collection.find(/*{alliance: a}*/).toArray(
+    collection.find().toArray(
         (err, layouts) => {
             console.log({layouts})
             if(err) {
@@ -31,6 +31,8 @@ router.get("/layouts", (req, res, next) => {
 //POST /api/v1/layouts
 router.post("/layouts", async (req, res, next) => {
     const {body, query} = req
+    console.log(typeof body)
+    console.log(body)
     const { w } = query
 
 
