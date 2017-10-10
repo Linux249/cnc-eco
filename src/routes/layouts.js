@@ -14,8 +14,13 @@ router.get("/layouts", (req, res, next) => {
         if (err) throw err;
         db.collection(`_${w}`).find({alliance: a}).toArray(
             (err, layouts) => {
-                if(err) next(err)
+                //console.log(layouts)
+                if(err) {
+                    console.log(err)
+                    next(err)
+                }
                 res.json(layouts)
+                db.close();
             }
         )
 
@@ -29,9 +34,9 @@ router.post("/layouts", (req, res, next) => {
     const {body, query} = req
     const { w } = query
 
-    MongoClient.connect(mongo_uri, (err, db) => {
+    MongoClient.connect(mongo_uri, async (err, db) => {
         if (err) throw err;
-        const layouts = Object.keys(body).map(key => {
+        const layouts = await Object.keys(body).map(key => {
             const [x, y] = key.split(":")
             const layoutString = body[key].layout.slice(0, 72)
             const {tib, cris} = layoutStats(layoutString)
@@ -46,12 +51,20 @@ router.post("/layouts", (req, res, next) => {
                 tib,
                 cris
             }
-            db.collection(`_${w}`).update({x, y}, layout, { upsert: true }).catch(e => console.log("Fehler beim Speichern eines Layouts", e))
+            db.collection(`_${w}`).updateOne({x, y}, layout, { upsert: true }, (err, result) => {
+                if(err) throw err
+                //console.log(result)
+            })
             return layout
-        })
 
+        })
+        //console.log(layouts)
         res.json(layouts)
         db.close();
+
+
+
+
     });
 })
 

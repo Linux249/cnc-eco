@@ -39,25 +39,6 @@ app.use((req, res, next) => {
 //nutzt den body parser
 app.use(jsonParser())
 
-//die Verbindung wird async aufgebaut, allerdings 'speichert' mongoose anfragen falls die app schneller läuft und Anfragen bekommt als die Verbindugn zur DB aufgebaut wird.
-
-
-// DB cleaner thats delete old layouts
-
-
-//falls Fehler kommen so ausgeben
-// db.on("error", (err) => {
-//     console.error("Fehler von DB:", err)
-// })
-//
-// //nach erfolgreichem verbinden
-// db.once("open", () => {
-//     console.log("db connection succesful")
-// })
-
-
-// Drop database
-// db.dropDatabase(function(err, result) {console.log(err + result)});
 // set router for the API
 app.use("/", apiRouter)
 
