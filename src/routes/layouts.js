@@ -51,12 +51,13 @@ router.post("/layouts", async (req, res, next) => {
 
     })
     await layouts.forEach(layout => {
-        req.db.collection(`_${w}`).update({x: layout.x, y: layout.y}, layout, { upsert: true }, (err, result) => {
+        req.db.collection(`_${w}`).updateOne({x: layout.x, y: layout.y}, layout, { upsert: true }, (err, result) => {
             if(err) {
                 next(err)
                 throw err
-
             }
+
+            console.log(result.result)
 
             //console.log(result)
         })
