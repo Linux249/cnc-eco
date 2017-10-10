@@ -6,6 +6,7 @@ import { changeAlliance, changeWorld, changePlayer } from '../actions/player'
 import Button from '../style/Button'
 import Row from '../style/Row'
 import Layout from './Layout'
+import Loading from './Loading'
 import { api_url } from '../config/config'
 
 class BaseHeader extends Component
