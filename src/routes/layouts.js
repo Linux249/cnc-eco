@@ -11,14 +11,14 @@ router.get("/layouts", (req, res, next) => {
     // TODO auth require
 
     const collection = req.db.collection(`_${w}`)
-    console.log(collection.namespace)
+
     collection.find().toArray(
         (err, layouts) => {
-            console.log({layouts})
             if(err) {
                 console.log(err)
                 next(err)
             }
+            console.log(`GET:\t${collection.namespace} - items: ${layouts.length}`)
             res.json(layouts)
         }
     )
@@ -33,15 +33,12 @@ router.post("/layouts", async (req, res, next) => {
     let {db, body, headers, query} = req
     const { w } = query
     if(headers['content-type'].includes("text")) body = JSON.parse(body)
-    console.log(body)
-    console.log(typeof body)
-    console.log(headers['content-type'] )
 
     const layouts = Object.keys(body).map(key => {
         const [x, y] = key.split(":")
         const layoutString = body[key].layout.slice(0, 72)
         const {tib, cris} = layoutStats(layoutString)
-        const layout = {
+        return {
             x,
             y,
             level: body[key].level,
@@ -49,14 +46,13 @@ router.post("/layouts", async (req, res, next) => {
             world: body[key].world,
             player: body[key].player,
             layout: layoutString,
+            time: new Date(),
             tib,
             cris
         }
-        return layout
-
     })
     const collection = db.collection(`_${w}`)
-    console.log(collection.namespace)
+    console.log(`POST: collection: ${collection.namespace} - items: ${layouts.length}`)
 
     await layouts.forEach(layout => {
         collection.updateOne({x: layout.x, y: layout.y}, layout, { upsert: true }, (err, result) => {
@@ -64,10 +60,6 @@ router.post("/layouts", async (req, res, next) => {
                 next(err)
                 throw err
             }
-
-            console.log(result.result)
-
-            //console.log(result)
         })
     })
     //npm console.log(layouts)
