@@ -30,12 +30,12 @@ router.get("/layouts", (req, res, next) => {
 
 //POST /api/v1/layouts
 router.post("/layouts", async (req, res, next) => {
-    const {body, query} = req
-    console.log(typeof body)
-    console.log(body)
-    console.log(req)
+    let {db, body, headers, query} = req
     const { w } = query
-
+    if(headers['content-type'].includes("text")) body = JSON.parse(body)
+    console.log(body)
+    console.log(typeof body)
+    console.log(headers['content-type'] )
 
     const layouts = Object.keys(body).map(key => {
         const [x, y] = key.split(":")
@@ -55,7 +55,7 @@ router.post("/layouts", async (req, res, next) => {
         return layout
 
     })
-    const collection = req.db.collection(`_${w}`)
+    const collection = db.collection(`_${w}`)
     console.log(collection.namespace)
 
     await layouts.forEach(layout => {
