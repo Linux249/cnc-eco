@@ -10,7 +10,7 @@ router.get("/layouts", (req, res, next) => {
     const { a, w } = req.query
     // TODO auth require
 
-    const collection = req.db.collection(`_${w}`)
+    const collection = req.db.collection(`layouts_${w}`)
     collection.find().toArray(
         (err, layouts) => {
             if(err) {
@@ -48,7 +48,7 @@ router.post("/layouts", async (req, res, next) => {
             cris
         }
     })
-    const collection = db.collection(`_${w}`)
+    const collection = db.collection(`layouts_${w}`)
     console.log(`POST: collection: ${collection.namespace} - items: ${layouts.length}`)
 
     await layouts.forEach(layout => {
