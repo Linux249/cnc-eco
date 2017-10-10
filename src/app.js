@@ -6,12 +6,27 @@ const jsonParser = require("body-parser").json
 //const mongoose = require("mongoose")
 import apiRouter from "./routes/index"
 //const config = require('./env.json')[process.env.NODE_ENV || 'development']
+import MongoClient from 'mongodb'
+
+const mongo_uri = process.env.MONGODB_URI ? process.env.MONGODB_URI : "mongodb://localhost:27017/cnc"
+
+let DB
+
+MongoClient.connect(mongo_uri, (err, db) => {
+    DB = db
+})
+
 
 
 
 // Create the express app
 const app = express()
 
+
+app.use((req, res, next) => {
+    req.db = DB
+    next()
+})
 //const allow = procces.env.
 
 app.use((req, res, next) => {
@@ -33,6 +48,8 @@ app.use((req, res, next) => {
     // Pass to next layer of middleware
     next()
 })
+
+app.use
 
 //zeigt verschiedene logs in der Console an
 //app.use(logger("dev"))

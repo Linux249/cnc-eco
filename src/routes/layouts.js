@@ -1,5 +1,4 @@
 'use strict'
-import MongoClient from 'mongodb'
 import { layoutStats } from '../utils/layout'
 import { Router } from "express"
 const router = Router()
@@ -10,9 +9,8 @@ const mongo_uri = process.env.MONGODB_URI ? process.env.MONGODB_URI : "mongodb:/
 router.get("/layouts", (req, res, next) => {
     const { a, w } = req.query
     // TODO auth require
-    MongoClient.connect(mongo_uri, (err, db) => {
-        if (err) throw err;
-        db.collection(`_${w}`).find(/*{alliance: a}*/).toArray(
+
+        req.db.collection(`_${w}`).find(/*{alliance: a}*/).toArray(
             (err, layouts) => {
                 //console.log(layouts)
                 if(err) {
@@ -20,11 +18,10 @@ router.get("/layouts", (req, res, next) => {
                     next(err)
                 }
                 res.json(layouts)
-                db.close();
             }
         )
 
-    })
+
 })
 
 
@@ -34,38 +31,34 @@ router.post("/layouts", (req, res, next) => {
     const {body, query} = req
     const { w } = query
 
-    MongoClient.connect(mongo_uri, async (err, db) => {
-        if (err) throw err;
-        const layouts = await Object.keys(body).map(key => {
-            const [x, y] = key.split(":")
-            const layoutString = body[key].layout.slice(0, 72)
-            const {tib, cris} = layoutStats(layoutString)
-            const layout = {
-                x,
-                y,
-                level: body[key].level,
-                alliance: body[key].alliance,
-                world: body[key].world,
-                player: body[key].player,
-                layout: layoutString,
-                tib,
-                cris
-            }
-            db.collection(`_${w}`).updateOne({x, y}, layout, { upsert: true }, (err, result) => {
-                if(err) throw err
-                //console.log(result)
-            })
-            return layout
 
+    const layouts = Object.keys(body).map(key => {
+        const [x, y] = key.split(":")
+        const layoutString = body[key].layout.slice(0, 72)
+        const {tib, cris} = layoutStats(layoutString)
+        const layout = {
+            x,
+            y,
+            level: body[key].level,
+            alliance: body[key].alliance,
+            world: body[key].world,
+            player: body[key].player,
+            layout: layoutString,
+            tib,
+            cris
+        }
+        req.db.collection(`_${w}`).update({x, y}, layout, { upsert: true }, (err, result) => {
+            if(err) throw err
+            //console.log(result)
         })
-        //npm console.log(layouts)
-        res.json(layouts)
-        db.close();
+        return layout
+
+    })
+    //npm console.log(layouts)
+    res.json(layouts)
 
 
 
-
-    });
 })
 
 export default router
