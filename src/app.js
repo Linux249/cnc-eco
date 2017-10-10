@@ -49,7 +49,6 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use
 
 //zeigt verschiedene logs in der Console an
 //app.use(logger("dev"))

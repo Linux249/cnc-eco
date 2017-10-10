@@ -33,6 +33,7 @@ router.post("/layouts", async (req, res, next) => {
     const {body, query} = req
     console.log(typeof body)
     console.log(body)
+    console.log(req)
     const { w } = query
 
 
