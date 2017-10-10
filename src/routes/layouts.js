@@ -27,7 +27,7 @@ router.get("/layouts", (req, res, next) => {
 
 
 //POST /api/v1/layouts
-router.post("/layouts", (req, res, next) => {
+router.post("/layouts", async (req, res, next) => {
     const {body, query} = req
     const { w } = query
 
@@ -47,12 +47,19 @@ router.post("/layouts", (req, res, next) => {
             tib,
             cris
         }
-        req.db.collection(`_${w}`).update({x, y}, layout, { upsert: true }, (err, result) => {
-            if(err) throw err
-            //console.log(result)
-        })
         return layout
 
+    })
+    await layouts.forEach(layout => {
+        req.db.collection(`_${w}`).update({x: layout.x, y: layout.y}, layout, { upsert: true }, (err, result) => {
+            if(err) {
+                next(err)
+                throw err
+
+            }
+
+            //console.log(result)
+        })
     })
     //npm console.log(layouts)
     res.json(layouts)
