@@ -2,7 +2,7 @@
 
 const express = require('express')
 //const logger = require("morgan")
-const jsonParser = require("body-parser").json
+const bodyParser = require("body-parser")
 //const mongoose = require("mongoose")
 import apiRouter from "./routes/index"
 //const config = require('./env.json')[process.env.NODE_ENV || 'development']
@@ -53,7 +53,8 @@ app.use((req, res, next) => {
 //zeigt verschiedene logs in der Console an
 //app.use(logger("dev"))
 //nutzt den body parser
-app.use(jsonParser())
+app.use(bodyParser.json())
+app.use(bodyParser.text())
 
 // set router for the API
 app.use("/", apiRouter)
