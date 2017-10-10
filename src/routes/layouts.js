@@ -10,16 +10,18 @@ router.get("/layouts", (req, res, next) => {
     const { a, w } = req.query
     // TODO auth require
 
-        req.db.collection(`_${w}`).find(/*{alliance: a}*/).toArray(
-            (err, layouts) => {
-                //console.log(layouts)
-                if(err) {
-                    console.log(err)
-                    next(err)
-                }
-                res.json(layouts)
+    const collection = req.db.collection(`_${w}`)
+    console.log(collection.namespace)
+    collection.find(/*{alliance: a}*/).toArray(
+        (err, layouts) => {
+            console.log({layouts})
+            if(err) {
+                console.log(err)
+                next(err)
             }
-        )
+            res.json(layouts)
+        }
+    )
 
 
 })
@@ -50,8 +52,11 @@ router.post("/layouts", async (req, res, next) => {
         return layout
 
     })
+    const collection = req.db.collection(`_${w}`)
+    console.log(collection.namespace)
+
     await layouts.forEach(layout => {
-        req.db.collection(`_${w}`).updateOne({x: layout.x, y: layout.y}, layout, { upsert: true }, (err, result) => {
+        collection.updateOne({x: layout.x, y: layout.y}, layout, { upsert: true }, (err, result) => {
             if(err) {
                 next(err)
                 throw err
