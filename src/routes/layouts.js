@@ -58,7 +58,7 @@ router.post("/layouts", (req, res, next) => {
             return layout
 
         })
-        //console.log(layouts)
+        //npm console.log(layouts)
         res.json(layouts)
         db.close();
 
