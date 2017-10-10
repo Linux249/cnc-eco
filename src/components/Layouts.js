@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import Body from '../style/Body'
 import Title from '../style/Title'
-// import Button from '../style/Button'
-// import Row from '../style/Row'
+import { changeAlliance, changeWorld, changePlayer } from '../actions/player'
+import Button from '../style/Button'
+import Row from '../style/Row'
 import Layout from './Layout'
 
 
@@ -20,6 +21,10 @@ class BaseHeader extends Component
     }
     componentWillMount() {
         //get layouts from api
+        this.getLayouts()
+    }
+
+    getLayouts = () => {
         const { pl, w, a } = this.props
         fetch(`https://cnc-eco.herokuapp.com/api/v1/layouts?pl=${pl}&w=${w}&a=${a}`)
             .then(res => res.json())
@@ -29,14 +34,19 @@ class BaseHeader extends Component
                 this.setState({ layouts })
             })
     }
+
     render()
     {
         const { layouts } = this.state
+        const { changeAlliance, changeWorld, changePlayer, w, a, pl} = this.props
         return (
             <Body>
-            <input value={this.state.pl}/>
-            <input value={this.state.w} />
-            <input value={this.state.a}/>
+            <Row>
+                <input value={pl} onChange={(e) => changePlayer(e.target.value)}/>
+                <input value={w} onChange={(e) => changeWorld(e.target.value)}/>
+                <input value={a} onChange={(e) => changeAlliance(e.target.value)}/>
+                <Button onClick={() => this.getLayouts()}>Update</Button>
+            </Row>
                 <Title>{layouts.length}</Title>
                 {layouts.map((layout, i) => <Layout key={i} layout={layout}/>)}
 
@@ -54,4 +64,12 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(BaseHeader)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        changePlayer: (w) => dispatch(changePlayer(w)),
+        changeWorld: (w) => dispatch(changeWorld(w)),
+        changeAlliance: (a) => dispatch(changeAlliance(a)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BaseHeader)
