@@ -25,12 +25,12 @@ export const layoutStats = layout => {
             cris += cris_n/4
         }
         if(silo === 5) {
-            tib += tib_n/4*3
-            cris += cris_n/4*3
+            tib += tib_n/5*3
+            cris += cris_n/5*3
         }
         if(silo === 6) {
-            tib += tib_n/4*6
-            cris += cris_n/4*6
+            tib += tib_n    //6*6
+            cris += cris_n  //6*6
         }
 
         // check kris neighbours
