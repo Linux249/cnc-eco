@@ -1,7 +1,7 @@
 //Libs
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { HashRouter  as Router, Route } from 'react-router-dom'
 import BaseHeader from './BaseHeader.js';
 import { replaceAllBase } from './../actions/base'
 import Bases from './Bases.js'

@@ -10,10 +10,10 @@ export default styled.div`
     border-radius: ${ borderRadius  };    
     box-shadow: ${ shadow  };    
 
-    height: 100%;
+    //height: 100%;
     
     padding: 10px;
-    margin-right: 10px;
+    margin: 5px;
    
 
 `

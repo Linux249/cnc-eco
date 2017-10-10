@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import Body from '../style/Body'
+import Area from '../style/Area'
 import Title from '../style/Title'
+import LayoutS from '../style/Layouts'
 import { changeAlliance, changeWorld, changePlayer } from '../actions/player'
 import Button from '../style/Button'
 import Row from '../style/Row'
@@ -9,7 +11,7 @@ import Layout from './Layout'
 import Loading from './Loading'
 import { api_url } from '../config/config'
 
-class BaseHeader extends Component
+class Layouts extends Component
 {
     constructor(props) {
         super()
@@ -52,11 +54,12 @@ class BaseHeader extends Component
                     <input value={w} onChange={(e) => changeWorld(e.target.value)}/>
                     <input value={a} onChange={(e) => changeAlliance(e.target.value)}/>
                     <Button onClick={() => this.getLayouts()}>Update</Button>
-                </Row>
-                <Row>
                     <Title>{layouts.length}</Title>
-                    {layouts.map((layout, i) => <Layout key={i} layout={layout}/>)}
                 </Row>
+                <LayoutS>
+
+                    {layouts.map((layout, i) => <Layout key={i} layout={layout}/>)}
+                </LayoutS>
 
             </Body>
         )
@@ -79,4 +82,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BaseHeader)
+export default connect(mapStateToProps, mapDispatchToProps)(Layouts)
