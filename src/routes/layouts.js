@@ -12,7 +12,7 @@ router.get("/layouts", (req, res, next) => {
     // TODO auth require
     MongoClient.connect(mongo_uri, (err, db) => {
         if (err) throw err;
-        db.collection(`_${w}`).find({alliance: a}).toArray(
+        db.collection(`_${w}`).find(/*{alliance: a}*/).toArray(
             (err, layouts) => {
                 //console.log(layouts)
                 if(err) {
