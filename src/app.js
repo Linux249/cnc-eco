@@ -42,11 +42,9 @@ app.use((req, res, next) => {
 //const allow = procces.env.
 
 app.use((req, res, next) => {
-
-    // Website you wish to allow to connect
-    // DEV
-    //
-    //res.setHeader('Access-Control-Allow-Origin', 'https://prodgame08.alliances.commandandconquer.com/')
+    const origin = req.get('origin');
+    //  set all headers to allowed
+    res.setHeader('Access-Control-Allow-Origin', origin)
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH,DELETE')

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "babel-node src/test.js",
     "deploy": "git push heroku master",
     "dev": "nodemon ./server.js --exec babel-node"
   },
