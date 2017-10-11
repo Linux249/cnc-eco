@@ -4,8 +4,12 @@ import mongoose, { Schema }  from 'mongoose'
 const playerSchema = new Schema({
     name: String,
     worlds: [{
-        name: String,
-        layouts: {type: Schema.ObjectId, ref: 'layouts'},
+        name: {type: String, default: "missing!!" }, // name of the world
+        w: Number, // id of the world
+        bases: [{
+            name: {type: String, default: "missing!!"},
+            layout: String, // only 72 as length!
+        }]
     }]
 })
 
