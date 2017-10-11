@@ -7,7 +7,7 @@ import {
 
 const initState = {
     a: 126,
-    w: 373,      // Toggle for showing help everywhere or not
+    w: 379,      // Toggle for showing help everywhere or not
     pl: "Linux249"
 }
 
