@@ -8,8 +8,29 @@ router.get("/player", async (req, res, next) => {
     const { name } = req.query
     // TODO auth require
 
-    const player = await Player.find({name})
+    const player = await Player.findOne({name})
     res.json(player)
+})
+
+// create new one
+router.post("/player", async (req, res, next) => {
+    const obj = new Player(req.body)
+    obj.save((err, data) => {
+        if (err) return next(err)
+        res.status = 201 // saved sucs..
+        res.json(data)  //Send saved data back
+    })
+})
+
+router.put("/player", async function(req, res, next) {
+    const { name } = req.query
+    const player = await Player.findOne({name})
+    player.set(req.body)
+    player.save((err, data) => {
+        if (err) return next(err)
+        res.status = 201 // saved sucs..
+        res.json(data)  //Send saved data back
+    })
 })
 
 export default router
