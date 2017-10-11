@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import Body from '../style/Body'
-import Area from '../style/Area'
+// import Area from '../style/Area'
 import Title from '../style/Title'
 import LayoutS from '../style/Layouts'
 import { changeAlliance, changeWorld, changePlayer } from '../actions/player'
@@ -17,9 +17,6 @@ class Layouts extends Component
         super()
         this.state = {
             layouts: [],
-            pl: "linux249",
-            a: 126,
-            w: 373,
             loading: false
         }
     }
@@ -49,17 +46,19 @@ class Layouts extends Component
         return (
             <Body>
                 <Loading isLoading={loading}/>
-                <Row>
-                    <input value={pl} onChange={(e) => changePlayer(e.target.value)}/>
-                    <input value={w} onChange={(e) => changeWorld(e.target.value)}/>
-                    <input value={a} onChange={(e) => changeAlliance(e.target.value)}/>
-                    <Button onClick={() => this.getLayouts()}>Update</Button>
-                    <Title>{layouts.length}</Title>
-                </Row>
-                <LayoutS>
-
-                    {layouts.map((layout, i) => <Layout key={i} layout={layout}/>)}
-                </LayoutS>
+                {!loading &&
+                    <div>
+                        <Row>
+                        <input value={pl} onChange={(e) => changePlayer(e.target.value)}/>
+                        <input value={w} onChange={(e) => changeWorld(e.target.value)}/>
+                        <input value={a} onChange={(e) => changeAlliance(e.target.value)}/>
+                        <Button onClick={() => this.getLayouts()}>Update</Button>
+                        <Title>{layouts.length}</Title>
+                    </Row>
+                    <LayoutS>
+                        {layouts.map((layout, i) => <Layout key={i} layout={layout}/>)}
+                    </LayoutS>
+                </div>}
 
             </Body>
         )

@@ -1,3 +1,8 @@
 import React from 'react'
+import styled from 'styled-components'
 
-export default ({isLoading}) => <div>{isLoading ? "Loading":""}</div>
+const Loading = styled.div`
+  font-size: 100px;
+
+`
+export default ({isLoading}) => <Loading>{isLoading ? "Loading":""}</Loading>

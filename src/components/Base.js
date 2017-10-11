@@ -10,7 +10,6 @@ class Base extends Component
 
     render()
     {
-        const { show } = this.props
         const slots = [...Array(8).keys()].map(function(y) {
             return (
                 <div key={"rowB " + y} className={"rowB " + y}>

@@ -3,7 +3,7 @@ import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux' 
 import { LvlNumber } from './LvlNumber'
 import { DropTarget, DragSource } from 'react-dnd'
-import {removeBuilding, replaceBuilding } from '../actions/base'
+import { replaceBuilding } from '../actions/base'
 import Slot from '../style/BuildingSlot'
 import { buildingKeys } from './../util/buildings'
 
@@ -58,7 +58,7 @@ class BuildingSlot extends Component {
             faction,
             connectDragSource,
             connectDropTarget ,
-            isDragging,
+            // isDragging,
         } = this.props
         const { type, slot, lvl} = building
         let img = 'undefined'
