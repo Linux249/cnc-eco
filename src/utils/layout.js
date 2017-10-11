@@ -35,6 +35,6 @@ export const layoutStats = layout => {
 
         // check kris neighbours
     })
-    return {tib, cris}
+    return {tib: Math.round(tib*100)/100, cris: Math.round(cris*100)/100}
 
 }
