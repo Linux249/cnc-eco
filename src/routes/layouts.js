@@ -24,12 +24,13 @@ router.get("/layouts", (req, res, next) => {
 
 //POST /api/v1/layouts
 router.post("/layouts", async (req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'https://prodgame08.alliances.commandandconquer.com')
     res.send()
     let {db, body, headers, query} = req
     const { w } = query
     if(headers['content-type'].includes("text")) body = JSON.parse(body)
 
-    const layouts = Object.keys(body).map(key => {
+    const layouts = await Object.keys(body).map(key => {
         const [x, y] = key.split(":")
         const layoutString = body[key].layout.slice(0, 72)
         const {tib, cris} = layoutStats(layoutString)
