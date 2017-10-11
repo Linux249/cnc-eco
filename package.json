@@ -32,6 +32,7 @@
     "express": "^4.16.1",
     "inert": "^4.2.1",
     "mongodb": "^2.2.31",
+    "mongoose": "^4.12.1",
     "socket.io": "^2.0.3"
   }
 }

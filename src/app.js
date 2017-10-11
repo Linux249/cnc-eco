@@ -3,20 +3,32 @@
 const express = require('express')
 //const logger = require("morgan")
 const bodyParser = require("body-parser")
-//const mongoose = require("mongoose")
+const mongoose = require("mongoose")
 import apiRouter from "./routes/index"
 //const config = require('./env.json')[process.env.NODE_ENV || 'development']
 import MongoClient from 'mongodb'
 
-const mongo_uri = process.env.MONGODB_URI ? process.env.MONGODB_URI : "mongodb://localhost:27017/cnc"
+const MONGO_URI = process.env.MONGODB_URI ? process.env.MONGODB_URI : "mongodb://localhost:27017/cnc"
 
 let DB
 
-MongoClient.connect(mongo_uri, (err, db) => {
+MongoClient.connect(MONGO_URI, (err, db) => {
     DB = db
 })
 
+mongoose.Promise = global.Promise
+mongoose.connect(MONGO_URI, { useMongoClient: true})
+const db = mongoose.connection //simplification
 
+//falls Fehler kommen so ausgeben
+db.on("error", (err) => {
+    console.error("Fehler von DB:", err)
+})
+
+//nach erfolgreichem verbinden
+db.once("open", () => {
+    console.log("db connection succesful")
+})
 
 
 // Create the express app
