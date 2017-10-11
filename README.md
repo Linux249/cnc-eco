@@ -1,4 +1,9 @@
 #Todo:
+- sort layouts while saving (enough time!)
+- get layouts x + y as index
+- // was ist mit strom? // control layout before saving (tib > 1)
+- 
+
 - Login system
 - Payment system
   - credits for money (List to choose)
