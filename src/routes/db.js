@@ -73,9 +73,9 @@ router.get("/cleanDocs", async (req, res, next) => {
                         console.log("cleaning: " + coll.name + " found items: " + layouts.length)
                         layouts.map(layout => {
                             const {tib, cris} = layoutStats(layout.layout)
+                            console.log(`Layout: ${layout.x}:${layout.y} bevor: ${layout.tib}:${layout.cris} after: ${tib}:${cris}`)
                             layout.tib = tib
                             layout.cris = cris
-                            console.log(layout)
                             collection.updateOne({x: layout.x, y: layout.y}, layout, { upsert: true }, (err, result) => {
                                 if(err) {
                                     next(err)
