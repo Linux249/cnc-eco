@@ -3,6 +3,26 @@ import { layoutStats } from '../utils/layout'
 import { Router } from "express"
 const router = Router()
 
+
+// GET /api/v1/layout
+// get a single labtop with world + coords as params
+router.get("/layout", (req, res, next) => {
+    const { w, x,y } = req.query
+    // TODO auth require
+
+    const collection = req.db.collection(`layouts_${w}`)
+    collection.findOne({x, y},
+        (err, layout) => {
+            if(err) {
+                console.log(err)
+                next(err)
+            }
+            //console.log(`GET:\t${collection.namespace} - items: ${layout.length}`)
+            res.json(layout)
+        }
+    )
+})
+
 //POST /api/v1/Archiv
 router.get("/layouts", (req, res, next) => {
     const { a, w } = req.query
