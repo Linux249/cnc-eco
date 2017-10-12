@@ -1,6 +1,6 @@
 import React from 'react'
 import Base from './Base.js'
-import BuildingMenu from './BuildingMenu'
+import BuildingMenu from './Buildings'
 import ProductionInfo from './ProductionInfo'
 import LineChart from './LineChart.js'
 import Area from '../style/Area'
