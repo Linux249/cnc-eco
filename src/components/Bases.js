@@ -1,17 +1,13 @@
 import React from 'react'
 import Base from './Base.js'
 import BuildingMenu from './Buildings'
-import ProductionInfo from './ProductionInfo'
-import LineChart from './LineChart.js'
-import Area from '../style/Area'
+import Menu from './Menu'
 import Body from '../style/Body'
 
-
-export default () => <Body>
-    <BuildingMenu />
-    <Base />
-    <Area>
-        <ProductionInfo />
-        <LineChart />
-    </Area>
-</Body>
+export default () => (
+    <Body>
+        <BuildingMenu />
+        <Base />
+        <Menu/>
+    </Body>
+)
