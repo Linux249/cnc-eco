@@ -30,7 +30,6 @@ export function changeFraction(faction) {
 }
 
 export function buildingsUp(building) {
-    console.log("KLICK FUNKTIONIERT!")
     return {
         type: BUILDING_TYP_UP,
         building
@@ -39,7 +38,7 @@ export function buildingsUp(building) {
 
 export function buildingsDown(building) {
     return {
-        type: CHANGE_FRACTION,
+        type: BUILDING_TYP_DOWN,
         building
     }
 }
