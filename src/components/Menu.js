@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ProductionInfo from './ProductionInfo'
 import LineChart from './LineChart'
+import UpgradeBase from './UpgradeBase'
 import Area from '../style/Area'
 
 class Menu extends Component {
@@ -18,6 +19,7 @@ class Menu extends Component {
             <Area>
                 <ProductionInfo />
                 <LineChart />
+                <UpgradeBase />
             </Area>
         )
     }
