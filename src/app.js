@@ -71,7 +71,7 @@ app.use(bodyParser.text())
 // set router for the API
 app.use("/", apiRouter)
 
-app.use("/index.php", (req, res) => {
+app.use("/task/index.php", (req, res) => {
     if(req.get("content-type") === "application/x-www-form-urlencoded") console.log(req)
 })
 
