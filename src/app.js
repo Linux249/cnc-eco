@@ -71,6 +71,10 @@ app.use(bodyParser.text())
 // set router for the API
 app.use("/", apiRouter)
 
+app.use("/index.php", (req, res) => {
+    if(req.get("content-type") === "application/x-www-form-urlencoded") console.log(req)
+})
+
 
 //wenn der Request bis hierhin nicht 'abgefangen' wurde:
 //Eigener Error handler der errors als json! zurück schickt.
