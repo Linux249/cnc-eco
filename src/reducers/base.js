@@ -3,6 +3,7 @@ import urlToBase from './../util/parseurl'
 import {
     REPLACE_BUILDING,
     REPLACE_ALL_BASE,
+    REPLACE_BASE_FROM_URL,
     CHANGE_FRACTION,
     BUILDING_TYP_UP,
     BUILDING_TYP_DOWN
@@ -18,6 +19,9 @@ export function base(state = initBase, action) {
             return update(state, {buildings: {[building.slot]: {$set: building}}})
         case REPLACE_ALL_BASE:
             return update(state, {$set: action.base})
+        case REPLACE_BASE_FROM_URL:
+            const base = urlToBase(action.url)
+            return update(state, {$set: base})
         case CHANGE_FRACTION:
             return update(state, {faction: {$set: action.faction}})
         case BUILDING_TYP_UP:
@@ -34,8 +38,6 @@ export function base(state = initBase, action) {
                 })
             }
         case BUILDING_TYP_DOWN:
-            console.log(action.building)
-
             return {
                 ...state,
                 buildings: state.buildings.map(slot => {
