@@ -21,17 +21,17 @@ export const layoutStats = layout => {
 
         const silo = tib_n + cris_n
         if(silo === 4) {
-            console.log("vierer")
+            //console.log("vierer")
             tib += tib_n/4
             cris += cris_n/4
         }
         if(silo === 5) {
-            console.log("5")
+            //console.log("5")
             tib += tib_n/5*3
             cris += cris_n/5*3
         }
         if(silo === 6) {
-            console.log("6")
+            //console.log("6")
             tib += tib_n    //6*6
             cris += cris_n  //6*6
         }
