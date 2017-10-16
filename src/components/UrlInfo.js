@@ -2,6 +2,7 @@
  * Created by Bombassd on 05.02.2017.
  */
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import Info from '../style/UrlInfo'
 import Row from '../style/Row'
 import Button from '../style/Button'
@@ -20,9 +21,12 @@ class UrlInfo extends Component
     {
         const url = this.refs.url.value
         try {
+            console.log(url)
             const base = urlToBase(url)
+            console.log(base)
             this.props.dispatch(replaceAllBase(base))
         } catch (e) {
+            console.log(e)
             this.refs.url.value = "Fehler"
         }
     }
@@ -39,5 +43,8 @@ class UrlInfo extends Component
         )
     }
 }
+const mapStateToProps = () => {
+    return {}
+}
 
-export default UrlInfo
+export default connect(mapStateToProps)(UrlInfo)

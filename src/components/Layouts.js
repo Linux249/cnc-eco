@@ -33,7 +33,7 @@ class Layouts extends Component
             .then(layouts => {
                 console.log(layouts)
                 // sort layouts
-                layouts = layouts.sort((a,b)=> b.tib - a.tib )
+                //layouts = layouts.sort((a,b)=> b.tib - a.tib )
                 this.setState({loading: false})
                 this.setState({ layouts })
             })
