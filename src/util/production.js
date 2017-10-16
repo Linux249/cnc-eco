@@ -368,11 +368,11 @@ export const futureProduction = (buildings, days = 121) => {
     {
         // todo hier die reinfolge des bauen festlegen
         for(let i in buildings) {
-            if(Object.keys(buildings[i]).length !== 0) {
+            if(buildings[i].lvl) {
                 const costs = calcBuildingCost(buildings[i])
                 const prod = calcProduction(buildings)
-                let tibTime = costs.tib / prod.tib/24 //- tibTimeLeft   // shoud be possible to become negativ
-                let powerTime = costs.power / prod.power/24 //- powerTimeLeft
+                let tibTime = costs.tib/prod.tib/24 //- tibTimeLeft   // shoud be possible to become negativ
+                let powerTime = costs.power/prod.power/24 //- powerTimeLeft
                 //if (tibTime <= 0) tibTimeLeft = -1*tibTime      // if negativ it means their ist still
 
                 if(tibTimeLeft > 0) {
@@ -383,8 +383,8 @@ export const futureProduction = (buildings, days = 121) => {
                         tibTimeLeft -= tibTime
                         tibTime = 0
                     }
-
                 }
+
                 if(powerTimeLeft > 0) {
                     if (powerTime > powerTimeLeft) {
                         powerTime -= powerTimeLeft
@@ -393,7 +393,6 @@ export const futureProduction = (buildings, days = 121) => {
                         powerTimeLeft -= powerTime
                         powerTime = 0
                     }
-
                 }
 
                 //if (powerTime <= 0) powerTimeLeft = -1*powerTime
@@ -409,8 +408,6 @@ export const futureProduction = (buildings, days = 121) => {
                     powerTimeLeft += tibTime - powerTime
                    // tibTimeLeft = 0
                   //  powerTimeLeft = 0
-
-
                 } // for days
 
                 // TODO Plants doesnt give cost back - problem also with other buildings with 0 costs
@@ -429,21 +426,18 @@ export const futureProduction = (buildings, days = 121) => {
     // the two points give the production item around the given day
     // it returns he calculatet produktion eactly on the given day
 
-
-
     //for day in days
     const expData = []
     for(let d = 1; d<=days; d++ ){
+
         const time = data.find((o, i) => o.time > d ? i: false)
         const i = data.findIndex(o => o === time)
-
         expData.push({
             prod: roundTwoPoints(data[i], data[i-1], d),
             time: d
         })
 
     }
-
 
     return expData
 }
