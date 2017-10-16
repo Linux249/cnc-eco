@@ -21,12 +21,10 @@ const creditsColor = '#ffdb32'
 
 class LineChart extends Component
 {
-
-
     constructor(props) {
         super(props);
-        //this.changeRange = this.changeRange.bind(this)
         this.state = {
+            // error: false,
             showRealLine: true,
             showTrendLine: true,
             options: {
@@ -112,10 +110,21 @@ class LineChart extends Component
         })
     }
 
+    // componentDidCatch(err, info) {
+    //     console.log({err, info})
+    //     this.setState({error: true})
+    //
+    // }
+
     render(){
         const { buildings } = this.props
-        const data = futureProduction(buildings)
         const { options } = this.state
+        let data = []
+        try {
+            data = futureProduction(buildings)
+        } catch(err) {
+            return <div>Keine Strom/Tib Produktion</div>
+        }
         const toggleTrendLines = ("trendlines" in options)
         const toogleRealLines = !("lineWidth" in options.series[0])
         const activeRange = options.vAxes[1].viewWindow.max
