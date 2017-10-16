@@ -1,4 +1,3 @@
-
 const neighbours = [-10, -9, -8, -1, 1, 8, 9, 10]
 
 export const layoutStats = layout => {
@@ -6,7 +5,7 @@ export const layoutStats = layout => {
         cris = 0
     // each char is a building
     const silos = layout.split('').map((slot, i, base) => {
-        if(slot !== ".") return
+        if (slot !== ".") return
         // check tip neighbours
         let tib_n = 0
             , cris_n = 0
@@ -20,17 +19,17 @@ export const layoutStats = layout => {
         })
 
         const silo = tib_n + cris_n
-        if(silo === 4) {
+        if (silo === 4) {
             //console.log("vierer")
-            tib += tib_n/4
-            cris += cris_n/4
+            tib += tib_n / 4
+            cris += cris_n / 4
         }
-        if(silo === 5) {
+        if (silo === 5) {
             //console.log("5")
-            tib += tib_n/5*3
-            cris += cris_n/5*3
+            tib += tib_n / 5 * 3
+            cris += cris_n / 5 * 3
         }
-        if(silo === 6) {
+        if (silo === 6) {
             //console.log("6")
             tib += tib_n    //6*6
             cris += cris_n  //6*6
@@ -38,6 +37,6 @@ export const layoutStats = layout => {
 
         // check kris neighbours
     })
-    return {tib: Math.round(tib*100)/100, cris: Math.round(cris*100)/100}
+    return {tib: Math.round(tib * 100) / 100, cris: Math.round(cris * 100) / 100}
 
 }
