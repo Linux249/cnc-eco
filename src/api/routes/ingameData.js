@@ -24,3 +24,5 @@ router.post("/ingameData", (req, res, next) => {
     //
     res.send("UPDATED")
 })
+
+export default router
