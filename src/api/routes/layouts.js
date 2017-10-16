@@ -24,21 +24,23 @@ router.get("/layout", (req, res, next) => {
 })
 
 //POST /api/v1/Archiv
-router.get("/layouts", (req, res, next) => {
-    const { a, w } = req.query
-    // TODO auth require
-
-    const collection = req.db.collection(`layouts_${w}`)
-    collection.find().toArray(
-        (err, layouts) => {
-            if(err) {
-                console.log(err)
-                next(err)
-            }
-            console.log(`GET:\t${collection.namespace} - items: ${layouts.length}`)
-            res.json(layouts)
-        }
-    )
+router.get("/layouts", async (req, res, next) => {
+    const { a, w, skip } = req.query
+    const limit = 50
+    try {
+        const collection = req.db.collection(`layouts_${w}`)
+        const layouts = await collection
+            .find()
+            .sort({tib: -1})
+            .limit(limit)
+            .skip(skip*limit)
+            .toArray()
+        console.log(`GET:\t${collection.namespace} - items: ${layouts.length}`)
+        res.json(layouts)
+    } catch(err) {
+        console.log({err})
+        next(err)
+    }
 })
 
 
