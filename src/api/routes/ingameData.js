@@ -36,7 +36,7 @@ router.post("/ingameData", async (req, res, next) => {
 
         // save
         const result = await player.save()
-        console.log({result})
+        console.log(`UPDATE PLAYER INFO: ${result}`)
         //res.json(result)
         res.send("UPDATED")
     } catch(err) {
