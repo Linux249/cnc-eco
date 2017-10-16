@@ -8,9 +8,9 @@ const playerSchema = new Schema({
         w: {type: Number, required: true}, // id of the world
         bases: [{
             name: {type: String, default: "missing!!"},
-            layout: String, // only 72 as length!
-            data: {type: Date, default: Date.now}
-        }]
+            layout: String  // only 72 as length!
+        }],
+        date: {type: Date, default: Date.now}
     }]
 })
 
