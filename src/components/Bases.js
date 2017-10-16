@@ -25,6 +25,7 @@ class Bases extends Component {
     async componentWillMount() {
         const { worlds } = await fetch(" https://cnc-eco.herokuapp.com/api/v1/player?name=linux249").then(res => res.json())
         this.setState({worlds, bases: worlds[0].bases})
+        this.props.replaceBaseFromUrl(worlds[0].bases[0].layout)
     }
 
     changeWorld = (i) => {
