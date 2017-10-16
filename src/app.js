@@ -4,7 +4,7 @@ const express = require('express')
 //const logger = require("morgan")
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
-import apiRouter from "./routes/index"
+import apiRouter from "./api/routes/index"
 //const config = require('./env.json')[process.env.NODE_ENV || 'development']
 import MongoClient from 'mongodb'
 
@@ -45,7 +45,7 @@ app.use((req, res, next) => {
     const origin = req.get('origin');
     const host =  req.get('host')
     //  set all headers to allowed
-    if(origin || host) res.setHeader('Access-Control-Allow-Origin', origin ? orgin : host)
+    if(origin || host) res.setHeader('Access-Control-Allow-Origin', origin ? origin : host)
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH,DELETE')

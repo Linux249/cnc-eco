@@ -1,5 +1,5 @@
 'use strict'
-import { layoutStats } from '../utils/layout'
+import { layoutStats } from '../../utils/layout'
 import { Router } from "express"
 const router = Router()
 

@@ -116,3 +116,10 @@ Ingame cliackable List of saved games (mini preview of layout)
 ### API: 
  - calcFutureProd(base/buildings)
  - 
+ 
+ 
+ 
+### Probleme: 
+- Alle Layouts zu laden dauert zu lange
+    - limit/skip für layouts
+        - Problem: Sortierung 
