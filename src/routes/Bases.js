@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { replaceBaseFromUrl } from '../actions/base'
-import Base from './Base.js'
-import BuildingMenu from './Buildings'
-import Menu from './Menu'
+import Base from '../components/Base.js'
+import BuildingMenu from '../containers/Buildings'
+import Menu from '../components/Menu'
 import Body from '../style/Body'
 import Row from '../style/Row'
 import Button from '../style/Button'

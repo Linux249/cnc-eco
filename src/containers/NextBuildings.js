@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components';
 import FlipMove from 'react-flip-move'
 
-import { showBuildingMenu  } from './../actions/menu'
+import { showBuildingMenu  } from '../actions/menu'
 import { buildings as buildingNames } from '../util/buildings'
 import  io from 'socket.io-client'
 const socketURL = `http://cnc-eco.herokuapp.com`

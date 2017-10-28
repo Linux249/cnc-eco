@@ -4,14 +4,14 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Button from './../style/Button'
-import Info from './../style/ProductionInfo'
-import { shortenNumber } from './../services/menu'
-import { calcProduction } from './../util/production'
-import icon_tib from './../img/icon/icon_tiberium.png'
-import icon_cris from './../img/icon/icon_crystal.png'
-import icon_power from './../img/icon/icon_power.png'
-import icon_credits from './../img/icon/icon_credits.png'
+import Button from '../style/Button'
+import Info from '../style/ProductionInfo'
+import { shortenNumber } from '../services/menu'
+import { calcProduction } from '../util/production'
+import icon_tib from '../img/icon/icon_tiberium.png'
+import icon_cris from '../img/icon/icon_crystal.png'
+import icon_power from '../img/icon/icon_power.png'
+import icon_credits from '../img/icon/icon_credits.png'
 
 
 class ProductionInfo extends Component

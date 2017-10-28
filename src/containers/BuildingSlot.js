@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux' 
-import { LvlNumber } from './LvlNumber'
+import { LvlNumber } from '../components/LvlNumber'
 import { DropTarget, DragSource } from 'react-dnd'
 import { replaceBuilding } from '../actions/base'
 import Slot from '../style/BuildingSlot'
-import { buildingKeys } from './../util/buildings'
+import { buildingKeys } from '../util/buildings'
 
 class BuildingSlot extends Component {
 

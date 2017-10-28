@@ -69,13 +69,16 @@ class Layout extends React.Component {
         const layouts = layout.layout.split('').map(slot => {
             if(slot==="t") return <Square><Tib/></Square>
             if(slot==="c") return <Square><Kris/></Square>
-            return <Square></Square>
+            return <Square/>
         })
+        const time = new Date(Date.parse(layout.time) - Date.now())
+
         return (
             <Area>
                 {/*<div>{`T: ${layout.tib}    - K: ${layout.cris}`}</div>*/}
                 <Container>{layouts}</Container>
-                <div>{`${layout.x} : ${layout.y}`}</div>
+                <div>{`${layout.x}:${layout.y}`}</div>
+                <div>{time.toDateString()}</div>
             </Area>
         );
     }

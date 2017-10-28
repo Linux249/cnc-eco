@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { replaceBuilding  } from './../actions/base'
+import { replaceBuilding  } from '../actions/base'
 import { changeFraction } from '../actions/base'
-import { buildingKeys } from './../util/buildings'
+import { buildingKeys } from '../util/buildings'
 import Menu from '../style/BuildingMenu'
 import Area from '../style/Area'
-import Button from './../style/Button'
+import Button from '../style/Button'
 import BuildingMenuItem from './BuildingMenuItem'
-import Row from './../style/Row'
+import Row from '../style/Row'
 
 
 class BuildingMenu extends Component {

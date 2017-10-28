@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-//import { connect } from 'react-redux';
-import BuildingSlot from './BuildingSlot.js'
-//import Details from './Details.js'
+import BuildingSlot from '../containers/BuildingSlot.js'
 import Area from '../style/Area'
 import BaseStyle from '../style/Base'
 import Row from '../style/Row'
@@ -34,8 +32,5 @@ class Base extends Component
         );
     }
 }
-
-
-
 
 export default Base;

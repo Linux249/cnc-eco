@@ -6,20 +6,20 @@ import { connect } from 'react-redux'
 import NextBuildings from './NextBuildings'
 import styled from 'styled-components';
 
-import { shortenNumber } from './../services/menu'
-import { calcBuildingCost } from './../util/production'
+import { shortenNumber } from '../services/menu'
+import { calcBuildingCost } from '../util/production'
 import { buildings as buildingNames } from '../util/buildings'
 
 
-import icon_tib from './../img/icon/icon_tiberium.png'
-import icon_cris from './../img/icon/icon_crystal.png'
-import icon_power from './../img/icon/icon_power.png'
-import icon_credits from './../img/icon/icon_credits.png'
+import icon_tib from '../img/icon/icon_tiberium.png'
+import icon_cris from '../img/icon/icon_crystal.png'
+import icon_power from '../img/icon/icon_power.png'
+import icon_credits from '../img/icon/icon_credits.png'
 // import { changeBuilding  } from './../actions/buildings'
 // import { changeFraction } from './../actions/menu'
 //  import { calcTimeForAllBuildings } from './../util/production'
 // import { findBestToLvlUpNext } from './../util/performance'
-import './../style/Details.css'
+import '../style/Details.css'
 const Row = styled.div`
     display: flex;
     align-content: center;

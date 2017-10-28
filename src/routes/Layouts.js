@@ -7,8 +7,8 @@ import LayoutS from '../style/Layouts'
 import { changeAlliance, changeWorld, changePlayer } from '../actions/player'
 import Button from '../style/Button'
 import Row from '../style/Row'
-import Layout from './Layout'
-import Loading from './Loading'
+import Layout from '../components/Layout'
+import Loading from '../components/Loading'
 import { api_url } from '../config/config'
 
 class Layouts extends Component
