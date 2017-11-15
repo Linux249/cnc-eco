@@ -4,6 +4,8 @@ import App from './components/App';
 import configureStore from './configureStore'
 import { Provider } from 'react-redux';
 import urlToBase from './util/parseurl'
+import './style/index.css'
+
 if (process.env.NODE_ENV !== 'production') {
     const {whyDidYouUpdate} = require('why-did-you-update')
     whyDidYouUpdate(React)
