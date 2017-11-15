@@ -11,6 +11,9 @@ import Layout from '../components/Layout'
 import Loading from '../components/Loading'
 import { api_url } from '../config/config'
 
+// TODO time since last seen a layout shod be placed to the backend
+// TODO IDEA autmaticly remove layouts after X days (cronjobs)
+
 class Layouts extends Component
 {
     constructor(props) {
@@ -33,7 +36,7 @@ class Layouts extends Component
             .then(layouts => {
                 console.log(layouts)
                 // sort layouts
-                //layouts = layouts.sort((a,b)=> b.tib - a.tib )
+                layouts = layouts.filter((l => 14 >= (new Date() - new Date(l.time) )/60/60/24/1000))
                 this.setState({loading: false})
                 this.setState({ layouts })
             })
