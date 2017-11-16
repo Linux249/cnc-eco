@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import Button from '../style/Button'
 class Login extends Component {
 
 
     render() {
 
-        return <Button>Login</Button>
+        return <div>HIER KOMMT EIN LOGIN BERREICH HIN</div>
     }
 }
 

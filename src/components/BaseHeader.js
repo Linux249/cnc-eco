@@ -5,18 +5,17 @@ import Title from '../style/Title'
 import Button from '../style/Button'
 import Row from '../style/Row'
 import UrlInfo from './UrlInfo'
-import Login from './Login'
-import s from 'styled-components'
+import styled from 'styled-components'
 
-const Link = s(NavLink)`
-    height: 50px;
-    
-    &.active {
-        back-ground-color: black;
-        color: black;
-    }
-`
-// https://github.com/styled-components/styled-components/issues/184
+const Link = Button.withComponent(
+    styled(NavLink)`
+        &.active {
+            background-color: #46004d;
+            color: white;
+            border: none;
+        }
+    `
+)
 
 class BaseHeader extends Component
 {
@@ -24,23 +23,17 @@ class BaseHeader extends Component
     {
         return (
             <Header>
-                <Title>CNC-ECO</Title>
+                <Title><NavLink to="/">CNC-ECO</NavLink></Title>
                 <UrlInfo />
                 <Row>
-                    <Button>
-                        <Link  to="/bases" activeClassName="active">Basen</Link>
-                    </Button>
-                    <Button>
-                        <Link  to="/scripts" activeClassName="active">Scripte</Link>
-                    </Button>
-                    <Button>
-                        <Link  to="/layouts" activeClassName="active">Layouts</Link>
-                    </Button>
-                    <Login />
+                    <Link  to="/bases" activeClassName="active">Basen</Link>
+                    <Link  to="/scripts" activeClassName="active">Scripte</Link>
+                    <Link  to="/layouts" activeClassName="active">Layouts</Link>
+                    <Link  to="/login" activeClassName="active">Login</Link>
                 </Row>
             </Header>
         )
-  }
+    }
 }
 
 
