@@ -92,6 +92,17 @@ router.get("/cleanDocs", async (req, res, next) => {
     res.json("all docs clean")
 })
 
+router.get("/layoutsFrom/:world", (req, res, next) => {
+    console.log("layoutsFrom")
+    //const { a, w } = req.query
+    // TODO auth require
+    const collName = ""
+    req.db.collection(`layouts_${req.params.world}`).distinct('player', function(err, players) {
+        console.log(players)
+
+        res.json(players)
+    })
+})
 
 export default router
 
