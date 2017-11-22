@@ -2,9 +2,17 @@
 - sort layouts while saving (enough time!)
 - get layouts x + y as index
 - // was ist mit strom? // control layout before saving (tib > 1)
-- 
+- layouts löschen
+  - https://github.com/agenda/agenda scheduling
+  - fehlt: E-mail versenden für reports
 
 - Login system
+ - regestrieren über ingame name
+ - senden von Bestätigungsmail ingame
+ - direkt oder alle 5 min schedulen? 
+ - löschen von nicht genutzten reg versuchen
+ - cncecoserver@gmail.com is vorhanden
+ 
 - Payment system
   - credits for money (List to choose)
 
