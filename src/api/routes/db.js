@@ -40,22 +40,26 @@ router.get("/db", (req, res, next) => {
     // )
 })
 
-
+// TODO Add this to scheduling
 //POST /api/v1/layouts
-router.get("/deleteColl", async (req, res, next) => {
-    req.db.listCollections().toArray(function(err, collInfos) {
+router.get("/deleteOldLayouts/:days", async (req, res, next) => {
+    const days = Number(req.params.days)
+    let date = new Date()
+    date.setDate(date.getDate() - days)
+    req.db.listCollections().toArray(function(err, allCollections) {
+        allCollections.map(async coll => {
+            if(coll.name.includes("layouts")) {
+                console.log(coll.name)
+                const curser = await req.db.collection(coll.name).remove({time: {$lt: date}})
+                console.log(`DELETE LAYOUTS on ${coll.name} #${curser.result.n} - status: ${curser.result.ok}` )
 
-        const deleted = collInfos.map(coll => {
-            console.log(coll)
-            if(!coll.name.includes("layouts")) {
-                req.db.collection(coll.name).drop()
-                console.log("Droped")
             }
         })
-        res.json(deleted)
+        res.json("wann")
     });
-
 })
+
+
 
 router.get("/cleanDocs", async (req, res, next) => {
     const { db } = req
