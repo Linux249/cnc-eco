@@ -8,12 +8,15 @@ import apiRouter from "./api/routes/index"
 //const config = require('./env.json')[process.env.NODE_ENV || 'development']
 import MongoClient from 'mongodb'
 
+import { createReport } from './service/report'
+
 const MONGO_URI = process.env.MONGODB_URI ? process.env.MONGODB_URI : "mongodb://localhost:27017/cnc"
 
 let DB
 
 MongoClient.connect(MONGO_URI, (err, db) => {
     DB = db
+    createReport(db)
 })
 
 mongoose.Promise = global.Promise
