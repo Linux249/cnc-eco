@@ -2,12 +2,13 @@
   "name": "cnc-web-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "babel-node server.js",
-    "test": "babel-node src/test.js",
+    "test": "",
     "deploy": "git push heroku master",
-    "dev": "nodemon ./server.js --exec babel-node"
+    "dev": "nodemon ./server.js --exec babel-nodeutdated
+    "
   },
   "repository": {
     "type": "git",
