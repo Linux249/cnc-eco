@@ -16,6 +16,8 @@
 - Payment system
   - credits for money (List to choose)
 
+- saved bases bedder structure
+
 Ingame cliackable List of saved games (mini preview of layout)
 - list is sorted: newest + saved bases
 - save Bases to account 

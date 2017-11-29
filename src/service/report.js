@@ -10,15 +10,13 @@ const report = {
         /* {
         * world: name,
         * deletedLayouts: count,
-        * docs: count, // after delte = #layouts
-        * size: MB,       // collection size
+        * stats: collection.stats()
         *
          */
     ],
     player: {
         /*
-        * docs: count // count docs
-        * size: MB //size of collection,
+        * collection.stats()
         * newestPlayer: [{ playername , worlds }]
          */
     }
@@ -52,10 +50,13 @@ export const createReport = async (db) => {
 
             // getting db stats
             // TODO analyzing stas document and pic only relevant infos
-            reportWorld.stats = await collection.stats(1024)
+            reportWorld.stats = await collection.stats({ scale : 1024 })
 
             report.worlds.push(reportWorld)
         }))
+
+        // PLAYER
+        report.player.stats = await db.collection('players').stats({ scale : 1024 })
 
         // save and return report
         await db.collection('reports').save(report)
