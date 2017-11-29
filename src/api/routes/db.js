@@ -28,7 +28,8 @@ router.get("/db/reports", async (req, res, next) => {
 
 router.get("/db/createReport", async (req, res, next) => {
     try {
-        await createReport(DB)
+        const report = await createReport(req.db)
+        res.json(report)
     } catch (e) {
         next(e)
     }

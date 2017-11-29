@@ -21,8 +21,7 @@ MongoClient.connect(MONGO_URI, (err, db) => {
     const j = schedule.scheduleJob({hour: 0, minute: 32}, function(){
         console.log("SCHEUDLER")
         createReport(DB)
-    });
-    console.log(j)
+    })
 })
 
 mongoose.Promise = global.Promise

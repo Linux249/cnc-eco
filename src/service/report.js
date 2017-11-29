@@ -58,7 +58,8 @@ export const createReport = async (db) => {
         }))
 
         // save and return report
-        return await db.collection('reports').save(report)
+        await db.collection('reports').save(report)
+        return report
 
     } catch(e) {
         // TODO proper error handling
