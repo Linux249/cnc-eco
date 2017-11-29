@@ -1,21 +1,27 @@
 'use strict'
 
-const express = require('express')
+import express from 'express'
 //const logger = require("morgan")
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
 import apiRouter from "./api/routes/index"
+import passport from 'passport'
+import configurePassport from './api/config/passport'  // configurePassport
 //const config = require('./env.json')[process.env.NODE_ENV || 'development']
 import MongoClient from 'mongodb'
 import schedule from 'node-schedule'
 import { createReport } from './service/report'
 
 
+import logging from 'morgan'
+import flash from 'connect-flash'
+
 
 const MONGO_URI = process.env.MONGODB_URI ? process.env.MONGODB_URI : "mongodb://localhost:27017/cnc"
 
 let DB
 
+// configuration ===============================================================
 MongoClient.connect(MONGO_URI, (err, db) => {
     DB = db
     const j = schedule.scheduleJob({hour: 0, minute: 32}, function(){
@@ -49,6 +55,7 @@ app.use((req, res, next) => {
 })
 //const allow = procces.env.
 
+// TO
 app.use((req, res, next) => {
     const origin = req.get('origin');
     const host =  req.get('host')
@@ -77,11 +84,22 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.json())
 app.use(bodyParser.text())
 
+
+configurePassport(passport)
+
+app.use(logging('dev'))
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+// routes ======================================================================
+
 // set router for the API
 app.use("/", apiRouter)
 
 app.use("/task/index.php", (req, res) => {
-    if(req.get("content-type") === "application/x-www-form-urlencoded") console.log(req)
+    if(req.get("content-type") === "application/x-www-form-urlencoded") {
+        console.log("TODO - DAS IN DIE db ODER SONST WO ANSCHAUEN")
+        console.log(req)
+    }
 })
 
 

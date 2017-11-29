@@ -3,3 +3,4 @@ node_modules
 build
 config.js
 src/api/config/config.js
+config.js
