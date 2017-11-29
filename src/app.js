@@ -7,8 +7,10 @@ const mongoose = require("mongoose")
 import apiRouter from "./api/routes/index"
 //const config = require('./env.json')[process.env.NODE_ENV || 'development']
 import MongoClient from 'mongodb'
-
+import schedule from 'node-schedule'
 import { createReport } from './service/report'
+
+
 
 const MONGO_URI = process.env.MONGODB_URI ? process.env.MONGODB_URI : "mongodb://localhost:27017/cnc"
 
@@ -16,7 +18,11 @@ let DB
 
 MongoClient.connect(MONGO_URI, (err, db) => {
     DB = db
-    //createReport(db)
+    const j = schedule.scheduleJob({hour: 0, minute: 32}, function(){
+        console.log("SCHEUDLER")
+        createReport(DB)
+    });
+    console.log(j)
 })
 
 mongoose.Promise = global.Promise
