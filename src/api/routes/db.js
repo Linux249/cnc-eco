@@ -1,6 +1,8 @@
 'use strict'
 import { layoutStats } from '../../utils/layout'
 import { Router } from "express"
+import { createReport } from '../../service/report'
+
 const router = Router()
 
 //POST /api/v1/Archiv
@@ -19,6 +21,14 @@ router.get("/db/reports", async (req, res, next) => {
     try {
         const reports = await req.db.collection('reports').find().toArray()
         res.json(reports)
+    } catch (e) {
+        next(e)
+    }
+})
+
+router.get("/db/createReport", async (req, res, next) => {
+    try {
+        await createReport(DB)
     } catch (e) {
         next(e)
     }
@@ -45,7 +55,7 @@ router.get("/deleteOldLayouts/:days", async (req, res, next) => {
 
 
 
-router.get("/cleanDocs", async (req, res, next) => {
+router.get("/repairLayouts", async (req, res, next) => {
     const { db } = req
     await db.listCollections().toArray(function(err, collInfos) {
         collInfos.map(coll => {

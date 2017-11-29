@@ -1,14 +1,3 @@
-const nodemailer = require('nodemailer');
-
-
-
-let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'cncecoserver@gmail.com',    // TODO config for Login dev/prod
-        pass: 'yourpassword'
-    }
-});
 
 const report = {
     date: new Date(),   // current time
@@ -36,20 +25,6 @@ const report = {
 
 }
 
-let mailOptions = {
-    from: 'cncecoserver@gmail.com',
-    to: 'julian.libor@gmail.com',
-    subject: 'CnCEco Web-Server status',
-    text: 'That was easy!'
-};
-
-/*transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-        console.log(error);
-    } else {
-        console.log('Email sent: ' + info.response);
-    }
-});*/
 
 export const createReport = async (db) => {
     'use strict'
@@ -60,7 +35,6 @@ export const createReport = async (db) => {
         // collections for the layouts
         const collections = await db.listCollections().toArray()
         const layoutsColl = collections.filter(coll => coll.name.includes("layouts"))
-        //console.log(layoutsColl)
 
         // got throug each World/collection
         await Promise.all(layoutsColl.map(async ({name}) => {
@@ -71,36 +45,25 @@ export const createReport = async (db) => {
                 stats: null
             }
 
-
             // deleting old layouts
-
             const { result } = await collection.remove({time: {$lt: date}})
             if(!result.ok) console.log("FEHLER BEIM LÖSCHEN VON LAYOUTS")       // TODO bedder error handling
             reportWorld.deletedLayouts = result.n
 
             // getting db stats
+            // TODO analyzing stas document and pic only relevant infos
             reportWorld.stats = await collection.stats(1024)
 
             report.worlds.push(reportWorld)
-            console.log()
-
-
-
         }))
 
-        // save report
-        const savedReport = await db.collection('reports').save(report)
-
-        console.log(savedReport)
-
-
+        // save and return report
+        return await db.collection('reports').save(report)
 
     } catch(e) {
         // TODO proper error handling
         console.error(e.message)
         console.error(e)
     }
-
-
 }
 
