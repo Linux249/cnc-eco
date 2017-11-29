@@ -4,40 +4,24 @@ import { Router } from "express"
 const router = Router()
 
 //POST /api/v1/Archiv
-router.get("/db", (req, res, next) => {
-    console.log("db")
-    //const { a, w } = req.query
-    // TODO auth require
-    const collections = req.db.listCollections().toArray(function(err, collInfos) {
-        collInfos.map(coll => {
-            console.log(coll)
-            console.log(coll.name)
-            console.log(typeof coll.name)
-            if(coll.name.includes("layouts")) {
-                // update each item
-            } else {
-                // TODO
-            }
-        })
+router.get("/db", async (req, res, next) => {
+    try {
+        const collections = await req.db.listCollections().toArray()
+        res.json(collections)
+    } catch (e) {
+        next(e)
+    }
 
-        res.json(collInfos)
-    });
-    // console.log(collections)
-    // console.log(typeof collections)
-    //console.log(collections.length)
-    //const collection = req.db.collection(`layouts_${w}`)
 
-    //res.json(collections)
-    // collection.find().toArray(
-    //     (err, layouts) => {
-    //         if(err) {
-    //             console.log(err)
-    //             next(err)
-    //         }
-    //         console.log(`GET:\t${collection.namespace} - items: ${layouts.length}`)
-    //         res.json(layouts)
-    //     }
-    // )
+})
+
+router.get("/db/reports", async (req, res, next) => {
+    try {
+        const reports = await req.db.collection('reports').find().toArray()
+        res.json(reports)
+    } catch (e) {
+        next(e)
+    }
 })
 
 // TODO Add this to scheduling

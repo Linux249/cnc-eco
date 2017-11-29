@@ -60,7 +60,7 @@ export const createReport = async (db) => {
         // collections for the layouts
         const collections = await db.listCollections().toArray()
         const layoutsColl = collections.filter(coll => coll.name.includes("layouts"))
-        console.log(layoutsColl)
+        //console.log(layoutsColl)
 
         // got throug each World/collection
         await Promise.all(layoutsColl.map(async ({name}) => {
@@ -79,18 +79,19 @@ export const createReport = async (db) => {
             reportWorld.deletedLayouts = result.n
 
             // getting db stats
-            reportWorld.stats = await collection.stats()
+            reportWorld.stats = await collection.stats(1024)
 
             report.worlds.push(reportWorld)
+            console.log()
 
 
 
         }))
 
         // save report
-        await db.collection('reports').save(report)
+        const savedReport = await db.collection('reports').save(report)
 
-        console.log(report)
+        console.log(savedReport)
 
 
 

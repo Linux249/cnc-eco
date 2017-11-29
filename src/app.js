@@ -16,7 +16,7 @@ let DB
 
 MongoClient.connect(MONGO_URI, (err, db) => {
     DB = db
-    createReport(db)
+    //createReport(db)
 })
 
 mongoose.Promise = global.Promise
