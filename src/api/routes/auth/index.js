@@ -1,6 +1,6 @@
 module.exports = function(app, passport) {
 
-    const successRedirect = '/profile'
+    const successRedirect = '/#/login?token='
 // normal routes ===============================================================
 
     // show the home page (will also have our login links)
@@ -18,7 +18,7 @@ module.exports = function(app, passport) {
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
         req.logout();
-        res.redirect('/');
+        res.redirect('/#/');
     });
 
 // =============================================================================
@@ -37,6 +37,7 @@ module.exports = function(app, passport) {
     app.post('/local/login', passport.authenticate('local-login', {
         successRedirect : '/profile', // redirect to the secure profile section
         failureRedirect : '/login', // redirect back to the signup page if there is an error
+        session: false,
         failureFlash : true // allow flash messages
     }));
 
@@ -48,9 +49,10 @@ module.exports = function(app, passport) {
     */
 
     // process the signup form
-    app.post('/signup', passport.authenticate('local-signup', {
+    app.post('/local/signup', passport.authenticate('local-signup', {
         successRedirect : '/profile', // redirect to the secure profile section
         failureRedirect : '/signup', // redirect back to the signup page if there is an error
+        session: false,
         failureFlash : true // allow flash messages
     }));
 
@@ -90,9 +92,15 @@ module.exports = function(app, passport) {
     // the callback after google has authenticated the user
     app.get('/auth/google/callback',
         passport.authenticate('google', {
-            successRedirect : '/profile',
-            failureRedirect : '/'
-        }));
+            //successRedirect : '/#/profile?token=',
+            failureRedirect : '/',
+            session: false
+        }),
+        (req, res) => {
+            const token = "tooookeeeen"
+            res.redirect(`/#/profile?token=${token}`)
+        }
+    );
 
 // =============================================================================
 // AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT) =============
