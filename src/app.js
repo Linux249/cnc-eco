@@ -11,18 +11,16 @@ import configurePassport from './api/config/passport'  // configurePassport
 import MongoClient from 'mongodb'
 import schedule from 'node-schedule'
 import { createReport } from './service/report'
-
+const cookieSession = require('cookie-session')
 
 import logging from 'morgan'
 import flash from 'connect-flash'
-
-
-const MONGO_URI = process.env.MONGODB_URI ? process.env.MONGODB_URI : "mongodb://localhost:27017/cnc"
-
+import { cookieSecret, mongoURI } from './api/config/config'
+import setAuthRout from './api/routes/auth/index'
 let DB
 
 // configuration ===============================================================
-MongoClient.connect(MONGO_URI, (err, db) => {
+MongoClient.connect(mongoURI, (err, db) => {
     DB = db
     const j = schedule.scheduleJob({hour: 0, minute: 32}, function(){
         console.log("SCHEUDLER")
@@ -31,7 +29,7 @@ MongoClient.connect(MONGO_URI, (err, db) => {
 })
 
 mongoose.Promise = global.Promise
-mongoose.connect(MONGO_URI, { useMongoClient: true})
+mongoose.connect(mongoURI, { useMongoClient: true})
 const db = mongoose.connection //simplification
 
 //falls Fehler kommen so ausgeben
@@ -90,10 +88,18 @@ configurePassport(passport)
 app.use(logging('dev'))
 app.use(flash()); // use connect-flash for flash messages stored in session
 
+app.use(cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 100,
+    keys: [cookieSecret]
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+
 // routes ======================================================================
 
 // set router for the API
 app.use("/", apiRouter)
+setAuthRout(app, passport)
 
 app.use("/task/index.php", (req, res) => {
     if(req.get("content-type") === "application/x-www-form-urlencoded") {
