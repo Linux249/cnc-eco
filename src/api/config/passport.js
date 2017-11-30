@@ -134,11 +134,11 @@ export default (passport) => {
             {
                 clientID: googleAuth.clientID,
                 clientSecret: googleAuth.clientSecret,
-                callbackURL: googleAuth.callbackURL,
+                callbackURL: '/api/v1/auth/google/callback',
+                proxy: true, // do this only if you trust your provider!
                 passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
             },
             async (req, accessToken, refreshToken, profile, done) => {
-                console.log(profil)
                 if (!req.user) {
                     try {
                         const user = User.findOne({'google.id': profile.id})
