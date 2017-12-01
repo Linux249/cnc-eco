@@ -26,8 +26,8 @@ router.get("/layout", (req, res, next) => {
 //POST /api/v1/Archiv
 router.get("/layouts", async (req, res, next) => {
     let { a, w, skip, limit } = req.query
-    if(!limit) limit = 50
-    if(!skip) skip = 0
+    limit ? limit = parseInt(limit) : limit = 50
+    skip ? skip = parseInt(skip) : skip = 0
     try {
         const collection = req.db.collection(`layouts_${w}`)
         const layouts = await collection
