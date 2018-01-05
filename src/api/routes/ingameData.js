@@ -13,11 +13,11 @@ router.post("/ingameData", async (req, res, next) => {
         const { worldId, serverName, currentplayerName, basecount, fraction } = body
         const bases = []
         // read all Bases and put them into array
-        for(let c = 0; c < basecount; c++) {
+        for(let i = 0; i < basecount; i++) {
             bases.push({
                 fraction,
-                name: body[`basename${c}`],
-                layout: body[`opt${c}`]
+                name: body[`basename${i}`],
+                layout: body[`opt${i}`]
             })
         }
 
@@ -26,13 +26,20 @@ router.post("/ingameData", async (req, res, next) => {
 
         // update or create world
         const index = player.worlds.findIndex(world => world.w == worldId)
-        console.log({player, index})
-        console.log(player.worlds)
-        index !== -1 ? player.worlds[index].bases = bases : player.worlds.push({
-            name: serverName,
-            w: worldId,
-            bases
-        })
+        //console.log({player, index})
+        //console.log(player.worlds)
+
+        if(index !== -1) {
+            player.worlds[index].bases = bases
+        } else {
+            player.worlds.push({
+                name: serverName,
+                w: worldId,
+                bases
+            })
+        }
+
+
 
         // save
         const result = await player.save()
@@ -41,6 +48,7 @@ router.post("/ingameData", async (req, res, next) => {
         res.send("UPDATED")
     } catch(err) {
         console.log({err})
+        res.send(err)
         next(err)
     }
 })
