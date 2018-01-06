@@ -3,6 +3,7 @@ import mongoose, { Schema }  from 'mongoose'
 
 const allianceSchema = new Schema({
     allianceId: {type: Number, unique: true},
+    name: String,
     count: Number,
     members: [{
         name: String,

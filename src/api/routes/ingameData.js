@@ -11,7 +11,7 @@ router.post("/ingameData", async (req, res, next) => {
     try {
 
         const { body } = req
-        const { worldId, allianceId, count, serverName, currentplayerName, basecount, fraction } = body
+        const { worldId, allianceId, allianceName, count, serverName, currentplayerName, basecount, fraction } = body
 
 
         /*
@@ -27,6 +27,7 @@ router.post("/ingameData", async (req, res, next) => {
         }))
 
         alliance.count = count
+        alliance.name = allianceName
         alliance.members = members
 
         await alliance.save()
