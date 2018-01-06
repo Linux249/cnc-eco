@@ -20,7 +20,7 @@ router.post("/ingameData", async (req, res, next) => {
         const aId = Number(`${allianceId}${worldId}`)       // unique id combine world and ally id
         let alliance = await Alliance.findOne({allianceId: aId}) || new Alliance({allianceId: aId})
 
-        const members = [...Array(count)].map((_, i) => ({
+        const members = [...Array(Number(count))].map((_, i) => ({
             name: body[`name${i}`],
             role: body[`ro${i}`],
             playerId: body[`playerId${i}`]
