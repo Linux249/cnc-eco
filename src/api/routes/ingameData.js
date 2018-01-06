@@ -2,6 +2,7 @@
 import { Router } from "express"
 const router = Router()
 import Player from '../model/Player'
+import Alliance from '../model/Alliance'
 
 
 // GET /api/v1/layout
@@ -10,7 +11,26 @@ router.post("/ingameData", async (req, res, next) => {
     try {
 
         const { body } = req
-        const { worldId, serverName, currentplayerName, basecount, fraction } = body
+        const { worldId, allianceId, count, serverName, currentplayerName, basecount, fraction } = body
+
+
+        /*
+        *   save Alliance Information's
+         */
+        const aId = Number(`${allianceId}${worldId}`)       // unique id combine world and ally id
+        let alliance = await Alliance.findOne({allianceId: aId}) || new Alliance({allianceId: aId})
+
+        const members = [...Array(5)].map((_, i) => ({
+            name: body[`name${i}`],
+            role: body[`ro${i}`],
+            playerId: body[`playerId${i}`]
+        }))
+
+        alliance.count = count
+        alliance.members = members
+
+        await alliance.save()
+
         const bases = []
         // read all Bases and put them into array
         for(let i = 0; i < basecount; i++) {
