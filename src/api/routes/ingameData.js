@@ -10,7 +10,7 @@ import Alliance from '../model/Alliance'
 router.post("/ingameData", async (req, res, next) => {
     try {
 
-        const { body } = req
+        const { body, db } = req
         const { worldId, allianceId, allianceName, count, serverName, currentplayerName, basecount, fraction } = body
 
 
@@ -32,16 +32,20 @@ router.post("/ingameData", async (req, res, next) => {
 
         await alliance.save()
 
-        const bases = []
-        // read all Bases and put them into array
-        for(let i = 0; i < basecount; i++) {
-            bases.push({
-                fraction,
-                name: body[`basename${i}`],
-                layout: body[`opt${i}`]
-            })
-        }
 
+
+        // save player data
+        const collection = db.collection(`players_${worldId}`)
+
+
+        // read all Bases and put them into array
+        const bases = await [...Array(Number(basecount))].map((_, i) => ({
+            fraction,
+            name: body[`basename${i}`],
+            layout: body[`opt${i}`]
+        }))
+
+        
         // find or create player
         let player = await Player.findOne({name: currentplayerName}) || new Player({name: currentplayerName})
 
