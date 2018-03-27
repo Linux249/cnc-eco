@@ -6,25 +6,26 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "gh-pages": "^0.12.0",
-    "react-scripts": "1.0.14",
+    "react-scripts": "1.1.1",
     "redux-logger": "^3.0.6",
     "why-did-you-update": "0.0.8"
   },
   "dependencies": {
-    "immutability-helper": "^2.5.0",
-    "prop-types": "^15.6.0",
-    "react": "^16.1.1",
-    "react-dnd": "^2.5.4",
-    "react-dnd-html5-backend": "^2.5.4",
-    "react-dom": "^16.1.1",
-    "react-google-charts": "^1.5.5",
-    "react-redux": "^5.0.6",
+    "auth0-js": "^8.12.3",
+    "immutability-helper": "^2.6.6",
+    "prop-types": "^15.6.1",
+    "react": "^16.2.0",
+    "react-dnd": "^2.6.0",
+    "react-dnd-html5-backend": "^2.6.0",
+    "react-dom": "^16.2.0",
+    "react-google-charts": "^1.5.7",
+    "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "socket.io-client": "^2.0.4",
-    "styled-components": "^2.2.3"
+    "styled-components": "^2.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
