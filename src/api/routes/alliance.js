@@ -21,7 +21,7 @@ router.get("/alliance", async (req, res, next) => {
     if(!alliance) next(new Error("No valid alliance id"))
 
     // WORLD OF PLAYER
-    const collection = db.collection(`players_${world}`)
+    const collection = req.db.collection(`players_${world}`)
 
     await new PromiseAll(alliance.members.map(async (member, i) => {
         // TODO was wen kein player gefunden wird?
