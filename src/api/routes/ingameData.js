@@ -30,6 +30,7 @@ router.post("/ingameData", async (req, res, next) => {
         alliance.name = allianceName
         alliance.members = members
 
+        // todo need i realy wait here?
         await alliance.save()
 
 
@@ -43,11 +44,46 @@ router.post("/ingameData", async (req, res, next) => {
             fraction,
             name: body[`basename${i}`],
             layout: body[`opt${i}`]
+            // TODO ad everything here
         }))
 
         
         // find or create player
-        let player = await Player.findOne({name: currentplayerName}) || new Player({name: currentplayerName})
+        //let player = await Player.findOne({name: currentplayerName}) || new Player({name: currentplayerName})
+
+        const player = {
+            playerId,
+            name: currentplayerName,
+            baeses,
+            basecount: body.basecount,          // count bases - 1 is init
+            fraction: body.fraction,        // 2 is NOD und 1 GDI
+            rank: body.rank,                // current rank on the world
+            points: body.points,            // total points
+            basekills: body.basekills,      // total kills
+            pvekills: body.pvekills,        // kills only in pve
+            pvpkills: body.pvpkills,        // kills only in pvp
+            hascode: body.hascode,          // had optain a satcode
+            maxcp: body.maxcp,              // max cp holdable
+            actcp: body.actcp,              // current commando points
+            funds: body.funds,              // current amount of funds
+            schirme: body.schirme,          // schirme ????
+            rPoints: body.RPoints,          // amout of research points
+            creditsCount: body.CreditsCount,    // amount of credits
+            timeToMcv: body.timeTOmcv,      // time left to next mcv
+            rpNeeded: body.rpNeeded,        // total rp that needed - %% this
+            totalPower: 0,
+            maxOff: 0,
+            maxDef: 0,
+            rep: 0,      // in the highest off
+            repMax: 0,   // is every where the same
+            totalTib: 0,
+            totalPower: 0,
+            totalCris: 0,
+            totalCredits: 0,
+        }
+
+        // find or create && overwrite or insert document
+        await collection.update({name: currentplayerName}, player, {upsert: true})
 
         // update or create world
         const index = player.worlds.findIndex(world => world.w == worldId)
