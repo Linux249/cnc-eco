@@ -29,7 +29,7 @@ router.get("/alliance", async (req, res, next) => {
         const player = await collection.findOne({playerId})
         // update player
         aliance.members[i] = {...member, ...player}
-    })
+    }))
 
 
     // TODO auth require
