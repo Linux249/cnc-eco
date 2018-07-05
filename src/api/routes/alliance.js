@@ -23,7 +23,7 @@ router.get("/alliance", async (req, res, next) => {
     // WORLD OF PLAYER
     const collection = req.db.collection(`players_${world}`)
 
-    await new PromiseAll(alliance.members.map(async (member, i) => {
+    await new Promise.all(alliance.members.map(async (member, i) => {
         // TODO was wen kein player gefunden wird?
         const { playerId } = member
         const player = await collection.findOne({playerId})
