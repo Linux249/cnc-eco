@@ -54,7 +54,7 @@ router.post("/ingameData", async (req, res, next) => {
         const player = {
             playerId: body['currentplayerId'],
             name: currentplayerName,
-            baeses,
+            bases,
             basecount: body.basecount,          // count bases - 1 is init
             fraction: body.fraction,        // 2 is NOD und 1 GDI
             rank: body.rank,                // current rank on the world
@@ -71,7 +71,6 @@ router.post("/ingameData", async (req, res, next) => {
             creditsCount: body.CreditsCount,    // amount of credits
             timeToMcv: body.timeTOmcv,      // time left to next mcv
             rpNeeded: body.rpNeeded,        // total rp that needed - %% this
-            totalPower: 0,
             maxOff: 0,
             maxDef: 0,
             rep: 0,      // in the highest off
