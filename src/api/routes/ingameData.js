@@ -85,10 +85,12 @@ router.post("/ingameData", async (req, res, next) => {
         await collection.update({name: currentplayerName}, player, {upsert: true})
 
         // update or create world
-        const index = player.worlds.findIndex(world => world.w == worldId)
+        // TODO save the world where the plaer has a "player"
+        //const index = player.worlds.findIndex(world => world.w == worldId)
         //console.log({player, index})
         //console.log(player.worlds)
 
+        /*
         if(index !== -1) {
             player.worlds[index].bases = bases
         } else {
@@ -99,7 +101,7 @@ router.post("/ingameData", async (req, res, next) => {
             })
         }
 
-
+        */
 
         // save
         const result = await player.save()
