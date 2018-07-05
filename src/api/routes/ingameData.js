@@ -52,7 +52,7 @@ router.post("/ingameData", async (req, res, next) => {
         //let player = await Player.findOne({name: currentplayerName}) || new Player({name: currentplayerName})
 
         const player = {
-            playerId,
+            playerId: body['currentplayerId'],
             name: currentplayerName,
             baeses,
             basecount: body.basecount,          // count bases - 1 is init
