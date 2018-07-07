@@ -9,8 +9,8 @@ router.get("/alliance", async (req, res, next) => {
     const { world } = req.query
     const allianceId = req.query.alliance
 
-    if(!world) next(new Error("world id is missing"))
-    if(!allianceId) next(new Error("alliance id is missing"))
+    if(!world) return next(new Error("world id is missing"))
+    if(!allianceId) return next(new Error("alliance id is missing"))
 
     const aId = Number(`${allianceId}${world}`)
 
@@ -18,7 +18,7 @@ router.get("/alliance", async (req, res, next) => {
 
     const alliance = await Alliance.findOne({allianceId: aId})
 
-    if(!alliance) next(new Error("No valid alliance id"))
+    if(!alliance) return next(new Error("No alliance found"))
 
     // WORLD OF PLAYER
     const collection = req.db.collection(`players_${world}`)
