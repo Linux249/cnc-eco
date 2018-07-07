@@ -27,8 +27,6 @@ router.get("/alliance", async (req, res, next) => {
 
     // WORLD OF PLAYER
     const collection = req.db.collection(`players_${world}`)
-    console.log(collection)
-    console.log('collection name: ' + collection.name)
 
     //console.log(alliance)
     await Promise.all(alliance.members.map(async (member, i) => {
@@ -36,14 +34,16 @@ router.get("/alliance", async (req, res, next) => {
         // console.log(member)
         const { playerId } = member
         const player = await collection.findOne({playerId})
-        // update player
+        if(player) console.log(player)
         if(player) alliance.members[i] = {...member, ...player, data: true}
         else alliance.members[i].data = false
+        return
     }))
 
 
     // TODO auth require
 
+    console.log(alliance)
     res.json(alliance)
 })
 
