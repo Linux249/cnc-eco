@@ -33,14 +33,20 @@ router.get("/alliance", async (req, res, next) => {
         // TODO was wen kein player gefunden wird?
         // console.log(member)
         const player = await collection.findOne({playerId: String(member.playerId)})
-        console.log(await collection.find({playerId: String(member.playerId)}))
-        console.log(await collection.find({playerId: Number(member.playerId)}))
-        console.log(await collection.find({playerId: member.playerId}))
         console.log(player)
         if(player) alliance.members[i] = {...member, ...player, data: true}
         else alliance.members[i].data = false
         return player
     }))
+
+    const test1 = await collection.find({playerId: String(member.playerId)})
+    const test2 = await collection.find({playerId: Number(member.playerId)})
+    const test3 = await collection.find({playerId: member.playerId})
+    const test4 = await collection.findOne({playerId: String(member.playerId)})
+    const test5 = await collection.findOne({playerId: Number(member.playerId)})
+    const test6 = await collection.findOne({playerId: member.playerId})
+    console.log({test1, test2, test3})
+    console.log({test6, test4, test5})
 
 
     // TODO auth require
