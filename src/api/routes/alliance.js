@@ -38,7 +38,7 @@ router.get("/alliance", async (req, res, next) => {
         else alliance.members[i].data = false
         return player
     }))
-
+/*
     const test1 = await collection.find({playerId: String(member.playerId)})
     const test2 = await collection.find({playerId: Number(member.playerId)})
     const test3 = await collection.find({playerId: member.playerId})
@@ -46,7 +46,7 @@ router.get("/alliance", async (req, res, next) => {
     const test5 = await collection.findOne({playerId: Number(member.playerId)})
     const test6 = await collection.findOne({playerId: member.playerId})
     console.log({test1, test2, test3})
-    console.log({test6, test4, test5})
+    console.log({test6, test4, test5})*/
 
 
     // TODO auth require
