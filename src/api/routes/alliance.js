@@ -27,6 +27,7 @@ router.get("/alliance", async (req, res, next) => {
 
     // WORLD OF PLAYER
     const collection = req.db.collection(`players_${world}`)
+    console.log('collection name: ' + collection.name)
 
     //console.log(alliance)
     await Promise.all(alliance.members.map(async (member, i) => {
