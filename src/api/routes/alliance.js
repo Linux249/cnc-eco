@@ -30,7 +30,7 @@ router.get("/alliance", async (req, res, next) => {
         const { playerId } = member
         const player = await collection.findOne({playerId})
         // update player
-        aliance.members[i] = {...member, ...player}
+        alliance.members[i] = {...member, ...player}
     }))
 
 
