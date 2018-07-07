@@ -27,6 +27,7 @@ router.get("/alliance", async (req, res, next) => {
 
     // WORLD OF PLAYER
     const collection = req.db.collection(`players_${world}`)
+    console.log(collection)
     console.log('collection name: ' + collection.name)
 
     //console.log(alliance)
@@ -36,7 +37,8 @@ router.get("/alliance", async (req, res, next) => {
         const { playerId } = member
         const player = await collection.findOne({playerId})
         // update player
-        alliance.members[i] = {...member, ...player}
+        if(player) alliance.members[i] = {...member, ...player, data: true}
+        else alliance.members[i].data = false
     }))
 
 
