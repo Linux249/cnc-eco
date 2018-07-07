@@ -34,7 +34,7 @@ router.get("/alliance", async (req, res, next) => {
         // console.log(member)
         const player = await collection.findOne({playerId: String(member.playerId)})
         console.log(player)
-        if(player) alliance.members[i] = {...member, ...player, data: true}
+        if(player) alliance.members[i] = { role: member.role, ...player, data: true}
         else alliance.members[i].data = false
         return player
     }))
