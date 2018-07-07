@@ -6,7 +6,6 @@ const router = Router()
 // GET // api/v1/player?name=22&w=123
 router.get("/player", async (req, res, next) => {
     const { player, world } = req.query
-    const { db }  = req
     // TODO auth require
 
     const collection = req.db.collection(`players_${world}`)
