@@ -5,15 +5,20 @@ const router = Router()
 
 // GET // api/v1/player?name=22&w=123
 router.get("/player", async (req, res, next) => {
-    const { name } = req.query
+    const { player, world } = req.query
+    const { db }  = req
     // TODO auth require
 
-    const player = await Player.findOne({name})
-    res.json(player)
+    const collection = req.db.collection(`players_${world}`)
+
+    const data = await collection.findOne({playerId: player})
+
+    //const player = await Player.findOne({name})
+    res.json(data)
 })
 
 // create new one
-router.post("/player", async (req, res, next) => {
+/*router.post("/player", async (req, res, next) => {
     const obj = new Player(req.body)
     obj.save((err, data) => {
         if (err) return next(err)
@@ -31,7 +36,7 @@ router.put("/player", async function(req, res, next) {
         res.status = 201 // saved sucs..
         res.json(data)  //Send saved data back
     })
-})
+})*/
 
 export default router
 
