@@ -32,12 +32,11 @@ router.get("/alliance", async (req, res, next) => {
     await Promise.all(alliance.members.map(async (member, i) => {
         // TODO was wen kein player gefunden wird?
         // console.log(member)
-        const { playerId } = member
-        const player = await collection.findOne({playerId})
-        if(player) console.log(player)
+        const player = await collection.findOne({playerId: member.playerId})
+        console.log(player)
         if(player) alliance.members[i] = {...member, ...player, data: true}
         else alliance.members[i].data = false
-        return
+        return player
     }))
 
 
