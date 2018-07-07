@@ -16,7 +16,12 @@ router.get("/alliance", async (req, res, next) => {
 
     console.log({ world, allianceId, aId })
 
-    const alliance = await Alliance.findOne({allianceId: aId})
+    let alliance
+    try {
+        alliance = await Alliance.findOne({allianceId: aId})
+    } catch (e) {
+        return next(e)
+    }
 
     if(!alliance) return next(new Error("No alliance found"))
 
