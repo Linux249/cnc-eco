@@ -31,12 +31,12 @@ class Layouts extends Component
     getLayouts = () => {
         this.setState({loading: true})
         const { pl, w, a } = this.props
-        fetch(`${api_url}/layouts?pl=${pl}&w=${w}&a=${a}`)
+        fetch(`${api_url}/layouts?pl=${pl}&w=${w}&a=${a}&limit=200`)
             .then(res => res.json())
             .then(layouts => {
                 console.log(layouts)
                 // sort layouts
-                layouts = layouts.filter((l => 14 >= (new Date() - new Date(l.time) )/60/60/24/1000))
+                layouts = layouts.filter((l => 2 >= (new Date() - new Date(l.time) )/60/60/24/1000))
                 this.setState({loading: false})
                 this.setState({ layouts })
             })
