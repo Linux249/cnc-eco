@@ -1,6 +1,4 @@
-export const CHANGE_PLAYER = "CHANGE_PLAYER"
-export const CHANGE_WORLD = "CHANGE_WORLD"
-export const CHANGE_ALLIANCE = "CHANGE_ALLIANCE"
+import {CHANGE_ALLIANCE, CHANGE_PLAYER, CHANGE_WORLD} from '../constants/actionTypes'
 
 
 export function changePlayer(player) {

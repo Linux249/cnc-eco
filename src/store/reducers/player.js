@@ -1,9 +1,6 @@
 import update from 'immutability-helper'
-import {
-    CHANGE_PLAYER,
-    CHANGE_WORLD,
-    CHANGE_ALLIANCE
-} from '../actions/player'
+import { CHANGE_ALLIANCE } from '../constants/actionTypes'
+import {CHANGE_PLAYER, CHANGE_WORLD} from '../constants/actionTypes'
 
 const initState = {
     a: 126,
@@ -14,11 +11,20 @@ const initState = {
 export function player(state = initState, action) {
     switch (action.type) {
         case CHANGE_PLAYER:
-            return update(state, {pl: {$set: action.pl}})
+            return {
+                ...state,
+                pl: action.pl
+            }
         case CHANGE_ALLIANCE:
-            return update(state, {a: {$set: action.a}})
+            return {
+                ...state,
+                a: action.a
+            }
         case CHANGE_WORLD:
-            return update(state, {w: {$set: action.w}})
+            return {
+                ...state,
+                w: action.w
+            }
         default:
             return state
     }

@@ -1,11 +1,17 @@
 import {copyObj} from '../../services/util'
+import {
+    BUILDING_TYP_DOWN,
+    BUILDING_TYP_UP,
+    CHANGE_FRACTION,
+    REPLACE_ALL_BASE,
+    REPLACE_BASE_FROM_URL,
+    REPLACE_BUILDING
+} from '../constants/actionTypes' // ad a new building a current location
+ // ad a new building a current location
+ // ad a new building a current location
 
-export const REPLACE_BUILDING = "REPLACE_BUILDING" // ad a new building a current location
-export const REPLACE_ALL_BASE = "REPLACE_ALL_BASE" // ad a new building a current location
-export const REPLACE_BASE_FROM_URL = "REPLACE_BASE_FROM_URL" // ad a new building a current location
-export const CHANGE_FRACTION = "CHANGE_FRACTION"
-export const BUILDING_TYP_UP = "BUILDING_TYP_UP"
-export const BUILDING_TYP_DOWN = "BUILDING_TYP_DOWN"
+
+
 
 // number where the building is set is inside building.slot
 export function replaceBuilding(building) {
