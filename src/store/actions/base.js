@@ -1,4 +1,4 @@
-import {copyObj} from '../services/util'
+import {copyObj} from '../../services/util'
 
 export const REPLACE_BUILDING = "REPLACE_BUILDING" // ad a new building a current location
 export const REPLACE_ALL_BASE = "REPLACE_ALL_BASE" // ad a new building a current location

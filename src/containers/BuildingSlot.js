@@ -3,7 +3,7 @@ import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux' 
 import { LvlNumber } from '../components/LvlNumber'
 import { DropTarget, DragSource } from 'react-dnd'
-import { replaceBuilding } from '../actions/base'
+import { replaceBuilding } from '../store/actions/base'
 import Slot from '../style/BuildingSlot'
 import { buildingKeys } from '../util/buildings'
 

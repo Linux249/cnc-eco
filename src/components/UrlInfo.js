@@ -8,7 +8,7 @@ import Row from '../style/Row'
 import Button from '../style/Button'
 import Label from '../style/Label'
 import urlToBase from './../util/parseurl.js'
-import { replaceAllBase } from '../actions/base'
+import { replaceAllBase } from '../store/actions/base'
 
 class UrlInfo extends Component
 {

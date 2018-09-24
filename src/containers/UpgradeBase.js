@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { buildingsUp, buildingsDown } from '../actions/base'
+import { buildingsUp, buildingsDown } from '../store/actions/base'
 import Row from '../style/Row'
 import Button from '../style/Button'
 

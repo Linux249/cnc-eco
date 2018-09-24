@@ -1,5 +1,5 @@
 import update from 'immutability-helper'
-import urlToBase from './../util/parseurl'
+import urlToBase from '../../util/parseurl'
 import {
     REPLACE_BUILDING,
     REPLACE_ALL_BASE,

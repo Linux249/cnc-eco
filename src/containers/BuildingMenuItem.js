@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { DragSource } from 'react-dnd'
-import { replaceBuilding  } from '../actions/base'
+import { replaceBuilding  } from '../store/actions/base'
 import MenuItem from '../style/BuildingMenuItem'
 import { findDOMNode } from 'react-dom';
 

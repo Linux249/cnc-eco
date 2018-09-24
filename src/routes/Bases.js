@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { replaceBaseFromUrl } from '../actions/base'
+import { replaceBaseFromUrl } from '../store/actions/base'
 import Base from '../components/Base.js'
 import BuildingMenu from '../containers/Buildings'
 import Menu from '../components/Menu'
