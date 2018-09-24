@@ -1,16 +1,15 @@
-//Libs
 import React, { Component } from 'react'
-import { connect } from 'react-redux';
 import { HashRouter  as Router, Route } from 'react-router-dom'
-import BaseHeader from './BaseHeader.js';
-import { replaceAllBase } from './../actions/base'
-import Bases from '../routes/Bases.js'
-import Scripts from '../routes/Scripts.js'
-import Layouts from '../routes/Layouts.js'
-
-import AppS from '../style/App'
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { connect } from 'react-redux';
+import BaseHeader from './BaseHeader.js';
+import Bases from '../routes/Bases'
+import Scripts from '../routes/Scripts'
+import Layouts from '../routes/Layouts'
+import Login from '../routes/Login'
+
+import AppS from '../style/App'
 
 class App extends Component
 {
@@ -24,6 +23,7 @@ class App extends Component
                     <Route path="/bases" component={Bases}/>
                     <Route path="/scripts" component={Scripts}/>
                     <Route path="/layouts" component={Layouts}/>
+                    <Route path="/login" component={Login}/>
                 </AppS>
             </Router>
         )
@@ -31,13 +31,5 @@ class App extends Component
 
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        replaceAllBase: (url) => dispatch(replaceAllBase(url))
-    }
-}
-
-App = DragDropContext(HTML5Backend)(App)
-
-export default connect(null, mapDispatchToProps)(App);
+export default DragDropContext(HTML5Backend)(App)
 
