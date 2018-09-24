@@ -2,6 +2,7 @@
 import { base } from './base'
 import { menu }from './menu';
 import { player }from './player';
+import { auth }from './auth';
 //
 //
 // /**
@@ -60,5 +61,6 @@ import { combineReducers } from 'redux';
 export default combineReducers({
     menu,
     base,
-    player
+    player,
+    auth
 });

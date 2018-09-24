@@ -1,4 +1,7 @@
-import {LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS} from '../constants/actionTypes'
+import {LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS,
+    CHANGE_AUTH_EMAIL,
+    CHANGE_AUTH_PASSWORD,
+} from '../constants/actionTypes'
 
 function requestLogin(creds) {
     return {
@@ -26,3 +29,13 @@ function loginError(message) {
         message
     }
 }
+
+export const changeAuthEmail = (email) => ({
+    type: CHANGE_AUTH_EMAIL,
+    email
+})
+
+export const changeAuthPassword = (password) => ({
+    type: CHANGE_AUTH_PASSWORD,
+    password
+})
