@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import { HashRouter  as Router, Route } from 'react-router-dom'
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { connect } from 'react-redux';
 import BaseHeader from './BaseHeader.js';
 import Bases from '../routes/Bases'
 import Scripts from '../routes/Scripts'
 import Layouts from '../routes/Layouts'
 import Login from '../routes/Login'
-
 import AppS from '../style/App'
+import Register from '../routes/Register'
 
 class App extends Component
 {
@@ -24,6 +23,7 @@ class App extends Component
                     <Route path="/scripts" component={Scripts}/>
                     <Route path="/layouts" component={Layouts}/>
                     <Route path="/login" component={Login}/>
+                    <Route path="/register" component={Register}/>
                 </AppS>
             </Router>
         )

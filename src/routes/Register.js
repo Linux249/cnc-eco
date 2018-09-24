@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {changeAuthEmail, changeAuthPassword, requestLogin} from '../store/actions/auth'
+import {changeAuthEmail, changeAuthPassword, requestRegister} from '../store/actions/auth'
 import connect from 'react-redux/es/connect/connect'
 import Input from '../style/Input'
 import styled from 'styled-components'
@@ -22,13 +22,13 @@ class Login extends Component {
 
     render() {
 
-        const {email, password, isFetching, isAuthenticated, changeEmail, changePassword, login } = this.props
+        const {email, password, isFetching, isAuthenticated, changeEmail, changePassword, register } = this.props
 
         return (
             <Middle>
                 <Container>
-                    <h1>Sign In</h1>
-                    <Link to='/register'>Need an account?</Link>
+                    <h1>Sign up</h1>
+                    <Link to='/login'>Have an account?</Link>
                     <Input
                         value={email}
                         onChange={e => changeEmail(e.target.value)}
@@ -42,7 +42,7 @@ class Login extends Component {
                         placeholder="Password"
                         minLength="4"
                     />
-                    <Button onClic={() => login()}>Sign in</Button>
+                    <Button onClic={() => register()}>Sign up</Button>
                 </Container>
             </Middle>
         )
@@ -61,7 +61,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
     changeEmail: changeAuthEmail,
     changePassword: changeAuthPassword,
-    login: requestLogin,
+    register: requestRegister,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

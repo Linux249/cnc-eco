@@ -30,6 +30,7 @@ class BaseHeader extends Component
                     <Link  to="/scripts" activeClassName="active">Scripte</Link>
                     <Link  to="/layouts" activeClassName="active">Layouts</Link>
                     <Link  to="/login" activeClassName="active">Login</Link>
+                    <Link  to="/register" activeClassName="active">Sign up</Link>
                 </Row>
             </Header>
         )

@@ -1,14 +1,23 @@
-import {LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS,
+import {
+    LOGIN_FAILURE,
+    LOGIN_REQUEST,
+    LOGIN_SUCCESS,
     CHANGE_AUTH_EMAIL,
     CHANGE_AUTH_PASSWORD,
+    REGISTER_REQUEST,
 } from '../constants/actionTypes'
 
-function requestLogin(creds) {
+export function requestLogin() {
     return {
         type: LOGIN_REQUEST,
         isFetching: true,
-        isAuthenticated: false,
-        creds
+    }
+}
+
+export function requestRegister() {
+    return {
+        type: REGISTER_REQUEST,
+        isFetching: true,
     }
 }
 
