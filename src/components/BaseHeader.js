@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { NavLink } from 'react-router-dom'
 import Header from '../style/BaseHeader'
 import Title from '../style/Title'
@@ -6,6 +6,7 @@ import Button from '../style/Button'
 import Row from '../style/Row'
 import UrlInfo from './UrlInfo'
 import styled from 'styled-components'
+import {connect} from 'react-redux'
 
 const Link = Button.withComponent(
     styled(NavLink)`
@@ -21,6 +22,7 @@ class BaseHeader extends Component
 {
     render()
     {
+        const { isAuthenticated } = this.props
         return (
             <Header>
                 <Title><NavLink to="/">CNC-ECO</NavLink></Title>
@@ -29,13 +31,21 @@ class BaseHeader extends Component
                     <Link  to="/bases" activeClassName="active">Basen</Link>
                     <Link  to="/scripts" activeClassName="active">Scripte</Link>
                     <Link  to="/layouts" activeClassName="active">Layouts</Link>
-                    <Link  to="/login" activeClassName="active">Login</Link>
-                    <Link  to="/register" activeClassName="active">Sign up</Link>
+                    {isAuthenticated ?
+                        <Link  to="/user" activeClassName="active">User</Link>
+                        :
+                        <Fragment>
+                            <Link  to="/login" activeClassName="active">Login</Link>
+                            <Link  to="/register" activeClassName="active">Sign up</Link>
+                        </Fragment>
+                    }
+
                 </Row>
             </Header>
         )
     }
 }
 
+const mapStateToProps = (state) => ({isAuthenticated: state.auth.isAuthenticated})
 
-export default BaseHeader
+export default connect(mapStateToProps)(BaseHeader)

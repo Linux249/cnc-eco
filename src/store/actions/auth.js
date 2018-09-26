@@ -4,20 +4,34 @@ import {
     LOGIN_SUCCESS,
     CHANGE_AUTH_EMAIL,
     CHANGE_AUTH_PASSWORD,
-    REGISTER_REQUEST,
+    START_ASYNC_AUTH,
+    END_ASYNC_AUTH,
 } from '../constants/actionTypes'
+import {api_url} from '../../config/config'
+
 
 export function requestLogin() {
-    return {
-        type: LOGIN_REQUEST,
-        isFetching: true,
+    return async (dispatch, getState) => {
+        dispatch({type: START_ASYNC_AUTH})
+        const { email, password } = getState().auth
+        const body = JSON.stringify({email, password})
+        const resp = await fetch(api_url + '/local/login', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body
+        })
+        console.log(resp)
+
     }
 }
 
 export function requestRegister() {
-    return {
-        type: REGISTER_REQUEST,
-        isFetching: true,
+    return async (dispatch, getState) => {
+        dispatch({type: START_ASYNC_AUTH})
+        const { email, password } = getState().auth
+        await fetch('/api')
     }
 }
 

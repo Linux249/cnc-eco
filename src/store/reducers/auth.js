@@ -1,4 +1,4 @@
-import {CHANGE_AUTH_EMAIL, CHANGE_AUTH_PASSWORD} from '../constants/actionTypes'
+import {CHANGE_AUTH_EMAIL, CHANGE_AUTH_PASSWORD, START_ASYNC_AUTH} from '../constants/actionTypes'
 
 const initState = {
     email: '',
@@ -18,6 +18,11 @@ export function auth(state = initState, action) {
             return {
                 ...state,
                 password: action.password
+            }
+        case START_ASYNC_AUTH:
+            return {
+                ...state,
+                isFetching: true
             }
         default:
             return state

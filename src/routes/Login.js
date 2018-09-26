@@ -42,7 +42,7 @@ class Login extends Component {
                         placeholder="Password"
                         minLength="4"
                     />
-                    <Button onClic={() => login()}>Sign in</Button>
+                    <Button onClick={() => login()}>Sign in</Button>
                 </Container>
             </Middle>
         )
