@@ -35,12 +35,12 @@ export default (passport) => {
             },
             async function (req, email, password, done) {
                 if (email) email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
-
+                console.log({req, email, password, done})
                 // asynchronous
                 try {
                     const user = await User.findOne({'local.email': email})
                     // if there are any errors, return the error
-                    if (err) return done(err);
+                    //if (err) return done(err);
 
                     // if no user is found, return the message
                     if (!user) return done(null, false, req.flash('loginMessage', 'No user found.'));
