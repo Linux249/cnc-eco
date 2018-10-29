@@ -5,6 +5,10 @@ import Player from '../model/Player'
 import Alliance from '../model/Alliance'
 
 
+// body.worldId is unique id of all worlds
+// body.allianceId is id of alliance on this world
+//
+
 // GET /api/v1/layout
 // get a single labtop with world + coords as params
 router.post("/ingameData", async (req, res, next) => {
@@ -40,7 +44,7 @@ router.post("/ingameData", async (req, res, next) => {
 
 
         // read all Bases and put them into array
-        const bases = await [...Array(Number(basecount))].map((_, i) => ({
+        const bases = [...Array(Number(basecount))].map((_, i) => ({
             fraction,
             name: body[`basename${i}`],
             layout: body[`opt${i}`]
@@ -81,6 +85,9 @@ router.post("/ingameData", async (req, res, next) => {
             totalCris: 0,
             totalCredits: 0,
         }
+
+        // set time for update
+        player._updated = new Date()
 
         // find or create && overwrite or insert document
         await collection.update({name: currentplayerName}, player, {upsert: true})
