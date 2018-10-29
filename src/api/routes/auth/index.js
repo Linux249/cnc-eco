@@ -41,10 +41,10 @@ module.exports = function(app, passport) {
         passport.authenticate('local-login', {session: false}, (err, user, info) => {
             if (err || !user) {
                 return res.status(400).json({
-                    message: 'No user found',
+                    message: 'No user found - no info?',
                     user   : user,
-                    err,
-                    info
+                    err: err && err.message,
+                    info,
                 });
             }
             req.login(user, {session: false}, (err) => {
@@ -58,13 +58,15 @@ module.exports = function(app, passport) {
             });
         })(req, res);
     });
+
+
     app.post('/local/signup', (req, res, next) => {
         passport.authenticate('local-signup', {session: false}, (err, user, info) => {
             if (err || !user) {
                 return res.status(400).json({
                     message: 'Fehler beim user erstellen',
                     user   : user,
-                    err,
+                    err: err && err.message,
                     info
                 });
             }
@@ -75,6 +77,7 @@ module.exports = function(app, passport) {
                 //console.log(user)
                 // generate a signed son web token with the contents of user object and return it in the response
                 const secret = process.env.JWT_SECRET || "dummy1234556"
+                console.log(err, user)
                 const token = jwt.sign(user, secret);
                 return res.json({user, token});
             });

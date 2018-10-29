@@ -44,8 +44,10 @@ router.post("/user/addPlayer", async (req, res, next) => {
     }
 
     // Test if the player doesn't used from other account
-    const userWhoOwnsPlayer = User.findOne({player})
-    if(userWhoOwnsPlayer) return next(new Error("Cannot add Player: Player owns somebody else already"))
+    const userWhoOwnsPlayer = await User.findOne({player: name})
+    if(userWhoOwnsPlayer) {
+        return next(new Error("Cannot add Player: Player owns somebody else already"))
+    }
 
     // Test if player exists on the world
     const collection = req.db.collection(`players_${worldId}`)
@@ -65,17 +67,22 @@ router.post("/user/addPlayer", async (req, res, next) => {
             // add player to user
             // TODO test if the world is not allready inside
 
-            player.worlds.push({
+            user.player = name
+            user.playerAdded = new Date()
+
+            user.worlds.push({
                 worldId: String,
                 player_id: Schema.ObjectId,
             })
-            collection.update({_id: player._id}, player)
+            const res = await collection.update({_id: player._id}, player)
+            res.json(res)
+
         } else next(new Error("Cannot add Player: Player was not updated in the last 3 minutes - please update data ingame"))
     } else next(new Error("Cannot add Player: Player has never updated - please update data ingame"))
 
     // add player to user and time
 
-    res.send()
+
 
 })
 

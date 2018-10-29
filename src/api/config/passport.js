@@ -45,9 +45,9 @@ export default (passport) => {
                     //if (err) return done(err);
 
                     // if no user is found, return the message
-                    if (!user) return done(null, false, req.flash('loginMessage', 'No user found.'));
+                    if (!user) return done(new Error('No user found - check email adress'), false);
 
-                    if (!user.validPassword(password)) return done(null, false, req.flash('loginMessage', 'Wrong password.'));
+                    if (!user.validPassword(password)) return done(new Error('Wrong password.'), false);
 
                     // all is well, return user
                     else return done(null, user);
@@ -88,7 +88,7 @@ export default (passport) => {
 
                         // check to see if theres already a user with that email
                         if (user) {
-                            return done(null, 'That email is already taken.', req.flash('signupMessage', 'That email is already taken.'));
+                            return done(new Error('That email is already taken.'), false);
                         } else {
 
                             // create the user
@@ -99,6 +99,7 @@ export default (passport) => {
 
                             newUser.save(function (err) {
                                 if (err) return done(err);
+                                delete newUser.local.password
                                 return done(null, newUser);
                             });
                         }
@@ -120,10 +121,9 @@ export default (passport) => {
                             user.local.email = email;
                             user.local.password = user.generateHash(password);
                             user.save(function (err) {
-                                if (err)
-                                    return done(err);
-
-                                return done(null, user);
+                                if (err) return done(err);
+                                delete user.local.password
+                                return done(null, v);
                             });
                         }
                     });

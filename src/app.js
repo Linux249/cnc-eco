@@ -12,6 +12,7 @@ import MongoClient from 'mongodb'
 import schedule from 'node-schedule'
 import { createReport } from './service/report'
 const cookieSession = require('cookie-session')
+import cors from 'cors'
 
 import logging from 'morgan'
 import flash from 'connect-flash'
@@ -82,6 +83,7 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.json())
 app.use(bodyParser.text())
 
+app.use(cors())
 
 configurePassport(passport)
 
