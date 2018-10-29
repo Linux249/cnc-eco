@@ -82,7 +82,7 @@ router.post("/user/addPlayer", async (req, res, next) => {
             user.playerAdded = new Date()
 
             user.worlds.push({
-                worldId: String,
+                worldId: worldId,
                 player_id: player._id,
             })
             //const r = await collection.update({_id: player._id}, player)
