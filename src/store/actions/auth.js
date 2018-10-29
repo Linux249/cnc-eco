@@ -6,6 +6,7 @@ import {
     START_ASYNC_AUTH,
 } from '../constants/actionTypes'
 import {api_url} from '../../config/config'
+import {updatePlayer} from './player'
 
 
 export const requestLogin = () => {
@@ -20,7 +21,7 @@ export const requestLogin = () => {
             },
             body
         }).catch(e => {
-            console.error("LOGIN FAILURE")
+            console.warn("LOGIN FAILURE")
             console.error(e)
             return dispatch(loginError(e.message))
         })
@@ -30,12 +31,13 @@ export const requestLogin = () => {
         console.log(data)
 
         if(!resp.ok) {
-            console.error("LOGIN FAILURE")
+            console.warn("LOGIN FAILURE")
             return dispatch(loginError(data.message))
 
         }
 
         dispatch(receiveLogin(data))
+        dispatch(updatePlayer(data.user))
 
     }
 }
@@ -53,7 +55,7 @@ export const requestRegister = () => {
             },
             body
         }).catch(e => {
-            console.error("LOGIN FAILURE")
+            console.warn("LOGIN FAILURE")
             console.error(e)
             return dispatch(loginError(e.message))
         })
@@ -63,12 +65,13 @@ export const requestRegister = () => {
         console.log(data)
 
         if(!resp.ok) {
-            console.error("LOGIN FAILURE")
+            console.warn("LOGIN FAILURE")
             return dispatch(loginError(data.message))
         }
 
         console.log(resp)
-        dispatch(receiveLogin(resp))
+        dispatch(receiveLogin(data))
+        dispatch(updatePlayer(data.user))
 
     }
 }

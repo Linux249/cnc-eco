@@ -12,7 +12,8 @@ const initState = {
     isFetching: false,
     isAuthenticated: false, // TODO check here for localStorage?
     token: null,
-    error: null
+    error: null,
+
 }
 
 export function auth(state = initState, action) {
@@ -44,7 +45,8 @@ export function auth(state = initState, action) {
                 isFetching: action.isFetching,
                 isAuthenticated: action.isAuthenticated,
                 token: action.token,
-                error: null
+                error: null,
+
             }
         case LOGIN_FAILURE:
             return {
