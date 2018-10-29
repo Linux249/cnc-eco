@@ -1,14 +1,13 @@
 //https://github.com/scotch-io/easy-node-authentication/blob/master/config/passport.js
-import {Strategy as GoogleStrategy} from 'passport-google-oauth20'
-import {Strategy as LocalStrategy} from 'passport-local'
-import {googleAuth} from "./config"
-import {User} from "../model/User";
-const passportJWT = require("passport-jwt");
-const JWTStrategy   = passportJWT.Strategy;
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { Strategy as LocalStrategy } from 'passport-local';
+import { googleAuth } from './config';
+import { User } from '../model/User';
+const passportJWT = require('passport-jwt');
+const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 
-export default (passport) => {
-
+export default passport => {
     // serialize user.id for cookie
     /*passport.serializeUser((user, done) => {
         done(null, user.id);    // .id is the mongo id
@@ -33,109 +32,110 @@ export default (passport) => {
                 // by default, local strategy uses username and password, we will override with email
                 usernameField: 'email',
                 passwordField: 'password',
-                passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+                passReqToCallback: true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
             },
-            async function (req, email, password, done) {
+            async function(req, email, password, done) {
                 if (email) email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
                 // asynchronous
                 try {
-                    const user = await User.findOne({'local.email': email})
-                    console.log({user, email, password, done})
+                    const user = await User.findOne({ 'local.email': email });
+                    console.log({ user, email, password, done });
                     // if there are any errors, return the error
                     //if (err) return done(err);
 
                     // if no user is found, return the message
                     if (!user) return done(new Error('No user found - check email adress'), false);
 
-                    if (!user.validPassword(password)) return done(new Error('Wrong password.'), false);
-
+                    if (!user.validPassword(password))
+                        return done(new Error('Wrong password.'), false);
                     // all is well, return user
                     else return done(null, user);
                 } catch (err) {
-                    console.log(err)
-                    return done(err)
+                    console.log(err);
+                    return done(err);
                 }
             }
         )
-    )
-
+    );
 
     // =========================================================================
     // LOCAL SIGNUP ============================================================
     // =========================================================================
-    passport.use('local-signup', new LocalStrategy({
-            // by default, local strategy uses username and password, we will override with email
-            usernameField: 'email',
-            passwordField: 'password',
-            passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-        },
-        function (req, email, password, done) {
-            // Use lower-case e-mails to avoid case-sensitive e-mail matching
-            if (email) email = email.toLowerCase();
-            //console.log("inside local signup cb")
+    passport.use(
+        'local-signup',
+        new LocalStrategy(
+            {
+                // by default, local strategy uses username and password, we will override with email
+                usernameField: 'email',
+                passwordField: 'password',
+                passReqToCallback: true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+            },
+            function(req, email, password, done) {
+                // Use lower-case e-mails to avoid case-sensitive e-mail matching
+                if (email) email = email.toLowerCase();
+                //console.log("inside local signup cb")
 
-            // asynchronous
-            process.nextTick(function () {
-                // if the user is not already logged in:
-                if (!req.user) {
-                    User.findOne({'local.email': email}, function (err, user) {
-                        //console.log("no user???")
-                        //console.log({err, user, email, password})
-                        //console.log(password)
-                        // if there are any errors, return the error
-                        if (err)
-                            return done(err);
+                // asynchronous
+                process.nextTick(function() {
+                    // if the user is not already logged in:
+                    if (!req.user) {
+                        User.findOne({ 'local.email': email }, function(err, user) {
+                            //console.log("no user???")
+                            //console.log({err, user, email, password})
+                            //console.log(password)
+                            // if there are any errors, return the error
+                            if (err) return done(err);
 
-                        // check to see if theres already a user with that email
-                        if (user) {
-                            return done(new Error('That email is already taken.'), false);
-                        } else {
+                            // check to see if theres already a user with that email
+                            if (user) {
+                                return done(new Error('That email is already taken.'), false);
+                            } else {
+                                // create the user
+                                const newUser = new User();
 
-                            // create the user
-                            const newUser = new User();
+                                newUser.local.email = email;
+                                newUser.local.password = newUser.generateHash(password);
 
-                            newUser.local.email = email;
-                            newUser.local.password = newUser.generateHash(password);
+                                newUser.save(function(err) {
+                                    if (err) return done(err);
+                                    delete newUser.local.password;
+                                    return done(null, newUser);
+                                });
+                            }
+                        });
+                        // if the user is logged in but has no local account...
+                    } else if (!req.user.local.email) {
+                        // ...presumably they're trying to connect a local account
+                        // BUT let's check if the email used to connect a local account is being used by another user
+                        User.findOne({ 'local.email': email }, function(err, user) {
+                            if (err) return done(err);
 
-                            newUser.save(function (err) {
-                                if (err) return done(err);
-                                delete newUser.local.password
-                                return done(null, newUser);
-                            });
-                        }
-
-                    });
-                    // if the user is logged in but has no local account...
-                } else if (!req.user.local.email) {
-                    // ...presumably they're trying to connect a local account
-                    // BUT let's check if the email used to connect a local account is being used by another user
-                    User.findOne({'local.email': email}, function (err, user) {
-                        if (err)
-                            return done(err);
-
-                        if (user) {
-                            return done(null, false, req.flash('loginMessage', 'That email is already taken.'));
-                            // Using 'loginMessage instead of signupMessage because it's used by /connect/local'
-                        } else {
-                            const user = req.user;
-                            user.local.email = email;
-                            user.local.password = user.generateHash(password);
-                            user.save(function (err) {
-                                if (err) return done(err);
-                                delete user.local.password
-                                return done(null, v);
-                            });
-                        }
-                    });
-                } else {
-                    // user is logged in and already has a local account. Ignore signup. (You should log out before trying to create a new account, user!)
-                    return done(null, req.user);
-                }
-
-            });
-
-        }));
-
+                            if (user) {
+                                return done(
+                                    null,
+                                    false,
+                                    req.flash('loginMessage', 'That email is already taken.')
+                                );
+                                // Using 'loginMessage instead of signupMessage because it's used by /connect/local'
+                            } else {
+                                const user = req.user;
+                                user.local.email = email;
+                                user.local.password = user.generateHash(password);
+                                user.save(function(err) {
+                                    if (err) return done(err);
+                                    delete user.local.password;
+                                    return done(null, v);
+                                });
+                            }
+                        });
+                    } else {
+                        // user is logged in and already has a local account. Ignore signup. (You should log out before trying to create a new account, user!)
+                        return done(null, req.user);
+                    }
+                });
+            }
+        )
+    );
 
     passport.use(
         new GoogleStrategy(
@@ -144,27 +144,27 @@ export default (passport) => {
                 clientSecret: googleAuth.clientSecret,
                 callbackURL: '/api/v1/auth/google/callback',
                 proxy: true, // do this only if you trust your provider!
-                passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+                passReqToCallback: true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
             },
             async (req, accessToken, refreshToken, profile, done) => {
                 try {
                     if (!req.user) {
-                        const user = await User.findOne({'google.id': profile.id})
+                        const user = await User.findOne({ 'google.id': profile.id });
                         if (user) {
-                            console.log(user)
+                            console.log(user);
                             // if there is a user id already but no token (user was linked at one point and then removed)
                             if (!user.google.token) {
                                 user.google.token = accessToken;
                                 user.google.name = profile.displayName;
                                 user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
-                                await user.save()
+                                await user.save();
                                 return done(null, user);
                             }
 
                             return done(null, user);
                         } else {
-                            console.log("neuer user")
+                            console.log('neuer user');
                             const newUser = new User();
 
                             newUser.google.id = profile.id;
@@ -172,11 +172,9 @@ export default (passport) => {
                             newUser.google.name = profile.displayName;
                             newUser.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
-                            await newUser.save()
+                            await newUser.save();
                             return done(null, newUser);
                         }
-
-
                     } else {
                         // user already exists and is logged in, we have to link accounts
                         const user = req.user; // pull the user out of the session
@@ -186,30 +184,33 @@ export default (passport) => {
                         user.google.name = profile.displayName;
                         user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
-                        await user.save()
+                        await user.save();
                         return done(null, user);
                     }
                 } catch (err) {
-                    console.log(err)
-                    return done(err)
+                    console.log(err);
+                    return done(err);
                 }
             }
         )
-    )
+    );
 
-    passport.use(new JWTStrategy({
-            jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-            secretOrKey   : process.env.JWT_SECRET || "dummy1234556"
-        },
-        function (jwtPayload, cb) {
-            //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
-            return User.findOneById(jwtPayload.id)
-                .then(user => {
-                    return cb(null, user);
-                })
-                .catch(err => {
-                    return cb(err);
-                });
-        }
-    ));
-}
+    passport.use(
+        new JWTStrategy(
+            {
+                jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+                secretOrKey: process.env.JWT_SECRET || 'dummy1234556',
+            },
+            function(jwtPayload, cb) {
+                //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
+                return User.findOneById(jwtPayload.id)
+                    .then(user => {
+                        return cb(null, user);
+                    })
+                    .catch(err => {
+                        return cb(err);
+                    });
+            }
+        )
+    );
+};

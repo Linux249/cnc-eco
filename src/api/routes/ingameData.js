@@ -1,9 +1,8 @@
-'use strict'
-import { Router } from "express"
-const router = Router()
-import Player from '../model/Player'
-import Alliance from '../model/Alliance'
-
+'use strict';
+import { Router } from 'express';
+const router = Router();
+import Player from '../model/Player';
+import Alliance from '../model/Alliance';
 
 // body.worldId is unique id of all worlds
 // body.allianceId is id of alliance on this world
@@ -11,47 +10,51 @@ import Alliance from '../model/Alliance'
 
 // GET /api/v1/layout
 // get a single labtop with world + coords as params
-router.post("/ingameData", async (req, res, next) => {
+router.post('/ingameData', async (req, res, next) => {
     try {
-
-        const { body, db } = req
-        const { worldId, allianceId, allianceName, count, serverName, currentplayerName, basecount, fraction } = body
-
+        const { body, db } = req;
+        const {
+            worldId,
+            allianceId,
+            allianceName,
+            count,
+            serverName,
+            currentplayerName,
+            basecount,
+            fraction,
+        } = body;
 
         /*
         *   save Alliance Information's
          */
-        const aId = Number(`${allianceId}${worldId}`)       // unique id combine world and ally id
-        let alliance = await Alliance.findOne({allianceId: aId}) || new Alliance({allianceId: aId})
+        const aId = Number(`${allianceId}${worldId}`); // unique id combine world and ally id
+        let alliance =
+            (await Alliance.findOne({ allianceId: aId })) || new Alliance({ allianceId: aId });
 
         const members = await [...Array(Number(count))].map((_, i) => ({
             name: body[`name${i}`],
             role: body[`ro${i}`],
-            playerId: body[`playerId${i}`]
-        }))
+            playerId: body[`playerId${i}`],
+        }));
 
-        alliance.count = count
-        alliance.name = allianceName
-        alliance.members = members
+        alliance.count = count;
+        alliance.name = allianceName;
+        alliance.members = members;
 
         // todo need i realy wait here?
-        await alliance.save()
-
-
+        await alliance.save();
 
         // save player data
-        const collection = db.collection(`players_${worldId}`)
-
+        const collection = db.collection(`players_${worldId}`);
 
         // read all Bases and put them into array
         const bases = [...Array(Number(basecount))].map((_, i) => ({
             fraction,
             name: body[`basename${i}`],
-            layout: body[`opt${i}`]
+            layout: body[`opt${i}`],
             // TODO ad everything here
-        }))
+        }));
 
-        
         // find or create player
         //let player = await Player.findOne({name: currentplayerName}) || new Player({name: currentplayerName})
 
@@ -60,37 +63,37 @@ router.post("/ingameData", async (req, res, next) => {
             allianceId,
             name: currentplayerName,
             bases,
-            basecount: body.basecount,          // count bases - 1 is init
-            fraction: body.fraction,        // 2 is NOD und 1 GDI
-            rank: body.rank,                // current rank on the world
-            points: body.points,            // total points
-            basekills: body.basekills,      // total kills
-            pvekills: body.pvekills,        // kills only in pve
-            pvpkills: body.pvpkills,        // kills only in pvp
-            hascode: body.hascode,          // had optain a satcode
-            maxcp: body.maxcp,              // max cp holdable
-            actcp: body.actcp,              // current commando points
-            funds: body.funds,              // current amount of funds
-            schirme: body.schirme,          // schirme ????
-            rPoints: body.RPoints,          // amout of research points
-            creditsCount: body.CreditsCount,    // amount of credits
-            timeToMcv: body.timeTOmcv,      // time left to next mcv
-            rpNeeded: body.rpNeeded,        // total rp that needed - %% this
+            basecount: body.basecount, // count bases - 1 is init
+            fraction: body.fraction, // 2 is NOD und 1 GDI
+            rank: body.rank, // current rank on the world
+            points: body.points, // total points
+            basekills: body.basekills, // total kills
+            pvekills: body.pvekills, // kills only in pve
+            pvpkills: body.pvpkills, // kills only in pvp
+            hascode: body.hascode, // had optain a satcode
+            maxcp: body.maxcp, // max cp holdable
+            actcp: body.actcp, // current commando points
+            funds: body.funds, // current amount of funds
+            schirme: body.schirme, // schirme ????
+            rPoints: body.RPoints, // amout of research points
+            creditsCount: body.CreditsCount, // amount of credits
+            timeToMcv: body.timeTOmcv, // time left to next mcv
+            rpNeeded: body.rpNeeded, // total rp that needed - %% this
             maxOff: 0,
             maxDef: 0,
-            rep: 0,      // in the highest off
-            repMax: 0,   // is every where the same
+            rep: 0, // in the highest off
+            repMax: 0, // is every where the same
             totalTib: 0,
             totalPower: 0,
             totalCris: 0,
             totalCredits: 0,
-        }
+        };
 
         // set time for update
-        player._updated = new Date()
+        player._updated = new Date();
 
         // find or create && overwrite or insert document
-        await collection.update({name: currentplayerName}, player, {upsert: true})
+        await collection.update({ name: currentplayerName }, player, { upsert: true });
 
         // update or create world
         // TODO save the world where the plaer has a "player"
@@ -115,17 +118,15 @@ router.post("/ingameData", async (req, res, next) => {
         //const result = await player.save()
         //console.log(`UPDATE PLAYER INFO: ${result}`)
         //res.json(result)
-        res.send("UPDATED")
-    } catch(err) {
-        console.log({err})
-        res.send(err)
-        next(err)
+        res.send('UPDATED');
+    } catch (err) {
+        console.log({ err });
+        res.send(err);
+        next(err);
     }
-})
+});
 
-export default router
-
-
+export default router;
 
 // 2017-10-16T10:04:43.127252+00:00 app[web.1]: { _data_: 'UPDATE',
 // 2017-10-16T10:04:43.127268+00:00 app[web.1]:   version: '4.7.5',
@@ -434,7 +435,6 @@ export default router
 // 2017-10-16T10:04:43.127451+00:00 app[web.1]:   x5: '388',
 // 2017-10-16T10:04:43.127451+00:00 app[web.1]:   y5: '670',
 // 2017-10-16T10:04:43.127457+00:00 app[web.1]:   opt5: 'http://cncopt.com/?map=3|N|N|- Tux 6 -|....25y.....29n...29n29n....23s12p28r.21s...29n27r33h33s33h27r29n29n..27r33h36s33h32s11p20s21p12p12p12p31r33h31r33h.12p39a12p37a12p....12p12p12p12p12p...............j........j..l...l..hh.....j.....j.....kk.j.jj..........lll.hh....................................|640000|520000|520000|120|120|116|120|newEconomy' }
-
 
 /*
 

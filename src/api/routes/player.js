@@ -1,20 +1,20 @@
-'use strict'
-import Player from '../model/Player'
-import { Router } from "express"
-const router = Router()
+'use strict';
+import Player from '../model/Player';
+import { Router } from 'express';
+const router = Router();
 
 // GET // api/v1/player?name=22&w=123
-router.get("/player", async (req, res, next) => {
-    const { player, world } = req.query
+router.get('/player', async (req, res, next) => {
+    const { player, world } = req.query;
     // TODO auth require
 
-    const collection = req.db.collection(`players_${world}`)
+    const collection = req.db.collection(`players_${world}`);
 
-    const data = await collection.findOne({playerId: player})
+    const data = await collection.findOne({ playerId: player });
 
     //const player = await Player.findOne({name})
-    res.json(data)
-})
+    res.json(data);
+});
 
 // create new one
 /*router.post("/player", async (req, res, next) => {
@@ -37,17 +37,20 @@ router.put("/player", async function(req, res, next) {
     })
 })*/
 
-export default router
+export default router;
 
 const player = {
     name: String,
-    worlds: [{
-        name: {type: String, default: "missing!!" }, // name of the world
-        w: Number, // id of the world
-        bases: [{
-            name: {type: String, default: "missing!!"},
-            layout: String, // only 72 as length!
-        }]
-    }]
-}
-
+    worlds: [
+        {
+            name: { type: String, default: 'missing!!' }, // name of the world
+            w: Number, // id of the world
+            bases: [
+                {
+                    name: { type: String, default: 'missing!!' },
+                    layout: String, // only 72 as length!
+                },
+            ],
+        },
+    ],
+};

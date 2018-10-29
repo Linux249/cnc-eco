@@ -1,10 +1,8 @@
 const jwt = require('jsonwebtoken');
 
-
 module.exports = function(app, passport) {
-
     //app.delete()
-// normal routes ===============================================================
+    // normal routes ===============================================================
 
     // show the home page (will also have our login links)
     /*app.get('/', function(req, res) {
@@ -24,9 +22,9 @@ module.exports = function(app, passport) {
         res.redirect('/#/');
     });
 
-// =============================================================================
-// AUTHENTICATE (FIRST LOGIN) ==================================================
-// =============================================================================
+    // =============================================================================
+    // AUTHENTICATE (FIRST LOGIN) ==================================================
+    // =============================================================================
 
     // locally --------------------------------
     // LOGIN ===============================
@@ -38,48 +36,47 @@ module.exports = function(app, passport) {
 
     // process the login form
     app.post('/local/login', (req, res, next) => {
-        passport.authenticate('local-login', {session: false}, (err, user, info) => {
+        passport.authenticate('local-login', { session: false }, (err, user, info) => {
             if (err || !user) {
                 return res.status(400).json({
                     message: 'No user found - no info?',
-                    user   : user,
+                    user: user,
                     err: err && err.message,
                     info,
                 });
             }
-            req.login(user, {session: false}, (err) => {
+            req.login(user, { session: false }, err => {
                 if (err) {
                     res.send(err);
                 }
                 // generate a signed son web token with the contents of user object and return it in the response
-                const secret = process.env.JWT_SECRET || "dummy1234556"
+                const secret = process.env.JWT_SECRET || 'dummy1234556';
                 const token = jwt.sign(user.toJSON(), secret);
-                return res.json({user, token});
+                return res.json({ user, token });
             });
         })(req, res);
     });
 
-
     app.post('/local/signup', (req, res, next) => {
-        passport.authenticate('local-signup', {session: false}, (err, user, info) => {
+        passport.authenticate('local-signup', { session: false }, (err, user, info) => {
             if (err || !user) {
                 return res.status(400).json({
                     message: 'Fehler beim user erstellen',
-                    user   : user,
+                    user: user,
                     err: err && err.message,
-                    info
+                    info,
                 });
             }
-            req.login(user, {session: false}, (err) => {
+            req.login(user, { session: false }, err => {
                 if (err) {
                     res.send(err);
                 }
                 //console.log(user)
                 // generate a signed son web token with the contents of user object and return it in the response
-                const secret = process.env.JWT_SECRET || "dummy1234556"
-                console.log(err, user)
+                const secret = process.env.JWT_SECRET || 'dummy1234556';
+                console.log(err, user);
                 const token = jwt.sign(user, secret);
-                return res.json({user, token});
+                return res.json({ user, token });
             });
         })(req, res);
     });
@@ -130,24 +127,25 @@ module.exports = function(app, passport) {
     // google ---------------------------------
 
     // send to google to do the authentication
-    app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+    app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
     // the callback after google has authenticated the user
-    app.get('/auth/google/callback',
+    app.get(
+        '/auth/google/callback',
         passport.authenticate('google', {
             //successRedirect : '/#/profile?token=',
-            failureRedirect : '/',
-            session: false
+            failureRedirect: '/',
+            session: false,
         }),
         (req, res) => {
-            const token = "tooookeeeen"
-            res.redirect(`/#/profile?token=${token}`)
+            const token = 'tooookeeeen';
+            res.redirect(`/#/profile?token=${token}`);
         }
     );
 
-// =============================================================================
-// AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT) =============
-// =============================================================================
+    // =============================================================================
+    // AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT) =============
+    // =============================================================================
 
     // locally --------------------------------
     /*
@@ -191,26 +189,28 @@ module.exports = function(app, passport) {
     // google ---------------------------------
 
     // send to google to do the authentication
-    app.get('/connect/google', passport.authorize('google', { scope : ['profile', 'email'] }));
+    app.get('/connect/google', passport.authorize('google', { scope: ['profile', 'email'] }));
 
     // the callback after google has authorized the user
-    app.get('/connect/google/callback',
+    app.get(
+        '/connect/google/callback',
         passport.authorize('google', {
-            successRedirect : '/profile',
-            failureRedirect : '/'
-        }));
+            successRedirect: '/profile',
+            failureRedirect: '/',
+        })
+    );
 
-// =============================================================================
-// UNLINK ACCOUNTS =============================================================
-// =============================================================================
-// used to unlink accounts. for social accounts, just remove the token
-// for local account, remove email and password
-// user account will stay active in case they want to reconnect in the future
+    // =============================================================================
+    // UNLINK ACCOUNTS =============================================================
+    // =============================================================================
+    // used to unlink accounts. for social accounts, just remove the token
+    // for local account, remove email and password
+    // user account will stay active in case they want to reconnect in the future
 
     // local -----------------------------------
     app.get('/unlink/local', isLoggedIn, function(req, res) {
-        var user            = req.user;
-        user.local.email    = undefined;
+        var user = req.user;
+        user.local.email = undefined;
         user.local.password = undefined;
         user.save(function(err) {
             res.redirect('/profile');
@@ -219,7 +219,7 @@ module.exports = function(app, passport) {
 
     // facebook -------------------------------
     app.get('/unlink/facebook', isLoggedIn, function(req, res) {
-        var user            = req.user;
+        var user = req.user;
         user.facebook.token = undefined;
         user.save(function(err) {
             res.redirect('/profile');
@@ -228,7 +228,7 @@ module.exports = function(app, passport) {
 
     // twitter --------------------------------
     app.get('/unlink/twitter', isLoggedIn, function(req, res) {
-        var user           = req.user;
+        var user = req.user;
         user.twitter.token = undefined;
         user.save(function(err) {
             res.redirect('/profile');
@@ -237,20 +237,16 @@ module.exports = function(app, passport) {
 
     // google ---------------------------------
     app.get('/unlink/google', isLoggedIn, function(req, res) {
-        var user          = req.user;
+        var user = req.user;
         user.google.token = undefined;
         user.save(function(err) {
             res.redirect('/profile');
         });
     });
-
-
 };
 
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated())
-        return next();
-    else
-        res.redirect('/');
+    if (req.isAuthenticated()) return next();
+    else res.redirect('/');
 }

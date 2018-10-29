@@ -1,16 +1,18 @@
-'use strict'
-import mongoose, { Schema }  from 'mongoose'
+'use strict';
+import mongoose, { Schema } from 'mongoose';
 
 const allianceSchema = new Schema({
-    allianceId: {type: Number, unique: true},
+    allianceId: { type: Number, unique: true },
     name: String,
     count: Number,
-    members: [{
-        name: String,
-        role: String,
-        playerId: Number
-    }],
-    date: {type: Date, default: Date.now}
-})
+    members: [
+        {
+            name: String,
+            role: String,
+            playerId: Number,
+        },
+    ],
+    date: { type: Date, default: Date.now },
+});
 
-export default mongoose.model('Alliance', allianceSchema)
+export default mongoose.model('Alliance', allianceSchema);
