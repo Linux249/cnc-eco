@@ -1,173 +1,154 @@
-
-
 //Url aufteilen
-function urlToBase(url)
-{
+function urlToBase(url) {
     // Todo doku wie der string aussehen sollte
     // Todo was passiert wen string anders aussieht?
-    let split = url.split("|")
-    let baseName = split[3]
-    let faction = split[1] // F = forgetten, N = NOD, G = GDI
-    let urlString = split[4]
-    let slot = 0
-    let building, unit, lvl
+    let split = url.split('|');
+    let baseName = split[3];
+    let faction = split[1]; // F = forgetten, N = NOD, G = GDI
+    let urlString = split[4];
+    let slot = 0;
+    let building, unit, lvl;
 
     let base = {
         nod_buildings_keys: {
-            "r": "NOD_Refinery",
-            "p": "NOD_Power Plant",
-            "h": "NOD_Harvester",
-            "y": "NOD_Construction Yard",
-            "d": "NOD_Airport",
-            "q": "NOD_Defense HQ",
-            "b": "NOD_Barracks",
-            "s": "NOD_Silo",
-            "f": "NOD_Factory",
-            "n": "NOD_Harvester_Crystal",
-            "e": "NOD_Command Post",
-            "z": "NOD_Support_Art",
-            "i": "NOD_Support_Ion",
-            "a": "NOD_Accumulator",
-            "x": "NOD_Support_Air",
-            "w": "NOD_Defense Facility",
-            "t": "tiberium",
-            "c": "crystal"
+            r: 'NOD_Refinery',
+            p: 'NOD_Power Plant',
+            h: 'NOD_Harvester',
+            y: 'NOD_Construction Yard',
+            d: 'NOD_Airport',
+            q: 'NOD_Defense HQ',
+            b: 'NOD_Barracks',
+            s: 'NOD_Silo',
+            f: 'NOD_Factory',
+            n: 'NOD_Harvester_Crystal',
+            e: 'NOD_Command Post',
+            z: 'NOD_Support_Art',
+            i: 'NOD_Support_Ion',
+            a: 'NOD_Accumulator',
+            x: 'NOD_Support_Air',
+            w: 'NOD_Defense Facility',
+            t: 'tiberium',
+            c: 'crystal',
         },
         buildings: [],
         defens: [],
         army: [],
         faction: faction,
-        name: baseName
-    }
+        name: baseName,
+    };
 
     //Gebäude auslesen - 72 slots
-    while (slot <= 71)
-    {
+    while (slot <= 71) {
         //building,
-        lvl = false
-        if (urlString[0] === ".")
-        {
-            urlString = urlString.slice(1)
-            base.buildings.push({slot})
+        lvl = false;
+        if (urlString[0] === '.') {
+            urlString = urlString.slice(1);
+            base.buildings.push({ slot });
         } else {
-            if (!isNaN(urlString[0]))
-            {
-                let num = urlString[0]
-                urlString = urlString.slice(1)
-                if (!isNaN(urlString[0]))
-                {
-                    num += urlString[0]
-                    urlString = urlString.slice(1)
+            if (!isNaN(urlString[0])) {
+                let num = urlString[0];
+                urlString = urlString.slice(1);
+                if (!isNaN(urlString[0])) {
+                    num += urlString[0];
+                    urlString = urlString.slice(1);
                 }
-                lvl = +num
+                lvl = +num;
             }
-            building = urlString[0]
-            urlString = urlString.slice(1)
+            building = urlString[0];
+            urlString = urlString.slice(1);
             base.buildings.push({
-            //name: base.nod_buildings_keys[building],
+                //name: base.nod_buildings_keys[building],
                 type: building,
                 lvl: lvl,
                 slot: slot,
-              //  x: slot % 9,
-               // y: Math.ceil(slot / 9)
-            })
+                //  x: slot % 9,
+                // y: Math.ceil(slot / 9)
+            });
         }
-        slot++
+        slot++;
     }
 
     //Armee defens - 72 slots
-    slot = 0 //reset
-    while (slot <= 71)
-    {
-        unit = false
-        lvl = false
-        if (urlString[0] === ".")
-        {
-            urlString = urlString.slice(1)
-            base.defens.push({slot})
+    slot = 0; //reset
+    while (slot <= 71) {
+        unit = false;
+        lvl = false;
+        if (urlString[0] === '.') {
+            urlString = urlString.slice(1);
+            base.defens.push({ slot });
         } else {
-            if (!isNaN(urlString[0]))
-            {
-                let num = urlString[0]
-                urlString = urlString.slice(1)
-                if (!isNaN(urlString[0]))
-                {
-                    num += urlString[0]
-                    urlString = urlString.slice(1)
+            if (!isNaN(urlString[0])) {
+                let num = urlString[0];
+                urlString = urlString.slice(1);
+                if (!isNaN(urlString[0])) {
+                    num += urlString[0];
+                    urlString = urlString.slice(1);
                 }
-                lvl = +num
+                lvl = +num;
             }
-            unit = urlString[0]
-            urlString = urlString.slice(1)
+            unit = urlString[0];
+            urlString = urlString.slice(1);
             base.defens.push({
                 type: unit,
                 lvl: lvl,
                 slot: slot,
                 x: slot % 9,
-                y: Math.ceil(slot / 9)
-            })
+                y: Math.ceil(slot / 9),
+            });
         }
-        slot++
+        slot++;
     }
 
     //unit army - 36 slots
-    slot = 0 //reset
-    while (slot <= 35)
-    {
-        unit = false
-        lvl = false
-        if (urlString[0] === ".")
-        {
-            urlString = urlString.slice(1)
-            base.army.push({})
+    slot = 0; //reset
+    while (slot <= 35) {
+        unit = false;
+        lvl = false;
+        if (urlString[0] === '.') {
+            urlString = urlString.slice(1);
+            base.army.push({});
         } else {
             if (!isNaN(urlString[0])) {
-                let num = urlString[0]
-                urlString = urlString.slice(1)
+                let num = urlString[0];
+                urlString = urlString.slice(1);
                 if (!isNaN(urlString[0])) {
-
-                    num += urlString[0]
-                    urlString = urlString.slice(1)
+                    num += urlString[0];
+                    urlString = urlString.slice(1);
                 }
-                lvl = +num
+                lvl = +num;
             }
-            unit = urlString[0]
-            urlString = urlString.slice(1)
+            unit = urlString[0];
+            urlString = urlString.slice(1);
             base.army.push({
                 type: unit,
                 lvl: lvl,
                 slot: slot,
                 x: slot % 9,
-                y: Math.ceil(slot / 9)
-            })
+                y: Math.ceil(slot / 9),
+            });
         }
-    slot++
+        slot++;
     }
 
-    delete(base.nod_buildings_keys)
+    delete base.nod_buildings_keys;
 
     //@return base
-    return base
+    return base;
 }
 
-
-function parseToURL(base)
-{
-    let urlString = ""
-    for (let building of base.buildings.concat(base.defens, base.army))
-    {
-        if (building.type)
-        {
-            if (building.lvl)
-            {
-                urlString += building.lvl
+function parseToURL(base) {
+    let urlString = '';
+    for (let building of base.buildings.concat(base.defens, base.army)) {
+        if (building.type) {
+            if (building.lvl) {
+                urlString += building.lvl;
             }
-            urlString += building.type
+            urlString += building.type;
         } else {
-            urlString += "."
+            urlString += '.';
         }
     }
-    return urlString
+    return urlString;
 }
 
 //TEST
@@ -184,7 +165,6 @@ function parseToURL(base)
 //console.log((out.localeCompare(dumy)))
 //console.log(dumy)
 
-
 //console.log(base)
 
-export default urlToBase
+export default urlToBase;

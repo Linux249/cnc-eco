@@ -1,44 +1,61 @@
-export const buildingKeys = ["t", "c", "h", "n", "s", "r", "a", "p", "y", "d", "b", "f", "q", "w", "e", "z", "x", "i"]
-
+export const buildingKeys = [
+    't',
+    'c',
+    'h',
+    'n',
+    's',
+    'r',
+    'a',
+    'p',
+    'y',
+    'd',
+    'b',
+    'f',
+    'q',
+    'w',
+    'e',
+    'z',
+    'x',
+    'i',
+];
 
 export const nod_buildings = {
-    "r": "NOD_Refinery",
-    "p": "NOD_Power Plant",
-    "h": "NOD_Harvester",
-    "y": "NOD_Construction Yard",
-    "d": "NOD_Airport",
-    "q": "NOD_Defense HQ",
-    "b": "NOD_Barracks",
-    "s": "NOD_Silo",
-    "f": "NOD_Factory",
-    "n": "NOD_Harvester_Crystal",
-    "e": "NOD_Command Post",
-    "z": "NOD_Support_Art",
-    "i": "NOD_Support_Ion",
-    "a": "NOD_Accumulator",
-    "x": "NOD_Support_Air",
-    "w": "NOD_Defense Facility"
-}
+    r: 'NOD_Refinery',
+    p: 'NOD_Power Plant',
+    h: 'NOD_Harvester',
+    y: 'NOD_Construction Yard',
+    d: 'NOD_Airport',
+    q: 'NOD_Defense HQ',
+    b: 'NOD_Barracks',
+    s: 'NOD_Silo',
+    f: 'NOD_Factory',
+    n: 'NOD_Harvester_Crystal',
+    e: 'NOD_Command Post',
+    z: 'NOD_Support_Art',
+    i: 'NOD_Support_Ion',
+    a: 'NOD_Accumulator',
+    x: 'NOD_Support_Air',
+    w: 'NOD_Defense Facility',
+};
 
 export const buildings = {
-    "r": "Refinery",
-    "p": "Power Plant",
-    "h": "Harvester",
-    "y": "Construction Yard",
-    "d": "Airport",
-    "q": "Defense HQ",
-    "b": "Barracks",
-    "s": "Silo",
-    "f": "Factory",
-    "n": "Harvester_Crystal",
-    "e": "Command Post",
-    "z": "Support_Art",
-    "i": "Support_Ion",
-    "a": "Accumulator",
-    "x": "Support_Air",
-    "w": "Defense Facility"
-}
-
+    r: 'Refinery',
+    p: 'Power Plant',
+    h: 'Harvester',
+    y: 'Construction Yard',
+    d: 'Airport',
+    q: 'Defense HQ',
+    b: 'Barracks',
+    s: 'Silo',
+    f: 'Factory',
+    n: 'Harvester_Crystal',
+    e: 'Command Post',
+    z: 'Support_Art',
+    i: 'Support_Ion',
+    a: 'Accumulator',
+    x: 'Support_Air',
+    w: 'Defense Facility',
+};
 
 /*var nod_buildings_names = {
  "NOD_Refinery": "r",
@@ -78,5 +95,3 @@ export const buildings = {
  "w": "NOD_Defense Facility"
  }
  */
-
-

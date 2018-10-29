@@ -1,4 +1,3 @@
-import React from 'react'
+import React from 'react';
 
-export default () => <div>Liste mit Scripten</div>
-
+export default () => <div>Liste mit Scripten</div>;

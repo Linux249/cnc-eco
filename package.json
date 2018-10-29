@@ -6,9 +6,10 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "gh-pages": "^0.12.0",
-    "react-scripts": "2.0.4",
+    "react-scripts": "2.0.5",
     "redux-logger": "^3.0.6",
-    "why-did-you-update": "0.0.8"
+    "why-did-you-update": "0.0.8",
+    "prettier": "^1.14.2"
   },
   "dependencies": {
     "immutability-helper": "^2.8.1",

@@ -1,4 +1,4 @@
-@import "https://fonts.googleapis.com/css?family=Karla";
+@import 'https://fonts.googleapis.com/css?family=Karla';
 * {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -13,7 +13,12 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: #444;
 }
 
@@ -60,7 +65,8 @@ header {
     left: 0;
     top: 100%;
 }
-.dropdown__bg, .dropdown__arrow {
+.dropdown__bg,
+.dropdown__arrow {
     position: absolute;
 }
 .dropdown__arrow {
@@ -71,8 +77,8 @@ header {
     border-color: transparent transparent white;
     top: -20px;
     opacity: 0;
-    -webkit-transition: .20s ease;
-    transition: .20s ease;
+    -webkit-transition: 0.2s ease;
+    transition: 0.2s ease;
     pointer-events: none;
 }
 .dropdown__bg {
@@ -80,8 +86,8 @@ header {
     height: 400px;
     background-color: white;
     opacity: 0;
-    -webkit-transition: .25s ease;
-    transition: .25s ease;
+    -webkit-transition: 0.25s ease;
+    transition: 0.25s ease;
     border-radius: 5px;
     overflow: hidden;
     z-index: -1;
@@ -93,24 +99,25 @@ header {
     left: 0;
     top: 300px;
     height: 700px;
-    -webkit-transition: .3s ease;
-    transition: .3s ease;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
 }
 .dropdown__wrap {
     overflow: hidden;
     position: absolute;
-    -webkit-transition: .25s ease;
-    transition: .25s ease;
+    -webkit-transition: 0.25s ease;
+    transition: 0.25s ease;
     z-index: 1;
 }
-.dropdown__wrap .top-section, .dropdown__wrap .bottom-section {
+.dropdown__wrap .top-section,
+.dropdown__wrap .bottom-section {
     padding: 20px;
 }
 .dropdown-menu__content {
     position: absolute;
     opacity: 0;
-    -webkit-transition: .25s ease;
-    transition: .25s ease;
+    -webkit-transition: 0.25s ease;
+    transition: 0.25s ease;
     min-width: 200px;
 }
 .dropdown-menu__content ul {
@@ -144,7 +151,8 @@ header {
     display: -ms-flexbox;
     display: flex;
 }
-.col-2 > ul, .col-2 > div {
+.col-2 > ul,
+.col-2 > div {
     -webkit-box-flex: 1;
     -ms-flex: 1 0 150px;
     flex: 1 0 150px;
@@ -167,7 +175,7 @@ header {
 .menu-title {
     margin: 0 0 10px;
     font-size: 18px;
-    color: #2196F3;
+    color: #2196f3;
 }
 
 .info {

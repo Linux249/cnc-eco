@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export default styled.div`
 
@@ -28,4 +28,4 @@ export default styled.div`
     padding-right: 4px;
     /*padding-bottom: -1px;*/
     background: rgba(255, 255, 255, 0.15);
-`
+`;

@@ -1,36 +1,31 @@
-var GAME_DATA = require("../GAME_DATA"),
+var GAME_DATA = require('../GAME_DATA'),
     fs = require('fs'),
     request = require('request');
 
-console.log("Bilder Donwloader gestartet");
+console.log('Bilder Donwloader gestartet');
 
+var url = 'https://eaassets-a.akamaihd.net/cncalliancesgame/cdn/data/';
 
-var url = "https://eaassets-a.akamaihd.net/cncalliancesgame/cdn/data/";
-
-var download = function (uri, filename, callback) {
-    request.head(uri, function (err, res, body) {
+var download = function(uri, filename, callback) {
+    request.head(uri, function(err, res, body) {
         //console.log('content-type:', res.headers['content-type']);
         //console.log('content-length:', res.headers['content-length']);
         if (!err && res.statusCode === 200) {
-            request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+            request(uri)
+                .pipe(fs.createWriteStream(filename))
+                .on('close', callback);
         } else if (err) {
             console.error(err);
         } else {
             console.log(res.statusCode);
         }
-
-
-
     });
 };
 
-
-
-
 for (var building in GAME_DATA.GAME_DATA.Tech) {
     //getting named! url to png
-    building = GAME_DATA.GAME_DATA.Tech[building]
-    var filename = building.n + ".png",
+    building = GAME_DATA.GAME_DATA.Tech[building];
+    var filename = building.n + '.png',
         png_link = building.di,
         png_link_detail = building.ddi;
 
@@ -44,12 +39,12 @@ for (var building in GAME_DATA.GAME_DATA.Tech) {
     //URL zusammensetzten
     png_link = url + png_link;
 
-    filename = "../img/buildings/" + filename;
+    filename = '../img/buildings/' + filename;
 
     console.log(filename);
     console.log(png_link);
 
-    download(png_link, filename, function () {
+    download(png_link, filename, function() {
         console.log('done: ' + filename);
     });
 
@@ -57,14 +52,16 @@ for (var building in GAME_DATA.GAME_DATA.Tech) {
 }
 //Downlaod manuel
 //Tib ground
-url = 'https://eaassets-a.akamaihd.net/cncalliancesgame/cdn/data/4bc5605149c6f6330630e31706b2975d.png';
+url =
+    'https://eaassets-a.akamaihd.net/cncalliancesgame/cdn/data/4bc5605149c6f6330630e31706b2975d.png';
 filename = '../img/buildings/tiberium.png';
-download(url, filename, function () {
+download(url, filename, function() {
     console.log('done: ' + filename);
 });
 
-url = 'https://eaassets-a.akamaihd.net/cncalliancesgame/cdn/data/c97fc957d031547a131c7730a11b09d2.png';
+url =
+    'https://eaassets-a.akamaihd.net/cncalliancesgame/cdn/data/c97fc957d031547a131c7730a11b09d2.png';
 filename = '../img/buildings/crystal.png';
-download(url, filename, function () {
+download(url, filename, function() {
     console.log('done: ' + filename);
 });

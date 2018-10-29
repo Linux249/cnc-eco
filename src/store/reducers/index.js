@@ -1,8 +1,8 @@
 //import { combineReducers } from 'redux';
-import { base } from './base'
-import { menu }from './menu';
-import { player }from './player';
-import { auth }from './auth';
+import { base } from './base';
+import { menu } from './menu';
+import { player } from './player';
+import { auth } from './auth';
 //
 //
 // /**
@@ -56,11 +56,9 @@ import { auth }from './auth';
 // }
 import { combineReducers } from 'redux';
 
-
-
 export default combineReducers({
     menu,
     base,
     player,
-    auth
+    auth,
 });

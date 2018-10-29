@@ -1,34 +1,31 @@
 /**
  * Created by Bombassd on 08.06.2017.
  */
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
-import FlipMove from 'react-flip-move'
+import FlipMove from 'react-flip-move';
 
-import { showBuildingMenu  } from '../store/actions/menu'
-import { buildings as buildingNames } from '../util/buildings'
-import  io from 'socket.io-client'
-const socketURL = `http://cnc-eco.herokuapp.com`
-const socket = io(socketURL)
-
-
-
+import { showBuildingMenu } from '../store/actions/menu';
+import { buildings as buildingNames } from '../util/buildings';
+import io from 'socket.io-client';
+const socketURL = `http://cnc-eco.herokuapp.com`;
+const socket = io(socketURL);
 
 // import './../style/Details.css'
 const ListItem = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin: 2px 0;
-  background: white;
-  height: 80px;
-`
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2px 0;
+    background: white;
+    height: 80px;
+`;
 
 const Column = styled.div`
     display: flex;
     flex-flow: column;
-`
+`;
 const Button = styled.div`
     display: flex;
     justify-content: center;
@@ -36,16 +33,18 @@ const Button = styled.div`
     flex-basis: 33%;
     height: 30px;
 
-    background-color: #EEE;
+    background-color: #eee;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    border: 1px solid #CCC;
+    border: 1px solid #ccc;
     border-radius: 3px;
     margin: 2px;
-    ${props => props.loading && `
+    ${props =>
+        props.loading &&
+        `
 		background: grey;
 		color: white;
-	`}
-`
+	`};
+`;
 
 class NextBuildings extends Component {
     constructor(props) {
@@ -54,41 +53,33 @@ class NextBuildings extends Component {
             show: 1, // 0 = building, 1 = baseProd, 2 = random
             loading: false,
             buildings: [24, 10],
-            error: false
-        }
+            error: false,
+        };
     }
 
     removeFromList(index) {
         this.setState(prevState => ({
-                buildings: prevState.buildings.filter((_, i) => i !== index)
-        }))
-
+            buildings: prevState.buildings.filter((_, i) => i !== index),
+        }));
     }
 
     toogleLoading(buildings = []) {
-        if(!this.state.loading) {
-            socket.connect()
-            socket.emit("buildings", buildings);
-
+        if (!this.state.loading) {
+            socket.connect();
+            socket.emit('buildings', buildings);
         } else {
-            socket.close()
+            socket.close();
         }
         this.setState(prevState => {
-            return {loading: !prevState.loading}
-        })
-
+            return { loading: !prevState.loading };
+        });
     }
 
-
-    getNextBuildings = (buildings) => {
-        if(!this.state.loading) this.toogleLoading(buildings)
-        console.log("button clicked")
+    getNextBuildings = buildings => {
+        if (!this.state.loading) this.toogleLoading(buildings);
+        console.log('button clicked');
         // socket.close();
         // socket.connect();
-
-
-
-
 
         /*if(!this.state.loading)     //prevent for too many clicks/loads
         {
@@ -154,13 +145,13 @@ class NextBuildings extends Component {
                 // })
                 .catch(e => this.setState({error: true, loading: false}))*!/
         }*/
-    }
-    componentDidMount(){
-        socket.on("buildings", data => {
-            console.log(data)
-            if(data) this.setState({buildings: data})
-            else this.toogleLoading()
-        })
+    };
+    componentDidMount() {
+        socket.on('buildings', data => {
+            console.log(data);
+            if (data) this.setState({ buildings: data });
+            else this.toogleLoading();
+        });
 
         // socket.emit("connect", function(data){
         //     console.log(data);
@@ -169,72 +160,58 @@ class NextBuildings extends Component {
     }
 
     render() {
-        const { buildings, fraction, selectSlot} = this.props
-        const { loading } = this.state
+        const { buildings, fraction, selectSlot } = this.props;
+        const { loading } = this.state;
 
         return (
             <div className="NextBuildings">
-
-                <Button
-                    loading={true}
-                >
-                    Delete Buildings
-                </Button>
-                <Button>
-                    Place Silos/raffs/akku
-                </Button>
-                <Button>
-                    All lvl 30
-                </Button>
-                <Button
-                    loading={loading}
-                    onClick={() => this.getNextBuildings(buildings)}
-                >
-                    {loading ? "loading": "Schuffle"}
+                <Button loading={true}>Delete Buildings</Button>
+                <Button>Place Silos/raffs/akku</Button>
+                <Button>All lvl 30</Button>
+                <Button loading={loading} onClick={() => this.getNextBuildings(buildings)}>
+                    {loading ? 'loading' : 'Schuffle'}
                 </Button>
 
-                <FlipMove duration={250} easing="ease-out"
-                          staggerDurationBy="30"
-                          // duration={500}
-                          enterAnimation="accordianVertical"
-                          leaveAnimation="accordianVertical"
-                          // typeName=""
+                <FlipMove
+                    duration={250}
+                    easing="ease-out"
+                    staggerDurationBy="30"
+                    // duration={500}
+                    enterAnimation="accordianVertical"
+                    leaveAnimation="accordianVertical"
+                    // typeName=""
                 >
-                    {this.state.buildings.map((slot, i) =>{
-                        const building = buildings[slot]
-                        const img = require("./../img/buildings/"+fraction+  "/"+ building.type + ".png")
+                    {this.state.buildings.map((slot, i) => {
+                        const building = buildings[slot];
+                        const img = require('./../img/buildings/' +
+                            fraction +
+                            '/' +
+                            building.type +
+                            '.png');
 
                         return (
                             <ListItem
                                 onMouseEnter={() => selectSlot(slot)}
                                 onMouseLeave={() => selectSlot(-1)}
-
-
                                 key={i}
                                 onClick={() => {
-                                    this.removeFromList(i)
+                                    this.removeFromList(i);
                                     //changeBuild(slot, building.type , building.lvl - 1 )
                                 }}
                             >
-
-                                <img
-                                    height="80%"
-                                    src={img}
-                                    alt={building.type}
-                                />
-                                <Column >
-                                    {buildingNames[building.type]}<br/>
-                                    Level: {building.lvl}<br/>
+                                <img height="80%" src={img} alt={building.type} />
+                                <Column>
+                                    {buildingNames[building.type]}
+                                    <br />
+                                    Level: {building.lvl}
+                                    <br />
                                     Slot: {slot}
                                 </Column>
-
-
-                            </ListItem>)
-                    }
-                    )}
+                            </ListItem>
+                        );
+                    })}
                 </FlipMove>
-                {this.state.error && "FEHLER"}
-
+                {this.state.error && 'FEHLER'}
             </div>
             //
 
@@ -262,27 +239,28 @@ class NextBuildings extends Component {
             //         )
             //     })}
             // </div>
-        )
+        );
     }
-
-
 }
 function mapStateToProps(state) {
     return {
         buildings: state.buildings,
-        fraction: state.menu.fraction
-
-    }
+        fraction: state.menu.fraction,
+    };
 }
 
-const mapDispatchToProps = (dispatch) => { return {
-       // changeBuild: (from, t, lvl) => dispatch(changeBuilding(from, t, lvl)),
-        selectSlot: (from) => dispatch(showBuildingMenu(from)),
-    }
+const mapDispatchToProps = dispatch => {
+    return {
+        // changeBuild: (from, t, lvl) => dispatch(changeBuilding(from, t, lvl)),
+        selectSlot: from => dispatch(showBuildingMenu(from)),
+    };
     // return {
     //     changeBuild: (from, t, lvl) => dispatch(changeBuilding(from, t, lvl)),
     //     changeFraction: fraction => dispatch(changeFraction(fraction))
     // }
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(NextBuildings)
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(NextBuildings);

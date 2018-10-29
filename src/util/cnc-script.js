@@ -27,102 +27,110 @@ var scity = null;
 var tcity = null;
 var tbase = null;
 try {
-    unsafeWindow.__cnceco_version = "1.7.7";
-    (function () {
-        var cnceco_main = function () {
-
+    unsafeWindow.__cnceco_version = '1.7.7';
+    (function() {
+        var cnceco_main = function() {
             var defense_unit_map = {
-                /* GDI Defense Units */"GDI_Wall": "w",
-                "GDI_Cannon": "c",
-                "GDI_Antitank Barrier": "t",
-                "GDI_Barbwire": "b",
-                "GDI_Turret": "m",
-                "GDI_Flak": "f",
-                "GDI_Art Inf": "r",
-                "GDI_Art Air": "e",
-                "GDI_Art Tank": "a",
-                "GDI_Def_APC Guardian": "g",
-                "GDI_Def_Missile Squad": "q",
-                "GDI_Def_Pitbull": "p",
-                "GDI_Def_Predator": "d",
-                "GDI_Def_Sniper": "s",
-                "GDI_Def_Zone Trooper": "z",
-                /* Nod Defense Units */"NOD_Def_Antitank Barrier": "t",
-                "NOD_Def_Art Air": "e",
-                "NOD_Def_Art Inf": "r",
-                "NOD_Def_Art Tank": "a",
-                "NOD_Def_Attack Bike": "p",
-                "NOD_Def_Barbwire": "b",
-                "NOD_Def_Black Hand": "z",
-                "NOD_Def_Cannon": "c",
-                "NOD_Def_Confessor": "s",
-                "NOD_Def_Flak": "f",
-                "NOD_Def_MG Nest": "m",
-                "NOD_Def_Militant Rocket Soldiers": "q",
-                "NOD_Def_Reckoner": "g",
-                "NOD_Def_Scorpion Tank": "d",
-                "NOD_Def_Wall": "w",
+                /* GDI Defense Units */ GDI_Wall: 'w',
+                GDI_Cannon: 'c',
+                'GDI_Antitank Barrier': 't',
+                GDI_Barbwire: 'b',
+                GDI_Turret: 'm',
+                GDI_Flak: 'f',
+                'GDI_Art Inf': 'r',
+                'GDI_Art Air': 'e',
+                'GDI_Art Tank': 'a',
+                'GDI_Def_APC Guardian': 'g',
+                'GDI_Def_Missile Squad': 'q',
+                GDI_Def_Pitbull: 'p',
+                GDI_Def_Predator: 'd',
+                GDI_Def_Sniper: 's',
+                'GDI_Def_Zone Trooper': 'z',
+                /* Nod Defense Units */ 'NOD_Def_Antitank Barrier': 't',
+                'NOD_Def_Art Air': 'e',
+                'NOD_Def_Art Inf': 'r',
+                'NOD_Def_Art Tank': 'a',
+                'NOD_Def_Attack Bike': 'p',
+                NOD_Def_Barbwire: 'b',
+                'NOD_Def_Black Hand': 'z',
+                NOD_Def_Cannon: 'c',
+                NOD_Def_Confessor: 's',
+                NOD_Def_Flak: 'f',
+                'NOD_Def_MG Nest': 'm',
+                'NOD_Def_Militant Rocket Soldiers': 'q',
+                NOD_Def_Reckoner: 'g',
+                'NOD_Def_Scorpion Tank': 'd',
+                NOD_Def_Wall: 'w',
 
-                /* Forgotten Defense Units */"FOR_Wall": "w",
-                "FOR_Barbwire_VS_Inf": "b",
-                "FOR_Barrier_VS_Veh": "t",
-                "FOR_Inf_VS_Inf": "g",
-                "FOR_Inf_VS_Veh": "r",
-                "FOR_Inf_VS_Air": "q",
-                "FOR_Sniper": "n",
-                "FOR_Mammoth": "y",
-                "FOR_Veh_VS_Inf": "o",
-                "FOR_Veh_VS_Veh": "s",
-                "FOR_Veh_VS_Air": "u",
-                "FOR_Turret_VS_Inf": "m",
-                "FOR_Turret_VS_Inf_ranged": "a",
-                "FOR_Turret_VS_Veh": "v",
-                "FOR_Turret_VS_Veh_ranged": "d",
-                "FOR_Turret_VS_Air": "f",
-                "FOR_Turret_VS_Air_ranged": "e",
-                "": ""
+                /* Forgotten Defense Units */ FOR_Wall: 'w',
+                FOR_Barbwire_VS_Inf: 'b',
+                FOR_Barrier_VS_Veh: 't',
+                FOR_Inf_VS_Inf: 'g',
+                FOR_Inf_VS_Veh: 'r',
+                FOR_Inf_VS_Air: 'q',
+                FOR_Sniper: 'n',
+                FOR_Mammoth: 'y',
+                FOR_Veh_VS_Inf: 'o',
+                FOR_Veh_VS_Veh: 's',
+                FOR_Veh_VS_Air: 'u',
+                FOR_Turret_VS_Inf: 'm',
+                FOR_Turret_VS_Inf_ranged: 'a',
+                FOR_Turret_VS_Veh: 'v',
+                FOR_Turret_VS_Veh_ranged: 'd',
+                FOR_Turret_VS_Air: 'f',
+                FOR_Turret_VS_Air_ranged: 'e',
+                '': '',
             };
 
             var offense_unit_map = {
-                /* GDI Offense Units */"GDI_APC Guardian": "g",
-                "GDI_Commando": "c",
-                "GDI_Firehawk": "f",
-                "GDI_Juggernaut": "j",
-                "GDI_Kodiak": "k",
-                "GDI_Mammoth": "m",
-                "GDI_Missile Squad": "q",
-                "GDI_Orca": "o",
-                "GDI_Paladin": "a",
-                "GDI_Pitbull": "p",
-                "GDI_Predator": "d",
-                "GDI_Riflemen": "r",
-                "GDI_Sniper Team": "s",
-                "GDI_Zone Trooper": "z",
+                /* GDI Offense Units */ 'GDI_APC Guardian': 'g',
+                GDI_Commando: 'c',
+                GDI_Firehawk: 'f',
+                GDI_Juggernaut: 'j',
+                GDI_Kodiak: 'k',
+                GDI_Mammoth: 'm',
+                'GDI_Missile Squad': 'q',
+                GDI_Orca: 'o',
+                GDI_Paladin: 'a',
+                GDI_Pitbull: 'p',
+                GDI_Predator: 'd',
+                GDI_Riflemen: 'r',
+                'GDI_Sniper Team': 's',
+                'GDI_Zone Trooper': 'z',
 
-                /* Nod Offense Units */"NOD_Attack Bike": "b",
-                "NOD_Avatar": "a",
-                "NOD_Black Hand": "z",
-                "NOD_Cobra": "r",
-                "NOD_Commando": "c",
-                "NOD_Confessor": "s",
-                "NOD_Militant Rocket Soldiers": "q",
-                "NOD_Militants": "m",
-                "NOD_Reckoner": "k",
-                "NOD_Salamander": "l",
-                "NOD_Scorpion Tank": "o",
-                "NOD_Specter Artilery": "p",
-                "NOD_Venom": "v",
-                "NOD_Vertigo": "t",
-                "": ""
+                /* Nod Offense Units */ 'NOD_Attack Bike': 'b',
+                NOD_Avatar: 'a',
+                'NOD_Black Hand': 'z',
+                NOD_Cobra: 'r',
+                NOD_Commando: 'c',
+                NOD_Confessor: 's',
+                'NOD_Militant Rocket Soldiers': 'q',
+                NOD_Militants: 'm',
+                NOD_Reckoner: 'k',
+                NOD_Salamander: 'l',
+                'NOD_Scorpion Tank': 'o',
+                'NOD_Specter Artilery': 'p',
+                NOD_Venom: 'v',
+                NOD_Vertigo: 't',
+                '': '',
             };
-
 
             function findTechLayout(city) {
                 for (var k in city) {
                     //console.log(typeof(city[k]), "1.city[", k, "]", city[k])
-                    if ((typeof (city[k]) == "object") && city[k] && 0 in city[k] && 8 in city[k]) {
-                        if ((typeof (city[k][0]) == "object") && city[k][0] && city[k][0] && 0 in city[k][0] && 15 in city[k][0]) {
-                            if ((typeof (city[k][0][0]) == "object") && city[k][0][0] && "BuildingIndex" in city[k][0][0]) {
+                    if (typeof city[k] == 'object' && city[k] && 0 in city[k] && 8 in city[k]) {
+                        if (
+                            typeof city[k][0] == 'object' &&
+                            city[k][0] &&
+                            city[k][0] &&
+                            0 in city[k][0] &&
+                            15 in city[k][0]
+                        ) {
+                            if (
+                                typeof city[k][0][0] == 'object' &&
+                                city[k][0][0] &&
+                                'BuildingIndex' in city[k][0][0]
+                            ) {
                                 return city[k];
                             }
                         }
@@ -135,11 +143,21 @@ try {
                 var cityBuildings = city.get_CityBuildingsData();
                 for (var k in cityBuildings) {
                     if (PerforceChangelist >= 376877) {
-                        if ((typeof (cityBuildings[k]) === "object") && cityBuildings[k] && "d" in cityBuildings[k] && "c" in cityBuildings[k] && cityBuildings[k].c > 0) {
+                        if (
+                            typeof cityBuildings[k] === 'object' &&
+                            cityBuildings[k] &&
+                            'd' in cityBuildings[k] &&
+                            'c' in cityBuildings[k] &&
+                            cityBuildings[k].c > 0
+                        ) {
                             return cityBuildings[k].d;
                         }
                     } else {
-                        if ((typeof (cityBuildings[k]) === "object") && cityBuildings[k] && "l" in cityBuildings[k]) {
+                        if (
+                            typeof cityBuildings[k] === 'object' &&
+                            cityBuildings[k] &&
+                            'l' in cityBuildings[k]
+                        ) {
                             return cityBuildings[k].l;
                         }
                     }
@@ -147,35 +165,51 @@ try {
             }
 
             function isOffenseUnit(unit) {
-                return (unit.get_UnitGameData_Obj().n in offense_unit_map);
+                return unit.get_UnitGameData_Obj().n in offense_unit_map;
             }
 
             function isDefenseUnit(unit) {
-                return (unit.get_UnitGameData_Obj().n in defense_unit_map);
+                return unit.get_UnitGameData_Obj().n in defense_unit_map;
             }
 
             function getUnitArrays(city) {
                 var ret = [];
                 for (var k in city) {
-                    if ((typeof (city[k]) == "object") && city[k]) {
+                    if (typeof city[k] == 'object' && city[k]) {
                         for (var k2 in city[k]) {
                             if (PerforceChangelist >= 376877) {
-                                if ((typeof (city[k][k2]) == "object") && city[k][k2] && "d" in city[k][k2]) {
+                                if (
+                                    typeof city[k][k2] == 'object' &&
+                                    city[k][k2] &&
+                                    'd' in city[k][k2]
+                                ) {
                                     var lst = city[k][k2].d;
-                                    if ((typeof (lst) == "object") && lst) {
+                                    if (typeof lst == 'object' && lst) {
                                         for (var i in lst) {
-                                            if (typeof (lst[i]) == "object" && lst[i] && "get_CurrentLevel" in lst[i]) {
+                                            if (
+                                                typeof lst[i] == 'object' &&
+                                                lst[i] &&
+                                                'get_CurrentLevel' in lst[i]
+                                            ) {
                                                 ret.push(lst);
                                             }
                                         }
                                     }
                                 }
                             } else {
-                                if ((typeof (city[k][k2]) == "object") && city[k][k2] && "l" in city[k][k2]) {
+                                if (
+                                    typeof city[k][k2] == 'object' &&
+                                    city[k][k2] &&
+                                    'l' in city[k][k2]
+                                ) {
                                     var lst = city[k][k2].l;
-                                    if ((typeof (lst) == "object") && lst) {
+                                    if (typeof lst == 'object' && lst) {
                                         for (var i in lst) {
-                                            if (typeof (lst[i]) == "object" && lst[i] && "get_CurrentLevel" in lst[i]) {
+                                            if (
+                                                typeof lst[i] == 'object' &&
+                                                lst[i] &&
+                                                'get_CurrentLevel' in lst[i]
+                                            ) {
                                                 ret.push(lst);
                                             }
                                         }
@@ -212,145 +246,148 @@ try {
                 return [];
             }
 
-
             function cnceco_create() {
-                console.log("CnC-Eco Link Button v" + window.__cnceco_version + " loaded");
+                console.log('CnC-Eco Link Button v' + window.__cnceco_version + ' loaded');
                 var cnceco = {
                     selected_base: null,
                     keymap: {
-                        /* GDI Buildings */"GDI_Accumulator": "a",
-                        "GDI_Refinery": "r",
-                        "GDI_Trade Center": "u",
-                        "GDI_Silo": "s",
-                        "GDI_Power Plant": "p",
-                        "GDI_Construction Yard": "y",
-                        "GDI_Airport": "d",
-                        "GDI_Barracks": "b",
-                        "GDI_Factory": "f",
-                        "GDI_Defense HQ": "q",
-                        "GDI_Defense Facility": "w",
-                        "GDI_Command Center": "e",
-                        "GDI_Support_Art": "z",
-                        "GDI_Support_Air": "x",
-                        "GDI_Support_Ion": "i",
-                        /* Forgotten Buildings */"FOR_Silo": "s",
-                        "FOR_Refinery": "r",
-                        "FOR_Tiberium Booster": "b",
-                        "FOR_Crystal Booster": "v",
-                        "FOR_Trade Center": "u",
-                        "FOR_Defense Facility": "w",
-                        "FOR_Construction Yard": "y",
-                        "FOR_Harvester_Tiberium": "h",
-                        "FOR_Defense HQ": "q",
-                        "FOR_Harvester_Crystal": "n",
-                        /* Nod Buildings */"NOD_Refinery": "r",
-                        "NOD_Power Plant": "p",
-                        "NOD_Harvester": "h",
-                        "NOD_Construction Yard": "y",
-                        "NOD_Airport": "d",
-                        "NOD_Trade Center": "u",
-                        "NOD_Defense HQ": "q",
-                        "NOD_Barracks": "b",
-                        "NOD_Silo": "s",
-                        "NOD_Factory": "f",
-                        "NOD_Harvester_Crystal": "n",
-                        "NOD_Command Post": "e",
-                        "NOD_Support_Art": "z",
-                        "NOD_Support_Ion": "i",
-                        "NOD_Accumulator": "a",
-                        "NOD_Support_Air": "x",
-                        "NOD_Defense Facility": "w",
+                        /* GDI Buildings */ GDI_Accumulator: 'a',
+                        GDI_Refinery: 'r',
+                        'GDI_Trade Center': 'u',
+                        GDI_Silo: 's',
+                        'GDI_Power Plant': 'p',
+                        'GDI_Construction Yard': 'y',
+                        GDI_Airport: 'd',
+                        GDI_Barracks: 'b',
+                        GDI_Factory: 'f',
+                        'GDI_Defense HQ': 'q',
+                        'GDI_Defense Facility': 'w',
+                        'GDI_Command Center': 'e',
+                        GDI_Support_Art: 'z',
+                        GDI_Support_Air: 'x',
+                        GDI_Support_Ion: 'i',
+                        /* Forgotten Buildings */ FOR_Silo: 's',
+                        FOR_Refinery: 'r',
+                        'FOR_Tiberium Booster': 'b',
+                        'FOR_Crystal Booster': 'v',
+                        'FOR_Trade Center': 'u',
+                        'FOR_Defense Facility': 'w',
+                        'FOR_Construction Yard': 'y',
+                        FOR_Harvester_Tiberium: 'h',
+                        'FOR_Defense HQ': 'q',
+                        FOR_Harvester_Crystal: 'n',
+                        /* Nod Buildings */ NOD_Refinery: 'r',
+                        'NOD_Power Plant': 'p',
+                        NOD_Harvester: 'h',
+                        'NOD_Construction Yard': 'y',
+                        NOD_Airport: 'd',
+                        'NOD_Trade Center': 'u',
+                        'NOD_Defense HQ': 'q',
+                        NOD_Barracks: 'b',
+                        NOD_Silo: 's',
+                        NOD_Factory: 'f',
+                        NOD_Harvester_Crystal: 'n',
+                        'NOD_Command Post': 'e',
+                        NOD_Support_Art: 'z',
+                        NOD_Support_Ion: 'i',
+                        NOD_Accumulator: 'a',
+                        NOD_Support_Air: 'x',
+                        'NOD_Defense Facility': 'w',
                         //"NOD_Tech Lab": "",
                         //"NOD_Recruitment Hub": "X",
                         //"NOD_Temple of Nod": "X",
 
-                        /* GDI Defense Units */"GDI_Wall": "w",
-                        "GDI_Cannon": "c",
-                        "GDI_Antitank Barrier": "t",
-                        "GDI_Barbwire": "b",
-                        "GDI_Turret": "m",
-                        "GDI_Flak": "f",
-                        "GDI_Art Inf": "r",
-                        "GDI_Art Air": "e",
-                        "GDI_Art Tank": "a",
-                        "GDI_Def_APC Guardian": "g",
-                        "GDI_Def_Missile Squad": "q",
-                        "GDI_Def_Pitbull": "p",
-                        "GDI_Def_Predator": "d",
-                        "GDI_Def_Sniper": "s",
-                        "GDI_Def_Zone Trooper": "z",
-                        /* Nod Defense Units */"NOD_Def_Antitank Barrier": "t",
-                        "NOD_Def_Art Air": "e",
-                        "NOD_Def_Art Inf": "r",
-                        "NOD_Def_Art Tank": "a",
-                        "NOD_Def_Attack Bike": "p",
-                        "NOD_Def_Barbwire": "b",
-                        "NOD_Def_Black Hand": "z",
-                        "NOD_Def_Cannon": "c",
-                        "NOD_Def_Confessor": "s",
-                        "NOD_Def_Flak": "f",
-                        "NOD_Def_MG Nest": "m",
-                        "NOD_Def_Militant Rocket Soldiers": "q",
-                        "NOD_Def_Reckoner": "g",
-                        "NOD_Def_Scorpion Tank": "d",
-                        "NOD_Def_Wall": "w",
+                        /* GDI Defense Units */ GDI_Wall: 'w',
+                        GDI_Cannon: 'c',
+                        'GDI_Antitank Barrier': 't',
+                        GDI_Barbwire: 'b',
+                        GDI_Turret: 'm',
+                        GDI_Flak: 'f',
+                        'GDI_Art Inf': 'r',
+                        'GDI_Art Air': 'e',
+                        'GDI_Art Tank': 'a',
+                        'GDI_Def_APC Guardian': 'g',
+                        'GDI_Def_Missile Squad': 'q',
+                        GDI_Def_Pitbull: 'p',
+                        GDI_Def_Predator: 'd',
+                        GDI_Def_Sniper: 's',
+                        'GDI_Def_Zone Trooper': 'z',
+                        /* Nod Defense Units */ 'NOD_Def_Antitank Barrier': 't',
+                        'NOD_Def_Art Air': 'e',
+                        'NOD_Def_Art Inf': 'r',
+                        'NOD_Def_Art Tank': 'a',
+                        'NOD_Def_Attack Bike': 'p',
+                        NOD_Def_Barbwire: 'b',
+                        'NOD_Def_Black Hand': 'z',
+                        NOD_Def_Cannon: 'c',
+                        NOD_Def_Confessor: 's',
+                        NOD_Def_Flak: 'f',
+                        'NOD_Def_MG Nest': 'm',
+                        'NOD_Def_Militant Rocket Soldiers': 'q',
+                        NOD_Def_Reckoner: 'g',
+                        'NOD_Def_Scorpion Tank': 'd',
+                        NOD_Def_Wall: 'w',
 
-                        /* Forgotten Defense Units */"FOR_Wall": "w",
-                        "FOR_Barbwire_VS_Inf": "b",
-                        "FOR_Barrier_VS_Veh": "t",
-                        "FOR_Inf_VS_Inf": "g",
-                        "FOR_Inf_VS_Veh": "r",
-                        "FOR_Inf_VS_Air": "q",
-                        "FOR_Sniper": "n",
-                        "FOR_Mammoth": "y",
-                        "FOR_Veh_VS_Inf": "o",
-                        "FOR_Veh_VS_Veh": "s",
-                        "FOR_Veh_VS_Air": "u",
-                        "FOR_Turret_VS_Inf": "m",
-                        "FOR_Turret_VS_Inf_ranged": "a",
-                        "FOR_Turret_VS_Veh": "v",
-                        "FOR_Turret_VS_Veh_ranged": "d",
-                        "FOR_Turret_VS_Air": "f",
-                        "FOR_Turret_VS_Air_ranged": "e",
+                        /* Forgotten Defense Units */ FOR_Wall: 'w',
+                        FOR_Barbwire_VS_Inf: 'b',
+                        FOR_Barrier_VS_Veh: 't',
+                        FOR_Inf_VS_Inf: 'g',
+                        FOR_Inf_VS_Veh: 'r',
+                        FOR_Inf_VS_Air: 'q',
+                        FOR_Sniper: 'n',
+                        FOR_Mammoth: 'y',
+                        FOR_Veh_VS_Inf: 'o',
+                        FOR_Veh_VS_Veh: 's',
+                        FOR_Veh_VS_Air: 'u',
+                        FOR_Turret_VS_Inf: 'm',
+                        FOR_Turret_VS_Inf_ranged: 'a',
+                        FOR_Turret_VS_Veh: 'v',
+                        FOR_Turret_VS_Veh_ranged: 'd',
+                        FOR_Turret_VS_Air: 'f',
+                        FOR_Turret_VS_Air_ranged: 'e',
 
-                        /* GDI Offense Units */"GDI_APC Guardian": "g",
-                        "GDI_Commando": "c",
-                        "GDI_Firehawk": "f",
-                        "GDI_Juggernaut": "j",
-                        "GDI_Kodiak": "k",
-                        "GDI_Mammoth": "m",
-                        "GDI_Missile Squad": "q",
-                        "GDI_Orca": "o",
-                        "GDI_Paladin": "a",
-                        "GDI_Pitbull": "p",
-                        "GDI_Predator": "d",
-                        "GDI_Riflemen": "r",
-                        "GDI_Sniper Team": "s",
-                        "GDI_Zone Trooper": "z",
+                        /* GDI Offense Units */ 'GDI_APC Guardian': 'g',
+                        GDI_Commando: 'c',
+                        GDI_Firehawk: 'f',
+                        GDI_Juggernaut: 'j',
+                        GDI_Kodiak: 'k',
+                        GDI_Mammoth: 'm',
+                        'GDI_Missile Squad': 'q',
+                        GDI_Orca: 'o',
+                        GDI_Paladin: 'a',
+                        GDI_Pitbull: 'p',
+                        GDI_Predator: 'd',
+                        GDI_Riflemen: 'r',
+                        'GDI_Sniper Team': 's',
+                        'GDI_Zone Trooper': 'z',
 
-                        /* Nod Offense Units */"NOD_Attack Bike": "b",
-                        "NOD_Avatar": "a",
-                        "NOD_Black Hand": "z",
-                        "NOD_Cobra": "r",
-                        "NOD_Commando": "c",
-                        "NOD_Confessor": "s",
-                        "NOD_Militant Rocket Soldiers": "q",
-                        "NOD_Militants": "m",
-                        "NOD_Reckoner": "k",
-                        "NOD_Salamander": "l",
-                        "NOD_Scorpion Tank": "o",
-                        "NOD_Specter Artilery": "p",
-                        "NOD_Venom": "v",
-                        "NOD_Vertigo": "t",
+                        /* Nod Offense Units */ 'NOD_Attack Bike': 'b',
+                        NOD_Avatar: 'a',
+                        'NOD_Black Hand': 'z',
+                        NOD_Cobra: 'r',
+                        NOD_Commando: 'c',
+                        NOD_Confessor: 's',
+                        'NOD_Militant Rocket Soldiers': 'q',
+                        NOD_Militants: 'm',
+                        NOD_Reckoner: 'k',
+                        NOD_Salamander: 'l',
+                        'NOD_Scorpion Tank': 'o',
+                        'NOD_Specter Artilery': 'p',
+                        NOD_Venom: 'v',
+                        NOD_Vertigo: 't',
 
-                        "<last>": "."
+                        '<last>': '.',
                     },
-                    make_sharelink: function () {
+                    make_sharelink: function() {
                         try {
                             var selected_base = cnceco.selected_base;
                             var city_id = selected_base.get_Id();
-                            var city = ClientLib.Data.MainData.GetInstance().get_Cities().GetCity(city_id);
-                            var own_city = ClientLib.Data.MainData.GetInstance().get_Cities().get_CurrentOwnCity();
+                            var city = ClientLib.Data.MainData.GetInstance()
+                                .get_Cities()
+                                .GetCity(city_id);
+                            var own_city = ClientLib.Data.MainData.GetInstance()
+                                .get_Cities()
+                                .get_CurrentOwnCity();
                             var alliance = ClientLib.Data.MainData.GetInstance().get_Alliance();
                             var server = ClientLib.Data.MainData.GetInstance().get_Server();
                             tbase = selected_base;
@@ -358,16 +395,16 @@ try {
                             scity = own_city;
                             //console.log("Target City: ", city);
                             //console.log("Own City: ", own_city);
-                            var link = "https://linux249.github.io/cnc-react-app/#/";
-                            link += "3|"; /* link version */
+                            var link = 'https://linux249.github.io/cnc-react-app/#/';
+                            link += '3|'; /* link version */
                             switch (city.get_CityFaction()) {
                                 case 1:
                                     /* GDI */
-                                    link += "G|";
+                                    link += 'G|';
                                     break;
                                 case 2:
                                     /* NOD */
-                                    link += "N|";
+                                    link += 'N|';
                                     break;
                                 case 3:
                                 /* FOR faction - unseen, but in GAMEDATA */
@@ -377,21 +414,23 @@ try {
                                 /* Forgotten Camps */
                                 case 6:
                                     /* Forgotten Outposts */
-                                    link += "F|";
+                                    link += 'F|';
                                     break;
                                 default:
-                                    console.log("cnceco: Unknown faction: " + city.get_CityFaction());
-                                    link += "E|";
+                                    console.log(
+                                        'cnceco: Unknown faction: ' + city.get_CityFaction()
+                                    );
+                                    link += 'E|';
                                     break;
                             }
                             switch (own_city.get_CityFaction()) {
                                 case 1:
                                     /* GDI */
-                                    link += "G|";
+                                    link += 'G|';
                                     break;
                                 case 2:
                                     /* NOD */
-                                    link += "N|";
+                                    link += 'N|';
                                     break;
                                 case 3:
                                 /* FOR faction - unseen, but in GAMEDATA */
@@ -401,21 +440,23 @@ try {
                                 /* Forgotten Camps */
                                 case 6:
                                     /* Forgotten Outposts */
-                                    link += "F|";
+                                    link += 'F|';
                                     break;
                                 default:
-                                    console.log("cnceco: Unknown faction: " + own_city.get_CityFaction());
-                                    link += "E|";
+                                    console.log(
+                                        'cnceco: Unknown faction: ' + own_city.get_CityFaction()
+                                    );
+                                    link += 'E|';
                                     break;
                             }
-                            link += city.get_Name() + "|";
-                            defense_units = []
+                            link += city.get_Name() + '|';
+                            defense_units = [];
                             for (var i = 0; i < 20; ++i) {
                                 var col = [];
                                 for (var j = 0; j < 9; ++j) {
                                     col.push(null);
                                 }
-                                defense_units.push(col)
+                                defense_units.push(col);
                             }
                             var defense_unit_list = getDefenseUnits(city);
                             if (PerforceChangelist >= 376877) {
@@ -430,13 +471,13 @@ try {
                                 }
                             }
 
-                            offense_units = []
+                            offense_units = [];
                             for (var i = 0; i < 20; ++i) {
                                 var col = [];
                                 for (var j = 0; j < 9; ++j) {
                                     col.push(null);
                                 }
-                                offense_units.push(col)
+                                offense_units.push(col);
                             }
 
                             var offense_unit_list = getOffenseUnits(own_city);
@@ -483,85 +524,113 @@ try {
                                                 if (GAMEDATA.Tech[techId].n in cnceco.keymap) {
                                                     link += cnceco.keymap[GAMEDATA.Tech[techId].n];
                                                 } else {
-                                                    console.log("cnceco [5]: Unhandled building: " + techId, building);
-                                                    link += ".";
+                                                    console.log(
+                                                        'cnceco [5]: Unhandled building: ' + techId,
+                                                        building
+                                                    );
+                                                    link += '.';
                                                 }
                                             } else if (defense_unit) {
-                                                if (defense_unit.get_UnitGameData_Obj().n in cnceco.keymap) {
-                                                    link += cnceco.keymap[defense_unit.get_UnitGameData_Obj().n];
+                                                if (
+                                                    defense_unit.get_UnitGameData_Obj().n in
+                                                    cnceco.keymap
+                                                ) {
+                                                    link +=
+                                                        cnceco.keymap[
+                                                            defense_unit.get_UnitGameData_Obj().n
+                                                        ];
                                                 } else {
-                                                    console.log("cnceco [5]: Unhandled unit: " + defense_unit.get_UnitGameData_Obj().n);
-                                                    link += ".";
+                                                    console.log(
+                                                        'cnceco [5]: Unhandled unit: ' +
+                                                            defense_unit.get_UnitGameData_Obj().n
+                                                    );
+                                                    link += '.';
                                                 }
                                             } else if (offense_unit) {
-                                                if (offense_unit.get_UnitGameData_Obj().n in cnceco.keymap) {
-                                                    link += cnceco.keymap[offense_unit.get_UnitGameData_Obj().n];
+                                                if (
+                                                    offense_unit.get_UnitGameData_Obj().n in
+                                                    cnceco.keymap
+                                                ) {
+                                                    link +=
+                                                        cnceco.keymap[
+                                                            offense_unit.get_UnitGameData_Obj().n
+                                                        ];
                                                 } else {
-                                                    console.log("cnceco [5]: Unhandled unit: " + offense_unit.get_UnitGameData_Obj().n);
-                                                    link += ".";
+                                                    console.log(
+                                                        'cnceco [5]: Unhandled unit: ' +
+                                                            offense_unit.get_UnitGameData_Obj().n
+                                                    );
+                                                    link += '.';
                                                 }
                                             } else {
-                                                link += ".";
+                                                link += '.';
                                             }
                                             break;
                                         case 1:
                                             /* Crystal */
-                                            if (spot.BuildingIndex < 0) link += "c";
-                                            else link += "n";
+                                            if (spot.BuildingIndex < 0) link += 'c';
+                                            else link += 'n';
                                             break;
                                         case 2:
                                             /* Tiberium */
-                                            if (spot.BuildingIndex < 0) link += "t";
-                                            else link += "h";
+                                            if (spot.BuildingIndex < 0) link += 't';
+                                            else link += 'h';
                                             break;
                                         case 4:
                                             /* Woods */
-                                            link += "j";
+                                            link += 'j';
                                             break;
                                         case 5:
                                             /* Scrub */
-                                            link += "h";
+                                            link += 'h';
                                             break;
                                         case 6:
                                             /* Oil */
-                                            link += "l";
+                                            link += 'l';
                                             break;
                                         case 7:
                                             /* Swamp */
-                                            link += "k";
+                                            link += 'k';
                                             break;
                                         default:
-                                            console.log("cnceco [4]: Unhandled resource type: " + city.GetResourceType(j, i));
-                                            link += ".";
+                                            console.log(
+                                                'cnceco [4]: Unhandled resource type: ' +
+                                                    city.GetResourceType(j, i)
+                                            );
+                                            link += '.';
                                             break;
                                     }
                                 }
                             }
                             /* Tack on our alliance bonuses */
                             if (alliance && scity.get_AllianceId() == tcity.get_AllianceId()) {
-                                link += "|" + alliance.get_POITiberiumBonus();
-                                link += "|" + alliance.get_POICrystalBonus();
-                                link += "|" + alliance.get_POIPowerBonus();
-                                link += "|" + alliance.get_POIInfantryBonus();
-                                link += "|" + alliance.get_POIVehicleBonus();
-                                link += "|" + alliance.get_POIAirBonus();
-                                link += "|" + alliance.get_POIDefenseBonus();
+                                link += '|' + alliance.get_POITiberiumBonus();
+                                link += '|' + alliance.get_POICrystalBonus();
+                                link += '|' + alliance.get_POIPowerBonus();
+                                link += '|' + alliance.get_POIInfantryBonus();
+                                link += '|' + alliance.get_POIVehicleBonus();
+                                link += '|' + alliance.get_POIAirBonus();
+                                link += '|' + alliance.get_POIDefenseBonus();
                             }
-                            if (server.get_TechLevelUpgradeFactorBonusAmount() != 1.20) {
-                                link += "|newEconomy";
+                            if (server.get_TechLevelUpgradeFactorBonusAmount() != 1.2) {
+                                link += '|newEconomy';
                             }
                             window.server = server;
-                            console.log("cnceco: get_TechLevelUpgradeFactorBonusAmount = ", server.get_TechLevelUpgradeFactorBonusAmount())
+                            console.log(
+                                'cnceco: get_TechLevelUpgradeFactorBonusAmount = ',
+                                server.get_TechLevelUpgradeFactorBonusAmount()
+                            );
 
                             //console.log(link);
-                            window.open(link, "_blank");
+                            window.open(link, '_blank');
                         } catch (e) {
-                            console.log("cnceco [1]: ", e);
+                            console.log('cnceco [1]: ', e);
                         }
-                    }
+                    },
                 };
                 if (!webfrontend.gui.region.RegionCityMenu.prototype.__cnceco_real_showMenu) {
-                    webfrontend.gui.region.RegionCityMenu.prototype.__cnceco_real_showMenu = webfrontend.gui.region.RegionCityMenu.prototype.showMenu;
+                    webfrontend.gui.region.RegionCityMenu.prototype.__cnceco_real_showMenu =
+                        webfrontend.gui.region.RegionCityMenu.prototype.showMenu;
                 }
 
                 var check_ct = 0;
@@ -569,7 +638,7 @@ try {
                 var button_enabled = 123456;
                 /* Wrap showMenu so we can inject our Sharelink at the end of menus and
                  * sync Base object to our cnceco.selected_base variable  */
-                webfrontend.gui.region.RegionCityMenu.prototype.showMenu = function (selected_base) {
+                webfrontend.gui.region.RegionCityMenu.prototype.showMenu = function(selected_base) {
                     try {
                         var self = this;
                         //console.log(selected_base);
@@ -579,18 +648,21 @@ try {
                             this.__cnceco_links = [];
                             for (var i in this) {
                                 try {
-                                    if (this[i] && this[i].basename == "Composite") {
-                                        var link = new qx.ui.form.Button("CnC-Eco", "https://linux249.github.io/cnc-react-app/favicon.ico");
-                                        link.addListener("execute", function () {
+                                    if (this[i] && this[i].basename == 'Composite') {
+                                        var link = new qx.ui.form.Button(
+                                            'CnC-Eco',
+                                            'https://linux249.github.io/cnc-react-app/favicon.ico'
+                                        );
+                                        link.addListener('execute', function() {
                                             var bt = qx.core.Init.getApplication();
                                             bt.getBackgroundArea().closeCityInfo();
                                             cnceco.make_sharelink();
                                         });
                                         this[i].add(link);
-                                        this.__cnceco_links.push(link)
+                                        this.__cnceco_links.push(link);
                                     }
                                 } catch (e) {
-                                    console.log("cnceco [2]: ", e);
+                                    console.log('cnceco [2]: ', e);
                                 }
                             }
                         }
@@ -609,7 +681,9 @@ try {
                                 break;
                             case ClientLib.Vis.VisObject.EObjectType.RegionGhostCity:
                                 tf = false;
-                                console.log("cnceco: Ghost City selected.. ignoring because we don't know what to do here");
+                                console.log(
+                                    "cnceco: Ghost City selected.. ignoring because we don't know what to do here"
+                                );
                                 break;
                             case ClientLib.Vis.VisObject.EObjectType.RegionNPCBase:
                                 tf = true;
@@ -636,7 +710,9 @@ try {
                                  * until the data is ready, then it'll light up. */
                                 if (selected_base && selected_base.get_Id) {
                                     var city_id = selected_base.get_Id();
-                                    var city = ClientLib.Data.MainData.GetInstance().get_Cities().GetCity(city_id);
+                                    var city = ClientLib.Data.MainData.GetInstance()
+                                        .get_Cities()
+                                        .GetCity(city_id);
                                     //if (!city || !city.m_CityUnits || !city.m_CityUnits.m_DefenseUnits) {
                                     //console.log("City", city);
                                     //console.log("get_OwnerId", city.get_OwnerId());
@@ -658,13 +734,16 @@ try {
                                 } else {
                                     if (check_ct > 0) {
                                         check_ct--;
-                                        check_timer = setTimeout(check_if_button_should_be_enabled, 100);
+                                        check_timer = setTimeout(
+                                            check_if_button_should_be_enabled,
+                                            100
+                                        );
                                     } else {
                                         check_timer = null;
                                     }
                                 }
                             } catch (e) {
-                                console.log("cnceco [3]: ", e);
+                                console.log('cnceco [3]: ', e);
                                 tf = false;
                             }
                         }
@@ -672,12 +751,11 @@ try {
                         check_ct = 50;
                         check_if_button_should_be_enabled();
                     } catch (e) {
-                        console.log("cnceco [3]: ", e);
+                        console.log('cnceco [3]: ', e);
                     }
                     this.__cnceco_real_showMenu(selected_base);
-                }
+                };
             }
-
 
             /* Nice load check (ripped from AmpliDude's LoU Tweak script) */
             function cnc_check_if_loaded() {
@@ -698,16 +776,18 @@ try {
                     else GM_log(e);
                 }
             }
-            if (/commandandconquer\.com/i.test(document.domain)) window.setTimeout(cnc_check_if_loaded, 1000);
-        }
+            if (/commandandconquer\.com/i.test(document.domain))
+                window.setTimeout(cnc_check_if_loaded, 1000);
+        };
 
-        // injecting because we can't seem to hook into the game interface via unsafeWindow 
+        // injecting because we can't seem to hook into the game interface via unsafeWindow
         //   (Ripped from AmpliDude's LoU Tweak script)
-        var script_block = document.createElement("script");
+        var script_block = document.createElement('script');
         txt = cnceco_main.toString();
-        script_block.innerHTML = "(" + txt + ")();";
-        script_block.type = "text/javascript";
-        if (/commandandconquer\.com/i.test(document.domain)) document.getElementsByTagName("head")[0].appendChild(script_block);
+        script_block.innerHTML = '(' + txt + ')();';
+        script_block.type = 'text/javascript';
+        if (/commandandconquer\.com/i.test(document.domain))
+            document.getElementsByTagName('head')[0].appendChild(script_block);
     })();
 } catch (e) {
     GM_log(e);

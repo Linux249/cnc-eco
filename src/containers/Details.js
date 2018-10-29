@@ -1,43 +1,42 @@
 /**
  * Created by Bombassd on 04.05.2017.
  */
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import NextBuildings from './NextBuildings'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import NextBuildings from './NextBuildings';
 import styled from 'styled-components';
 
-import { shortenNumber } from '../services/menu'
-import { calcBuildingCost } from '../util/production'
-import { buildings as buildingNames } from '../util/buildings'
+import { shortenNumber } from '../services/menu';
+import { calcBuildingCost } from '../util/production';
+import { buildings as buildingNames } from '../util/buildings';
 
-
-import icon_tib from '../img/icon/icon_tiberium.png'
-import icon_cris from '../img/icon/icon_crystal.png'
-import icon_power from '../img/icon/icon_power.png'
-import icon_credits from '../img/icon/icon_credits.png'
+import icon_tib from '../img/icon/icon_tiberium.png';
+import icon_cris from '../img/icon/icon_crystal.png';
+import icon_power from '../img/icon/icon_power.png';
+import icon_credits from '../img/icon/icon_credits.png';
 // import { changeBuilding  } from './../actions/buildings'
 // import { changeFraction } from './../actions/menu'
 //  import { calcTimeForAllBuildings } from './../util/production'
 // import { findBestToLvlUpNext } from './../util/performance'
-import '../style/Details.css'
+import '../style/Details.css';
 const Row = styled.div`
     display: flex;
     align-content: center;
     align-items: center;
-`
+`;
 
 class Details extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: 0 // 0 = building, 1 = baseProd, 2 = random
-        }
+            show: 0, // 0 = building, 1 = baseProd, 2 = random
+        };
     }
 
     toggleDetails(show) {
         this.setState({
-            show
-        })
+            show,
+        });
     }
 
     // fetch data from server
@@ -52,41 +51,47 @@ class Details extends Component {
     // }
 
     render() {
-        const { days30, days90, days120, building } = this.props
-        const buildingProd = calcBuildingCost(building)
+        const { days30, days90, days120, building } = this.props;
+        const buildingProd = calcBuildingCost(building);
 
-        const showNextBuildings = (this.state.show === 2)
+        const showNextBuildings = this.state.show === 2;
         // const time = calcTimeForAllBuildings(buildings)
         return (
-                <div className="Details">
-                    <div className="buttons">
-                        <div onClick={() => this.toggleDetails(0)}>Building</div>
-                        <div onClick={() => this.toggleDetails(1)}>Production</div>
-                        <div onClick={() => this.toggleDetails(2)}>Random</div>
-                    </div>
+            <div className="Details">
+                <div className="buttons">
+                    <div onClick={() => this.toggleDetails(0)}>Building</div>
+                    <div onClick={() => this.toggleDetails(1)}>Production</div>
+                    <div onClick={() => this.toggleDetails(2)}>Random</div>
+                </div>
 
-                    {/*die genau produktion in X Zeit könen wir nicht ausrechnen. Ein Gebäude ist in eher +0.03 Tagen erst fertig. Deshalb miteln wir den WErt durch die benötigte zeitvon */}
-                    {this.state.show === 0 && building &&
+                {/*die genau produktion in X Zeit könen wir nicht ausrechnen. Ein Gebäude ist in eher +0.03 Tagen erst fertig. Deshalb miteln wir den WErt durch die benötigte zeitvon */}
+                {this.state.show === 0 &&
+                    building && (
                         <div className="buildings">
-
                             <Row>Name: {buildingNames[building.type]}</Row>
                             <Row>Production: (arrowUp) </Row>
                             <Row>Upgrade costs: </Row>
-                            <Row>{shortenNumber(buildingProd.tib, 2)}{' '}<img src={icon_tib} alt={icon_tib} /></Row>
-                            <Row>{shortenNumber(buildingProd.power, 2)}{' '}<img src={icon_power} alt={icon_tib} /></Row>
+                            <Row>
+                                {shortenNumber(buildingProd.tib, 2)}{' '}
+                                <img src={icon_tib} alt={icon_tib} />
+                            </Row>
+                            <Row>
+                                {shortenNumber(buildingProd.power, 2)}{' '}
+                                <img src={icon_power} alt={icon_tib} />
+                            </Row>
                             {/*<div>+production: </div>*/}
                             {/*<div>kosten/+prod: </div>*/}
                         </div>
-                    }
-                    {this.state.show === 0 && !building && <div>Kein Gebude ausgewählt</div> }
+                    )}
+                {this.state.show === 0 && !building && <div>Kein Gebude ausgewählt</div>}
 
-                    {this.state.show === 1 &&
+                {this.state.show === 1 && (
                     <div className="futureProd">
                         <div className="text">Produktion in X Tagen</div>
                         <div className="table">
                             <div className="column">
-                               <br/>
-                               <br/>
+                                <br />
+                                <br />
                                 <img src={icon_tib} alt={icon_tib} />
                                 <img src={icon_cris} alt={icon_tib} />
                                 <img src={icon_power} alt={icon_tib} />
@@ -114,15 +119,12 @@ class Details extends Component {
                                 <div>{shortenNumber(days120.prod.credits)}</div>
                             </div>
                         </div>
-                    </div>}
-                    {
-                        showNextBuildings &&
-                        <NextBuildings />
+                    </div>
+                )}
+                {showNextBuildings && <NextBuildings />}
 
-                    }
-
-                    {/*{JSON.stringify(time)}*/}
-                </div>
+                {/*{JSON.stringify(time)}*/}
+            </div>
             //
 
             // <div className="BuildingMenu" >
@@ -149,18 +151,16 @@ class Details extends Component {
             //         )
             //     })}
             // </div>
-        )
+        );
     }
-
-
 }
 function mapStateToProps(state) {
     return {
         days30: state.production.data[29],
         days90: state.production.data[89],
         days120: state.production.data[119],
-        building: state.buildings[state.menu.from]|| false,
-    }
+        building: state.buildings[state.menu.from] || false,
+    };
 }
 
 // const mapDispatchToProps = (dispatch) => { return {}
@@ -170,4 +170,4 @@ function mapStateToProps(state) {
 //     // }
 // }
 
-export default connect(mapStateToProps)(Details)
+export default connect(mapStateToProps)(Details);

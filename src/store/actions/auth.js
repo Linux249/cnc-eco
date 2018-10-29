@@ -4,85 +4,81 @@ import {
     CHANGE_AUTH_EMAIL,
     CHANGE_AUTH_PASSWORD,
     START_ASYNC_AUTH,
-} from '../constants/actionTypes'
-import {api_url} from '../../config/config'
-import {updatePlayer} from './player'
-
+} from '../constants/actionTypes';
+import { api_url } from '../../config/config';
+import { updatePlayer } from './player';
 
 export const requestLogin = () => {
     return async (dispatch, getState) => {
-        dispatch({type: START_ASYNC_AUTH})
-        const { email, password } = getState().auth
-        const body = JSON.stringify({email, password})
+        dispatch({ type: START_ASYNC_AUTH });
+        const { email, password } = getState().auth;
+        const body = JSON.stringify({ email, password });
         const resp = await fetch(api_url + '/local/login', {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json; charset=utf-8",
+                'Content-Type': 'application/json; charset=utf-8',
             },
-            body
+            body,
         }).catch(e => {
-            console.warn("LOGIN FAILURE")
-            console.error(e)
-            return dispatch(loginError(e.message))
-        })
+            console.warn('LOGIN FAILURE');
+            console.error(e);
+            return dispatch(loginError(e.message));
+        });
 
-        console.log(resp)
-        const data = await resp.json()
-        console.log(data)
+        console.log(resp);
+        const data = await resp.json();
+        console.log(data);
 
-        if(!resp.ok) {
-            console.warn("LOGIN FAILURE")
-            return dispatch(loginError(data.message))
-
+        if (!resp.ok) {
+            console.warn('LOGIN FAILURE');
+            return dispatch(loginError(data.message));
         }
 
-        dispatch(receiveLogin(data))
-        dispatch(updatePlayer(data.user))
-
-    }
-}
+        dispatch(receiveLogin(data));
+        dispatch(updatePlayer(data.user));
+    };
+};
 
 export const requestRegister = () => {
     return async (dispatch, getState) => {
-        dispatch({type: START_ASYNC_AUTH})
-        const { email, password } = getState().auth
-        const body = JSON.stringify({email, password})
+        dispatch({ type: START_ASYNC_AUTH });
+        const { email, password } = getState().auth;
+        const body = JSON.stringify({ email, password });
 
         const resp = await fetch(api_url + '/local/signup', {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json; charset=utf-8",
+                'Content-Type': 'application/json; charset=utf-8',
             },
-            body
+            body,
         }).catch(e => {
-            console.warn("LOGIN FAILURE")
-            console.error(e)
-            return dispatch(loginError(e.message))
-        })
+            console.warn('LOGIN FAILURE');
+            console.error(e);
+            return dispatch(loginError(e.message));
+        });
 
-        console.log(resp)
-        const data = await resp.json()
-        console.log(data)
+        console.log(resp);
+        const data = await resp.json();
+        console.log(data);
 
-        if(!resp.ok) {
-            console.warn("LOGIN FAILURE")
-            return dispatch(loginError(data.message))
+        if (!resp.ok) {
+            console.warn('LOGIN FAILURE');
+            return dispatch(loginError(data.message));
         }
 
-        console.log(resp)
-        dispatch(receiveLogin(data))
-        dispatch(updatePlayer(data.user))
-
-    }
-}
+        console.log(resp);
+        dispatch(receiveLogin(data));
+        dispatch(updatePlayer(data.user));
+    };
+};
 
 function receiveLogin(user) {
     return {
         type: LOGIN_SUCCESS,
         isFetching: false,
         isAuthenticated: true,
-        token: user.token
-    }
+        token: user.token,
+    };
 }
 
 function loginError(message) {
@@ -90,16 +86,16 @@ function loginError(message) {
         type: LOGIN_FAILURE,
         isFetching: false,
         isAuthenticated: false,
-        message
-    }
+        message,
+    };
 }
 
-export const changeAuthEmail = (email) => ({
+export const changeAuthEmail = email => ({
     type: CHANGE_AUTH_EMAIL,
-    email
-})
+    email,
+});
 
-export const changeAuthPassword = (password) => ({
+export const changeAuthPassword = password => ({
     type: CHANGE_AUTH_PASSWORD,
-    password
-})
+    password,
+});

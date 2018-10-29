@@ -1,34 +1,41 @@
-import React, { Component } from 'react'
-import {changeAuthEmail, changeAuthPassword, requestLogin} from '../store/actions/auth'
-import connect from 'react-redux/es/connect/connect'
-import Input from '../style/Input'
-import styled from 'styled-components'
-import {Link} from 'react-router-dom'
-import {Button} from '../style/Button'
+import React, { Component } from 'react';
+import { changeAuthEmail, changeAuthPassword, requestLogin } from '../store/actions/auth';
+import connect from 'react-redux/es/connect/connect';
+import Input from '../style/Input';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { Button } from '../style/Button';
 
 const Middle = styled.div`
     display: flex;
     justify-content: center;
-`
+`;
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     max-width: 60rem;
-`
+`;
 
 class Login extends Component {
-
     render() {
-
-        const {email, password, error, isFetching, isAuthenticated, changeEmail, changePassword, login } = this.props
+        const {
+            email,
+            password,
+            error,
+            isFetching,
+            isAuthenticated,
+            changeEmail,
+            changePassword,
+            login,
+        } = this.props;
 
         return (
             <Middle>
                 <Container>
                     <h1>Sign In</h1>
-                    <Link to='/register'>Need an account?</Link>
+                    <Link to="/register">Need an account?</Link>
                     {error && <div>{error}</div>}
                     <Input
                         name="name"
@@ -48,7 +55,7 @@ class Login extends Component {
                     <Button onClick={() => login()}>Sign in</Button>
                 </Container>
             </Middle>
-        )
+        );
     }
 }
 
@@ -58,14 +65,17 @@ function mapStateToProps(state) {
         password: state.auth.password,
         isFetching: state.auth.isFetching,
         isAuthenticated: state.auth.isAuthenticated,
-        error: state.auth.error
-    }
+        error: state.auth.error,
+    };
 }
 
 const mapDispatchToProps = {
     changeEmail: changeAuthEmail,
     changePassword: changeAuthPassword,
     login: requestLogin,
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Login);

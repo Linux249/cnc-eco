@@ -1,12 +1,11 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export default styled.div`
     display: flex;
     width: 600px;
     height: 25px;
-    
-    
-    & > input{
+
+    & > input {
         flex-grow: 1;
     }
 
@@ -21,8 +20,7 @@ export default styled.div`
     //width: 880px;
     //height: 50px;
     //margin-bottom: 10px;
-
-`
+`;
 /*
 
 .UrlInfo input {

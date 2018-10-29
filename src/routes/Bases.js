@@ -1,26 +1,26 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { replaceBaseFromUrl } from '../store/actions/base'
-import Base from '../components/Base.js'
-import BuildingMenu from '../containers/Buildings'
-import Menu from '../components/Menu'
-import Body from '../style/Body'
-import Row from '../style/Row'
-import Button from '../style/Button'
-import styled from 'styled-components'
-import {api_url} from '../config/config'
+import { replaceBaseFromUrl } from '../store/actions/base';
+import Base from '../components/Base.js';
+import BuildingMenu from '../containers/Buildings';
+import Menu from '../components/Menu';
+import Body from '../style/Body';
+import Row from '../style/Row';
+import Button from '../style/Button';
+import styled from 'styled-components';
+import { api_url } from '../config/config';
 
-const BaseS = styled.div``
-const MenuS = styled.div``
+const BaseS = styled.div``;
+const MenuS = styled.div``;
 
 class Bases extends Component {
     constructor() {
-        super()
+        super();
         this.state = {
-            player: "linux249",
+            player: 'linux249',
             worlds: [],
-            bases: []
-        }
+            bases: [],
+        };
     }
 
     async componentWillMount() {
@@ -29,51 +29,47 @@ class Bases extends Component {
         // this.props.replaceBaseFromUrl(worlds[0].bases[0].layout)
     }
 
-    changeWorld = (i) => {
-        this.setState(prevState => ({bases: prevState.worlds[i].bases}))
-    }
-
+    changeWorld = i => {
+        this.setState(prevState => ({ bases: prevState.worlds[i].bases }));
+    };
 
     render() {
-        const { worlds, bases } = this.state
-        const { replaceBaseFromUrl } = this.props
+        const { worlds, bases } = this.state;
+        const { replaceBaseFromUrl } = this.props;
 
         return (
             <BaseS>
                 <Row>
-                    {worlds.map((world, i) =>
-                        <Button
-                            key={i}
-                            onClick={() => this.changeWorld(i)}
-                        >
+                    {worlds.map((world, i) => (
+                        <Button key={i} onClick={() => this.changeWorld(i)}>
                             {world.name}
                         </Button>
-                    )}
+                    ))}
                 </Row>
                 <Row>
-                    {bases.map((base, i) =>
-                        <Button
-                            key={i}
-                            onClick={() => replaceBaseFromUrl(base.layout)}
-                        >
+                    {bases.map((base, i) => (
+                        <Button key={i} onClick={() => replaceBaseFromUrl(base.layout)}>
                             {base.name}
                         </Button>
-                    )}
+                    ))}
                 </Row>
                 <Body>
-                <BuildingMenu />
-                <Base />
-                <Menu/>
+                    <BuildingMenu />
+                    <Base />
+                    <Menu />
                 </Body>
             </BaseS>
-        )
+        );
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return {
-        replaceBaseFromUrl: (url) => dispatch(replaceBaseFromUrl(url))
-    }
-}
+        replaceBaseFromUrl: url => dispatch(replaceBaseFromUrl(url)),
+    };
+};
 
-export default connect(null, mapDispatchToProps)(Bases);
+export default connect(
+    null,
+    mapDispatchToProps
+)(Bases);

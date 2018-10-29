@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export default styled.div`
     display: inline-block;
@@ -6,10 +6,10 @@ export default styled.div`
     height: 15%;
     align-content: center;
     text-align: center;
-  
+
     & > img {
-    /*height: auto;*/
-    max-width: 100%;
-    max-height: 100%;
+        /*height: auto;*/
+        max-width: 100%;
+        max-height: 100%;
     }
-`
+`;

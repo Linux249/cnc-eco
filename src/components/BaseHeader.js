@@ -1,12 +1,12 @@
-import React, { Component, Fragment } from 'react'
-import { NavLink } from 'react-router-dom'
-import Header from '../style/BaseHeader'
-import Title from '../style/Title'
-import Button from '../style/Button'
-import Row from '../style/Row'
-import UrlInfo from './UrlInfo'
-import styled from 'styled-components'
-import {connect} from 'react-redux'
+import React, { Component, Fragment } from 'react';
+import { NavLink } from 'react-router-dom';
+import Header from '../style/BaseHeader';
+import Title from '../style/Title';
+import Button from '../style/Button';
+import Row from '../style/Row';
+import UrlInfo from './UrlInfo';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 const Link = Button.withComponent(
     styled(NavLink)`
@@ -16,36 +16,47 @@ const Link = Button.withComponent(
             border: none;
         }
     `
-)
+);
 
-class BaseHeader extends Component
-{
-    render()
-    {
-        const { isAuthenticated } = this.props
+class BaseHeader extends Component {
+    render() {
+        const { isAuthenticated } = this.props;
         return (
             <Header>
-                <Title><NavLink to="/">CNC-ECO</NavLink></Title>
+                <Title>
+                    <NavLink to="/">CNC-ECO</NavLink>
+                </Title>
                 <UrlInfo />
                 <Row>
-                    <Link  to="/bases" activeClassName="active">Basen</Link>
-                    <Link  to="/scripts" activeClassName="active">Scripte</Link>
-                    <Link  to="/layouts" activeClassName="active">Layouts</Link>
-                    {isAuthenticated ?
-                        <Link  to="/user" activeClassName="active">User</Link>
-                        :
+                    <Link to="/bases" activeClassName="active">
+                        Basen
+                    </Link>
+                    <Link to="/scripts" activeClassName="active">
+                        Scripte
+                    </Link>
+                    <Link to="/layouts" activeClassName="active">
+                        Layouts
+                    </Link>
+                    {isAuthenticated ? (
+                        <Link to="/user" activeClassName="active">
+                            User
+                        </Link>
+                    ) : (
                         <Fragment>
-                            <Link  to="/login" activeClassName="active">Login</Link>
-                            <Link  to="/register" activeClassName="active">Sign up</Link>
+                            <Link to="/login" activeClassName="active">
+                                Login
+                            </Link>
+                            <Link to="/register" activeClassName="active">
+                                Sign up
+                            </Link>
                         </Fragment>
-                    }
-
+                    )}
                 </Row>
             </Header>
-        )
+        );
     }
 }
 
-const mapStateToProps = (state) => ({isAuthenticated: state.auth.isAuthenticated})
+const mapStateToProps = state => ({ isAuthenticated: state.auth.isAuthenticated });
 
-export default connect(mapStateToProps)(BaseHeader)
+export default connect(mapStateToProps)(BaseHeader);
