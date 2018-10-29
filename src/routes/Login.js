@@ -22,20 +22,23 @@ class Login extends Component {
 
     render() {
 
-        const {email, password, isFetching, isAuthenticated, changeEmail, changePassword, login } = this.props
+        const {email, password, error, isFetching, isAuthenticated, changeEmail, changePassword, login } = this.props
 
         return (
             <Middle>
                 <Container>
                     <h1>Sign In</h1>
                     <Link to='/register'>Need an account?</Link>
+                    {error && <div>{error}</div>}
                     <Input
+                        name="name"
                         value={email}
                         onChange={e => changeEmail(e.target.value)}
                         type="email"
                         placeholder="Email"
                     />
                     <Input
+                        name="password"
                         value={password}
                         onChange={e => changePassword(e.target.value)}
                         type="password"
@@ -55,6 +58,7 @@ function mapStateToProps(state) {
         password: state.auth.password,
         isFetching: state.auth.isFetching,
         isAuthenticated: state.auth.isAuthenticated,
+        error: state.auth.error
     }
 }
 

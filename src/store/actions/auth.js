@@ -1,16 +1,14 @@
 import {
     LOGIN_FAILURE,
-    LOGIN_REQUEST,
     LOGIN_SUCCESS,
     CHANGE_AUTH_EMAIL,
     CHANGE_AUTH_PASSWORD,
     START_ASYNC_AUTH,
-    END_ASYNC_AUTH,
 } from '../constants/actionTypes'
 import {api_url} from '../../config/config'
 
 
-export function requestLogin() {
+export const requestLogin = () => {
     return async (dispatch, getState) => {
         dispatch({type: START_ASYNC_AUTH})
         const { email, password } = getState().auth
@@ -21,17 +19,57 @@ export function requestLogin() {
                 "Content-Type": "application/json; charset=utf-8",
             },
             body
+        }).catch(e => {
+            console.error("LOGIN FAILURE")
+            console.error(e)
+            return dispatch(loginError(e.message))
         })
+
         console.log(resp)
+        const data = await resp.json()
+        console.log(data)
+
+        if(!resp.ok) {
+            console.error("LOGIN FAILURE")
+            return dispatch(loginError(data.message))
+
+        }
+
+        dispatch(receiveLogin(data))
 
     }
 }
 
-export function requestRegister() {
+export const requestRegister = () => {
     return async (dispatch, getState) => {
         dispatch({type: START_ASYNC_AUTH})
         const { email, password } = getState().auth
-        await fetch('/api')
+        const body = JSON.stringify({email, password})
+
+        const resp = await fetch(api_url + '/local/signup', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body
+        }).catch(e => {
+            console.error("LOGIN FAILURE")
+            console.error(e)
+            return dispatch(loginError(e.message))
+        })
+
+        console.log(resp)
+        const data = await resp.json()
+        console.log(data)
+
+        if(!resp.ok) {
+            console.error("LOGIN FAILURE")
+            return dispatch(loginError(data.message))
+        }
+
+        console.log(resp)
+        dispatch(receiveLogin(resp))
+
     }
 }
 
@@ -40,7 +78,7 @@ function receiveLogin(user) {
         type: LOGIN_SUCCESS,
         isFetching: false,
         isAuthenticated: true,
-        id_token: user.id_token
+        token: user.token
     }
 }
 
