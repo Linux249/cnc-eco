@@ -31,16 +31,20 @@ router.delete("/user/:id", async (req, res, next) => {
 
 router.post("/user/addPlayer", async (req, res, next) => {
     const { name, worldId, _id } = req.body
+    console.log({ name, worldId, _id })
 
     // Find User first
     const user = await User.findOne({_id})
-    if(!user) return next(new Error("Cannot add Player: Users id invalid"))
+    if(!user) {
+        console.log(user)
+        return next(new Error("Cannot add Player: Users id invalid"))
+    }
 
     // Test id user is allowed to add a player again
     if(user.playerAdded) {
         const time = user.playerAdded - new Date()
         console.log(time)
-        if(time < 7) return next(new Error("Cannot add Player: Users id invalid"))
+        if(time < 7 && false) return next(new Error("Cannot add Player: Users id invalid"))
     }
 
     // Test if the player doesn't used from other account
@@ -56,14 +60,21 @@ router.post("/user/addPlayer", async (req, res, next) => {
         return next(new Error("Cannot add Player: World doesn't exist in db"))
 
     // find player
-    const player = collection.findOne({name})
-    if(!player) return next(new Error("Cannot add Player: Player name not found - please update data ingame"))
+    const player = await collection.findOne({name})
+    if(!player) {
+        console.log("no player found")
+        console.log(player)
+        return next(new Error("Cannot add Player: Player name not found - please update data ingame"))
+    }
+
+    //console.log(player)
 
 
     // Test if player is updated in last 2 min
-    if(player.updated) {
-        const minutes = (player.updated - new Date()) / 1000 / 60
-        if(minutes < 3) {
+    if(player._updated) {
+        const minutes = (player._updated - new Date()) / 1000 / 60
+        console.log({minutes})
+        if(minutes < -3) {
             // add player to user
             // TODO test if the world is not allready inside
 
@@ -72,12 +83,15 @@ router.post("/user/addPlayer", async (req, res, next) => {
 
             user.worlds.push({
                 worldId: String,
-                player_id: Schema.ObjectId,
+                player_id: player._id,
             })
-            const res = await collection.update({_id: player._id}, player)
-            res.json(res)
+            //const r = await collection.update({_id: player._id}, player)
+            user.save((err, doc)=> {
+                if(err) return next(err)
+                res.json(doc)
+            })
 
-        } else next(new Error("Cannot add Player: Player was not updated in the last 3 minutes - please update data ingame"))
+        } else next(new Error("Cannot add Player: Player was not updated in the last 3 (" + minutes + ") minutes - please update data ingame"))
     } else next(new Error("Cannot add Player: Player has never updated - please update data ingame"))
 
     // add player to user and time
