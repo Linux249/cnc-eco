@@ -2,7 +2,7 @@
  * Created by Bombassd on 08.06.2017.
  */
 'use strict';
-import { findBestToLvlUpNext } from './src/performance'
+//import { findBestToLvlUpNext } from './performance'
 // import Path from 'path'
 // import Inert from 'inert'
 // import Hapi from 'hapi'
@@ -13,7 +13,7 @@ import express from 'express'
 let app = express();
 let server = require('http').createServer(app);
 let io = require('socket.io')(server, {'pingInterval': 1000});
-const api = require("./src/app")
+const api = require("./app")
 
 const PORT = process.env.PORT || 8000
 
@@ -49,7 +49,7 @@ io.on('connect', function (socket) {
 
     socket.on("buildings", (buildings) => {
         console.log("buildings emited - start searching")
-        findBestToLvlUpNext(buildings, foundNewBest)
+        //findBestToLvlUpNext(buildings, foundNewBest)
 
         socket.on('disconnect', function(){
             // clearInterval(interv)

@@ -1,3 +1,10 @@
 {
-  "presets": ["es2015", "babel-preset-stage-2"]
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": "current"
+      }
+    }]
+  ],
+  "plugins": ["syntax-object-rest-spread", "babel-plugin-transform-strict-mode"]
 }
