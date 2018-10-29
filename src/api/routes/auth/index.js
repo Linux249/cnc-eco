@@ -1,6 +1,9 @@
+const jwt = require('jsonwebtoken');
+
+
 module.exports = function(app, passport) {
 
-    const successRedirect = '/#/login?token='
+    //app.delete()
 // normal routes ===============================================================
 
     // show the home page (will also have our login links)
@@ -34,12 +37,49 @@ module.exports = function(app, passport) {
     */
 
     // process the login form
-    app.post('/local/login', passport.authenticate('local-login', {
-        successRedirect : '/profile', // redirect to the secure profile section
-        failureRedirect : '/login', // redirect back to the signup page if there is an error
-        session: false,
-        failureFlash : true // allow flash messages
-    }));
+    app.post('/local/login', (req, res, next) => {
+        passport.authenticate('local-login', {session: false}, (err, user, info) => {
+            if (err || !user) {
+                return res.status(400).json({
+                    message: 'No user found',
+                    user   : user,
+                    err,
+                    info
+                });
+            }
+            req.login(user, {session: false}, (err) => {
+                if (err) {
+                    res.send(err);
+                }
+                // generate a signed son web token with the contents of user object and return it in the response
+                const secret = process.env.JWT_SECRET || "dummy1234556"
+                const token = jwt.sign(user.toJSON(), secret);
+                return res.json({user, token});
+            });
+        })(req, res);
+    });
+    app.post('/local/signup', (req, res, next) => {
+        passport.authenticate('local-signup', {session: false}, (err, user, info) => {
+            if (err || !user) {
+                return res.status(400).json({
+                    message: 'Fehler beim user erstellen',
+                    user   : user,
+                    err,
+                    info
+                });
+            }
+            req.login(user, {session: false}, (err) => {
+                if (err) {
+                    res.send(err);
+                }
+                //console.log(user)
+                // generate a signed son web token with the contents of user object and return it in the response
+                const secret = process.env.JWT_SECRET || "dummy1234556"
+                const token = jwt.sign(user, secret);
+                return res.json({user, token});
+            });
+        })(req, res);
+    });
 
     // SIGNUP =================================
     // show the signup form
@@ -49,12 +89,12 @@ module.exports = function(app, passport) {
     */
 
     // process the signup form
-    app.post('/local/signup', passport.authenticate('local-signup', {
+    /*app.post('/local/signup', passport.authenticate('local-signup', {
         successRedirect : '/profile', // redirect to the secure profile section
         failureRedirect : '/signup', // redirect back to the signup page if there is an error
         session: false,
         failureFlash : true // allow flash messages
-    }));
+    }));*/
 
     /*
     // facebook -------------------------------
@@ -107,6 +147,7 @@ module.exports = function(app, passport) {
 // =============================================================================
 
     // locally --------------------------------
+    /*
     app.get('/connect/local', function(req, res) {
         res.render('connect-local.ejs', { message: req.flash('loginMessage') });
     });
@@ -115,6 +156,7 @@ module.exports = function(app, passport) {
         failureRedirect : '/connect/local', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
+    */
 
     /*
     // facebook -------------------------------

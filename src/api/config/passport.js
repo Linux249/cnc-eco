@@ -2,13 +2,15 @@
 import {Strategy as GoogleStrategy} from 'passport-google-oauth20'
 import {Strategy as LocalStrategy} from 'passport-local'
 import {googleAuth} from "./config"
-
 import {User} from "../model/User";
+const passportJWT = require("passport-jwt");
+const JWTStrategy   = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
 
 export default (passport) => {
 
     // serialize user.id for cookie
-    passport.serializeUser((user, done) => {
+    /*passport.serializeUser((user, done) => {
         done(null, user.id);    // .id is the mongo id
     })
 
@@ -19,7 +21,7 @@ export default (passport) => {
             done(err, user)
         })
     })
-
+    */
 
     // =========================================================================
     // LOCAL LOGIN =============================================================
@@ -35,10 +37,10 @@ export default (passport) => {
             },
             async function (req, email, password, done) {
                 if (email) email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
-                console.log({req, email, password, done})
                 // asynchronous
                 try {
                     const user = await User.findOne({'local.email': email})
+                    console.log({user, email, password, done})
                     // if there are any errors, return the error
                     //if (err) return done(err);
 
@@ -68,21 +70,25 @@ export default (passport) => {
             passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
         },
         function (req, email, password, done) {
-            if (email)
-                email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
+            // Use lower-case e-mails to avoid case-sensitive e-mail matching
+            if (email) email = email.toLowerCase();
+            //console.log("inside local signup cb")
 
             // asynchronous
             process.nextTick(function () {
                 // if the user is not already logged in:
                 if (!req.user) {
                     User.findOne({'local.email': email}, function (err, user) {
+                        //console.log("no user???")
+                        //console.log({err, user, email, password})
+                        //console.log(password)
                         // if there are any errors, return the error
                         if (err)
                             return done(err);
 
                         // check to see if theres already a user with that email
                         if (user) {
-                            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+                            return done(null, 'That email is already taken.', req.flash('signupMessage', 'That email is already taken.'));
                         } else {
 
                             // create the user
@@ -190,4 +196,20 @@ export default (passport) => {
             }
         )
     )
+
+    passport.use(new JWTStrategy({
+            jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+            secretOrKey   : process.env.JWT_SECRET || "dummy1234556"
+        },
+        function (jwtPayload, cb) {
+            //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
+            return User.findOneById(jwtPayload.id)
+                .then(user => {
+                    return cb(null, user);
+                })
+                .catch(err => {
+                    return cb(err);
+                });
+        }
+    ));
 }

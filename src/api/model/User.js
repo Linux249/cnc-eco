@@ -23,8 +23,13 @@ const userSchema = Schema({
         token: String,
         email: String,
         name: String
-    }
-
+    },
+    player: {type: String, index: true, unique: true, sparse: true},
+    playerAdded: {type: Date},
+    worlds: [{
+        worldId: String,
+        player_id: Schema.ObjectId,
+    }]
 });
 
 // generating a hash

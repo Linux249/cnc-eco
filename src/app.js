@@ -101,6 +101,10 @@ app.use(passport.session())
 app.use("/", apiRouter)
 setAuthRout(app, passport)
 
+// usage from example
+// app.use('/user', passport.authenticate('jwt', {session: false}), user);
+// https://medium.com/front-end-hacking/learn-using-jwt-with-passport-authentication-9761539c4314
+
 app.use("/task/index.php", (req, res) => {
     if(req.get("content-type") === "application/x-www-form-urlencoded") {
         console.log("TODO - DAS IN DIE db ODER SONST WO ANSCHAUEN")

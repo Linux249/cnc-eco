@@ -1,3 +1,7 @@
+Evn - vars that should be set on server
+JWT_SECRET
+
+
 #Todo:
 - sort layouts while saving (enough time!)
 - get layouts x + y as index
