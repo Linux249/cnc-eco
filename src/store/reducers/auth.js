@@ -7,8 +7,8 @@ import {
 } from '../constants/actionTypes'
 
 const initState = {
-    email: '',
-    password: '',
+    email: 'julian.libor@gmail.com',
+    password: 'test123',
     isFetching: false,
     isAuthenticated: false, // TODO check here for localStorage?
     token: null,

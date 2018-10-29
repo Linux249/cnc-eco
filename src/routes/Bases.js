@@ -8,6 +8,7 @@ import Body from '../style/Body'
 import Row from '../style/Row'
 import Button from '../style/Button'
 import styled from 'styled-components'
+import {api_url} from '../config/config'
 
 const BaseS = styled.div``
 const MenuS = styled.div``
@@ -23,9 +24,9 @@ class Bases extends Component {
     }
 
     async componentWillMount() {
-        const { worlds } = await fetch(" https://cnc-eco.herokuapp.com/api/v1/player?name=linux249").then(res => res.json())
-        this.setState({worlds, bases: worlds[0].bases})
-        this.props.replaceBaseFromUrl(worlds[0].bases[0].layout)
+        // const { worlds } = await fetch(api_url + "/player?name=linux249&world=373").then(res => res.json())
+        // this.setState({worlds, bases: worlds[0].bases})
+        // this.props.replaceBaseFromUrl(worlds[0].bases[0].layout)
     }
 
     changeWorld = (i) => {
