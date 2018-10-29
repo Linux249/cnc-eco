@@ -17,7 +17,7 @@ import cors from 'cors';
 import logging from 'morgan';
 import flash from 'connect-flash';
 import { cookieSecret, mongoURI } from './api/config/config';
-import setAuthRout from './api/routes/auth/auth';
+import setAuthRout from './api/routes/auth/index';
 let DB;
 
 // configuration ===============================================================
@@ -91,16 +91,16 @@ app.use(cors());
 configurePassport(passport);
 
 app.use(logging('dev'));
-app.use(flash()); // use connect-flash for flash messages stored in session
+//app.use(flash()); // use connect-flash for flash messages stored in session
 
-app.use(
+/*app.use(
     cookieSession({
         maxAge: 30 * 24 * 60 * 60 * 100,
         keys: [cookieSecret],
     })
-);
+);*/
 app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.session());
 
 // routes ======================================================================
 
