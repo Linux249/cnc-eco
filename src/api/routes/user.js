@@ -82,7 +82,7 @@ router.post('/user/addPlayer', async (req, res, next) => {
 
             user.worlds.push({
                 worldId: worldId,
-                worldName: "TODO where from?",
+                worldName: 'TODO where from?',
                 player_id: player._id,
             });
             //const r = await collection.update({_id: player._id}, player)
@@ -98,7 +98,8 @@ router.post('/user/addPlayer', async (req, res, next) => {
                         ') minutes - please update data ingame'
                 )
             );
-    } else next(new Error('Cannot add Player: Player has never updated - please update data ingame'));
+    } else
+        next(new Error('Cannot add Player: Player has never updated - please update data ingame'));
 
     // add player to user and time
 });

@@ -9,20 +9,21 @@
 // import layouts from './src/routes/layouts'
 //const mongoose = require("mongoose")
 
-import express from 'express'
+import express from 'express';
 let app = express();
 let server = require('http').createServer(app);
-let io = require('socket.io')(server, {'pingInterval': 1000});
-const api = require("./app")
+let io = require('socket.io')(server, { pingInterval: 1000 });
+const api = require('./app');
 
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT || 8000;
 
 // DB
-const mongo_uri = process.env.MONGODB_URI ? process.env.MONGODB_URI : "mongodb://localhost:27017/cnc"
-console.log({mongo_uri})
+const mongo_uri = process.env.MONGODB_URI
+    ? process.env.MONGODB_URI
+    : 'mongodb://localhost:27017/cnc';
+console.log({ mongo_uri });
 //mongoose.connect(mongo_uri, { useMongoClient: true, promiseLibrary: global.Promise })
 //const db = mongoose.connection //simplification
-
 
 //app.use("/", express.static("public"))
 
@@ -43,28 +44,25 @@ console.log({mongo_uri})
 //
 // server.route(layouts);
 
-io.on('connect', function (socket) {
+io.on('connect', function(socket) {
+    console.log('someone conecceted');
 
-    console.log("someone conecceted")
-
-    socket.on("buildings", (buildings) => {
-        console.log("buildings emited - start searching")
+    socket.on('buildings', buildings => {
+        console.log('buildings emited - start searching');
         //findBestToLvlUpNext(buildings, foundNewBest)
 
-        socket.on('disconnect', function(){
+        socket.on('disconnect', function() {
             // clearInterval(interv)
             console.log('user disconnected');
         });
 
         function foundNewBest(id) {
-            socket.emit("buildings", id)
-
+            socket.emit('buildings', id);
         }
-    })
-
+    });
 });
 
-app.use("/api/v1", api)
+app.use('/api/v1', api);
 // Start the server
 // server.start((err) => {
 //
@@ -74,14 +72,13 @@ app.use("/api/v1", api)
 //     console.log('Server running at:', server.info.uri);
 // });
 
-app.use("/", express.static("cnc-eco"))
+app.use('/', express.static('cnc-eco'));
 
-
-app.set('port', PORT)
+app.set('port', PORT);
 
 /**
  * Listen on provided port
  */
 app.listen(PORT, () => {
-    console.log("Server gestartet - Port: " + PORT)
-})
+    console.log('Server gestartet - Port: ' + PORT);
+});

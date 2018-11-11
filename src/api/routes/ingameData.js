@@ -25,7 +25,7 @@ router.post('/ingameData', async (req, res, next) => {
         } = body;
 
         /*
-        *   save Alliance Information's
+         *   save Alliance Information's
          */
         const aId = Number(`${allianceId}${worldId}`); // unique id combine world and ally id
         let alliance =

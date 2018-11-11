@@ -2,21 +2,21 @@ const report = {
     date: new Date(), // current time
     server: [
         /*
-        * size: MB  // DB size
+         * size: MB  // DB size
          */
     ],
     worlds: [
         /* {
-        * world: name,
-        * deletedLayouts: count,
-        * stats: collection.stats()
-        *
+         * world: name,
+         * deletedLayouts: count,
+         * stats: collection.stats()
+         *
          */
     ],
     player: {
         /*
-        * collection.stats()
-        * newestPlayer: [{ playername , worlds }]
+         * collection.stats()
+         * newestPlayer: [{ playername , worlds }]
          */
     },
 };

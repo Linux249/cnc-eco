@@ -74,7 +74,7 @@ module.exports = function(app, passport) {
                 //console.log(user)
                 // generate a signed son web token with the contents of user object and return it in the response
                 const secret = process.env.JWT_SECRET || 'dummy1234556';
-                console.log({err, user});
+                console.log({ err, user });
                 const token = jwt.sign(user.toJSON(), secret);
                 return res.json({ user, token });
             });
