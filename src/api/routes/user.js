@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { User } from '../model/User';
-//import { Schema } from 'mongoose';
+// import { Schema } from 'mongoose';
 
 const router = Router();
 
@@ -92,6 +92,60 @@ router.post('/user/addPlayer', async (req, res, next) => {
         } else {
             return next(new Error(`Cannot add Player: Player was not updated in the last 3 (${minutes}) minutes - please update data ingame`));
         }
+    } else {
+        return next(new Error('Cannot add Player: Player has never updated - please update data ingame'));
+    }
+
+    // add player to user and time
+});
+
+router.post('/user/addWorld', async (req, res, next) => {
+    // name is player name given from user
+    const { name, worldId, _id } = req.body;
+    // TODO worldName comes also from where user choose world later
+    console.log({ name, worldId, _id });
+
+    // Find User first TODO - thats could be done via auth later
+    const user = await User.findOne({ _id });
+    if (!user) {
+        console.log(user);
+        return next(new Error('Cannot add Player: Users id invalid'));
+    }
+
+    // ANTI HACK Test if the player really is in User saved already
+    if (user.player !== name) {
+        return next(new Error('Cannot add Player: Player doesn\'t belong to this Account'));
+    }
+
+    // Test if player exists on the world
+    const collection = req.db.collection(`players_${worldId}`);
+    if (!collection) {
+        // should not happen because user cannot add any world
+        return next(new Error("Cannot add Player: World doesn't exist in db"));
+    }
+
+    // find player
+    const player = await collection.findOne({ name });
+    if (!player) {
+        console.log('no player found');
+        console.log(player);
+        return next(new Error('Cannot add Player: Player name not found - please update data ingame'));
+    }
+
+    // console.log(player)
+
+    // Test if player is updated in last 2 min
+    if (player._updated) {
+        user.worlds.push({
+            worldId,
+            worldName: player.serverName,
+            player_id: player._id,
+        });
+        // const r = await collection.update({_id: player._id}, player)
+        user.save((err, doc) => {
+            if (err) return next(err);
+            return res.json(doc);
+        });
     } else {
         return next(new Error('Cannot add Player: Player has never updated - please update data ingame'));
     }
