@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { shortenNumber } from './../services/menu';
 import { Chart } from 'react-google-charts';
 import { futureProduction } from '../util/production.js';
+import { calcProduction } from '../util/production';
 
 // Colors for lines
 const tibColor = '#23ff1d';
@@ -19,9 +20,33 @@ const crisColor = '#0000f1';
 const powerColor = '#99bbf1';
 const creditsColor = '#ffdb32';
 
+const chartDataDefault = [['Days', 'Tib', 'Kris', 'Power', 'Credits']];
+
+const ranges = [
+    10000,
+    100000,
+    1000000,
+    10000000,
+    100000000,
+    1000000000,
+    10000000000,
+    100000000000,
+    1000000000000,
+];
+
 class LineChart extends Component {
     constructor(props) {
         super(props);
+        const chartData = [...chartDataDefault];
+        futureProduction(props.buildings).forEach(data =>
+            chartData.push([
+                data.time,
+                data.prod.tib,
+                data.prod.kris,
+                data.prod.power,
+                data.prod.credits,
+            ])
+        );
         this.state = {
             // error: false,
             showRealLine: true,
@@ -60,6 +85,7 @@ class LineChart extends Component {
                     },
                 },
             },
+            chartData,
         };
     }
 
@@ -112,48 +138,30 @@ class LineChart extends Component {
         });
     }
 
-    // componentDidCatch(err, info) {
-    //     console.log({err, info})
-    //     this.setState({error: true})
-    //
-    // }
+    componentDidUpdate(prevProps) {
+        if (prevProps.buildings !== this.props.buildings)
+            window.requestIdleCallback(() => {
+                const chartData = [...chartDataDefault];
+                futureProduction(this.props.buildings).forEach(data =>
+                    chartData.push([
+                        data.time,
+                        data.prod.tib,
+                        data.prod.kris,
+                        data.prod.power,
+                        data.prod.credits,
+                    ])
+                );
+                this.setState({ chartData });
+            });
+    }
 
     render() {
-        const { buildings } = this.props;
-        const { options } = this.state;
-        let data = [];
-        try {
-            data = futureProduction(buildings);
-        } catch (err) {
-            return <div>Keine Strom/Tib Produktion</div>;
-        }
+        const { options, chartData } = this.state;
         const toggleTrendLines = 'trendlines' in options;
         const toogleRealLines = !('lineWidth' in options.series[0]);
         const activeRange = options.vAxes[1].viewWindow.max;
         const activeDays = options.hAxis.viewWindow.max;
 
-        const data2 = [['Days', 'Tib', 'Kris', 'Power', 'Credits']];
-        data.map(data =>
-            data2.push([
-                data.time,
-                data.prod.tib,
-                data.prod.kris,
-                data.prod.power,
-                data.prod.credits,
-            ])
-        );
-
-        const ranges = [
-            10000,
-            100000,
-            1000000,
-            10000000,
-            100000000,
-            1000000000,
-            10000000000,
-            100000000000,
-            1000000000000,
-        ];
         const days = [30, 60, 90, 120];
         return (
             <div>
@@ -190,7 +198,7 @@ class LineChart extends Component {
                     <ChartS>
                         <Chart
                             chartType="LineChart"
-                            data={data2}
+                            data={chartData}
                             options={this.state.options}
                             graph_id="LineChart"
                             width="100%"
