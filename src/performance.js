@@ -2,7 +2,6 @@
  * Created by Bombassd on 08.06.2017.
  */
 
-
 import { futureProduction } from './production';
 // import async from 'async'
 
@@ -93,7 +92,9 @@ function getRandomBuildings(buildings) {
 
     while (randoms.length < 10) {
         const random = Math.floor(Math.random() * length);
-        if (buildings[random].type && 'shnra'.indexOf(buildings[random].type) !== -1) { randoms.push(random); }
+        if (buildings[random].type && 'shnra'.indexOf(buildings[random].type) !== -1) {
+            randoms.push(random);
+        }
     }
     return randoms;
 }

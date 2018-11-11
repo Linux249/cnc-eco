@@ -1,5 +1,3 @@
-
-
 import express from 'express';
 
 import apiRouter from './api/routes/index';

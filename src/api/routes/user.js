@@ -1,4 +1,3 @@
-
 import { User } from '../model/User';
 import { Router } from 'express';
 import { Schema } from 'mongoose';
@@ -54,9 +53,10 @@ router.post('/user/addPlayer', async (req, res, next) => {
 
     // Test if player exists on the world
     const collection = req.db.collection(`players_${worldId}`);
-    if (!collection)
-    // should not happen because user cannot add any world
-    { return next(new Error("Cannot add Player: World doesn't exist in db")); }
+    if (!collection) {
+        // should not happen because user cannot add any world
+        return next(new Error("Cannot add Player: World doesn't exist in db"));
+    }
 
     // find player
     const player = await collection.findOne({ name });
@@ -90,11 +90,11 @@ router.post('/user/addPlayer', async (req, res, next) => {
                 res.json(doc);
             });
         } else {
-            next(new Error(`Cannot add Player: Player was not updated in the last 3 (${
-                minutes
-            }) minutes - please update data ingame`));
+            next(new Error(`Cannot add Player: Player was not updated in the last 3 (${minutes}) minutes - please update data ingame`));
         }
-    } else { next(new Error('Cannot add Player: Player has never updated - please update data ingame')); }
+    } else {
+        next(new Error('Cannot add Player: Player has never updated - please update data ingame'));
+    }
 
     // add player to user and time
 });

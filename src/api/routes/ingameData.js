@@ -1,4 +1,3 @@
-
 import { Router } from 'express';
 import Player from '../model/Player';
 import Alliance from '../model/Alliance';

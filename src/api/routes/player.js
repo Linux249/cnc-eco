@@ -1,4 +1,3 @@
-
 import Player from '../model/Player';
 import { Router } from 'express';
 

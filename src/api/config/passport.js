@@ -36,13 +36,16 @@ export default (passport) => {
                 passwordField: 'password',
                 passReqToCallback: true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
             },
-            (async (req, email, password, done) => {
+            async (req, email, password, done) => {
                 if (email) email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
                 // asynchronous
                 try {
                     const user = await User.findOne({ 'local.email': email });
                     console.log({
-                        user, email, password, done,
+                        user,
+                        email,
+                        password,
+                        done,
                     });
                     // if there are any errors, return the error
                     // if (err) return done(err);
@@ -50,14 +53,16 @@ export default (passport) => {
                     // if no user is found, return the message
                     if (!user) return done(new Error('No user found - check email adress'), false);
 
-                    if (!user.validPassword(password)) { return done(new Error('Wrong password.'), false); }
+                    if (!user.validPassword(password)) {
+                        return done(new Error('Wrong password.'), false);
+                    }
                     // all is well, return user
                     return done(null, user);
                 } catch (err) {
                     console.log(err);
                     return done(err);
                 }
-            }),
+            },
         ),
     );
 
@@ -73,7 +78,7 @@ export default (passport) => {
                 passwordField: 'password',
                 passReqToCallback: true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
             },
-            ((req, email, password, done) => {
+            (req, email, password, done) => {
                 // Use lower-case e-mails to avoid case-sensitive e-mail matching
                 if (email) email = email.toLowerCase();
                 // console.log("inside local signup cb")
@@ -135,7 +140,7 @@ export default (passport) => {
                         return done(null, req.user);
                     }
                 });
-            }),
+            },
         ),
     );
 
@@ -198,11 +203,10 @@ export default (passport) => {
             jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
             secretOrKey: process.env.JWT_SECRET || 'dummy1234556',
         },
-        ((jwtPayload, cb) =>
+        (jwtPayload, cb) =>
         // find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
             User.findOneById(jwtPayload.id)
                 .then(user => cb(null, user))
-                .catch(err => cb(err))
-        ),
+                .catch(err => cb(err)),
     ));
 };

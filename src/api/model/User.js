@@ -25,7 +25,10 @@ const userSchema = Schema({
         name: String,
     },
     player: {
-        type: String, index: true, unique: true, sparse: true,
+        type: String,
+        index: true,
+        unique: true,
+        sparse: true,
     },
     playerAdded: { type: Date },
     worlds: [
