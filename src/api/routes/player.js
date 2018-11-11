@@ -1,6 +1,6 @@
 // import Player from '../model/Player';
 import { Router } from 'express';
-
+const ObjectId = require('mongodb').ObjectId
 const router = Router();
 
 // GET // api/v1/player?name=22&w=123
@@ -10,7 +10,7 @@ router.get('/player', async (req, res, next) => {
 
     const collection = req.db.collection(`players_${world}`);
 
-    const data = await collection.findOne({ playerId: player });
+    const data = await collection.findOne({ _id: ObjectId(player)});
 
     // const player = await Player.findOne({name})
     res.json(data);
