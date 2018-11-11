@@ -12,7 +12,6 @@
     "why-did-you-update": "0.0.8"
   },
   "dependencies": {
-    "immutability-helper": "^2.8.1",
     "prop-types": "^15.6.2",
     "react": "^16.6.1",
     "react-dnd": "^5.0.0",

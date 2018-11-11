@@ -15,8 +15,8 @@ class Menu extends Component {
     render() {
         return (
             <Area>
-                <ProductionInfo />
-                <LineChart />
+                {/*<ProductionInfo />*/}
+                {/*<LineChart />*/}
                 <UpgradeBase />
             </Area>
         );

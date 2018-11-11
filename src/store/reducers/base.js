@@ -1,4 +1,3 @@
-import update from 'immutability-helper';
 import urlToBase from '../../util/parseurl';
 import {
     BUILDING_TYP_DOWN,
@@ -16,41 +15,42 @@ const initBase = urlToBase(
 export function base(state = initBase, action) {
     switch (action.type) {
         case REPLACE_BUILDING:
-            const building = action.building;
-            return update(state, { buildings: { [building.slot]: { $set: building } } });
+            const buildings = state.buildings.map((b, i) => i === action.building.slot ? action.building : b)
+            return  {
+                ...state,
+                buildings,
+            }
+            //return update(state, { buildings: { [building.slot]: { $set: building } } });
         case REPLACE_ALL_BASE:
-            return update(state, { $set: action.base });
+            return action.base
         case REPLACE_BASE_FROM_URL:
-            const base = urlToBase(action.url);
-            return update(state, { $set: base });
+            return urlToBase(action.url);
         case CHANGE_FRACTION:
-            return update(state, { faction: { $set: action.faction } });
+            return {...state, faction:action.faction  };
         case BUILDING_TYP_UP:
             return {
                 ...state,
-                buildings: state.buildings.map(slot => {
-                    let { lvl } = slot;
-                    if (lvl) {
+                buildings: state.buildings.map(b => {
+                    if (b.type === action.building) {
+                        let { lvl } = b;
                         lvl += 1;
                         if (lvl > 65) lvl = 65;
-                        if (slot.type === action.building)
-                            return update(slot, { lvl: { $set: lvl } });
+
                     }
-                    return slot;
+                    return b;
                 }),
             };
         case BUILDING_TYP_DOWN:
             return {
                 ...state,
-                buildings: state.buildings.map(slot => {
-                    let { lvl } = slot;
-                    if (lvl) {
+                buildings: state.buildings.map(b => {
+                    if (b.type === action.building) {
+                        let { lvl } = b;
                         lvl -= 1;
                         if (lvl < 12) lvl = 12;
-                        if (slot.type === action.building)
-                            return update(slot, { lvl: { $set: lvl } });
+                        return {...b, lvl};
                     }
-                    return slot;
+                    return b;
                 }),
             };
         default:

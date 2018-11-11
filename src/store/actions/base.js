@@ -1,4 +1,3 @@
-import { copyObj } from '../../services/util';
 import {
     BUILDING_TYP_DOWN,
     BUILDING_TYP_UP,
@@ -12,10 +11,12 @@ import {
 
 // number where the building is set is inside building.slot
 export function replaceBuilding(building) {
-    building = copyObj(building);
+    //building = copyObj(building);
     return {
         type: REPLACE_BUILDING,
-        building,
+        building: {
+            ...building
+        }
     };
 }
 
