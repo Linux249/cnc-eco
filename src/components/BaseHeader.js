@@ -37,6 +37,9 @@ class BaseHeader extends Component {
                     <Link to="/layouts" activeClassName="active">
                         Layouts
                     </Link>
+                    <Link to="/alliance" activeClassName="active">
+                        Alliance
+                    </Link>
                     {isAuthenticated ? (
                         <Link to="/user" activeClassName="active">
                             User

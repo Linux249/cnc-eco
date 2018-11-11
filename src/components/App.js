@@ -9,6 +9,7 @@ import Layouts from '../routes/Layouts';
 import Login from '../routes/Login';
 import AppS from '../style/App';
 import Register from '../routes/Register';
+import Alliance from '../routes/Alliance';
 import User from '../routes/User';
 
 class App extends Component {
@@ -23,6 +24,7 @@ class App extends Component {
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
                     <Route path="/user" component={User} />
+                    <Route path="/alliance" component={Alliance} />
                 </AppS>
             </Router>
         );
