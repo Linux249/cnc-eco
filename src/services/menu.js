@@ -3,19 +3,21 @@
  */
 
 export function shortenNumber(n, d) {
-    if (n < 1) return '0';
+    const negativ = (n < 0) ? "-" : "";
+    n = Math.abs(n)
+    if (n === 0) return '0';
     let k = Math.floor(n);
-    if (n < 1000) return n.toString().split('.')[0];
+    if (n < 1000) return negativ + n.toString().split('.')[0];
     if (d !== 0) d = d || 1;
 
     k = n / 1e12;
-    if (k >= 1) return shorten(k, d, 'T');
+    if (k >= 1) return negativ + shorten(k, d, 'T');
     k = n / 1e9;
-    if (k >= 1) return shorten(k, d, 'G');
+    if (k >= 1) return negativ + shorten(k, d, 'G');
     k = n / 1e6;
-    if (k >= 1) return shorten(k, d, 'M');
+    if (k >= 1) return negativ + shorten(k, d, 'M');
     k = n / 1e3;
-    if (k >= 1) return shorten(k, d, 'K');
+    if (k >= 1) return negativ + shorten(k, d, 'K');
 }
 
 function shorten(a, b, c) {
