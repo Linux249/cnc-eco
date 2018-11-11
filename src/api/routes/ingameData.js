@@ -1,5 +1,5 @@
 import { Router } from 'express';
-// import Player from '../model/Player';
+import World from '../model/World';
 import Alliance from '../model/Alliance';
 
 const router = Router();
@@ -120,6 +120,11 @@ router.post('/ingameData', async (req, res, next) => {
         // console.log(`UPDATE PLAYER INFO: ${result}`)
         // res.json(result)
         res.send('UPDATED');
+        // check if world allready is known
+        const world = await World.findOne({ worldId });
+        if (!world) new World({ worldId, worldName: serverName }).save();
+
+        // add world
     } catch (err) {
         console.log({ err });
         res.send(err);

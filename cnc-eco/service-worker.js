@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/cnc-eco/precache-manifest.27cd5d4a23b270b91a8c3906c3e5f043.js"
+  "/cnc-eco/precache-manifest.f4d171f087c7bc3875fd75e503aad904.js"
 );
 
 workbox.clientsClaim();
