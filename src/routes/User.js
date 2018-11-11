@@ -10,7 +10,7 @@ import Button from '../style/Button';
 import styled from 'styled-components';
 import Input from '../style/Input';
 import { api_url } from '../config/config';
-import {updatePlayer} from '../store/actions/player'
+import { updatePlayer } from '../store/actions/player';
 
 const BaseS = styled.div``;
 const MenuS = styled.div``;
@@ -46,7 +46,10 @@ class User extends Component {
         const { _id } = this.props;
         if (!world) return this.setState({ error: 'Bitte Welt angeben' });
         if (!name) return this.setState({ error: 'Bitte Spieler angeben' });
-        if (!_id) return this.setState({ error: 'Warum sollte man ohne id hier sein dürfen außer bei missing login' });
+        if (!_id)
+            return this.setState({
+                error: 'Warum sollte man ohne id hier sein dürfen außer bei missing login',
+            });
 
         const body = {
             name,
@@ -66,12 +69,12 @@ class User extends Component {
         });
         console.log(res);
         const player = await res.json();
-        console.log({player});
+        console.log({ player });
         if (!res.ok || player.error) {
             return this.setState({ error: player.error.message });
         }
 
-        this.props.dispatch(updatePlayer(player))
+        this.props.dispatch(updatePlayer(player));
     };
 
     render() {

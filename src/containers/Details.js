@@ -65,24 +65,23 @@ class Details extends Component {
                 </div>
 
                 {/*die genau produktion in X Zeit könen wir nicht ausrechnen. Ein Gebäude ist in eher +0.03 Tagen erst fertig. Deshalb miteln wir den WErt durch die benötigte zeitvon */}
-                {this.state.show === 0 &&
-                    building && (
-                        <div className="buildings">
-                            <Row>Name: {buildingNames[building.type]}</Row>
-                            <Row>Production: (arrowUp) </Row>
-                            <Row>Upgrade costs: </Row>
-                            <Row>
-                                {shortenNumber(buildingProd.tib, 2)}{' '}
-                                <img src={icon_tib} alt={icon_tib} />
-                            </Row>
-                            <Row>
-                                {shortenNumber(buildingProd.power, 2)}{' '}
-                                <img src={icon_power} alt={icon_tib} />
-                            </Row>
-                            {/*<div>+production: </div>*/}
-                            {/*<div>kosten/+prod: </div>*/}
-                        </div>
-                    )}
+                {this.state.show === 0 && building && (
+                    <div className="buildings">
+                        <Row>Name: {buildingNames[building.type]}</Row>
+                        <Row>Production: (arrowUp) </Row>
+                        <Row>Upgrade costs: </Row>
+                        <Row>
+                            {shortenNumber(buildingProd.tib, 2)}{' '}
+                            <img src={icon_tib} alt={icon_tib} />
+                        </Row>
+                        <Row>
+                            {shortenNumber(buildingProd.power, 2)}{' '}
+                            <img src={icon_power} alt={icon_tib} />
+                        </Row>
+                        {/*<div>+production: </div>*/}
+                        {/*<div>kosten/+prod: </div>*/}
+                    </div>
+                )}
                 {this.state.show === 0 && !building && <div>Kein Gebude ausgewählt</div>}
 
                 {this.state.show === 1 && (

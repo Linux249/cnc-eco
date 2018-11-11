@@ -19,7 +19,7 @@ class Alliance extends Component {
         super();
         this.state = {
             members: [...Array(50)],
-            loading: false
+            loading: false,
         };
     }
     componentWillMount() {
@@ -29,32 +29,29 @@ class Alliance extends Component {
 
     getAlliance = () => {
         this.setState({ loading: true });
-        const {  } = this.props;
+        const {} = this.props;
         //const alliance = await fetch(`${api_url}/layouts?pl=${pl}&w=${w}&a=${a}&limit=200`).then(res => res.json())
         this.setState({ loading: false });
     };
 
     render() {
         const { loading, members } = this.state;
-        const { } = this.props;
+        const {} = this.props;
         return (
             <Body>
                 <LayoutS>
                     <Loading isLoading={loading} />
                     {!loading && (
                         <Fragment>
-                            <Row>
-                                Alliance
-
-                            </Row>
+                            <Row>Alliance</Row>
                             {members.map(member => (
                                 <Body>
                                     <div>Name</div>
                                     <div>Rang</div>
                                     <div>Punkte</div>
                                     <div>Basen</div>
-                                    <div></div>
-                                    <div></div>
+                                    <div />
+                                    <div />
                                 </Body>
                             ))}
                         </Fragment>

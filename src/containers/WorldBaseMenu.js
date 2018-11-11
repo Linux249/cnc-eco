@@ -1,11 +1,10 @@
-import Row from '../style/Row'
-import Button from '../style/Button'
-import React from 'react'
-import {connect} from 'react-redux'
+import Row from '../style/Row';
+import Button from '../style/Button';
+import React from 'react';
+import { connect } from 'react-redux';
 
-
-export const WorldBaseMenu = (props) => {
-    const { worlds, bases, playerName } = props
+export const WorldBaseMenu = props => {
+    const { worlds, bases, playerName } = props;
     return (
         <>
             <Row>
@@ -25,15 +24,15 @@ export const WorldBaseMenu = (props) => {
                 ))}
             </Row>
         </>
-    )
-}
+    );
+};
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return {
         playerName: state.player.name,
         worlds: state.player.worlds,
-        bases: []
-    }
-}
+        bases: [],
+    };
+};
 
 export default connect(mapStateToProps)(WorldBaseMenu);

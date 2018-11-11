@@ -704,7 +704,7 @@ try {
                                     clearTimeout(check_timer);
                                 }
 
-                                /* When a city is selected, the data for the city is loaded in the background.. once the 
+                                /* When a city is selected, the data for the city is loaded in the background.. once the
                                  * data arrives, this method is called again with these fields set, but until it does
                                  * we can't actually generate the link.. so this section of the code grays out the button
                                  * until the data is ready, then it'll light up. */

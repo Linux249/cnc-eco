@@ -78,7 +78,7 @@ function receiveLogin(data) {
         isFetching: false,
         isAuthenticated: true,
         token: data.token,
-        user_id: data.user._id
+        user_id: data.user._id,
     };
 }
 
