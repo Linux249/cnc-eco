@@ -8,7 +8,7 @@ import Row from '../style/Row';
 import Button from '../style/Button';
 import Label from '../style/Label';
 import urlToBase from './../util/parseurl.js';
-import { replaceAllBase } from '../store/actions/base';
+import {replaceAllBase, replaceBaseFromUrl} from '../store/actions/base'
 
 class UrlInfo extends Component {
     constructor(props) {
@@ -42,6 +42,13 @@ class UrlInfo extends Component {
 }
 const mapStateToProps = () => {
     return {};
+};
+
+// TODO was copy pasted here as a reminder for an old? way for changing base via url
+const mapDispatchToProps = dispatch => {
+    return {
+        replaceBaseFromUrl: url => dispatch(replaceBaseFromUrl(url)),
+    };
 };
 
 export default connect(mapStateToProps)(UrlInfo);
