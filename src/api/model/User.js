@@ -35,14 +35,13 @@ const userSchema = Schema({
         {
             worldId: String,
             player_id: Schema.ObjectId,
+            worldName: String,
         },
     ],
 });
 
 // generating a hash
-userSchema.methods.generateHash = function (password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-};
+userSchema.methods.generateHash = password => bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 
 // checking if password is valid
 userSchema.methods.validPassword = function (password) {
