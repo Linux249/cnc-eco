@@ -47,27 +47,27 @@ class WorldBaseMenu extends Component {
                             {world.worldName}
                         </Button>
                     )}
+                    <Row>
+                        {bases.map((base, i) => (
+                            <Button key={i} onClick={() => {}}>
+                                {base.name}
+                            </Button>
+                        ))}
+                    </Row>
                 </Row>
-                bases
-                <Row>
-                    {bases.map((base, i) => (
-                        <Button key={i} onClick={() => {}}>
-                            {base.name}
-                        </Button>
-                    ))}
-                </Row>
+
             </>
         );
     }
 }
 
 const mapStateToProps = state => {
-        const world = state.player.worlds[0]
+    const world = state.player.worlds[0]
     return {
         selectedWorld: state.player.selectedWorld,
         playerName: state.player.name,
         worlds: state.player.worlds,
-        bases: [],
+        bases: state.player.bases,
         world
     };
 };

@@ -1,6 +1,6 @@
 import { PLAYER_CHANGE_LOADING,
     PLAYER_CHANGE_WORLD,
-    PLAYER_UPDATE } from '../constants/actionTypes';
+    PLAYER_UPDATE_NAME_WORLDS, PLAYER_UPDATE_BASES } from '../constants/actionTypes';
 
 const initState = {
     a: 126,
@@ -31,11 +31,16 @@ export function player(state = initState, action) {
                 ...state,
                 w: action.w,
             };
-        case PLAYER_UPDATE:
+        case PLAYER_UPDATE_NAME_WORLDS:
             return {
                 ...state,
                 name: action.name,
                 worlds: action.worlds,
+            };
+        case PLAYER_UPDATE_BASES:
+            return {
+                ...state,
+                bases: action.bases,
             };
         default:
             return state;
