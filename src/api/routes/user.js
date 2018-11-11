@@ -26,10 +26,12 @@ router.delete('/user/:id', async (req, res, next) => {
 });
 
 router.post('/user/addPlayer', async (req, res, next) => {
+    // name is player name given from user
     const { name, worldId, _id } = req.body;
+    // TODO worldName comes also from where user choose world later
     console.log({ name, worldId, _id });
 
-    // Find User first
+    // Find User first TODO - thats could be done via auth later
     const user = await User.findOne({ _id });
     if (!user) {
         console.log(user);
@@ -80,6 +82,7 @@ router.post('/user/addPlayer', async (req, res, next) => {
 
             user.worlds.push({
                 worldId: worldId,
+                worldName: "TODO where from?",
                 player_id: player._id,
             });
             //const r = await collection.update({_id: player._id}, player)
@@ -95,8 +98,7 @@ router.post('/user/addPlayer', async (req, res, next) => {
                         ') minutes - please update data ingame'
                 )
             );
-    } else
-        next(new Error('Cannot add Player: Player has never updated - please update data ingame'));
+    } else next(new Error('Cannot add Player: Player has never updated - please update data ingame'));
 
     // add player to user and time
 });

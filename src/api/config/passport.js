@@ -96,10 +96,10 @@ export default passport => {
                                 newUser.local.email = email;
                                 newUser.local.password = newUser.generateHash(password);
 
-                                newUser.save(function(err) {
+                                newUser.save(function(err, savedUser) {
                                     if (err) return done(err);
-                                    delete newUser.local.password;
-                                    return done(null, newUser);
+                                    savedUser.local.password = undefined;
+                                    return done(null, savedUser);
                                 });
                             }
                         });
