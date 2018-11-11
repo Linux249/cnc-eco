@@ -5,14 +5,14 @@ import {connect} from 'react-redux'
 
 
 export const WorldBaseMenu = (props) => {
-    const { worlds, bases } = props
+    const { worlds, bases, playerName } = props
     return (
         <>
             <Row>
-                worlds
+                {playerName}
                 {worlds.map((world, i) => (
                     <Button key={i} onClick={() => {}}>
-                        {world.name}
+                        {world.worldName}
                     </Button>
                 ))}
             </Row>
@@ -30,7 +30,8 @@ export const WorldBaseMenu = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        worlds: [],
+        playerName: state.player.name,
+        worlds: state.player.worlds,
         bases: []
     }
 }

@@ -67,10 +67,11 @@ class User extends Component {
         console.log(res);
         const player = await res.json();
         console.log({player});
-        this.props.dispatch(updatePlayer(player))
-        if (!res.ok) {
-            this.setState({ error: player.error.message });
+        if (!res.ok || player.error) {
+            return this.setState({ error: player.error.message });
         }
+
+        this.props.dispatch(updatePlayer(player))
     };
 
     render() {
@@ -104,7 +105,7 @@ class User extends Component {
 }
 
 const mapStateToProps = state => ({
-    _id: state.player._id,
+    _id: state.auth.user_id,
 });
 
 const mapDispatchToProps = dispatch => {
