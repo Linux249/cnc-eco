@@ -1,13 +1,15 @@
 /**
  * Created by Bombassd on 12.01.2017.
  */
+
 'use-strict';
-let util = require('./production.js');
+
+const util = require('./production.js');
 
 const dummy =
     'http://cncopt.com/?map=2|N|N|-fix-|.........20p20p20p20p20p20h20s42h.20p20a20p20a20p20h20s20h.20p20p26p20p20p20h20s20h.20p20a20p20a20p....20p20p20p20p20n20s....cc.20n20s20nc..........j37s37f37s37f37s37q.l37q37zj37z37z37zk..37q37sj37qll37s..37qh37c37q37c37qjj.37q37s37z37qj37s37q..l37q37q37s37q37zh..37mj37w37w37w37wh.h37w37qh37m37q..k.42l42l43r43r..1q1p.42l43r44r44r..1b..48l48r48r46r.....50m50m43r43r38r....|newEconomy';
 
-//Url aufteilen
+// Url aufteilen
 
 const silo_production = [
     0,
@@ -76,7 +78,7 @@ const silo_production = [
     62182619,
     77728274,
     97160342,
-]; //Stufe 12 Silo Produziert array[12] tiberium * Anzahl der Sammler
+]; // Stufe 12 Silo Produziert array[12] tiberium * Anzahl der Sammler
 const accu_production = [
     0,
     48,
@@ -418,7 +420,7 @@ const raf_cost = [
     235879167836,
 ];
 
-const calcBaseUpCost = buildings => {
+const calcBaseUpCost = (buildings) => {
     const costs_tiberium = [
         1,
         2,
@@ -486,24 +488,24 @@ const calcBaseUpCost = buildings => {
         89348169635,
         117939583918,
     ];
-    let costs = { tib: 0, power: 0 };
-    buildings.forEach(function(building) {
+    const costs = { tib: 0, power: 0 };
+    buildings.forEach((building) => {
         if (building.type && building.lvl < 65) {
             switch (building.type) {
-                case 'n': // kris harvester
-                case 'h': // tib harvester
-                    costs.tib += costs_tiberium[building.lvl];
-                    costs.power += Math.round((costs_tiberium[building.lvl] / 4) * 3); //power coosts for a harvester
-                    break;
-                case 's': // silo
-                case 'a': // akku
-                    costs.tib += costs_tiberium[building.lvl];
-                    costs.power += Math.round(costs_tiberium[building.lvl] / 4);
-                    break;
-                case 'r': // rafenerieeee
-                    costs.tib += costs_tiberium[building.lvl] * 2; // dubble costs
-                    costs.power += Math.round(costs_tiberium[building.lvl] / 2); //power costs for a raf
-                    break;
+            case 'n': // kris harvester
+            case 'h': // tib harvester
+                costs.tib += costs_tiberium[building.lvl];
+                costs.power += Math.round((costs_tiberium[building.lvl] / 4) * 3); // power coosts for a harvester
+                break;
+            case 's': // silo
+            case 'a': // akku
+                costs.tib += costs_tiberium[building.lvl];
+                costs.power += Math.round(costs_tiberium[building.lvl] / 4);
+                break;
+            case 'r': // rafenerieeee
+                costs.tib += costs_tiberium[building.lvl] * 2; // dubble costs
+                costs.power += Math.round(costs_tiberium[building.lvl] / 2); // power costs for a raf
+                break;
             }
         }
     });
@@ -516,7 +518,9 @@ const urlToBase = (url = dummy) => {
     const faction = split[1]; // F = forgetten, N = NOD, G = GDI
     let urlString = split[4];
     let slot = 1;
-    let building, unit, lvl;
+    let building,
+        unit,
+        lvl;
 
     const base = {
         nod_buildings_keys: {
@@ -542,11 +546,11 @@ const urlToBase = (url = dummy) => {
         buildings: [],
         defens: [],
         army: [],
-        faction: faction,
+        faction,
         name: baseName,
     };
 
-    //Gebäude auslesen - 72 slots
+    // Gebäude auslesen - 72 slots
     while (slot <= 72) {
         building, (lvl = false);
         if (urlString[0] == '.') {
@@ -567,8 +571,8 @@ const urlToBase = (url = dummy) => {
             base.buildings.push({
                 name: base.nod_buildings_keys[building],
                 type: building,
-                lvl: lvl,
-                slot: slot,
+                lvl,
+                slot,
                 x: slot % 9,
                 y: Math.ceil(slot / 9),
             });
@@ -576,8 +580,8 @@ const urlToBase = (url = dummy) => {
         slot++;
     }
 
-    //Armee defens - 72 slots
-    slot = 1; //reset
+    // Armee defens - 72 slots
+    slot = 1; // reset
     while (slot <= 72) {
         unit, (lvl = false);
         if (urlString[0] == '.') {
@@ -597,8 +601,8 @@ const urlToBase = (url = dummy) => {
             urlString = urlString.slice(1);
             base.defens.push({
                 type: unit,
-                lvl: lvl,
-                slot: slot,
+                lvl,
+                slot,
                 x: slot % 9,
                 y: Math.ceil(slot / 9),
             });
@@ -606,8 +610,8 @@ const urlToBase = (url = dummy) => {
         slot++;
     }
 
-    //unit army - 36 slots
-    slot = 1; //reset
+    // unit army - 36 slots
+    slot = 1; // reset
     while (slot <= 36) {
         unit, (lvl = false);
         if (urlString[0] == '.') {
@@ -627,8 +631,8 @@ const urlToBase = (url = dummy) => {
             urlString = urlString.slice(1);
             base.army.push({
                 type: unit,
-                lvl: lvl,
-                slot: slot,
+                lvl,
+                slot,
                 x: slot % 9,
                 y: Math.ceil(slot / 9),
             });
@@ -638,13 +642,13 @@ const urlToBase = (url = dummy) => {
 
     delete base.nod_buildings_keys;
 
-    //@return base
+    // @return base
     return base;
 };
 
-const parseBaseToURL = base => {
+const parseBaseToURL = (base) => {
     let urlString = '';
-    base.buildings.concat(base.defens, base.army).forEach(function(building) {
+    base.buildings.concat(base.defens, base.army).forEach((building) => {
         if (building.type) {
             if (building.lvl) {
                 urlString += building.lvl;
@@ -660,9 +664,9 @@ const parseBaseToURL = base => {
 // lvl all buildings += [lvl]
 const allBuildingLvLUp = (base, lvl = 0) => {
     if (base.buildings) {
-        base.buildings.forEach(function(building) {
+        base.buildings.forEach((building) => {
             if (building.lvl) {
-                building.lvl += lvl; //upgrade building lvl
+                building.lvl += lvl; // upgrade building lvl
                 if (building.lvl > 65) building.lvl = 65; // check for max lvl (65)
             }
         });
@@ -670,38 +674,38 @@ const allBuildingLvLUp = (base, lvl = 0) => {
     return base;
 };
 
-const best = base => {
-    let topTib = [];
+const best = (base) => {
+    const topTib = [];
     base.buildings.forEach((building, index, allBuildings) => {
         // upgrade one building
         if (building.lvl < 65) {
             building.lvl += 1;
-            let production = util.calcBaseProduction(allBuildings);
+            const production = util.calcBaseProduction(allBuildings);
             // console.log(building)
             console.info(production);
             topTib.push(production);
         }
 
-        //console.log(building)
+        // console.log(building)
     });
 
     return topTib;
 };
 
 const productionOverDays = (base, days) => {
-    let prodOverTime = [];
-    let limit = days * 24;
+    const prodOverTime = [];
+    const limit = days * 24;
     let time = 0;
     while (time < limit) {
-        let production = util.calcBaseProduction(base.buildings);
-        let costs = calcBaseUpCost(base.buildings);
+        const production = util.calcBaseProduction(base.buildings);
+        const costs = calcBaseUpCost(base.buildings);
         prodOverTime.push({
             production,
             time,
         });
         base = allBuildingLvLUp(base, 1);
         console.log(production.tib);
-        time = time + costs.tib / production.tib;
+        time += costs.tib / production.tib;
         console.log(time);
     }
     return prodOverTime;
@@ -716,9 +720,9 @@ exports.productionOverDays = productionOverDays;
 exports.calcBaseUpCost = calcBaseUpCost;
 
 // TEST
-//let base = urlToBase(dummy);
-//let urlString = parseToURL(base);
-//let out = "http://cncopt.com/?map=2|N|N|-fix-|" + urlString + "|newEconomy";
-//console.log(urlString);
-//console.log((out.localeCompare(dummy)));
-//console.log(dummy);
+// let base = urlToBase(dummy);
+// let urlString = parseToURL(base);
+// let out = "http://cncopt.com/?map=2|N|N|-fix-|" + urlString + "|newEconomy";
+// console.log(urlString);
+// console.log((out.localeCompare(dummy)));
+// console.log(dummy);

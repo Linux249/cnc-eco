@@ -1,18 +1,20 @@
 /**
  * Created by Bombassd on 08.06.2017.
  */
-'use strict';
-//import { findBestToLvlUpNext } from './performance'
+
+
+// import { findBestToLvlUpNext } from './performance'
 // import Path from 'path'
 // import Inert from 'inert'
 // import Hapi from 'hapi'
 // import layouts from './src/routes/layouts'
-//const mongoose = require("mongoose")
+// const mongoose = require("mongoose")
 
 import express from 'express';
-let app = express();
-let server = require('http').createServer(app);
-let io = require('socket.io')(server, { pingInterval: 1000 });
+
+const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server, { pingInterval: 1000 });
 const api = require('./app');
 
 const PORT = process.env.PORT || 8000;
@@ -22,10 +24,10 @@ const mongo_uri = process.env.MONGODB_URI
     ? process.env.MONGODB_URI
     : 'mongodb://localhost:27017/cnc';
 console.log({ mongo_uri });
-//mongoose.connect(mongo_uri, { useMongoClient: true, promiseLibrary: global.Promise })
-//const db = mongoose.connection //simplification
+// mongoose.connect(mongo_uri, { useMongoClient: true, promiseLibrary: global.Promise })
+// const db = mongoose.connection //simplification
 
-//app.use("/", express.static("public"))
+// app.use("/", express.static("public"))
 
 //
 //
@@ -44,14 +46,14 @@ console.log({ mongo_uri });
 //
 // server.route(layouts);
 
-io.on('connect', function(socket) {
+io.on('connect', (socket) => {
     console.log('someone conecceted');
 
-    socket.on('buildings', buildings => {
+    socket.on('buildings', (buildings) => {
         console.log('buildings emited - start searching');
-        //findBestToLvlUpNext(buildings, foundNewBest)
+        // findBestToLvlUpNext(buildings, foundNewBest)
 
-        socket.on('disconnect', function() {
+        socket.on('disconnect', () => {
             // clearInterval(interv)
             console.log('user disconnected');
         });
@@ -80,5 +82,5 @@ app.set('port', PORT);
  * Listen on provided port
  */
 app.listen(PORT, () => {
-    console.log('Server gestartet - Port: ' + PORT);
+    console.log(`Server gestartet - Port: ${PORT}`);
 });

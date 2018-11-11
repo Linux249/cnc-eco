@@ -1,7 +1,6 @@
 'use-strict';
 
 import { Router } from 'express';
-const router = Router();
 
 import layouts from './layouts';
 import db from './db';
@@ -9,6 +8,8 @@ import player from './player';
 import alliance from './alliance';
 import ingameData from './ingameData';
 import user from './user';
+
+const router = Router();
 
 router.use('/', layouts);
 router.use('/', db);

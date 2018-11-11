@@ -1,6 +1,7 @@
-'use strict';
+
 import { layoutStats } from '../../utils/layout';
 import { Router } from 'express';
+
 const router = Router();
 
 // GET /api/v1/layout
@@ -15,14 +16,16 @@ router.get('/layout', (req, res, next) => {
             console.log(err);
             next(err);
         }
-        //console.log(`GET:\t${collection.namespace} - items: ${layout.length}`)
+        // console.log(`GET:\t${collection.namespace} - items: ${layout.length}`)
         res.json(layout);
     });
 });
 
-//POST /api/v1/Archiv
+// POST /api/v1/Archiv
 router.get('/layouts', async (req, res, next) => {
-    let { a, w, skip, limit } = req.query;
+    let {
+        a, w, skip, limit,
+    } = req.query;
     limit ? (limit = parseInt(limit)) : (limit = 50);
     skip ? (skip = parseInt(skip)) : (skip = 0);
     try {
@@ -41,18 +44,20 @@ router.get('/layouts', async (req, res, next) => {
     }
 });
 
-//POST /api/v1/layouts
+// POST /api/v1/layouts
 router.post('/layouts', async (req, res, next) => {
     res.setHeader(
         'Access-Control-Allow-Origin',
-        'https://prodgame08.alliances.commandandconquer.com'
+        'https://prodgame08.alliances.commandandconquer.com',
     );
     res.send();
-    let { db, body, headers, query } = req;
+    let {
+        db, body, headers, query,
+    } = req;
     const { w } = query;
     if (headers['content-type'].includes('text')) body = JSON.parse(body);
 
-    const layouts = await Object.keys(body).map(key => {
+    const layouts = await Object.keys(body).map((key) => {
         const [x, y] = key.split(':');
         const layoutString = body[key].layout.slice(0, 72);
         const { tib, cris } = layoutStats(layoutString);
@@ -72,7 +77,7 @@ router.post('/layouts', async (req, res, next) => {
     const collection = db.collection(`layouts_${w}`);
     console.log(`POST: collection: ${collection.namespace} - items: ${layouts.length}`);
 
-    await layouts.forEach(layout => {
+    await layouts.forEach((layout) => {
         collection.updateOne(
             { x: layout.x, y: layout.y },
             layout,
@@ -82,10 +87,10 @@ router.post('/layouts', async (req, res, next) => {
                     next(err);
                     throw err;
                 }
-            }
+            },
         );
     });
-    //npm console.log(layouts)
+    // npm console.log(layouts)
 });
 
 export default router;

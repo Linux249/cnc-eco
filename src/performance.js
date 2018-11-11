@@ -1,17 +1,18 @@
 /**
  * Created by Bombassd on 08.06.2017.
  */
-'use strict';
+
+
 import { futureProduction } from './production';
-//import async from 'async'
+// import async from 'async'
 
 // c param how many buildings shoud be lvled for analieze
 export function findBestToLvlUpNext(buildings, callback) {
-    let bestTibProd = []; //saves the building
-    let maxProd = 0;
-    let finish = false;
+    const bestTibProd = []; // saves the building
+    const maxProd = 0;
+    const finish = false;
 
-    let i = 0;
+    const i = 0;
     const end = 100;
     const candidates = [];
 
@@ -77,7 +78,7 @@ function* gen(buildings) {
         // if bedder results founded
         if (tibProd >= maxProd) {
             maxProd = tibProd; // for compare with future results
-            bestTibProd = randoms; //save best results - array of slots
+            bestTibProd = randoms; // save best results - array of slots
             console.log(`New Best: run:  + ${i} + \t ${maxProd} \t ${bestTibProd}`);
             yield bestTibProd;
         }
@@ -92,8 +93,7 @@ function getRandomBuildings(buildings) {
 
     while (randoms.length < 10) {
         const random = Math.floor(Math.random() * length);
-        if (buildings[random].type && 'shnra'.indexOf(buildings[random].type) !== -1)
-            randoms.push(random);
+        if (buildings[random].type && 'shnra'.indexOf(buildings[random].type) !== -1) { randoms.push(random); }
     }
     return randoms;
 }
@@ -120,7 +120,7 @@ function getRandomLvlUpBase(buildings, count) {
     let i = 0;
     while (i < count) {
         const random = Math.floor(Math.random() * length);
-        //TODO add p
+        // TODO add p
         if (copyBuildings[random].type && copyBuildings[random].type in ['s', 'h', 'n', 'a', 'r']) {
             randoms.push(random);
             i++;

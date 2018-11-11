@@ -1,7 +1,8 @@
-'use strict';
+
 import { Router } from 'express';
-const router = Router();
 import Alliance from '../model/Alliance';
+
+const router = Router();
 
 // GET // api/v1/alliance?world=22&alliance=123
 router.get('/alliance', async (req, res, next) => {
@@ -28,18 +29,16 @@ router.get('/alliance', async (req, res, next) => {
     // WORLD OF PLAYER
     const collection = req.db.collection(`players_${world}`);
 
-    //console.log(alliance)
-    await Promise.all(
-        alliance.members.map(async (member, i) => {
-            // TODO was wen kein player gefunden wird?
-            // console.log(member)
-            const player = await collection.findOne({ playerId: String(member.playerId) });
-            console.log(player);
-            if (player) alliance.members[i] = { role: member.role, ...player, data: true };
-            else alliance.members[i].data = false;
-            return player;
-        })
-    );
+    // console.log(alliance)
+    await Promise.all(alliance.members.map(async (member, i) => {
+        // TODO was wen kein player gefunden wird?
+        // console.log(member)
+        const player = await collection.findOne({ playerId: String(member.playerId) });
+        console.log(player);
+        if (player) alliance.members[i] = { role: member.role, ...player, data: true };
+        else alliance.members[i].data = false;
+        return player;
+    }));
     /*
     const test1 = await collection.find({playerId: String(member.playerId)})
     const test2 = await collection.find({playerId: Number(member.playerId)})
@@ -48,7 +47,7 @@ router.get('/alliance', async (req, res, next) => {
     const test5 = await collection.findOne({playerId: Number(member.playerId)})
     const test6 = await collection.findOne({playerId: member.playerId})
     console.log({test1, test2, test3})
-    console.log({test6, test4, test5})*/
+    console.log({test6, test4, test5}) */
 
     // TODO auth require
 

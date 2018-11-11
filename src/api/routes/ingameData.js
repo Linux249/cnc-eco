@@ -1,8 +1,9 @@
-'use strict';
+
 import { Router } from 'express';
-const router = Router();
 import Player from '../model/Player';
 import Alliance from '../model/Alliance';
+
+const router = Router();
 
 // body.worldId is unique id of all worlds
 // body.allianceId is id of alliance on this world
@@ -28,7 +29,7 @@ router.post('/ingameData', async (req, res, next) => {
          *   save Alliance Information's
          */
         const aId = Number(`${allianceId}${worldId}`); // unique id combine world and ally id
-        let alliance =
+        const alliance =
             (await Alliance.findOne({ allianceId: aId })) || new Alliance({ allianceId: aId });
 
         const members = await [...Array(Number(count))].map((_, i) => ({
@@ -56,10 +57,10 @@ router.post('/ingameData', async (req, res, next) => {
         }));
 
         // find or create player
-        //let player = await Player.findOne({name: currentplayerName}) || new Player({name: currentplayerName})
+        // let player = await Player.findOne({name: currentplayerName}) || new Player({name: currentplayerName})
 
         const player = {
-            playerId: body['currentplayerId'],
+            playerId: body.currentplayerId,
             allianceId,
             name: currentplayerName,
             bases,
@@ -97,9 +98,9 @@ router.post('/ingameData', async (req, res, next) => {
 
         // update or create world
         // TODO save the world where the plaer has a "player"
-        //const index = player.worlds.findIndex(world => world.w == worldId)
-        //console.log({player, index})
-        //console.log(player.worlds)
+        // const index = player.worlds.findIndex(world => world.w == worldId)
+        // console.log({player, index})
+        // console.log(player.worlds)
 
         /*
         if(index !== -1) {
@@ -115,9 +116,9 @@ router.post('/ingameData', async (req, res, next) => {
         */
 
         // save
-        //const result = await player.save()
-        //console.log(`UPDATE PLAYER INFO: ${result}`)
-        //res.json(result)
+        // const result = await player.save()
+        // console.log(`UPDATE PLAYER INFO: ${result}`)
+        // res.json(result)
         res.send('UPDATED');
     } catch (err) {
         console.log({ err });

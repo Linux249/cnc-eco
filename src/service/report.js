@@ -21,9 +21,8 @@ const report = {
     },
 };
 
-export const createReport = async db => {
-    'use strict';
-    let date = new Date();
+export const createReport = async (db) => {
+    const date = new Date();
     date.setDate(date.getDate() - 14); // date 14 days before now
 
     try {
@@ -32,27 +31,25 @@ export const createReport = async db => {
         const layoutsColl = collections.filter(coll => coll.name.includes('layouts'));
 
         // got throug each World/collection
-        await Promise.all(
-            layoutsColl.map(async ({ name }) => {
-                const collection = await db.collection(name);
-                const reportWorld = {
-                    name: name,
-                    deletedLayouts: null,
-                    stats: null,
-                };
+        await Promise.all(layoutsColl.map(async ({ name }) => {
+            const collection = await db.collection(name);
+            const reportWorld = {
+                name,
+                deletedLayouts: null,
+                stats: null,
+            };
 
                 // deleting old layouts
-                const { result } = await collection.remove({ time: { $lt: date } });
-                if (!result.ok) console.log('FEHLER BEIM LÖSCHEN VON LAYOUTS'); // TODO bedder error handling
-                reportWorld.deletedLayouts = result.n;
+            const { result } = await collection.remove({ time: { $lt: date } });
+            if (!result.ok) console.log('FEHLER BEIM LÖSCHEN VON LAYOUTS'); // TODO bedder error handling
+            reportWorld.deletedLayouts = result.n;
 
-                // getting db stats
-                // TODO analyzing stas document and pic only relevant infos
-                reportWorld.stats = await collection.stats({ scale: 1024 });
+            // getting db stats
+            // TODO analyzing stas document and pic only relevant infos
+            reportWorld.stats = await collection.stats({ scale: 1024 });
 
-                report.worlds.push(reportWorld);
-            })
-        );
+            report.worlds.push(reportWorld);
+        }));
 
         // PLAYER
         report.player.stats = await db.collection('players').stats({ scale: 1024 });

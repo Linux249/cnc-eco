@@ -1,23 +1,27 @@
-'use strict';
+
 
 import express from 'express';
-//const logger = require("morgan")
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+
 import apiRouter from './api/routes/index';
 import passport from 'passport';
 import configurePassport from './api/config/passport'; // configurePassport
-//const config = require('./env.json')[process.env.NODE_ENV || 'development']
+// const config = require('./env.json')[process.env.NODE_ENV || 'development']
 import MongoClient from 'mongodb';
 import schedule from 'node-schedule';
 import { createReport } from './service/report';
-const cookieSession = require('cookie-session');
+
 import cors from 'cors';
 
 import logging from 'morgan';
 import flash from 'connect-flash';
 import { cookieSecret, mongoURI } from './api/config/config';
 import setAuthRout from './api/routes/auth/index';
+// const logger = require("morgan")
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const cookieSession = require('cookie-session');
+
 let DB;
 
 // configuration ===============================================================
@@ -25,23 +29,23 @@ MongoClient.connect(
     mongoURI,
     (err, db) => {
         DB = db;
-        const j = schedule.scheduleJob({ hour: 0, minute: 32 }, function() {
+        const j = schedule.scheduleJob({ hour: 0, minute: 32 }, () => {
             console.log('SCHEUDLER');
             createReport(DB);
         });
-    }
+    },
 );
 
 mongoose.Promise = global.Promise;
 mongoose.connect(mongoURI);
-const db = mongoose.connection; //simplification
+const db = mongoose.connection; // simplification
 
-//falls Fehler kommen so ausgeben
-db.on('error', err => {
+// falls Fehler kommen so ausgeben
+db.on('error', (err) => {
     console.error('Fehler von DB:', err);
 });
 
-//nach erfolgreichem verbinden
+// nach erfolgreichem verbinden
 db.once('open', () => {
     console.log('db connection succesful');
 });
@@ -53,14 +57,14 @@ app.use((req, res, next) => {
     req.db = DB;
     next();
 });
-//const allow = procces.env.
+// const allow = procces.env.
 
 // TO
 app.use((req, res, next) => {
     const origin = req.get('origin');
     const host = req.get('host');
     //  set all headers to allowed
-    if (origin || host) res.setHeader('Access-Control-Allow-Origin', origin ? origin : host);
+    if (origin || host) res.setHeader('Access-Control-Allow-Origin', origin || host);
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH,DELETE');
@@ -76,9 +80,9 @@ app.use((req, res, next) => {
     next();
 });
 
-//zeigt verschiedene logs in der Console an
-//app.use(logger("dev"))
-//nutzt den body parser
+// zeigt verschiedene logs in der Console an
+// app.use(logger("dev"))
+// nutzt den body parser
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 app.use(bodyParser.text());
@@ -88,16 +92,16 @@ app.use(cors());
 configurePassport(passport);
 
 app.use(logging('dev'));
-//app.use(flash()); // use connect-flash for flash messages stored in session
+// app.use(flash()); // use connect-flash for flash messages stored in session
 
-/*app.use(
+/* app.use(
     cookieSession({
         maxAge: 30 * 24 * 60 * 60 * 100,
         keys: [cookieSecret],
     })
-);*/
+); */
 app.use(passport.initialize());
-//app.use(passport.session());
+// app.use(passport.session());
 
 // routes ======================================================================
 
@@ -116,8 +120,8 @@ app.use('/task/index.php', (req, res) => {
     }
 });
 
-//wenn der Request bis hierhin nicht 'abgefangen' wurde:
-//Eigener Error handler der errors als json! zurück schickt.
+// wenn der Request bis hierhin nicht 'abgefangen' wurde:
+// Eigener Error handler der errors als json! zurück schickt.
 app.use((req, res, next) => {
     const message = `link nicht gültig -: ${req.url}`;
     const err = new Error(message);
@@ -125,10 +129,10 @@ app.use((req, res, next) => {
     next(err);
 });
 
-//Error Handler - Server error
+// Error Handler - Server error
 app.use((err, req, res, next) => {
     console.warn(err);
-    res.status(err.status || 500); //falls irgendwo? next(err) aufgerufne wurde hat es wie oben eine status bekommen
+    res.status(err.status || 500); // falls irgendwo? next(err) aufgerufne wurde hat es wie oben eine status bekommen
     res.json({
         error: {
             message: err.message,

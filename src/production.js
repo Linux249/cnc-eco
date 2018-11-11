@@ -9,7 +9,6 @@
  *!/
 
 
-
  exports.calcBaseProduction = function (buildings)
  {
  let production = [0,0,0,0]      // [tib, kris, power, credits]
@@ -229,7 +228,7 @@ const roundTwoPoints = (p1, p2, day) => {
         credits: 0,
     };
     // for each of the 4 productions
-    for (let p in prod) {
+    for (const p in prod) {
         // x is time/days - y the production
         const x1 = p1.time;
         const y1 = p1.prod[p];
@@ -246,7 +245,7 @@ const roundTwoPoints = (p1, p2, day) => {
     return prod;
 };
 
-const calcBuildingCost = building => {
+const calcBuildingCost = (building) => {
     const costs_tiberium = [
         1,
         2,
@@ -315,7 +314,7 @@ const calcBuildingCost = building => {
         117939583918,
         117939583918,
     ];
-    let costs = {
+    const costs = {
         tib: 0,
         power: 0,
     };
@@ -323,22 +322,22 @@ const calcBuildingCost = building => {
 
     if (building.type && building.lvl <= 65) {
         switch (building.type) {
-            case 'n': // kris harvester
-            case 'h': // tib harvester
-                costs.tib += costs_tiberium[building.lvl];
-                costs.power += Math.round((costs_tiberium[building.lvl] / 4) * 3); //power coosts for a harvester
-                break;
-            case 's': // silo
-            case 'a': // akku
-                costs.tib += costs_tiberium[building.lvl];
-                costs.power += Math.round(costs_tiberium[building.lvl] / 4);
-                break;
-            case 'r': // rafenerieeee
-                costs.tib += costs_tiberium[building.lvl] * 2; // dubble costs
-                costs.power += Math.round(costs_tiberium[building.lvl] / 2); //power costs for a raf
-                break;
-            default:
-                break;
+        case 'n': // kris harvester
+        case 'h': // tib harvester
+            costs.tib += costs_tiberium[building.lvl];
+            costs.power += Math.round((costs_tiberium[building.lvl] / 4) * 3); // power coosts for a harvester
+            break;
+        case 's': // silo
+        case 'a': // akku
+            costs.tib += costs_tiberium[building.lvl];
+            costs.power += Math.round(costs_tiberium[building.lvl] / 4);
+            break;
+        case 'r': // rafenerieeee
+            costs.tib += costs_tiberium[building.lvl] * 2; // dubble costs
+            costs.power += Math.round(costs_tiberium[building.lvl] / 2); // power costs for a raf
+            break;
+        default:
+            break;
         }
     }
 
@@ -346,11 +345,11 @@ const calcBuildingCost = building => {
 };
 
 const calcBuildingCostAll = (buildings, lvl = 1) => {
-    let costs = {
+    const costs = {
         tib: 0,
         power: 0,
     };
-    buildings.forEach(building => {
+    buildings.forEach((building) => {
         if (building.lvl) {
             const cost = calcBuildingCost(building);
             costs.tib += cost.tib;
@@ -365,8 +364,8 @@ const calcBuildingCostAll = (buildings, lvl = 1) => {
 /*
  calc the produktion from Base
  */
-export const calcBaseProduction = buildings => {
-    let production = [0, 0, 0, 0]; // [tib, kris, power, credits]
+export const calcBaseProduction = (buildings) => {
+    const production = [0, 0, 0, 0]; // [tib, kris, power, credits]
     const neighbours = [-10, -9, -8, -1, 1, 8, 9, 10];
     const silo_production = [
         0,
@@ -435,7 +434,7 @@ export const calcBaseProduction = buildings => {
         62182619,
         77728274,
         97160342,
-    ]; //Stufe 12 Silo Produziert array[12] tiberium * Anzahl der Sammler
+    ]; // Stufe 12 Silo Produziert array[12] tiberium * Anzahl der Sammler
     const accu_production = [
         0,
         48,
@@ -961,14 +960,14 @@ export const calcBaseProduction = buildings => {
             if (building.lvl > 65) building.lvl = 65;
             // get tib/kris Silo?
             if (building.type === 's') {
-                neighbours.forEach(n => {
-                    let j = i + n; // j: neighbour
-                    if (0 <= j && j <= 71) {
+                neighbours.forEach((n) => {
+                    const j = i + n; // j: neighbour
+                    if (j >= 0 && j <= 71) {
                         if (buildings[j] && buildings[j].type === 'h') {
                             // h = tib
                             production[0] += silo_production[building.lvl]; // 0 = tib
                         } else if (buildings[j] && buildings[j].type === 'n') {
-                            //n = kris
+                            // n = kris
                             production[1] += silo_production[building.lvl]; // 1 = kris
                         }
                     }
@@ -977,14 +976,14 @@ export const calcBaseProduction = buildings => {
 
             // get tib harvester Production
             else if (building.type === 'h') {
-                //chick if silo around exists
+                // chick if silo around exists
                 let hasSilo = false;
-                neighbours.forEach(n => {
-                    let j = i + n; // j: neighbour
-                    if (0 <= j && j <= 71) {
+                neighbours.forEach((n) => {
+                    const j = i + n; // j: neighbour
+                    if (j >= 0 && j <= 71) {
                         // find silo
                         if (buildings[j] && buildings[j].type === 's') {
-                            hasSilo = true; //silo found
+                            hasSilo = true; // silo found
                         }
                     }
                 });
@@ -994,14 +993,14 @@ export const calcBaseProduction = buildings => {
 
             // get kris harvester Production
             else if (building.type === 'n') {
-                //chick if silo around exists
+                // chick if silo around exists
                 let hasSilo = false;
-                neighbours.forEach(n => {
-                    let j = i + n; // j: neighbour
-                    if (0 <= j && j <= 71) {
+                neighbours.forEach((n) => {
+                    const j = i + n; // j: neighbour
+                    if (j >= 0 && j <= 71) {
                         // find silo
                         if (buildings[j] && buildings[j].type === 's') {
-                            hasSilo = true; //silo found
+                            hasSilo = true; // silo found
                         }
                     }
                 });
@@ -1011,9 +1010,9 @@ export const calcBaseProduction = buildings => {
 
             // get power from accu
             else if (building.type === 'a') {
-                neighbours.forEach(n => {
-                    let j = i + n; // j: neighbour
-                    if (0 <= j && j <= 71) {
+                neighbours.forEach((n) => {
+                    const j = i + n; // j: neighbour
+                    if (j >= 0 && j <= 71) {
                         if (buildings[j] && buildings[j].type === 'p') {
                             // p = PowerPlant
                             production[2] += accu_production[building.lvl]; // 2 = power
@@ -1025,10 +1024,10 @@ export const calcBaseProduction = buildings => {
             // get power from PowerPlants
             else if (building.type === 'p') {
                 let hasAccu = false;
-                neighbours.forEach(n => {
-                    let j = i + n; // j: neighbour
-                    if (0 <= j && j <= 71) {
-                        //find kris fields around
+                neighbours.forEach((n) => {
+                    const j = i + n; // j: neighbour
+                    if (j >= 0 && j <= 71) {
+                        // find kris fields around
                         if (
                             buildings[j] &&
                             (buildings[j].type === 'n' || buildings[j].type === 'c')
@@ -1036,11 +1035,11 @@ export const calcBaseProduction = buildings => {
                             // p = PowerPlant
                             production[2] += pp_production_perm[building.lvl] / 2; // 2 = power
                         }
-                        //find 1 accu around
+                        // find 1 accu around
                         if (buildings[j] && buildings[j].type === 'a') {
                             hasAccu = true;
                         }
-                        //find rafs around
+                        // find rafs around
                         if (buildings[j] && buildings[j].type === 'r') {
                             production[3] += pp_production_credit[building.lvl];
                         }
@@ -1051,13 +1050,13 @@ export const calcBaseProduction = buildings => {
                 production[2] += pp_production_perm[building.lvl];
             }
 
-            //get credits from Rafs
+            // get credits from Rafs
             else if (building.type === 'r') {
                 let hasPp = false;
-                //count harvester/tib's around
-                neighbours.forEach(n => {
-                    let j = i + n; // j: neighbour
-                    if (0 <= j && j <= 71) {
+                // count harvester/tib's around
+                neighbours.forEach((n) => {
+                    const j = i + n; // j: neighbour
+                    if (j >= 0 && j <= 71) {
                         // find harvest/tib
                         if (
                             buildings[j] &&
@@ -1065,7 +1064,7 @@ export const calcBaseProduction = buildings => {
                         ) {
                             production[3] += raf_production_perm[building.lvl] / 2; // production[3] = credis
                         }
-                        //find one PowerPlant
+                        // find one PowerPlant
                         if (buildings[j] && buildings[j].type === 'p') {
                             hasPp = true;
                         }
@@ -1089,7 +1088,7 @@ export const calcBaseProduction = buildings => {
 /*
  full base +1
  */
-export const calcBaseUpCost = buildings => {
+export const calcBaseUpCost = (buildings) => {
     const costs_tiberium = [
         1,
         2,
@@ -1158,29 +1157,29 @@ export const calcBaseUpCost = buildings => {
         117939583918,
         117939583918,
     ];
-    let costs = {
+    const costs = {
         tib: 0,
         power: 0,
     };
-    buildings.forEach(building => {
+    buildings.forEach((building) => {
         if (building.type && building.lvl <= 65) {
             switch (building.type) {
-                case 'n': // kris harvester
-                case 'h': // tib harvester
-                    costs.tib += costs_tiberium[building.lvl];
-                    costs.power += Math.round((costs_tiberium[building.lvl] / 4) * 3); //power coosts for a harvester
-                    break;
-                case 's': // silo
-                case 'a': // akku
-                    costs.tib += costs_tiberium[building.lvl];
-                    costs.power += Math.round(costs_tiberium[building.lvl] / 4);
-                    break;
-                case 'r': // rafenerieeee
-                    costs.tib += costs_tiberium[building.lvl] * 2; // dubble costs
-                    costs.power += Math.round(costs_tiberium[building.lvl] / 2); //power costs for a raf
-                    break;
-                default:
-                    break;
+            case 'n': // kris harvester
+            case 'h': // tib harvester
+                costs.tib += costs_tiberium[building.lvl];
+                costs.power += Math.round((costs_tiberium[building.lvl] / 4) * 3); // power coosts for a harvester
+                break;
+            case 's': // silo
+            case 'a': // akku
+                costs.tib += costs_tiberium[building.lvl];
+                costs.power += Math.round(costs_tiberium[building.lvl] / 4);
+                break;
+            case 'r': // rafenerieeee
+                costs.tib += costs_tiberium[building.lvl] * 2; // dubble costs
+                costs.power += Math.round(costs_tiberium[building.lvl] / 2); // power costs for a raf
+                break;
+            default:
+                break;
             }
         }
     });
@@ -1201,13 +1200,13 @@ export const futureProduction = (buildings, days = 121) => {
 
     while (time < days) {
         // todo hier die reinfolge des bauen festlegen
-        for (let i in buildings) {
+        for (const i in buildings) {
             if (Object.keys(buildings[i]).length !== 0) {
                 const costs = calcBuildingCost(buildings[i]);
                 const prod = calcBaseProduction(buildings);
-                let tibTime = costs.tib / prod.tib / 24; //- tibTimeLeft   // shoud be possible to become negativ
-                let powerTime = costs.power / prod.power / 24; //- powerTimeLeft
-                //if (tibTime <= 0) tibTimeLeft = -1*tibTime      // if negativ it means their ist still
+                let tibTime = costs.tib / prod.tib / 24; // - tibTimeLeft   // shoud be possible to become negativ
+                let powerTime = costs.power / prod.power / 24; // - powerTimeLeft
+                // if (tibTime <= 0) tibTimeLeft = -1*tibTime      // if negativ it means their ist still
 
                 if (tibTimeLeft > 0) {
                     if (tibTime > tibTimeLeft) {
@@ -1228,11 +1227,11 @@ export const futureProduction = (buildings, days = 121) => {
                     }
                 }
 
-                //if (powerTime <= 0) powerTimeLeft = -1*powerTime
+                // if (powerTime <= 0) powerTimeLeft = -1*powerTime
                 if (powerTime > tibTime) {
                     time += powerTime;
                     tibTimeLeft += powerTime - tibTime;
-                    //powerTimeLeft = 0
+                    // powerTimeLeft = 0
                     // tibTimeLeft = 0
                 } else {
                     time += tibTime;
@@ -1257,7 +1256,7 @@ export const futureProduction = (buildings, days = 121) => {
     // the two points give the production item around the given day
     // it returns he calculatet produktion eactly on the given day
 
-    //for day in days
+    // for day in days
     const expData = [];
     for (let d = 1; d <= days; d++) {
         const time = data.find((o, i) => (o.time > d ? i : false));
@@ -1305,14 +1304,14 @@ export const futureProduction = (buildings, days = 121) => {
      prod
      })
 
-     }*/
+     } */
     return expData;
 };
 
 /*
 
  */
-export const calcTimeForAllBuildings = buildings => {
+export const calcTimeForAllBuildings = (buildings) => {
     const production = calcBaseProduction(buildings);
     const costs = calcBuildingCostAll(buildings);
     const time = {
@@ -1323,7 +1322,7 @@ export const calcTimeForAllBuildings = buildings => {
     return time;
 };
 
-/*export const productionOverDays = (base, days) => {
+/* export const productionOverDays = (base, days) => {
  base = cloneObject(base)
  let prodOverTime = []
  let limit = days*24
@@ -1356,4 +1355,4 @@ export const calcTimeForAllBuildings = buildings => {
  console.log("DIREKT LÖSCHEN")
  console.log(ret)
  return ret
- }*/
+ } */

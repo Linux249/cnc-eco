@@ -1,4 +1,4 @@
-'use strict';
+
 import mongoose, { Schema } from 'mongoose';
 
 const allianceSchema = new Schema({
