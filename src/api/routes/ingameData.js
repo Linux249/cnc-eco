@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import Player from '../model/Player';
+// import Player from '../model/Player';
 import Alliance from '../model/Alliance';
 
 const router = Router();

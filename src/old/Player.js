@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+/*import mongoose, { Schema } from 'mongoose';
 
 const playerSchema = new Schema({
     name: String,
@@ -17,4 +17,4 @@ const playerSchema = new Schema({
     ],
 });
 
-export default mongoose.model('Player', playerSchema);
+export default mongoose.model('Player', playerSchema);*/
