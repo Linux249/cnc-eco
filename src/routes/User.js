@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { replaceBaseFromUrl } from '../store/actions/base';
-import Base from '../components/Base.js';
-import BuildingMenu from '../containers/Buildings';
-import Menu from '../components/Menu';
-import Body from '../style/Body';
-import Row from '../style/Row';
 import Button from '../style/Button';
 import styled from 'styled-components';
 import Input from '../style/Input';
 import { api_url } from '../config/config';
 import { updatePlayer } from '../store/actions/player';
 
-const BaseS = styled.div``;
-const MenuS = styled.div``;
 
 const Middle = styled.div`
     display: flex;
@@ -77,7 +69,43 @@ class User extends Component {
         this.props.dispatch(updatePlayer(player));
     };
 
+
+    addWorld = async () => {
+        const { world } = this.state;
+        const { _id, playerName } = this.props;
+        if (!world) return this.setState({ error: 'Bitte Welt angeben' });
+        if (!_id)
+            return this.setState({
+                error: 'Warum sollte man ohne id hier sein dürfen außer bei missing login',
+            });
+
+        const body = {
+            name: playerName,
+            worldId: world,
+            _id,
+        };
+
+        const res = await fetch(api_url + '/user/addWorld', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            },
+            body: JSON.stringify(body),
+        }).catch(e => {
+            console.warn('catched error');
+            console.error(e);
+        });
+        console.log(res);
+        const player = await res.json();
+        console.log({ player });
+        if (!res.ok || player.error) {
+            return this.setState({ error: player.error.message });
+        }
+        this.props.dispatch(updatePlayer(player));
+    };
+
     render() {
+        const { playerName } = this.props
         const { world, error, name } = this.state;
 
         return (
@@ -94,13 +122,17 @@ class User extends Component {
                         size="3"
                         max="999"
                     />
-                    <h5>set your name</h5>
-                    <Input
-                        name="name"
-                        value={name}
-                        onChange={e => this.changeName(e.target.value)}
-                    />
-                    <Button onClick={this.addPlayer}>Add player</Button>
+                    {!playerName && (
+                        <>
+                            <h5>set your name</h5>
+                            <Input
+                                name="name"
+                                value={name}
+                                onChange={e => this.changeName(e.target.value)}
+                            />
+                        </>
+                    )}
+                    <Button onClick={!playerName ? this.addPlayer : this.addWorld}>{!playerName ? 'Add player' : 'Add world'}</Button>
                 </Container>
             </Middle>
         );
@@ -109,6 +141,7 @@ class User extends Component {
 
 const mapStateToProps = state => ({
     _id: state.auth.user_id,
+    playerName: state.player.name,
 });
 
 const mapDispatchToProps = dispatch => {
