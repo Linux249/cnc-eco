@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Body from '../style/Body';
-// import Area from '../style/Area'
 import Title from '../style/Title';
 import LayoutS from '../style/Layouts';
-import { changeAlliance, changeWorld, changePlayer } from '../store/actions/player';
 import Button from '../style/Button';
 import Row from '../style/Row';
 import Layout from '../components/Layout';
@@ -41,16 +39,16 @@ class Layouts extends Component {
 
     render() {
         const { layouts, loading } = this.state;
-        const { changeAlliance, changeWorld, changePlayer, w, a, pl } = this.props;
+        const { w, a, pl } = this.props;
         return (
             <Body>
                 <Loading isLoading={loading} />
                 {!loading && (
                     <div>
                         <Row>
-                            <input value={pl} onChange={e => changePlayer(e.target.value)} />
-                            <input disabled value={w} onChange={e => changeWorld(e.target.value)} />
-                            <input value={a} onChange={e => changeAlliance(e.target.value)} />
+                            <input disabled value={pl}/>
+                            <input disabled value={w}/>
+                            <input disabled value={a}/>
                             <Button onClick={() => this.getLayouts()}>Update</Button>
                             <Title>{layouts.length}</Title>
                         </Row>
@@ -77,13 +75,10 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        changePlayer: w => dispatch(changePlayer(w)),
-        changeWorld: w => dispatch(changeWorld(w)),
-        changeAlliance: a => dispatch(changeAlliance(a)),
+
     };
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(Layouts);

@@ -1,15 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import Body from '../style/Body';
-// import Area from '../style/Area'
-import Title from '../style/Title';
 import LayoutS from '../style/Layouts';
-import { changeAlliance, changeWorld, changePlayer } from '../store/actions/player';
-import Button from '../style/Button';
 import Row from '../style/Row';
-import Layout from '../components/Layout';
 import Loading from '../components/Loading';
-import { api_url } from '../config/config';
 
 // TODO time since last seen a layout shod be placed to the backend
 // TODO IDEA autmaticly remove layouts after X days (cronjobs)
@@ -73,9 +67,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        changePlayer: w => dispatch(changePlayer(w)),
-        changeWorld: w => dispatch(changeWorld(w)),
-        changeAlliance: a => dispatch(changeAlliance(a)),
+
     };
 };
 

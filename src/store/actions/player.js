@@ -1,28 +1,13 @@
 import {
-    CHANGE_ALLIANCE, CHANGE_LOADING,
-    CHANGE_PLAYER,
-    CHANGE_WORLD,
+    PLAYER_CHANGE_LOADING,
+    PLAYER_CHANGE_WORLD,
     PLAYER_UPDATE
 } from '../constants/actionTypes'
 
-export function changePlayer(player) {
-    return {
-        type: CHANGE_PLAYER,
-        pl: player,
-    };
-}
-
 export function changeWorld(worldId) {
     return {
-        type: CHANGE_WORLD,
+        type: PLAYER_CHANGE_WORLD,
         w: worldId,
-    };
-}
-
-export function changeAlliance(alliance) {
-    return {
-        type: CHANGE_ALLIANCE,
-        a: alliance,
     };
 }
 
@@ -40,7 +25,7 @@ export const updatePlayer = user => {
 
 export function changeloading(loading) {
     return {
-        type: CHANGE_LOADING,
+        type: PLAYER_CHANGE_LOADING,
         loading,
     };
 }

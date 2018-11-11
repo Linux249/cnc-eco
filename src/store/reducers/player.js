@@ -1,5 +1,6 @@
-import { CHANGE_ALLIANCE, PLAYER_UPDATE } from '../constants/actionTypes';
-import { CHANGE_PLAYER, CHANGE_WORLD } from '../constants/actionTypes';
+import { PLAYER_CHANGE_LOADING,
+    PLAYER_CHANGE_WORLD,
+    PLAYER_UPDATE } from '../constants/actionTypes';
 
 const initState = {
     a: 126,
@@ -20,17 +21,12 @@ const initState = {
 
 export function player(state = initState, action) {
     switch (action.type) {
-        case CHANGE_PLAYER:
+        case PLAYER_CHANGE_LOADING:
             return {
                 ...state,
-                pl: action.pl,
+                loading: action.loading,
             };
-        case CHANGE_ALLIANCE:
-            return {
-                ...state,
-                a: action.a,
-            };
-        case CHANGE_WORLD:
+        case PLAYER_CHANGE_WORLD:
             return {
                 ...state,
                 w: action.w,
