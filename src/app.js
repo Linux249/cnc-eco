@@ -33,10 +33,7 @@ MongoClient.connect(
 );
 
 mongoose.Promise = global.Promise;
-mongoose.connect(
-    mongoURI,
-    { useMongoClient: true }
-);
+mongoose.connect(mongoURI);
 const db = mongoose.connection; //simplification
 
 //falls Fehler kommen so ausgeben
