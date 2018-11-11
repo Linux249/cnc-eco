@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { replaceBuilding } from '../store/actions/base';
 import { changeFraction } from '../store/actions/base';
 import { buildingKeys } from '../util/buildings';
 import Menu from '../style/BuildingMenu';
@@ -40,7 +39,6 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        replaceBuilding: building => dispatch(replaceBuilding(building)),
         changeFraction: fraction => dispatch(changeFraction(fraction)),
     };
 };

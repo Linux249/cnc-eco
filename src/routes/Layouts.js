@@ -46,9 +46,9 @@ class Layouts extends Component {
                 {!loading && (
                     <div>
                         <Row>
-                            <input disabled value={pl}/>
-                            <input disabled value={w}/>
-                            <input disabled value={a}/>
+                            <input disabled value={pl} />
+                            <input disabled value={w} />
+                            <input disabled value={a} />
                             <Button onClick={() => this.getLayouts()}>Update</Button>
                             <Title>{layouts.length}</Title>
                         </Row>
@@ -74,11 +74,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = dispatch => {
-    return {
-
-    };
+    return {};
 };
 
-export default connect(
-    mapStateToProps
-)(Layouts);
+export default connect(mapStateToProps)(Layouts);

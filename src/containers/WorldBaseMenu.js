@@ -3,7 +3,7 @@ import Button from '../style/Button';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import {changeWorld} from '../store/actions/player'
+import { changeWorld } from '../store/actions/player';
 
 const DropDownAnchor = styled.div`
     position: relative;
@@ -55,21 +55,23 @@ class WorldBaseMenu extends Component {
                         ))}
                     </Row>
                 </Row>
-
             </>
         );
     }
 }
 
 const mapStateToProps = state => {
-    const world = state.player.worlds[0]
+    const world = state.player.worlds[0];
     return {
         selectedWorld: state.player.selectedWorld,
         playerName: state.player.name,
         worlds: state.player.worlds,
         bases: state.player.bases,
-        world
+        world,
     };
 };
 
-export default connect(mapStateToProps, { selectWorld: changeWorld })(WorldBaseMenu);
+export default connect(
+    mapStateToProps,
+    { selectWorld: changeWorld }
+)(WorldBaseMenu);

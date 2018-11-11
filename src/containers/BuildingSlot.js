@@ -3,7 +3,7 @@ import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
 import { LvlNumber } from '../components/LvlNumber';
 import { DropTarget, DragSource } from 'react-dnd';
-import { replaceBuilding } from '../store/actions/base';
+import { replaceBuilding, switchBuilding } from '../store/actions/base';
 import Slot from '../style/BuildingSlot';
 import { buildingKeys } from '../util/buildings';
 
@@ -88,32 +88,25 @@ function mapStateToProps(state, props) {
         lvl: state.menu.lvl,
     };
 }
-const mapDispatchToProps = dispatch => {
-    return {
-        replaceBuilding: building => dispatch(replaceBuilding(building)),
-    };
+const mapDispatchToProps = {
+    replaceBuilding,
+    switchBuilding,
 };
 
 const buildingSource = {
     beginDrag({ building }) {
         return { building };
     },
-    endDrag({ replaceBuilding }, monitor) {
+    endDrag({ switchBuilding }, monitor) {
         if (!monitor.didDrop()) {
             return;
         }
         const from = monitor.getItem().building;
         const to = monitor.getDropResult().building;
-        if (from.slot !== undefined) {
-            const tempSlot = from.slot;
-            from.slot = to.slot;
-            to.slot = tempSlot;
-            replaceBuilding(from);
-            replaceBuilding(to);
-        } else {
-            from.slot = to.slot;
-            replaceBuilding(from);
-        }
+        const tempSlot = from.slot;
+        from.slot = to.slot;
+        to.slot = tempSlot;
+        switchBuilding(from, to);
     },
 };
 

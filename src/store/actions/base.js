@@ -5,18 +5,26 @@ import {
     REPLACE_ALL_BASE,
     REPLACE_BASE_FROM_URL,
     REPLACE_BUILDING,
+    SWITCH_BUILDINGS,
 } from '../constants/actionTypes'; // ad a new building a current location
 // ad a new building a current location
 // ad a new building a current location
 
 // number where the building is set is inside building.slot
 export function replaceBuilding(building) {
-    //building = copyObj(building);
     return {
         type: REPLACE_BUILDING,
         building: {
-            ...building
-        }
+            ...building,
+        },
+    };
+}
+
+export function switchBuilding(from, to) {
+    return {
+        type: SWITCH_BUILDINGS,
+        from: { ...from },
+        to: { ...to },
     };
 }
 

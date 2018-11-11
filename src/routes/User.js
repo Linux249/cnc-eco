@@ -6,7 +6,6 @@ import Input from '../style/Input';
 import { api_url } from '../config/config';
 import { updatePlayer } from '../store/actions/player';
 
-
 const Middle = styled.div`
     display: flex;
     justify-content: center;
@@ -69,7 +68,6 @@ class User extends Component {
         this.props.dispatch(updatePlayer(player));
     };
 
-
     addWorld = async () => {
         const { world } = this.state;
         const { _id, playerName } = this.props;
@@ -105,7 +103,7 @@ class User extends Component {
     };
 
     render() {
-        const { playerName } = this.props
+        const { playerName } = this.props;
         const { world, error, name } = this.state;
 
         return (
@@ -132,7 +130,9 @@ class User extends Component {
                             />
                         </>
                     )}
-                    <Button onClick={!playerName ? this.addPlayer : this.addWorld}>{!playerName ? 'Add player' : 'Add world'}</Button>
+                    <Button onClick={!playerName ? this.addPlayer : this.addWorld}>
+                        {!playerName ? 'Add player' : 'Add world'}
+                    </Button>
                 </Container>
             </Middle>
         );

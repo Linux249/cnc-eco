@@ -14,7 +14,12 @@ import icon_power from '../img/icon/icon_power.png';
 import icon_credits from '../img/icon/icon_credits.png';
 
 class ProductionInfo extends Component {
+    componentDidUpdate(prevProps) {
+        if (prevProps.buildings !== this.props.buildings) console.error('BUILDINGS CHANGE');
+    }
+
     render() {
+        return null;
         const { buildings } = this.props;
         const production = calcProduction(buildings);
         const { tib, kris, power, credits } = production;

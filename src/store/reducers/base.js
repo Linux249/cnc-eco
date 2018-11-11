@@ -6,6 +6,7 @@ import {
     REPLACE_ALL_BASE,
     REPLACE_BASE_FROM_URL,
     REPLACE_BUILDING,
+    SWITCH_BUILDINGS,
 } from '../constants/actionTypes';
 
 const initBase = urlToBase(
@@ -15,18 +16,25 @@ const initBase = urlToBase(
 export function base(state = initBase, action) {
     switch (action.type) {
         case REPLACE_BUILDING:
-            const buildings = state.buildings.map((b, i) => i === action.building.slot ? action.building : b)
-            return  {
+            return {
                 ...state,
-                buildings,
-            }
-            //return update(state, { buildings: { [building.slot]: { $set: building } } });
+                buildings: state.buildings.map((b, i) =>
+                    i === action.building.slot ? action.building : b
+                ),
+            };
+        case SWITCH_BUILDINGS:
+            return {
+                ...state,
+                buildings: state.buildings.map((b, i) =>
+                    i === action.from.slot ? action.from : i === action.to.slot ? action.to : b
+                ),
+            };
         case REPLACE_ALL_BASE:
-            return action.base
+            return action.base;
         case REPLACE_BASE_FROM_URL:
             return urlToBase(action.url);
         case CHANGE_FRACTION:
-            return {...state, faction:action.faction  };
+            return { ...state, faction: action.faction };
         case BUILDING_TYP_UP:
             return {
                 ...state,
@@ -35,7 +43,7 @@ export function base(state = initBase, action) {
                         let { lvl } = b;
                         lvl += 1;
                         if (lvl > 65) lvl = 65;
-
+                        return { ...b, lvl };
                     }
                     return b;
                 }),
@@ -48,7 +56,7 @@ export function base(state = initBase, action) {
                         let { lvl } = b;
                         lvl -= 1;
                         if (lvl < 12) lvl = 12;
-                        return {...b, lvl};
+                        return { ...b, lvl };
                     }
                     return b;
                 }),

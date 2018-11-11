@@ -1,6 +1,9 @@
-import { PLAYER_CHANGE_LOADING,
+import {
+    PLAYER_CHANGE_LOADING,
     PLAYER_CHANGE_WORLD,
-    PLAYER_UPDATE_NAME_WORLDS, PLAYER_UPDATE_BASES } from '../constants/actionTypes';
+    PLAYER_UPDATE_NAME_WORLDS,
+    PLAYER_UPDATE_BASES,
+} from '../constants/actionTypes';
 
 const initState = {
     a: 126,
@@ -8,7 +11,7 @@ const initState = {
     pl: 'Linux249',
     name: '',
     worlds: [
-        { worldName: 'dumm',  },
+        { worldName: 'dumm' },
         { worldName: 'dumm with' },
         { worldName: 'dumm with some' },
         { worldName: 'dumm with some löonger' },
@@ -16,7 +19,7 @@ const initState = {
     ],
     bases: [],
     selectedWorld: 0,
-    loading: false
+    loading: false,
 };
 
 export function player(state = initState, action) {
