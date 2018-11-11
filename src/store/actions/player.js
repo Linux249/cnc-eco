@@ -30,7 +30,6 @@ export const updatePlayer = user => {
     return {
         type: PLAYER_UPDATE,
         name: user.player,
-        _id: user._id,
         worlds: user.worlds,
     };
 };

@@ -72,12 +72,13 @@ export const requestRegister = () => {
     };
 };
 
-function receiveLogin(user) {
+function receiveLogin(data) {
     return {
         type: LOGIN_SUCCESS,
         isFetching: false,
         isAuthenticated: true,
-        token: user.token,
+        token: data.token,
+        user_id: data.user._id
     };
 }
 

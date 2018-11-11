@@ -7,7 +7,6 @@ const initState = {
     w: 379, // Toggle for showing help everywhere or not
     pl: 'Linux249',
     name: '',
-    _id: null,
     worlds: [],
 };
 
@@ -32,7 +31,6 @@ export function player(state = initState, action) {
             return {
                 ...state,
                 name: action.name,
-                _id: action._id,
                 worlds: action.worlds,
             };
         default:
