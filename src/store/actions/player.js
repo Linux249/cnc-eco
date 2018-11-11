@@ -1,9 +1,9 @@
 import {
-    CHANGE_ALLIANCE,
+    CHANGE_ALLIANCE, CHANGE_LOADING,
     CHANGE_PLAYER,
     CHANGE_WORLD,
-    PLAYER_UPDATE,
-} from '../constants/actionTypes';
+    PLAYER_UPDATE
+} from '../constants/actionTypes'
 
 export function changePlayer(player) {
     return {
@@ -12,10 +12,10 @@ export function changePlayer(player) {
     };
 }
 
-export function changeWorld(world) {
+export function changeWorld(worldId) {
     return {
         type: CHANGE_WORLD,
-        w: world,
+        w: worldId,
     };
 }
 
@@ -27,9 +27,20 @@ export function changeAlliance(alliance) {
 }
 
 export const updatePlayer = user => {
-    return {
-        type: PLAYER_UPDATE,
-        name: user.player,
-        worlds: user.worlds,
+    return dispatch => {
+        dispatch({
+            type: PLAYER_UPDATE,
+            name: user.player,
+            worlds: user.worlds,
+        })
+        dispatch(changeloading(true))
+        dispatch(changeloading(false))
     };
 };
+
+export function changeloading(loading) {
+    return {
+        type: CHANGE_LOADING,
+        loading,
+    };
+}

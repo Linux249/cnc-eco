@@ -49,7 +49,7 @@ class Layouts extends Component {
                     <div>
                         <Row>
                             <input value={pl} onChange={e => changePlayer(e.target.value)} />
-                            <input value={w} onChange={e => changeWorld(e.target.value)} />
+                            <input disabled value={w} onChange={e => changeWorld(e.target.value)} />
                             <input value={a} onChange={e => changeAlliance(e.target.value)} />
                             <Button onClick={() => this.getLayouts()}>Update</Button>
                             <Title>{layouts.length}</Title>
