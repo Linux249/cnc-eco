@@ -3,8 +3,8 @@
  */
 
 export function shortenNumber(n, d) {
-    const negativ = (n < 0) ? "-" : "";
-    n = Math.abs(n)
+    const negativ = n < 0 ? '-' : '';
+    n = Math.abs(n);
     if (n === 0) return '0';
     let k = Math.floor(n);
     if (n < 1000) return negativ + n.toString().split('.')[0];

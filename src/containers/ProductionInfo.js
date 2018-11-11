@@ -26,14 +26,14 @@ const Diff = styled.div`
     display: inline-block;
     animation: ${rotate} 2s ease-in-out;
     //padding: 2rem 1rem;
-    font-size:  0.8rem;
-    
-    color: ${p => p.positiv ? 'green' : '#e06161'};
+    font-size: 0.8rem;
+
+    color: ${p => (p.positiv ? 'green' : '#e06161')};
 `;
 
 class ProductionInfo extends Component {
     state = {
-        diff: { tib: "", kris: "", power: "", credits: "" },
+        diff: { tib: '', kris: '', power: '', credits: '' },
         production: calcProduction(this.props.buildings),
     };
 
