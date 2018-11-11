@@ -61,6 +61,7 @@ router.post('/ingameData', async (req, res, next) => {
         const player = {
             playerId: body.currentplayerId,
             allianceId,
+            serverName,
             name: currentplayerName,
             bases,
             basecount: body.basecount, // count bases - 1 is init

@@ -1,6 +1,6 @@
-import { User } from '../model/User';
 import { Router } from 'express';
-import { Schema } from 'mongoose';
+import { User } from '../model/User';
+//import { Schema } from 'mongoose';
 
 const router = Router();
 
@@ -72,7 +72,7 @@ router.post('/user/addPlayer', async (req, res, next) => {
     if (player._updated) {
         const minutes = (player._updated - new Date()) / 1000 / 60;
         console.log({ minutes });
-        if (minutes < -3) {
+        if (minutes > -3) {
             // add player to user
             // TODO test if the world is not allready inside
 
@@ -81,19 +81,19 @@ router.post('/user/addPlayer', async (req, res, next) => {
 
             user.worlds.push({
                 worldId,
-                worldName: 'TODO where from?',
+                worldName: player.serverName,
                 player_id: player._id,
             });
             // const r = await collection.update({_id: player._id}, player)
             user.save((err, doc) => {
                 if (err) return next(err);
-                res.json(doc);
+                return res.json(doc);
             });
         } else {
-            next(new Error(`Cannot add Player: Player was not updated in the last 3 (${minutes}) minutes - please update data ingame`));
+            return next(new Error(`Cannot add Player: Player was not updated in the last 3 (${minutes}) minutes - please update data ingame`));
         }
     } else {
-        next(new Error('Cannot add Player: Player has never updated - please update data ingame'));
+        return next(new Error('Cannot add Player: Player has never updated - please update data ingame'));
     }
 
     // add player to user and time
