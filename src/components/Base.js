@@ -3,6 +3,7 @@ import BuildingSlot from '../containers/BuildingSlot.js';
 import Area from '../style/Area';
 import BaseStyle from '../style/Base';
 import Row from '../style/Row';
+import ProductionInfo from '../containers/ProductionInfo';
 
 class Base extends Component {
     render() {
@@ -19,6 +20,7 @@ class Base extends Component {
 
         return (
             <Area>
+                <ProductionInfo />
                 <BaseStyle>{slots}</BaseStyle>
             </Area>
         );

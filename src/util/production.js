@@ -765,8 +765,8 @@ export const calcBuildingProduction = (buildings, i) => {
     const building = buildings[i];
     if (building) {
         if (building.lvl > 65) {
-            building.lvl = 65;
             console.error('Gebäude lvl über 65', { building }); //sollte niemals vorkommen
+            building.lvl = 65;
         }
 
         // Silo production

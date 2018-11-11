@@ -10,7 +10,7 @@ export default styled.div`
     margin-bottom: 10px;
 
     & > div > img {
-        margin-left: 5px;
+        margin-right: 5px;
     }
 
     & > div:hover {
