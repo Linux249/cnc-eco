@@ -130,6 +130,7 @@ app.use((req, res, next) => {
 
 //Error Handler - Server error
 app.use((err, req, res, next) => {
+    console.warn(err)
     res.status(err.status || 500); //falls irgendwo? next(err) aufgerufne wurde hat es wie oben eine status bekommen
     res.json({
         error: {
