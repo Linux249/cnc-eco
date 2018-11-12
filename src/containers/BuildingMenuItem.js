@@ -10,11 +10,7 @@ class BuildingMenuItem extends Component {
         const { img, type, connectDragSource } = this.props;
 
         return (
-            <MenuItem
-                ref={instance => {
-                    connectDragSource(findDOMNode(instance));
-                }}
-            >
+            <MenuItem ref={instance => connectDragSource(findDOMNode(instance))}>
                 <img src={img} alt={type} />
                 <div>{type}</div>
             </MenuItem>
@@ -27,27 +23,17 @@ const buildingSource = {
         return { building };
     },
     endDrag({ replaceBuilding }, monitor) {
-        if (!monitor.didDrop()) {
-            return;
-        }
+        if (!monitor.didDrop()) return;
         const from = monitor.getItem().building;
         const to = monitor.getDropResult().building;
-        if (from.slot) {
-            const tempSlot = from.slot;
-            from.slot = to.slot;
-            to.slot = tempSlot;
-            replaceBuilding(from);
-            replaceBuilding(to);
-        } else {
-            from.slot = to.slot;
-            replaceBuilding(from);
-        }
+        to.type = from.type;
+        to.lvl = from.lvl;
+        replaceBuilding(to);
     },
 };
 
-BuildingMenuItem = DragSource('building', buildingSource, (connect, monitor) => ({
+BuildingMenuItem = DragSource('building', buildingSource, connect => ({
     connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
 }))(BuildingMenuItem);
 
 const mapDispatchToProps = dispatch => {

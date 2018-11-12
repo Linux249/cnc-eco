@@ -8,29 +8,30 @@ import Slot from '../style/BuildingSlot';
 import { buildingKeys } from '../util/buildings';
 
 class BuildingSlot extends Component {
-    contextClick = (e, building) => {
+    contextClick = e => {
         e.preventDefault();
-        const { slot } = building;
+        const { slot } = this.props.building;
         this.props.replaceBuilding({ slot });
     };
 
-    handleKeyDown = (event, building) => {
+    handleKeyDown = event => {
+        const { building } = this.props;
         event.preventDefault();
         const { key } = event; // get pressed key
 
-        //change building
+        //change building type
         if (buildingKeys.includes(key)) {
             building.type = key;
             if (!building.lvl) building.lvl = this.props.lvl;
             this.props.replaceBuilding(building);
         }
-        //change lvl up
+        // + building lvl up
         if (key === '+' && building.lvl) {
             building.lvl += 1;
             building.lvl = !building.lvl ? 1 : building.lvl > 65 ? 65 : building.lvl;
             this.props.replaceBuilding(building);
         }
-        //change lvl down
+        // - building lvl down
         if (key === '-' && building.lvl) {
             building.lvl -= 1;
             building.lvl = !building.lvl ? 1 : building.lvl > 65 ? 65 : building.lvl;
@@ -42,25 +43,18 @@ class BuildingSlot extends Component {
         if (digits.exec(key) && building.lvl) {
             const rawLvl = `${building.lvl}${key}`;
             const lvl = Number(rawLvl.length > 2 ? rawLvl.slice(1) : rawLvl);
-            building.lvl = !lvl ? 1 : lvl > 65 ? 65 : lvl; //check: if lvl not exists (=0)return 1 - else check if>65
+            building.lvl = !lvl ? 1 : lvl > 65 ? 65 : lvl;
             console.log({ rawLvl, building });
             this.props.replaceBuilding(building);
         }
     };
 
     render() {
-        const {
-            building,
-            faction,
-            connectDragSource,
-            connectDropTarget,
-            // isDragging,
-        } = this.props;
+        const { building, faction, connectDragSource, connectDropTarget } = this.props;
         const { type, slot, lvl } = building;
-        let img = 'undefined';
-        if (type) {
-            img = require('./../img/buildings/' + faction + '/' + type + '.png');
-        }
+        const img = type
+            ? require('./../img/buildings/' + faction + '/' + type + '.png')
+            : 'undefined';
 
         return (
             <Slot
@@ -69,12 +63,11 @@ class BuildingSlot extends Component {
                     connectDragSource(findDOMNode(instance));
                 }}
                 key={slot}
-                onKeyDown={e => this.handleKeyDown(e, building)}
+                onKeyDown={this.handleKeyDown}
                 tabIndex="0"
-                onContextMenu={e => this.contextClick(e, building)}
+                onContextMenu={this.contextClick}
             >
                 {lvl && <LvlNumber lvl={lvl} />}
-                {/*{(building.slot || building.slot === 0)&& <LvlNumber lvl={building.slot} />}*/}
                 {type && <img src={img} alt={type} />}
             </Slot>
         );
@@ -116,15 +109,12 @@ const buildingTarget = {
     },
 };
 
-BuildingSlot = DropTarget('building', buildingTarget, (connect, monitor) => ({
+BuildingSlot = DropTarget('building', buildingTarget, connect => ({
     connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver(),
-    canDrop: monitor.canDrop(),
 }))(BuildingSlot);
 
-BuildingSlot = DragSource('building', buildingSource, (connect, monitor) => ({
+BuildingSlot = DragSource('building', buildingSource, connect => ({
     connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
 }))(BuildingSlot);
 
 export default connect(
