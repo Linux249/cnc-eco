@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export default styled.div`
     //    position: relative ;
     display: flex;
-    justify-content: space-around;
-    //align-content: space-around;
+    justify-content: space-between;
+    //align-content: center;
     //flex-wrap: wrap;
 
     margin-bottom: 10px;
