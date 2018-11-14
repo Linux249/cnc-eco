@@ -127,7 +127,7 @@ router.post('/ingameData', async (req, res, next) => {
         // add world
     } catch (err) {
         console.log({ err });
-        res.send(err);
+        //res.send(err);
         next(err);
     }
 });
