@@ -9,7 +9,7 @@ import Row from './../style/Row';
 import ChartS from './../style/LineChart';
 import Column from './../style/Column';
 import { connect } from 'react-redux';
-import { shortenNumber } from './../services/menu';
+import { shortenNumber } from '../util/service';
 import { Chart } from 'react-google-charts';
 import { futureProduction } from '../util/production.js';
 import { calcProduction } from '../util/production';

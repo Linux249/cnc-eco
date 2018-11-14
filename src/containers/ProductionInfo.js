@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Button from '../style/Button';
 import Info from '../style/ProductionInfo';
-import { shortenNumber } from '../services/menu';
+import { shortenNumber } from '../util/service';
 import { calcProduction } from '../util/production';
 import icon_tib from '../img/icon/icon_tiberium.png';
 import icon_cris from '../img/icon/icon_crystal.png';

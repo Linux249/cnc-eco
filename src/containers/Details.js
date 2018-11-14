@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import NextBuildings from './NextBuildings';
 import styled from 'styled-components';
 
-import { shortenNumber } from '../services/menu';
+import { shortenNumber } from '../util/service';
 import { calcBuildingCost } from '../util/production';
 import { buildings as buildingNames } from '../util/buildings';
 
