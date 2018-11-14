@@ -5,12 +5,12 @@ export default styled.div`
     display: flex;
     /*justify-content: flex-end;*/
     /*text-align: center;*/
-    /*top: 30px;*/
-    /*left: 2px;*/
+    position: absolute;
+    top: 2px;
+    left: 2px;
     z-index: 10;
-    width: 100%;
+    //width: 100%;
 
-    & > div {
     letter-spacing: 0;
     max-height: 30%;
     /*width: 30%;*/

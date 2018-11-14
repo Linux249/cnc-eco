@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 export default styled.div`
-    max-width: 820px;
-    display: flex;
-    flex-flow: column;
+    display: grid;
+    grid-template-rows: repeat(8, 1fr);
+    grid-template-columns: repeat(9, 1fr);
+    max-width: 800px;
+    min-width: 200px;
 `;

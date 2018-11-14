@@ -5,7 +5,7 @@ export default styled.div`
     display: flex;
     justify-content: space-around;
     //align-content: space-around;
-    //flex-wrap: wrap;
+    flex-wrap: wrap;
 
     margin-bottom: 10px;
 

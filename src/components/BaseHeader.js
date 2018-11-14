@@ -27,7 +27,7 @@ class BaseHeader extends Component {
                     <NavLink to="/">CNC-ECO</NavLink>
                 </Title>
                 <UrlInfo />
-                <Row>
+                <Row wrap>
                     <Link to="/bases" activeClassName="active">
                         Basen
                     </Link>
