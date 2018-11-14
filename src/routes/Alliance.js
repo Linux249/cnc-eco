@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import {shortenNumber} from '../util/service'
 import {api_url} from '../config/config'
 import Button from '../style/Button'
-
+import icon_credits from '../img/icon/icon_credits.png'
 // TODO time since last seen a layout shod be placed to the backend
 // TODO IDEA autmaticly remove layouts after X days (cronjobs)
 
@@ -23,6 +23,12 @@ const Cell = styled.div`
     justify-content: center;
     align-items: center;
 `;
+
+const Icon = styled.img`
+    width: 1.4rem;
+    height: 1.4rem;
+    margin: 0.2rem;
+`
 
 class Alliance extends Component {
     constructor(props) {
@@ -75,7 +81,7 @@ class Alliance extends Component {
                                 <Cell>PVE Kills</Cell>
                                 <Cell>PVP Kills</Cell>
                                 <Cell>Code</Cell>
-                                <Cell>Credits</Cell>
+                                <Cell><Icon src={icon_credits}>{}</Icon></Cell>
                                 <Cell>Max CP</Cell>
                                 <Cell>Funds</Cell>
                                 <Cell>Schirme</Cell>
