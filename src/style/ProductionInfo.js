@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export default styled.div`
     //    position: relative ;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     //align-content: space-around;
     flex-wrap: wrap;
 
