@@ -19,11 +19,10 @@ export function changeWorld(world) {
         const player = await fetch(url, {
             headers: new Headers({
                 Authorization: 'Bearer  ' + getStore().auth.token,
-                'Content-Type': 'application/x-www-form-urlencoded',
             }),
         }).then(res => res.json());
         console.log({ player });
-        dispatch(updateBases(player.bases));
+        player.bases && dispatch(updateBases(player.bases));
         dispatch(changeLoading(false));
     };
 }
