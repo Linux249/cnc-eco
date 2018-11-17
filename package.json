@@ -1,11 +1,9 @@
 {
   "name": "cnc-eco",
-  "homepage": "https://linux249.github.io/cnc-eco",
   "version": "0.1.2",
   "private": true,
   "devDependencies": {
     "babel-cli": "^6.24.1",
-    "gh-pages": "^0.12.0",
     "prettier": "^1.15.2",
     "react-scripts": "2.1.1",
     "redux-logger": "^3.0.6",
@@ -31,7 +29,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "deploy": "npm run build&&gh-pages -d build",
     "server": "nodemon ./app.js --exec babel-node"
   },
   "browserslist": [
