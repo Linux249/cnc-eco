@@ -2,25 +2,14 @@
   "name": "cnc-web-server",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.js",
   "scripts": {
     "start": "node ./dist/server.js",
     "build": "babel ./src --experimental --source-maps-inline -d ./dist",
     "debug": "babel-node ./src/server.js %NODE_DEBUG_OPTION%",
-    "deploy": "git push heroku master",
-    "dev": "nodemon ./src/server.js --exec babel-node",
-    "postinstall": "npm run ../client/build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Linux249/cnc-web-server.git"
+    "dev": "nodemon ./src/server.js --exec babel-node"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Linux249/cnc-web-server/issues"
-  },
-  "homepage": "https://github.com/Linux249/cnc-web-server#readme",
   "devDependencies": {
     "nodemon": "^1.18.4",
     "prettier": "^1.14.2",

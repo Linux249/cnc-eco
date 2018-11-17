@@ -73,7 +73,7 @@ app.use('/api/v1', api);
 //     console.log('Server running at:', server.info.uri);
 // });
 
-app.use('/', express.static('cnc-eco'));
+app.use('/', express.static('../client/cnc-eco'));
 
 app.set('port', PORT);
 
