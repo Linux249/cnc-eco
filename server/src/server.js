@@ -2,15 +2,8 @@
  * Created by Bombassd on 08.06.2017.
  */
 
-// import { findBestToLvlUpNext } from './performance'
-// import Path from 'path'
-// import Inert from 'inert'
-// import Hapi from 'hapi'
-// import layouts from './src/routes/layouts'
-// const mongoose = require("mongoose")
-
 import express from 'express';
-
+import Path from 'path'
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { pingInterval: 1000 });
@@ -72,8 +65,9 @@ app.use('/api/v1', api);
 //     }
 //     console.log('Server running at:', server.info.uri);
 // });
-
-app.use('/', express.static('../client/cnc-eco'));
+const path = Path.join(__dirname,'../../client/build');
+//console.log({path})
+app.use('/', express.static(path));
 
 app.set('port', PORT);
 

@@ -1,18 +1,16 @@
 import express from 'express';
-
-import apiRouter from './api/routes/index';
 import passport from 'passport';
-import configurePassport from './api/config/passport'; // configurePassport
-// const config = require('./env.json')[process.env.NODE_ENV || 'development']
 import MongoClient from 'mongodb';
 import schedule from 'node-schedule';
-import { createReport } from './service/report';
 import cors from 'cors';
 import logging from 'morgan';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import apiRouter from './api/routes/index';
+import configurePassport from './api/config/passport'; // configurePassport
+import { createReport } from './service/report';
 import { mongoURI } from './api/config/config';
 import setAuthRout from './api/routes/auth/index';
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 
 
 let DB;
