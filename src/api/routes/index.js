@@ -12,7 +12,7 @@ import layoutsRouter from './layouts/index';
 const router = Router();
 
 // unprotected Routes
-router.get('/ingameData', ingameData);
+router.post('/ingameData', ingameData);
 router.post('/layouts', layouts);
 
 // AUTH Only for members area
