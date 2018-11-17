@@ -1,15 +1,16 @@
 import {
     PLAYER_CHANGE_LOADING,
     PLAYER_CHANGE_WORLD,
-    PLAYER_UPDATE_NAME_WORLDS,
-    PLAYER_UPDATE_BASES,
-} from '../constants/actionTypes';
+    PLAYER_UPDATE, PLAYER_UPDATE_ALLIANCE_ID,
+    PLAYER_UPDATE_BASES
+} from '../constants/actionTypes'
 
 const initState = {
     a: 126,
     w: 373, // Toggle for showing help everywhere or not
     pl: 'Linux249',
     name: '',
+    allianceId: null,
     worlds: [
         { worldName: 'dumm' },
         { worldName: 'dumm with' },
@@ -34,16 +35,22 @@ export function player(state = initState, action) {
                 ...state,
                 w: action.w,
             };
-        case PLAYER_UPDATE_NAME_WORLDS:
+        case PLAYER_UPDATE:
             return {
                 ...state,
                 name: action.name,
                 worlds: action.worlds,
+                allianceId: action.allianceId,
             };
         case PLAYER_UPDATE_BASES:
             return {
                 ...state,
                 bases: action.bases,
+            };
+        case PLAYER_UPDATE_ALLIANCE_ID:
+            return {
+                ...state,
+                allianceId: action.allianceId,
             };
         default:
             return state;

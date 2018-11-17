@@ -48,8 +48,8 @@ class Alliance extends Component {
 
     getAlliance = async () => {
         this.setState({ loading: true });
-        const { w, a, token } = this.props;
-        const url = `${api_url}/alliance?world=${w}&alliance=${a}`;
+        const { w, allianceId, token } = this.props;
+        const url = `${api_url}/alliance?world=${w}&alliance=${allianceId}`;
         const alliance = await fetch(url, {
             headers: {
                 Authorization: 'Bearer  ' + token,
@@ -132,7 +132,7 @@ function mapStateToProps(state) {
     return {
         pl: state.player.pl,
         w: state.player.w,
-        a: state.player.a,
+        allianceId: state.player.allianceId,
         worlds: state.player.worlds,
         auth: state.auth.isAuthenticated,
         token: state.auth.token,

@@ -2,7 +2,8 @@ import {
     PLAYER_CHANGE_LOADING,
     PLAYER_CHANGE_WORLD,
     PLAYER_UPDATE_BASES,
-    PLAYER_UPDATE_NAME_WORLDS,
+    PLAYER_UPDATE,
+    PLAYER_UPDATE_ALLIANCE_ID,
 } from '../constants/actionTypes';
 import { api_url } from '../../config';
 
@@ -23,6 +24,7 @@ export function changeWorld(world) {
         }).then(res => res.json());
         console.log({ player });
         player.bases && dispatch(updateBases(player.bases));
+        player.allianceId && dispatch(updateAllianceId(player.allianceId));
         dispatch(changeLoading(false));
     };
 }
@@ -34,12 +36,20 @@ export const updateBases = bases => {
     };
 };
 
+export const updateAllianceId = allianceId => {
+    return {
+        type: PLAYER_UPDATE_ALLIANCE_ID,
+        allianceId,
+    };
+};
+
 export const updatePlayer = user => {
     return (dispatch, getState) => {
         dispatch({
-            type: PLAYER_UPDATE_NAME_WORLDS,
+            type: PLAYER_UPDATE,
             name: user.player,
             worlds: user.worlds,
+            allianceId: user.allianceId
         });
         // check if the world id changed - usefully for initial loading kick
         const { selectedWorld, w } = getState().player;
