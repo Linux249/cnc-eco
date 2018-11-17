@@ -26,7 +26,6 @@ class BaseHeader extends Component {
                 <Title>
                     <NavLink to="/">CNC-ECO</NavLink>
                 </Title>
-                <UrlInfo />
                 <Row wrap>
                     {isAuthenticated && (
                         <>
