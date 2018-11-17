@@ -1,14 +1,11 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { createLogger } from 'redux-logger';
 import reducerCall from './reducers/index.js';
-
-const loggerMiddleware = createLogger();
 
 const createStoreWithMiddleware =
     process.env.NODE_ENV === 'development'
         ? // development
-          applyMiddleware(thunkMiddleware, loggerMiddleware)(createStore)
+          applyMiddleware(thunkMiddleware, require('redux-logger')())(createStore)
         : // production
           applyMiddleware(thunkMiddleware)(createStore);
 
