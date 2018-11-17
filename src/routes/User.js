@@ -34,24 +34,20 @@ class User extends Component {
 
     addPlayer = async () => {
         const { world, name } = this.state;
-        const { _id } = this.props;
+        const { token } = this.props;
         if (!world) return this.setState({ error: 'Bitte Welt angeben' });
         if (!name) return this.setState({ error: 'Bitte Spieler angeben' });
-        if (!_id)
-            return this.setState({
-                error: 'Warum sollte man ohne id hier sein dürfen außer bei missing login',
-            });
 
         const body = {
             name,
             worldId: world,
-            _id,
         };
 
         const res = await fetch(api_url + '/user/addPlayer', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
+                Authorization: 'Bearer  ' + token,
             },
             body: JSON.stringify(body),
         }).catch(e => {
@@ -70,23 +66,19 @@ class User extends Component {
 
     addWorld = async () => {
         const { world } = this.state;
-        const { _id, playerName } = this.props;
+        const { playerName, token } = this.props;
         if (!world) return this.setState({ error: 'Bitte Welt angeben' });
-        if (!_id)
-            return this.setState({
-                error: 'Warum sollte man ohne id hier sein dürfen außer bei missing login',
-            });
 
         const body = {
             name: playerName,
             worldId: world,
-            _id,
         };
 
         const res = await fetch(api_url + '/user/addWorld', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
+                Authorization: 'Bearer  ' + token,
             },
             body: JSON.stringify(body),
         }).catch(e => {
@@ -142,10 +134,7 @@ class User extends Component {
 const mapStateToProps = state => ({
     _id: state.auth.user_id,
     playerName: state.player.name,
+    token: state.auth.token,
 });
-
-const mapDispatchToProps = dispatch => {
-    return {};
-};
 
 export default connect(mapStateToProps)(User);

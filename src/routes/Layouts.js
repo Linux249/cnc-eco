@@ -27,8 +27,13 @@ class Layouts extends Component {
 
     getLayouts = () => {
         this.setState({ loading: true });
-        const { pl, w, a } = this.props;
-        fetch(`${api_url}/layouts?pl=${pl}&w=${w}&a=${a}&limit=200`)
+        const { pl, w, a, token } = this.props;
+        const url = `${api_url}/layouts?pl=${pl}&w=${w}&a=${a}&limit=200`;
+        fetch(url, {
+            headers: {
+                Authorization: 'Bearer  ' + token,
+            },
+        })
             .then(res => res.json())
             .then(layouts => {
                 console.log(layouts);
@@ -70,6 +75,7 @@ function mapStateToProps(state) {
         w: state.player.w,
         a: state.player.a,
         worlds: state.player.worlds,
+        token: state.auth.token,
     };
 }
 

@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { focusColor, hoverColor } from './constants';
 export default styled.div`
     // height: 70px;
-     display: flex;
-     justify-content: center;
-     align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     // width: 77px;
     //flex-basis: 11.11%;
     position: relative;

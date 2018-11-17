@@ -7,7 +7,7 @@ import {
 import { api_url } from '../../config/config';
 
 export function changeWorld(world) {
-    return async dispatch => {
+    return async (dispatch, getStore) => {
         await dispatch({
             type: PLAYER_CHANGE_WORLD,
             w: world.worldId,
@@ -15,9 +15,13 @@ export function changeWorld(world) {
         dispatch(changeLoading(true));
 
         // todo requqest player data
-        const player = await fetch(
-            api_url + '/player?player=' + world.player_id + '&world=' + world.worldId
-        ).then(res => res.json());
+        const url = api_url + '/player?player=' + world.player_id + '&world=' + world.worldId;
+        const player = await fetch(url, {
+            headers: new Headers({
+                Authorization: 'Bearer  ' + getStore().auth.token,
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }),
+        }).then(res => res.json());
         console.log({ player });
         dispatch(updateBases(player.bases));
         dispatch(changeLoading(false));
