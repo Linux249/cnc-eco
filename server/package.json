@@ -9,7 +9,7 @@
     "debug": "babel-node ./src/server.js %NODE_DEBUG_OPTION%",
     "deploy": "git push heroku master",
     "dev": "nodemon ./src/server.js --exec babel-node",
-    "postinstall": "npm run build"
+    "postinstall": "npm run ../client/build"
   },
   "repository": {
     "type": "git",
