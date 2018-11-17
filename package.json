@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cd ../server && npm start",
-    "postinstall": "cd client && npm i && npm run build && cd ../server && npm i && npm run build"
+    "postinstall": ""
   },
   "repository": {
     "type": "git",
