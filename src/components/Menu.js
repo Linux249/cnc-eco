@@ -4,22 +4,9 @@ import LineChart from '../containers/LineChart';
 import UpgradeBase from '../containers/UpgradeBase';
 import Area from '../style/Area';
 
-class Menu extends Component {
-    constructor() {
-        super();
-        // this.state = {
-        //
-        // }
-    }
-
-    render() {
-        return (
-            <Area>
-                <LineChart />
-                <UpgradeBase />
-            </Area>
-        );
-    }
-}
-
-export default Menu;
+export default () => (
+    <Area>
+        <LineChart />
+        <UpgradeBase />
+    </Area>
+);

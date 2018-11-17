@@ -7,7 +7,7 @@ import Button from '../style/Button';
 import Row from '../style/Row';
 import Layout from '../components/Layout';
 import Loading from '../components/Loading';
-import { api_url } from '../config/config';
+import { api_url } from '../config';
 
 // TODO time since last seen a layout shod be placed to the backend
 // TODO IDEA autmaticly remove layouts after X days (cronjobs)

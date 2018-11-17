@@ -1,25 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import BuildingSlot from '../containers/BuildingSlot.js';
 import Area from '../style/Area';
 import BaseStyle from '../style/Base';
 import ProductionInfo from '../containers/ProductionInfo';
 
-class Base extends Component {
-    render() {
-        const slots = [...Array(8).keys()].map(function(y) {
-            return [...Array(9).keys()].map(function(x) {
-                const slot = x + y * 9;
-                return <BuildingSlot key={slot} slot={slot} />;
-            });
-        });
+const slots = [...Array(8).keys()].map(function(y) {
+    return [...Array(9).keys()].map(function(x) {
+        const slot = x + y * 9;
+        return <BuildingSlot key={slot} slot={slot} />;
+    });
+});
 
-        return (
-            <Area>
-                <ProductionInfo />
-                <BaseStyle>{slots}</BaseStyle>
-            </Area>
-        );
-    }
-}
-
-export default Base;
+export default () => (
+    <Area>
+        <ProductionInfo />
+        <BaseStyle>{slots}</BaseStyle>
+    </Area>
+);

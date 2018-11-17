@@ -6,7 +6,7 @@ import Row from '../style/Row';
 import Loading from '../components/Loading';
 import styled from 'styled-components';
 import { shortenNumber } from '../util/service';
-import { api_url } from '../config/config';
+import { api_url } from '../config';
 import Button from '../style/Button';
 import icon_credits from '../img/icon/icon_credits.png';
 // TODO time since last seen a layout shod be placed to the backend
@@ -138,9 +138,5 @@ function mapStateToProps(state) {
         token: state.auth.token,
     };
 }
-
-const mapDispatchToProps = dispatch => {
-    return {};
-};
 
 export default connect(mapStateToProps)(Alliance);

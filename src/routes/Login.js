@@ -25,7 +25,6 @@ class Login extends Component {
             password,
             error,
             isFetching,
-            isAuthenticated,
             changeEmail,
             changePassword,
             login,
@@ -64,7 +63,6 @@ function mapStateToProps(state) {
         email: state.auth.email,
         password: state.auth.password,
         isFetching: state.auth.isFetching,
-        isAuthenticated: state.auth.isAuthenticated,
         error: state.auth.error,
     };
 }

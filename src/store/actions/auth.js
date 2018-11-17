@@ -5,7 +5,7 @@ import {
     CHANGE_AUTH_PASSWORD,
     START_ASYNC_AUTH,
 } from '../constants/actionTypes';
-import { api_url } from '../../config/config';
+import { api_url } from '../../config';
 import { updatePlayer } from './player';
 
 export const requestLogin = () => {

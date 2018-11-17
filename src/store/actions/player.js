@@ -4,7 +4,7 @@ import {
     PLAYER_UPDATE_BASES,
     PLAYER_UPDATE_NAME_WORLDS,
 } from '../constants/actionTypes';
-import { api_url } from '../../config/config';
+import { api_url } from '../../config';
 
 export function changeWorld(world) {
     return async (dispatch, getStore) => {

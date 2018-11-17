@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Button from '../style/Button';
 import styled from 'styled-components';
 import Input from '../style/Input';
-import { api_url } from '../config/config';
+import { api_url } from '../config';
 import { updatePlayer } from '../store/actions/player';
 
 const Middle = styled.div`

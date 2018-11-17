@@ -20,15 +20,7 @@ const Container = styled.div`
 
 class Login extends Component {
     render() {
-        const {
-            email,
-            password,
-            isFetching,
-            isAuthenticated,
-            changeEmail,
-            changePassword,
-            register,
-        } = this.props;
+        const { email, password, isFetching, changeEmail, changePassword, register } = this.props;
 
         return (
             <Middle>
@@ -60,7 +52,6 @@ function mapStateToProps(state) {
         email: state.auth.email,
         password: state.auth.password,
         isFetching: state.auth.isFetching,
-        isAuthenticated: state.auth.isAuthenticated,
     };
 }
 
