@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Input from '../style/Input';
 import { api_url } from '../config';
 import { updatePlayer } from '../store/actions/player';
+import Area from '../style/Area';
 
 const Middle = styled.div`
     display: flex;
@@ -18,25 +19,40 @@ const Container = styled.div`
     max-width: 100rem;
 `;
 
+const Error = styled.div`
+    font-size: 1rem;
+    color: darkred;
+`;
+
 class User extends Component {
-    constructor() {
+    constructor(props) {
         super();
         this.state = {
-            world: '373',
-            name: 'linux249',
+            world: '',
+            name: props.playerName,
             error: null,
+            worlds: [],
+            loading: 0,
         };
     }
+
+    startLoading = () => this.setState(l => ({loading: l + 1}))
+
+    endLoading = () => this.setState(l => ({loading: l - 1}))
+
+    cleanError = () => this.setState({error: null})
 
     changeWorld = world => this.setState({ world });
 
     changeName = name => this.setState({ name });
 
     addPlayer = async () => {
+        this.cleanError()
+        this.startLoading()
         const { world, name } = this.state;
         const { token } = this.props;
-        if (!world) return this.setState({ error: 'Bitte Welt angeben' });
         if (!name) return this.setState({ error: 'Bitte Spieler angeben' });
+        if (!world) return this.setState({ error: 'Bitte Welt angeben' });
 
         const body = {
             name,
@@ -54,9 +70,8 @@ class User extends Component {
             console.warn('catched error');
             console.error(e);
         });
-        console.log(res);
         const player = await res.json();
-        console.log({ player });
+        this.endLoading()
         if (!res.ok || player.error) {
             return this.setState({ error: player.error.message });
         }
@@ -65,6 +80,8 @@ class User extends Component {
     };
 
     addWorld = async () => {
+        this.cleanError()
+        this.startLoading()
         const { world } = this.state;
         const { playerName, token } = this.props;
         if (!world) return this.setState({ error: 'Bitte Welt angeben' });
@@ -85,43 +102,67 @@ class User extends Component {
             console.warn('catched error');
             console.error(e);
         });
-        console.log(res);
         const player = await res.json();
-        console.log({ player });
+        this.endLoading()
         if (!res.ok || player.error) {
             return this.setState({ error: player.error.message });
         }
         this.props.dispatch(updatePlayer(player));
     };
 
+    loadWorlds = async () => {
+        // TODO add try catch and proper array handling
+        this.startLoading()
+        const { token } = this.props;
+        const { name} = this.state;
+        const url = `${api_url}/worlds?name=${name}`;
+        const data = await fetch(url, {
+            headers: {
+                Authorization: 'Bearer  ' + token,
+            },
+        }).then(res => res.json());
+        this.setState({
+            worlds: data.worlds,
+        });
+        this.endLoading()
+    }
+
+    componentDidMount() {
+        this.props.playerName && this.loadWorlds();
+    }
+
     render() {
         const { playerName } = this.props;
-        const { world, error, name } = this.state;
+        const { world, error, name, worlds, loading } = this.state;
 
         return (
             <Middle>
                 <Container>
                     <h3>add player (ingame) name to your account</h3>
-                    <h3>{error}</h3>
-                    <h5>Bitte Welt id eingeben</h5>
-                    <Input
-                        name="world"
-                        value={world}
-                        onChange={e => this.changeWorld(e.target.value)}
-                        type="number"
-                        size="3"
-                        max="999"
-                    />
-                    {!playerName && (
-                        <>
-                            <h5>set your name</h5>
+                    <h3>add "you can only all 7 days change username" stuff to ui</h3>
+                    <h3>add player (ingame) name to your account</h3>
+                    <Error>{error}</Error>
+
+                            <h2>What is your ingame name?</h2>
                             <Input
                                 name="name"
                                 value={name}
                                 onChange={e => this.changeName(e.target.value)}
                             />
-                        </>
-                    )}
+                    <h2>Select a World</h2>
+                    <Area>
+                        {loading ?
+                            <h5>loading...</h5>
+                            :
+                            worlds.map(w => (
+                            <Button
+                                onClick={() => this.changeWorld(w.worldId)}
+                                active={world === w.worldId}
+                            >{w.worldName}</Button>
+                        ))}
+                        <Button onClick={this.loadWorlds}>reload worlds</Button>
+                    </Area>
+
                     <Button onClick={!playerName ? this.addPlayer : this.addWorld}>
                         {!playerName ? 'Add player' : 'Add world'}
                     </Button>
