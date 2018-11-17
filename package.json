@@ -5,7 +5,7 @@
   "description": "see '/client'/'/server' for readme's",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd ../server && npm start",
+    "start": "cd server && npm start",
     "install": " cd client && npm i && cd ../server && npm i",
     "postinstall": "cd client && npm run build && cd ../server && npm run build"
   },
