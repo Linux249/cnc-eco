@@ -1,0 +1,51 @@
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection).
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+
+POST http://localhost:8000/api/v1/local/login
+Content-Type: application/json
+
+{
+   "email": "julian.libor@gmail.com",
+   "password": "test123"
+
+}
+
+###
+
+POST http://localhost:8000/api/v1/local/signup
+Content-Type: application/json
+
+{
+   "email": "julian.libor@gmail.com",
+   "password": "test123"
+
+}
+
+###
+
+// DELETE A USER WITH ID
+DELETE http://{{host}}/api/v1/user/5bd74be8b1a6e966fb4ec55e
+Content-Type: application/json
+
+
+###
+
+// GET ALL USER IN DB
+GET http://localhost:8000/api/v1/user
+
+###
+
+// add a player name to user
+POST http://localhost:8000/api/v1/user/addPlayer
+
+###
+
+
+// add a player name to user
+GET http://localhost:8000/api/v1/worlds?name=linux249
+
+###
