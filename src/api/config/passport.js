@@ -2,7 +2,7 @@
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { googleAuth } from './config';
-import { User } from '../model/User';
+import User from '../model/User';
 
 const passportJWT = require('passport-jwt');
 
@@ -182,7 +182,7 @@ export default (passport) => {
                     return done(null, newUser);
                 }
                 // user already exists and is logged in, we have to link accounts
-                const user = req.user; // pull the user out of the session
+                const { user } = req; // pull the user out of the session
 
                 user.google.id = profile.id;
                 user.google.token = accessToken;
@@ -203,10 +203,14 @@ export default (passport) => {
             jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
             secretOrKey: process.env.JWT_SECRET || 'dummy1234556',
         },
-        (jwtPayload, cb) =>
         // find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
-            User.findOneById(jwtPayload.id)
-                .then(user => cb(null, user))
-                .catch(err => cb(err)),
+        (jwtPayload, cb) => {
+            // console.log({ jwtPayload });
+            return User.findById(jwtPayload._id)
+                .then((user) => {
+                    return cb(null, user);
+                })
+                .catch(err => cb(err));
+        },
     ));
 };

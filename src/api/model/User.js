@@ -41,7 +41,8 @@ const userSchema = Schema({
 });
 
 // generating a hash
-userSchema.methods.generateHash = password => bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+userSchema.methods.generateHash = password =>
+    bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 
 // checking if password is valid
 userSchema.methods.validPassword = function (password) {
@@ -49,4 +50,4 @@ userSchema.methods.validPassword = function (password) {
 };
 
 // create the model for users and expose it to our app
-export const User = mongoose.model('User', userSchema);
+export default mongoose.model('User', userSchema);

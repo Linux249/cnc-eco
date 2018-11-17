@@ -1,6 +1,5 @@
 import { Router } from 'express';
-import { User } from '../model/User';
-// import { Schema } from 'mongoose';
+import User from '../model/User';
 
 const router = Router();
 
@@ -12,7 +11,7 @@ router.get('/user', async (req, res) => {
 });
 
 // DELETE /api/v1/user/5bd708bfd279eb34d088bc69
-router.delete('/user/:id', async (req, res, next) => {
+router.delete('/user/:id', async (req, res) => {
     const { id } = req.params;
     // TODO auth require
     // console.log({id})
@@ -27,12 +26,12 @@ router.delete('/user/:id', async (req, res, next) => {
 
 router.post('/user/addPlayer', async (req, res, next) => {
     // name is player name given from user
-    const { name, worldId, _id } = req.body;
+    const { name, worldId } = req.body;
     // TODO worldName comes also from where user choose world later
-    console.log({ name, worldId, _id });
+    console.log({ name, worldId});
 
-    // Find User first TODO - thats could be done via auth later
-    const user = await User.findOne({ _id });
+    // PROTECT HACK: Find User first check if user _id from client is same like from auth
+    const user = req.user;
     if (!user) {
         console.log(user);
         return next(new Error('Cannot add Player: Users id invalid'));
@@ -101,15 +100,15 @@ router.post('/user/addPlayer', async (req, res, next) => {
 
 router.post('/user/addWorld', async (req, res, next) => {
     // name is player name given from user
-    const { name, worldId, _id } = req.body;
+    const { name, worldId } = req.body;
     // TODO worldName comes also from where user choose world later
-    console.log({ name, worldId, _id });
+    console.log({ name, worldId });
 
-    // Find User first TODO - thats could be done via auth later
-    const user = await User.findOne({ _id });
+    const user = req.user;
+    // TODO that schould never happen
     if (!user) {
         console.log(user);
-        return next(new Error('Cannot add Player: Users id invalid'));
+        return next(new Error('Cannot add Player: User in not Logged in invalid'));
     }
 
     // ANTI HACK Test if the player really is in User saved already
@@ -127,10 +126,16 @@ router.post('/user/addWorld', async (req, res, next) => {
     // find player
     const player = await collection.findOne({ name });
     if (!player) {
+        // TODO rework error - this route should not be accessible without existing player name
         console.log('no player found');
         console.log(player);
-        return next(new Error('Cannot add Player: Player name not found - please update data ingame'));
+        return next(new Error('Cannot add World: Player name not found - please update data ingame'));
     }
+
+    // Test if world not added already
+    // TODO CHECK if the ui protects the user to get in this situation
+    if(user.worlds.find(e => e.worldId === worldId))
+        return next(new Error('Cannot add World: World is already added to your user'))
 
     // console.log(player)
 
@@ -144,6 +149,7 @@ router.post('/user/addWorld', async (req, res, next) => {
         // const r = await collection.update({_id: player._id}, player)
         user.save((err, doc) => {
             if (err) return next(err);
+            console.log(`Player ${player.name} added world  ${player.serverName} to user ${user.local.email}`);
             return res.json(doc);
         });
     } else {

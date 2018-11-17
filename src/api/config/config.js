@@ -17,7 +17,6 @@ if (process.env.NODE_ENV === 'production') {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
             // 'callbackURL': 'https://cnc-eco.herokuapp.com/api/v1/auth/google/callback'
         },
-        cookieSecret: process.env.COOKIE_SECRET,
         mongoURI: process.env.MONGODB_URI,
     };
 } else {

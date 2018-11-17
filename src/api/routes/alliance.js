@@ -6,8 +6,7 @@ const router = Router();
 // GET // api/v1/alliance?world=22&alliance=123
 router.get('/alliance', async (req, res, next) => {
     console.log('Test logs in /alliance');
-    const { world } = req.query;
-    const allianceId = req.query.alliance;
+    const { world, alliance: allianceId } = req.query;
 
     if (!world) return next(new Error('world id is missing'));
     if (!allianceId) return next(new Error('alliance id is missing'));
@@ -22,6 +21,8 @@ router.get('/alliance', async (req, res, next) => {
     } catch (e) {
         return next(e);
     }
+
+    // TODO check if player who request is inside the alliance=
 
     if (!alliance) return next(new Error('No alliance found'));
 

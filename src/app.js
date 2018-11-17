@@ -7,18 +7,13 @@ import configurePassport from './api/config/passport'; // configurePassport
 import MongoClient from 'mongodb';
 import schedule from 'node-schedule';
 import { createReport } from './service/report';
-
 import cors from 'cors';
-
 import logging from 'morgan';
-import flash from 'connect-flash';
-import { cookieSecret, mongoURI } from './api/config/config';
+import { mongoURI } from './api/config/config';
 import setAuthRout from './api/routes/auth/index';
-// const logger = require("morgan")
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const cookieSession = require('cookie-session');
 
 let DB;
 
@@ -104,8 +99,8 @@ app.use(passport.initialize());
 // routes ======================================================================
 
 // set router for the API
-app.use('/', apiRouter);
 setAuthRout(app, passport);
+app.use('/', apiRouter);
 
 // usage from example
 // app.use('/user', passport.authenticate('jwt', {session: false}), user);

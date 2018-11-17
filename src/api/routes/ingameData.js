@@ -1,16 +1,12 @@
-import { Router } from 'express';
 import World from '../model/World';
 import Alliance from '../model/Alliance';
 
-const router = Router();
-
 // body.worldId is unique id of all worlds
 // body.allianceId is id of alliance on this world
-//
 
 // GET /api/v1/layout
 // get a single labtop with world + coords as params
-router.post('/ingameData', async (req, res, next) => {
+export default async (req, res, next) => {
     try {
         const { body, db } = req;
         const {
@@ -127,12 +123,10 @@ router.post('/ingameData', async (req, res, next) => {
         // add world
     } catch (err) {
         console.log({ err });
-        //res.send(err);
+        // res.send(err);
         next(err);
     }
-});
-
-export default router;
+};
 
 // 2017-10-16T10:04:43.127252+00:00 app[web.1]: { _data_: 'UPDATE',
 // 2017-10-16T10:04:43.127268+00:00 app[web.1]:   version: '4.7.5',
