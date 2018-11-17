@@ -2,13 +2,12 @@
   "name": "cnc-eco-client",
   "version": "0.1.2",
   "devDependencies": {
-    "babel-cli": "^6.24.1",
     "prettier": "^1.15.2",
-    "react-scripts": "2.1.1",
     "redux-logger": "^3.0.6",
     "why-did-you-update": "0.0.8"
   },
   "dependencies": {
+    "react-scripts": "2.1.1",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dnd": "^6.0.0",
