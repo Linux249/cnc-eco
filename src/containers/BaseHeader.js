@@ -28,17 +28,21 @@ class BaseHeader extends Component {
                 </Title>
                 <UrlInfo />
                 <Row wrap>
-                    <Link to="/bases" activeClassName="active">
-                        Basen
-                    </Link>
+                    {isAuthenticated && (
+                        <>
+                            <Link to="/bases" activeClassName="active">
+                                Basen
+                            </Link>
+                            <Link to="/layouts" activeClassName="active">
+                                Layouts
+                            </Link>
+                            <Link to="/alliance" activeClassName="active">
+                                Alliance
+                            </Link>
+                        </>
+                    )}
                     <Link to="/scripts" activeClassName="active">
                         Scripte
-                    </Link>
-                    <Link to="/layouts" activeClassName="active">
-                        Layouts
-                    </Link>
-                    <Link to="/alliance" activeClassName="active">
-                        Alliance
                     </Link>
                     {isAuthenticated ? (
                         <Link to="/user" activeClassName="active">
