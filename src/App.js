@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 
 class App extends Component {
     render() {
-        const { auth } = this.props;
+        const { auth, name } = this.props;
         return (
             <Router>
                 <AppS>
@@ -24,14 +24,14 @@ class App extends Component {
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
                     <Route path="/scripts" component={Scripts} />
-                    <ProtectedRoute path="/bases" auth={auth} component={Bases} />
-                    <ProtectedRoute path="/layouts" auth={auth} component={Layouts} />
-                    <ProtectedRoute path="/alliance" auth={auth} component={Alliance} />
-                    <ProtectedRoute path="/user" auth={auth} component={User} />
+                    <ProtectedRoute path="/bases" auth={auth} name={name} component={Bases} />
+                    <ProtectedRoute path="/layouts" auth={auth} name={name} component={Layouts} />
+                    <ProtectedRoute path="/alliance" auth={auth} name={name} component={Alliance} />
+                    <ProtectedRoute path="/user" auth={auth} name={name} component={User} />
                 </AppS>
             </Router>
         );
     }
 }
 
-export default DragDropContext(HTML5Backend)(connect(s => ({ auth: s.auth.isAuthenticated }))(App));
+export default DragDropContext(HTML5Backend)(connect(s => ({ auth: s.auth.isAuthenticated, name: s.player.name }))(App));
