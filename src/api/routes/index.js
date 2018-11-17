@@ -2,10 +2,11 @@ import passport from 'passport';
 import { Router } from 'express';
 import layouts from './layouts';
 import db from './db';
-import player from './player';
-import alliance from './alliance';
+import playerRouter from './player';
+import allianceRouter from './alliance';
 import ingameData from './ingameData';
 import user from './user';
+import worlds from './worlds';
 import layoutsRouter from './layouts/index';
 
 const router = Router();
@@ -14,16 +15,18 @@ const router = Router();
 router.get('/ingameData', ingameData);
 router.post('/layouts', layouts);
 
-// TODO that should be higher protected (Admin role)
-router.use('/', db);
-
 // AUTH Only for members area
 router.use('/', passport.authenticate('jwt', { session: false }));
+
+router.use('/worlds', worlds);
 router.use('/', layoutsRouter);
-router.use('/', player);
-router.use('/', alliance);
+router.use('/', playerRouter);
+router.use('/', allianceRouter);
 
 // Protected through login
 router.use('/', user);
+
+// TODO that should be higher protected (Admin role)
+router.use('/', db);
 
 export default router;

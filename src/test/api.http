@@ -43,3 +43,9 @@ GET http://localhost:8000/api/v1/user
 POST http://localhost:8000/api/v1/user/addPlayer
 
 ###
+
+
+// add a player name to user
+GET http://localhost:8000/api/v1/worlds?name=linux249
+
+###
