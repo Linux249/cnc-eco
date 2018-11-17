@@ -41,12 +41,12 @@ export default (passport) => {
                 // asynchronous
                 try {
                     const user = await User.findOne({ 'local.email': email });
-                    console.log({
+                    /* console.log({
                         user,
                         email,
                         password,
                         done,
-                    });
+                    }); */
                     // if there are any errors, return the error
                     // if (err) return done(err);
 
@@ -203,14 +203,10 @@ export default (passport) => {
             jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
             secretOrKey: process.env.JWT_SECRET || 'dummy1234556',
         },
-        // find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
-        (jwtPayload, cb) => {
-            // console.log({ jwtPayload });
-            return User.findById(jwtPayload._id)
-                .then((user) => {
-                    return cb(null, user);
-                })
-                .catch(err => cb(err));
-        },
+        // SECURE CHECK check user in db prevents for sending false payload
+        (jwtPayload, done) =>
+            User.findById(jwtPayload._id)
+                .then(user => done(null, user))
+                .catch(err => done(err)),
     ));
 };
