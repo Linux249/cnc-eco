@@ -1,7 +1,6 @@
 {
   "name": "cnc-eco-client",
   "version": "0.1.2",
-  "private": true,
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "prettier": "^1.15.2",
