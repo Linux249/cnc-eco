@@ -5,6 +5,7 @@ import Input from '../style/Input';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Button } from '../style/Button';
+import {Redirect} from 'react-router'
 
 const Middle = styled.div`
     display: flex;
@@ -25,12 +26,13 @@ class Login extends Component {
             password,
             error,
             isFetching,
+            isAuthenticated,
             changeEmail,
             changePassword,
             login,
         } = this.props;
 
-        return (
+        return !isAuthenticated ? (
             <Middle>
                 <Container>
                     <h1>Sign In</h1>
@@ -54,6 +56,8 @@ class Login extends Component {
                     <Button onClick={() => login()}>Sign in</Button>
                 </Container>
             </Middle>
+        ) : (
+            <Redirect to="bases" />
         );
     }
 }
@@ -64,6 +68,7 @@ function mapStateToProps(state) {
         password: state.auth.password,
         isFetching: state.auth.isFetching,
         error: state.auth.error,
+        isAuthenticated: state.auth.isAuthenticated,
     };
 }
 

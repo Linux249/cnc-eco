@@ -40,7 +40,6 @@ export function player(state = initState, action) {
                 ...state,
                 name: action.name,
                 worlds: action.worlds,
-                allianceId: action.allianceId,
             };
         case PLAYER_UPDATE_BASES:
             return {

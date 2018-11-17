@@ -49,7 +49,6 @@ export const updatePlayer = user => {
             type: PLAYER_UPDATE,
             name: user.player,
             worlds: user.worlds,
-            allianceId: user.allianceId
         });
         // check if the world id changed - usefully for initial loading kick
         const { selectedWorld, w } = getState().player;
