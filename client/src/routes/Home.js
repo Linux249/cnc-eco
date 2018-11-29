@@ -1,6 +1,11 @@
 import React from 'react';
 import UrlInfo from '../containers/UrlInfo';
+import { Row } from '../style/Row';
 
 export default () => {
-    return <UrlInfo />;
+    return (
+        <Row center>
+            <UrlInfo />
+        </Row>
+    );
 };
