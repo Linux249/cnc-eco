@@ -25,7 +25,7 @@ export default async (req, res, next) => {
             `IngameData from: ${currentplayerName} 
             on: ${serverName}(${worldId}) 
             a: ${allianceName}(${allianceId}) 
-            #${basecount}`,
+            #${basecount}`
         );
 
         /*
@@ -132,7 +132,6 @@ export default async (req, res, next) => {
             };
         });
 
-
         // find or create player
         // let player = await Player.findOne({name: currentplayerName}) || new Player({name: currentplayerName})
 
@@ -158,11 +157,6 @@ export default async (req, res, next) => {
             creditsCount: body.CreditsCount, // amount of credits
             timeToMcv: body.timeTOmcv, // time left to next mcv
             rpNeeded: body.rpNeeded, // total rp that needed - %% this
-
-            maxOff: 0,
-            maxDef: 0,
-            rep: 0, // in the highest off
-            repMax: 0, // is every where the same
 
             totalTib,
             totalPower,
