@@ -3,7 +3,7 @@
  */
 
 import express from 'express';
-import Path from 'path'
+import Path from 'path';
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { pingInterval: 1000 });
@@ -38,10 +38,10 @@ console.log({ mongo_uri });
 //
 // server.route(layouts);
 
-io.on('connect', (socket) => {
+io.on('connect', socket => {
     console.log('someone conecceted');
 
-    socket.on('buildings', (buildings) => {
+    socket.on('buildings', buildings => {
         console.log('buildings emited - start searching');
         // findBestToLvlUpNext(buildings, foundNewBest)
 
@@ -65,7 +65,7 @@ app.use('/api/v1', api);
 //     }
 //     console.log('Server running at:', server.info.uri);
 // });
-const path = Path.join(__dirname,'../../client/build');
+const path = Path.join(__dirname, '../../client/build');
 //console.log({path})
 app.use('/', express.static(path));
 

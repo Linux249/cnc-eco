@@ -32,14 +32,7 @@ class WorldBaseMenu extends Component {
     };
 
     render() {
-        const {
-            worlds,
-            worldName,
-            bases,
-            selectedBase,
-            selectBase,
-            withBases,
-        } = this.props;
+        const { worlds, worldName, bases, selectedBase, selectBase, withBases } = this.props;
         const { showWorld } = this.state;
         return (
             <>
@@ -48,7 +41,10 @@ class WorldBaseMenu extends Component {
                         <DropDownAnchor>
                             <DropDownArea>
                                 {worlds.map(w => (
-                                    <Button onClick={() => this.handleSelectWorld(w)} key={w.worldId}>
+                                    <Button
+                                        onClick={() => this.handleSelectWorld(w)}
+                                        key={w.worldId}
+                                    >
                                         {w.worldName}
                                     </Button>
                                 ))}

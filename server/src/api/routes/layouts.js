@@ -3,16 +3,14 @@ import { layoutStats } from '../../utils/layout';
 export default async (req, res, next) => {
     res.setHeader(
         'Access-Control-Allow-Origin',
-        'https://prodgame08.alliances.commandandconquer.com',
+        'https://prodgame08.alliances.commandandconquer.com'
     );
     res.send();
-    let {
-        db, body, headers, query,
-    } = req;
+    let { db, body, headers, query } = req;
     const { w } = query;
     if (headers['content-type'].includes('text')) body = JSON.parse(body);
 
-    const layouts = await Object.keys(body).map((key) => {
+    const layouts = await Object.keys(body).map(key => {
         const [x, y] = key.split(':');
         const layoutString = body[key].layout.slice(0, 72);
         const { tib, cris } = layoutStats(layoutString);
@@ -32,7 +30,7 @@ export default async (req, res, next) => {
     const collection = db.collection(`layouts_${w}`);
     console.log(`POST: collection: ${collection.namespace} - items: ${layouts.length}`);
 
-    await layouts.forEach((layout) => {
+    await layouts.forEach(layout => {
         collection.updateOne(
             { x: layout.x, y: layout.y },
             layout,
@@ -42,7 +40,7 @@ export default async (req, res, next) => {
                     next(err);
                     throw err;
                 }
-            },
+            }
         );
     });
     // npm console.log(layouts)

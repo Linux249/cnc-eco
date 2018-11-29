@@ -13,7 +13,7 @@ const Spinner = styled.div`
     height: 0.5rem;
     position: absolute;
     top: -5px;
-    background-color: rgba(51,51,51,0.7);
+    background-color: rgba(51, 51, 51, 0.7);
     border-radius: 100%;
     animation: ${move} 4s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
 

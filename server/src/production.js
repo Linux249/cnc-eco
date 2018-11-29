@@ -245,7 +245,7 @@ const roundTwoPoints = (p1, p2, day) => {
     return prod;
 };
 
-const calcBuildingCost = (building) => {
+const calcBuildingCost = building => {
     const costs_tiberium = [
         1,
         2,
@@ -322,22 +322,22 @@ const calcBuildingCost = (building) => {
 
     if (building.type && building.lvl <= 65) {
         switch (building.type) {
-        case 'n': // kris harvester
-        case 'h': // tib harvester
-            costs.tib += costs_tiberium[building.lvl];
-            costs.power += Math.round((costs_tiberium[building.lvl] / 4) * 3); // power coosts for a harvester
-            break;
-        case 's': // silo
-        case 'a': // akku
-            costs.tib += costs_tiberium[building.lvl];
-            costs.power += Math.round(costs_tiberium[building.lvl] / 4);
-            break;
-        case 'r': // rafenerieeee
-            costs.tib += costs_tiberium[building.lvl] * 2; // dubble costs
-            costs.power += Math.round(costs_tiberium[building.lvl] / 2); // power costs for a raf
-            break;
-        default:
-            break;
+            case 'n': // kris harvester
+            case 'h': // tib harvester
+                costs.tib += costs_tiberium[building.lvl];
+                costs.power += Math.round((costs_tiberium[building.lvl] / 4) * 3); // power coosts for a harvester
+                break;
+            case 's': // silo
+            case 'a': // akku
+                costs.tib += costs_tiberium[building.lvl];
+                costs.power += Math.round(costs_tiberium[building.lvl] / 4);
+                break;
+            case 'r': // rafenerieeee
+                costs.tib += costs_tiberium[building.lvl] * 2; // dubble costs
+                costs.power += Math.round(costs_tiberium[building.lvl] / 2); // power costs for a raf
+                break;
+            default:
+                break;
         }
     }
 
@@ -349,7 +349,7 @@ const calcBuildingCostAll = (buildings, lvl = 1) => {
         tib: 0,
         power: 0,
     };
-    buildings.forEach((building) => {
+    buildings.forEach(building => {
         if (building.lvl) {
             const cost = calcBuildingCost(building);
             costs.tib += cost.tib;
@@ -364,7 +364,7 @@ const calcBuildingCostAll = (buildings, lvl = 1) => {
 /*
  calc the produktion from Base
  */
-export const calcBaseProduction = (buildings) => {
+export const calcBaseProduction = buildings => {
     const production = [0, 0, 0, 0]; // [tib, kris, power, credits]
     const neighbours = [-10, -9, -8, -1, 1, 8, 9, 10];
     const silo_production = [
@@ -960,7 +960,7 @@ export const calcBaseProduction = (buildings) => {
             if (building.lvl > 65) building.lvl = 65;
             // get tib/kris Silo?
             if (building.type === 's') {
-                neighbours.forEach((n) => {
+                neighbours.forEach(n => {
                     const j = i + n; // j: neighbour
                     if (j >= 0 && j <= 71) {
                         if (buildings[j] && buildings[j].type === 'h') {
@@ -978,7 +978,7 @@ export const calcBaseProduction = (buildings) => {
             else if (building.type === 'h') {
                 // chick if silo around exists
                 let hasSilo = false;
-                neighbours.forEach((n) => {
+                neighbours.forEach(n => {
                     const j = i + n; // j: neighbour
                     if (j >= 0 && j <= 71) {
                         // find silo
@@ -995,7 +995,7 @@ export const calcBaseProduction = (buildings) => {
             else if (building.type === 'n') {
                 // chick if silo around exists
                 let hasSilo = false;
-                neighbours.forEach((n) => {
+                neighbours.forEach(n => {
                     const j = i + n; // j: neighbour
                     if (j >= 0 && j <= 71) {
                         // find silo
@@ -1010,7 +1010,7 @@ export const calcBaseProduction = (buildings) => {
 
             // get power from accu
             else if (building.type === 'a') {
-                neighbours.forEach((n) => {
+                neighbours.forEach(n => {
                     const j = i + n; // j: neighbour
                     if (j >= 0 && j <= 71) {
                         if (buildings[j] && buildings[j].type === 'p') {
@@ -1024,7 +1024,7 @@ export const calcBaseProduction = (buildings) => {
             // get power from PowerPlants
             else if (building.type === 'p') {
                 let hasAccu = false;
-                neighbours.forEach((n) => {
+                neighbours.forEach(n => {
                     const j = i + n; // j: neighbour
                     if (j >= 0 && j <= 71) {
                         // find kris fields around
@@ -1054,7 +1054,7 @@ export const calcBaseProduction = (buildings) => {
             else if (building.type === 'r') {
                 let hasPp = false;
                 // count harvester/tib's around
-                neighbours.forEach((n) => {
+                neighbours.forEach(n => {
                     const j = i + n; // j: neighbour
                     if (j >= 0 && j <= 71) {
                         // find harvest/tib
@@ -1088,7 +1088,7 @@ export const calcBaseProduction = (buildings) => {
 /*
  full base +1
  */
-export const calcBaseUpCost = (buildings) => {
+export const calcBaseUpCost = buildings => {
     const costs_tiberium = [
         1,
         2,
@@ -1161,25 +1161,25 @@ export const calcBaseUpCost = (buildings) => {
         tib: 0,
         power: 0,
     };
-    buildings.forEach((building) => {
+    buildings.forEach(building => {
         if (building.type && building.lvl <= 65) {
             switch (building.type) {
-            case 'n': // kris harvester
-            case 'h': // tib harvester
-                costs.tib += costs_tiberium[building.lvl];
-                costs.power += Math.round((costs_tiberium[building.lvl] / 4) * 3); // power coosts for a harvester
-                break;
-            case 's': // silo
-            case 'a': // akku
-                costs.tib += costs_tiberium[building.lvl];
-                costs.power += Math.round(costs_tiberium[building.lvl] / 4);
-                break;
-            case 'r': // rafenerieeee
-                costs.tib += costs_tiberium[building.lvl] * 2; // dubble costs
-                costs.power += Math.round(costs_tiberium[building.lvl] / 2); // power costs for a raf
-                break;
-            default:
-                break;
+                case 'n': // kris harvester
+                case 'h': // tib harvester
+                    costs.tib += costs_tiberium[building.lvl];
+                    costs.power += Math.round((costs_tiberium[building.lvl] / 4) * 3); // power coosts for a harvester
+                    break;
+                case 's': // silo
+                case 'a': // akku
+                    costs.tib += costs_tiberium[building.lvl];
+                    costs.power += Math.round(costs_tiberium[building.lvl] / 4);
+                    break;
+                case 'r': // rafenerieeee
+                    costs.tib += costs_tiberium[building.lvl] * 2; // dubble costs
+                    costs.power += Math.round(costs_tiberium[building.lvl] / 2); // power costs for a raf
+                    break;
+                default:
+                    break;
             }
         }
     });
@@ -1311,7 +1311,7 @@ export const futureProduction = (buildings, days = 121) => {
 /*
 
  */
-export const calcTimeForAllBuildings = (buildings) => {
+export const calcTimeForAllBuildings = buildings => {
     const production = calcBaseProduction(buildings);
     const costs = calcBuildingCostAll(buildings);
     const time = {

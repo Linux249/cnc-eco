@@ -6,7 +6,7 @@ let createStoreWithMiddleware;
 if (process.env.NODE_ENV === 'development') {
     const logger = require('redux-logger');
     createStoreWithMiddleware = applyMiddleware(thunkMiddleware, logger.createLogger())(
-        createStore,
+        createStore
     );
 } else {
     createStoreWithMiddleware = applyMiddleware(thunkMiddleware)(createStore);

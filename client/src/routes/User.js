@@ -158,7 +158,8 @@ class User extends Component {
                     <h2>Select a World</h2>
                     <Area>
                         <LoadingPoints loading={loading}/>
-                        {worlds.length !== 0 && worlds.map(w => (
+                        {worlds.length !== 0 &&
+                        worlds.map(w => (
                             <Button
                                 key={w.worldId}
                                 onClick={() => this.changeWorld(w.worldId)}

@@ -12,7 +12,6 @@ import { createReport } from './service/report';
 import { mongoURI } from './api/config/config';
 import setAuthRout from './api/routes/auth/index';
 
-
 let DB;
 
 // configuration ===============================================================
@@ -24,7 +23,7 @@ MongoClient.connect(
             console.log('SCHEUDLER');
             createReport(DB);
         });
-    },
+    }
 );
 
 mongoose.Promise = global.Promise;
@@ -32,7 +31,7 @@ mongoose.connect(mongoURI);
 const db = mongoose.connection; // simplification
 
 // falls Fehler kommen so ausgeben
-db.on('error', (err) => {
+db.on('error', err => {
     console.error('Fehler von DB:', err);
 });
 

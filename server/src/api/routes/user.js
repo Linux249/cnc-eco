@@ -28,7 +28,7 @@ router.post('/user/addPlayer', async (req, res, next) => {
     // name is player name given from user
     const { name, worldId } = req.body;
     // TODO worldName comes also from where user choose world later
-    console.log({ name, worldId});
+    console.log({ name, worldId });
 
     // PROTECT HACK: Find User first check if user _id from client is same like from auth
     const user = req.user;
@@ -62,7 +62,9 @@ router.post('/user/addPlayer', async (req, res, next) => {
     if (!player) {
         console.log('no player found');
         console.log(player);
-        return next(new Error('Cannot add Player: Player name not found - please update data ingame'));
+        return next(
+            new Error('Cannot add Player: Player name not found - please update data ingame')
+        );
     }
 
     // console.log(player)
@@ -89,10 +91,16 @@ router.post('/user/addPlayer', async (req, res, next) => {
                 return res.json(doc);
             });
         } else {
-            return next(new Error(`Cannot add Player: Player was not updated in the last 3 (${minutes}) minutes - please update data ingame`));
+            return next(
+                new Error(
+                    `Cannot add Player: Player was not updated in the last 3 (${minutes}) minutes - please update data ingame`
+                )
+            );
         }
     } else {
-        return next(new Error('Cannot add Player: Player has never updated - please update data ingame'));
+        return next(
+            new Error('Cannot add Player: Player has never updated - please update data ingame')
+        );
     }
 
     // add player to user and time
@@ -103,8 +111,8 @@ router.post('/user/addWorld', async (req, res, next) => {
     const { name, worldId } = req.body;
     // TODO worldName comes also from where user choose world later
     console.log({ name, worldId });
-    if(!name) return next(new Error('Player name missing'))
-    if(!worldId) return next(new Error('World missing'))
+    if (!name) return next(new Error('Player name missing'));
+    if (!worldId) return next(new Error('World missing'));
 
     const user = req.user;
     // TODO that schould never happen
@@ -131,13 +139,15 @@ router.post('/user/addWorld', async (req, res, next) => {
         // TODO rework error - this route should not be accessible without existing player name
         console.log('no player found');
         console.log(player);
-        return next(new Error('Cannot add World: Player name not found - please update data ingame'));
+        return next(
+            new Error('Cannot add World: Player name not found - please update data ingame')
+        );
     }
 
     // Test if world not added already
     // UI protect this situation - raise higher error lvl for logging potential ui bugs
     if (user.worlds.some(e => +e.worldId === +worldId))
-        return next(new Error('Cannot add World: World is already added to your user'))
+        return next(new Error('Cannot add World: World is already added to your user'));
 
     // console.log(player)
 
@@ -151,11 +161,17 @@ router.post('/user/addWorld', async (req, res, next) => {
         // const r = await collection.update({_id: player._id}, player)
         user.save((err, doc) => {
             if (err) return next(err);
-            console.log(`Player ${player.name} added world  ${player.serverName} to user ${user.local.email}`);
+            console.log(
+                `Player ${player.name} added world  ${player.serverName} to user ${
+                    user.local.email
+                    }`
+            );
             return res.json(doc);
         });
     } else {
-        return next(new Error('Cannot add Player: Player has never updated - please update data ingame'));
+        return next(
+            new Error('Cannot add Player: Player has never updated - please update data ingame')
+        );
     }
 
     // add player to user and time

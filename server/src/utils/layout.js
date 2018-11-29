@@ -1,6 +1,6 @@
 const neighbours = [-10, -9, -8, -1, 1, 8, 9, 10];
 
-export const layoutStats = (layout) => {
+export const layoutStats = layout => {
     let tib = 0,
         cris = 0;
     // each char is a building
@@ -10,7 +10,7 @@ export const layoutStats = (layout) => {
         let tib_n = 0,
             cris_n = 0;
 
-        neighbours.forEach((n) => {
+        neighbours.forEach(n => {
             const j = i + n; // j: neighbour
             if (j >= 0 && j <= 71) {
                 if (base[j] === 't') tib_n += 1; // 0 = tib

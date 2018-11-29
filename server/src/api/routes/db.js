@@ -42,13 +42,15 @@ router.get('/deleteOldLayouts/:days', async (req, res, next) => {
     const date = new Date();
     date.setDate(date.getDate() - days);
     req.db.listCollections().toArray((err, allCollections) => {
-        allCollections.map(async (coll) => {
+        allCollections.map(async coll => {
             if (coll.name.includes('layouts')) {
                 console.log(coll.name);
                 const curser = await req.db.collection(coll.name).remove({ time: { $lt: date } });
-                console.log(`DELETE LAYOUTS on ${coll.name} #${curser.result.n} - status: ${
-                    curser.result.ok
-                }`);
+                console.log(
+                    `DELETE LAYOUTS on ${coll.name} #${curser.result.n} - status: ${
+                        curser.result.ok
+                        }`
+                );
             }
         });
         res.json('wann');
@@ -58,7 +60,7 @@ router.get('/deleteOldLayouts/:days', async (req, res, next) => {
 router.get('/repairLayouts', async (req, res, next) => {
     const { db } = req;
     await db.listCollections().toArray((err, collInfos) => {
-        collInfos.map((coll) => {
+        collInfos.map(coll => {
             console.log(coll);
             if (coll.name.includes('layouts')) {
                 const collection = db.collection(coll.name);
@@ -68,11 +70,13 @@ router.get('/repairLayouts', async (req, res, next) => {
                         next(err);
                     }
                     console.log(`cleaning: ${coll.name} found items: ${layouts.length}`);
-                    layouts.map((layout) => {
+                    layouts.map(layout => {
                         const { tib, cris } = layoutStats(layout.layout);
-                        console.log(`Layout: ${layout.x}:${layout.y} bevor: ${layout.tib}:${
-                            layout.cris
-                        } after: ${tib}:${cris}`);
+                        console.log(
+                            `Layout: ${layout.x}:${layout.y} bevor: ${layout.tib}:${
+                                layout.cris
+                                } after: ${tib}:${cris}`
+                        );
                         layout.tib = tib;
                         layout.cris = cris;
                         collection.updateOne(
@@ -84,7 +88,7 @@ router.get('/repairLayouts', async (req, res, next) => {
                                     next(err);
                                     throw err;
                                 }
-                            },
+                            }
                         );
                     });
                 });

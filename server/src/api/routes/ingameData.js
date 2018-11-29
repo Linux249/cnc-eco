@@ -22,7 +22,7 @@ export default async (req, res, next) => {
 
         if (!currentplayerName) return next(new Error('Request is currently not supported'));
         console.log(
-            `IngameData from: ${currentplayerName} on: ${serverName}(${worldId}) a: ${allianceName}(${allianceId}) base# ${basecount}`,
+            `IngameData from: ${currentplayerName} on: ${serverName}(${worldId}) a: ${allianceName}(${allianceId}) base# ${basecount}`
         );
 
         /*

@@ -30,7 +30,7 @@ console.log(cost);
 
 const test = [{ a: 0 }, { a: 0 }, { a: 0 }];
 
-test.forEach((b) => {
+test.forEach(b => {
     b.a += 1;
     console.log(b.a);
     console.log(test);

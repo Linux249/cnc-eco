@@ -34,10 +34,10 @@ if (process.env.NODE_ENV === 'production') {
             // 'callbackURL': 'http://localhost:8000/auth/twitter/callback'
         },
         googleAuth: {
-            clientID: "dasd",
-            clientSecret: "sdasd",
+            clientID: 'dasd',
+            clientSecret: 'sdasd'
             // 'callbackURL': 'https://cnc-eco.herokuapp.com/api/v1/auth/google/callback'
         },
         mongoURI: process.env.MONGODB_URI || 'mongodb://localhost:27017',
-    }
+    };
 }

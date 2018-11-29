@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-module.exports = function (app, passport) {
+module.exports = function(app, passport) {
     // app.delete()
     // normal routes ===============================================================
 
@@ -45,7 +45,7 @@ module.exports = function (app, passport) {
                     info,
                 });
             }
-            req.login(user, { session: false }, (err) => {
+            req.login(user, { session: false }, err => {
                 if (err) {
                     res.send(err);
                 }
@@ -67,7 +67,7 @@ module.exports = function (app, passport) {
                     info,
                 });
             }
-            req.login(user, { session: false }, (err) => {
+            req.login(user, { session: false }, err => {
                 if (err) {
                     res.send(err);
                 }
@@ -140,7 +140,7 @@ module.exports = function (app, passport) {
         (req, res) => {
             const token = 'tooookeeeen';
             res.redirect(`/#/profile?token=${token}`);
-        },
+        }
     );
 
     // =============================================================================
@@ -197,7 +197,7 @@ module.exports = function (app, passport) {
         passport.authorize('google', {
             successRedirect: '/profile',
             failureRedirect: '/',
-        }),
+        })
     );
 
     // =============================================================================
@@ -212,7 +212,7 @@ module.exports = function (app, passport) {
         const user = req.user;
         user.local.email = undefined;
         user.local.password = undefined;
-        user.save((err) => {
+        user.save(err => {
             res.redirect('/profile');
         });
     });
@@ -221,7 +221,7 @@ module.exports = function (app, passport) {
     app.get('/unlink/facebook', isLoggedIn, (req, res) => {
         const user = req.user;
         user.facebook.token = undefined;
-        user.save((err) => {
+        user.save(err => {
             res.redirect('/profile');
         });
     });
@@ -230,7 +230,7 @@ module.exports = function (app, passport) {
     app.get('/unlink/twitter', isLoggedIn, (req, res) => {
         const user = req.user;
         user.twitter.token = undefined;
-        user.save((err) => {
+        user.save(err => {
             res.redirect('/profile');
         });
     });
@@ -239,7 +239,7 @@ module.exports = function (app, passport) {
     app.get('/unlink/google', isLoggedIn, (req, res) => {
         const user = req.user;
         user.google.token = undefined;
-        user.save((err) => {
+        user.save(err => {
             res.redirect('/profile');
         });
     });

@@ -71,7 +71,7 @@ class Alliance extends Component {
             count: alliance.count,
             lastUpdated: alliance.date,
             members: alliance.members.sort((m1, m2) =>
-                !m1.rank || !m2.rank ? -1 : m1.rank < m2.rank ? 1 : -1,
+                !m1.rank || !m2.rank ? -1 : m1.rank < m2.rank ? 1 : -1
             ),
         });
         this.props.changeLoading(false);
@@ -123,16 +123,20 @@ class Alliance extends Component {
 
                         <Cell>
                             {' '}
-                            <Icon src={tib} alt="Tib"/>/h
+                            <Icon src={tib} alt="Tib"/>
+                            /h
                         </Cell>
                         <Cell>
-                            <Icon src={cris} alt="Cris"/>/h
+                            <Icon src={cris} alt="Cris"/>
+                            /h
                         </Cell>
                         <Cell>
-                            <Icon src={power} alt="Power"/>/h
+                            <Icon src={power} alt="Power"/>
+                            /h
                         </Cell>
                         <Cell>
-                            <Icon src={credits} alt="Credits"/>/h
+                            <Icon src={credits} alt="Credits"/>
+                            /h
                         </Cell>
 
                         <Cell>
@@ -238,5 +242,5 @@ const mapDispatchToProps = { changeLoading };
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps,
+    mapDispatchToProps
 )(Alliance);

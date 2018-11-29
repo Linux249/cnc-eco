@@ -420,7 +420,7 @@ const raf_cost = [
     235879167836,
 ];
 
-const calcBaseUpCost = (buildings) => {
+const calcBaseUpCost = buildings => {
     const costs_tiberium = [
         1,
         2,
@@ -489,23 +489,23 @@ const calcBaseUpCost = (buildings) => {
         117939583918,
     ];
     const costs = { tib: 0, power: 0 };
-    buildings.forEach((building) => {
+    buildings.forEach(building => {
         if (building.type && building.lvl < 65) {
             switch (building.type) {
-            case 'n': // kris harvester
-            case 'h': // tib harvester
-                costs.tib += costs_tiberium[building.lvl];
-                costs.power += Math.round((costs_tiberium[building.lvl] / 4) * 3); // power coosts for a harvester
-                break;
-            case 's': // silo
-            case 'a': // akku
-                costs.tib += costs_tiberium[building.lvl];
-                costs.power += Math.round(costs_tiberium[building.lvl] / 4);
-                break;
-            case 'r': // rafenerieeee
-                costs.tib += costs_tiberium[building.lvl] * 2; // dubble costs
-                costs.power += Math.round(costs_tiberium[building.lvl] / 2); // power costs for a raf
-                break;
+                case 'n': // kris harvester
+                case 'h': // tib harvester
+                    costs.tib += costs_tiberium[building.lvl];
+                    costs.power += Math.round((costs_tiberium[building.lvl] / 4) * 3); // power coosts for a harvester
+                    break;
+                case 's': // silo
+                case 'a': // akku
+                    costs.tib += costs_tiberium[building.lvl];
+                    costs.power += Math.round(costs_tiberium[building.lvl] / 4);
+                    break;
+                case 'r': // rafenerieeee
+                    costs.tib += costs_tiberium[building.lvl] * 2; // dubble costs
+                    costs.power += Math.round(costs_tiberium[building.lvl] / 2); // power costs for a raf
+                    break;
             }
         }
     });
@@ -518,9 +518,7 @@ const urlToBase = (url = dummy) => {
     const faction = split[1]; // F = forgetten, N = NOD, G = GDI
     let urlString = split[4];
     let slot = 1;
-    let building,
-        unit,
-        lvl;
+    let building, unit, lvl;
 
     const base = {
         nod_buildings_keys: {
@@ -646,9 +644,9 @@ const urlToBase = (url = dummy) => {
     return base;
 };
 
-const parseBaseToURL = (base) => {
+const parseBaseToURL = base => {
     let urlString = '';
-    base.buildings.concat(base.defens, base.army).forEach((building) => {
+    base.buildings.concat(base.defens, base.army).forEach(building => {
         if (building.type) {
             if (building.lvl) {
                 urlString += building.lvl;
@@ -664,7 +662,7 @@ const parseBaseToURL = (base) => {
 // lvl all buildings += [lvl]
 const allBuildingLvLUp = (base, lvl = 0) => {
     if (base.buildings) {
-        base.buildings.forEach((building) => {
+        base.buildings.forEach(building => {
             if (building.lvl) {
                 building.lvl += lvl; // upgrade building lvl
                 if (building.lvl > 65) building.lvl = 65; // check for max lvl (65)
@@ -674,7 +672,7 @@ const allBuildingLvLUp = (base, lvl = 0) => {
     return base;
 };
 
-const best = (base) => {
+const best = base => {
     const topTib = [];
     base.buildings.forEach((building, index, allBuildings) => {
         // upgrade one building
