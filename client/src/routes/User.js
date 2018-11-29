@@ -6,6 +6,7 @@ import Input from '../style/Input';
 import { api_url } from '../config';
 import { updatePlayer } from '../store/actions/player';
 import Area from '../style/Area';
+import LoadingPoints from '../style/LoadingPoints';
 
 const Middle = styled.div`
     display: flex;
@@ -36,9 +37,9 @@ class User extends Component {
         };
     }
 
-    startLoading = () => this.setState(l => ({ loading: l + 1 }));
+    startLoading = () => this.setState(({ loading: l }) => ({ loading: l + 1 }));
 
-    endLoading = () => this.setState(l => ({ loading: l - 1 }));
+    endLoading = () => this.setState(({ loading: l }) => ({ loading: l - 1 }));
 
     cleanError = () => this.setState({ error: null });
 
@@ -155,18 +156,15 @@ class User extends Component {
                     <h5>you can only all 7 days change your username</h5>
                     <h2>Select a World</h2>
                     <Area>
-                        {loading ? (
-                            <h5>loading...</h5>
-                        ) : (
-                            worlds.map(w => (
-                                <Button
-                                    onClick={() => this.changeWorld(w.worldId)}
-                                    active={world === w.worldId}
-                                >
-                                    {w.worldName}
-                                </Button>
-                            ))
-                        )}
+                        <LoadingPoints loading={loading}/>
+                        {worlds.length !== 0 && worlds.map(w => (
+                            <Button
+                                onClick={() => this.changeWorld(w.worldId)}
+                                active={world === w.worldId}
+                            >
+                                {w.worldName}
+                            </Button>
+                        ))}
                         <Button onClick={this.loadWorlds}>reload worlds</Button>
                     </Area>
 
