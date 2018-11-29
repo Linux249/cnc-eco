@@ -22,10 +22,7 @@ export default async (req, res, next) => {
 
         if (!currentplayerName) return next(new Error('Request is currently not supported'));
         console.log(
-            `IngameData from: ${currentplayerName} 
-            on: ${serverName}(${worldId}) 
-            a: ${allianceName}(${allianceId}) 
-            #${basecount}`
+            `IngameData from: ${currentplayerName} on: ${serverName}(${worldId}) a: ${allianceName}(${allianceId}) base# ${basecount}`,
         );
 
         /*
@@ -73,13 +70,14 @@ export default async (req, res, next) => {
 
         const bases = [...Array(Number(basecount))].map((_, i) => {
             // update max off base index
-            const off = body[`off${i}`];
-            const def = body[`def${i}`];
+            const off = +body[`off${i}`];
+            const def = +body[`def${i}`];
             avargDef += Math.round((def / basecount) * 100) / 100;
 
-            const rep = body[`availrep${i}`];
-            const maxRep = body[`repmax${i}`];
-            if (i !== offBaseIndex && off > offbase.off) {
+            const rep = +body[`availrep${i}`];
+            const maxRep = +body[`repmax${i}`];
+            if ((i !== offBaseIndex && off >= offbase.off) || i === 0) {
+                console.log({ i, off, def, rep, maxRep });
                 offBaseIndex = i;
                 offbase.off = off;
                 offbase.def = def;
@@ -87,18 +85,18 @@ export default async (req, res, next) => {
                 offbase.maxRep = maxRep;
             }
 
-            const tib = body[`tib${i}`];
-            const cris = body[`cris${i}`];
-            const power = body[`power${i}`];
-            const cash = body[`cash${i}`];
+            const tib = +body[`tib${i}`];
+            const cris = +body[`cris${i}`];
+            const power = +body[`power${i}`];
+            const cash = +body[`cash${i}`];
             totalTib += tib;
             totalCris += cris;
             totalPower += power;
             totalCredits += cash;
 
-            const subLvl = body[`suplvl${i}`];
-            const dfLvl = body[`dflvl${i}`];
-            const dfHQLvl = body[`dfhqlvl${i}`];
+            const subLvl = +body[`suplvl${i}`];
+            const dfLvl = +body[`dflvl${i}`];
+            const dfHQLvl = +body[`dfhqlvl${i}`];
             avargSubLvl += Math.round((subLvl / basecount) * 100) / 100;
             avargDfLvl += Math.round((dfLvl / basecount) * 100) / 100;
             avargDfHQLvl += Math.round((dfHQLvl / basecount) * 100) / 100;
