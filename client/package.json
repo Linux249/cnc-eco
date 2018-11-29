@@ -7,7 +7,6 @@
     "why-did-you-update": "0.0.8"
   },
   "dependencies": {
-    "react-scripts": "2.1.1",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dnd": "^6.0.0",
@@ -17,10 +16,11 @@
     "react-redux": "^5.1.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "socket.io-client": "^2.1.1",
-    "styled-components": "^4.1.1"
+    "socket.io-client": "^2.2.0",
+    "styled-components": "^4.1.2"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -29,7 +29,7 @@ class Layouts extends Component {
     getLayouts = () => {
         this.setState({ loading: true });
         const { pl, w, allianceId, token } = this.props;
-        const url = `${api_url}/layouts?pl=${pl}&w=${w}&a=${allianceId}&limit=200`;
+        const url = `${api_url}/layouts?pl=${pl}&w=${w}&a=${allianceId}&limit=200&skip=0`;
         fetch(url, {
             headers: {
                 Authorization: 'Bearer  ' + token,

@@ -7,7 +7,7 @@ import Body from '../style/Body';
 
 export default () => (
     <>
-        <WorldBaseMenu />
+        <WorldBaseMenu withBases/>
         <Body>
             <BuildingMenu />
             <Base />
