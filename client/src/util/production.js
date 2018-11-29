@@ -1049,7 +1049,7 @@ export const futureProduction = (buildings, days = 121) => {
                     });
                 }
                 buildings[i].lvl += 1;
-                if(buildings[i].lvl > 65 ) buildings[i].lvl = 65
+                if (buildings[i].lvl > 65) buildings[i].lvl = 65;
             }
         }
     }

@@ -1,12 +1,12 @@
-import React from 'react'
-import {changeAuthEmail, changeAuthPassword, requestRegister} from '../store/actions/auth'
-import connect from 'react-redux/es/connect/connect'
-import Input from '../style/Input'
-import styled from 'styled-components'
-import {Link} from 'react-router-dom'
-import {Button} from '../style/Button'
-import {Redirect} from 'react-router'
-import {StyledLink} from '../style/Link'
+import React from 'react';
+import { changeAuthEmail, changeAuthPassword, requestRegister } from '../store/actions/auth';
+import connect from 'react-redux/es/connect/connect';
+import Input from '../style/Input';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { Button } from '../style/Button';
+import { Redirect } from 'react-router';
+import { StyledLink } from '../style/Link';
 
 const Middle = styled.div`
     display: flex;

@@ -76,4 +76,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = { changeLoading };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layouts);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(Layouts);

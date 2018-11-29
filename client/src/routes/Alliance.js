@@ -133,4 +133,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = { changeLoading };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Alliance);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(Alliance);

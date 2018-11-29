@@ -26,13 +26,21 @@ class WorldBaseMenu extends Component {
         this.setState(({ showWorld }) => ({ showWorld: !showWorld }));
     };
 
-    handleSelectWorld = (world) => {
-        this.props.selectWorld(world)
-        this.toggleShowWorld()
-    }
+    handleSelectWorld = world => {
+        this.props.selectWorld(world);
+        this.toggleShowWorld();
+    };
 
     render() {
-        const { worlds, worldName, bases, playerName, selectedBase, selectBase ,withBases } = this.props;
+        const {
+            worlds,
+            worldName,
+            bases,
+            playerName,
+            selectedBase,
+            selectBase,
+            withBases,
+        } = this.props;
         const { showWorld } = this.state;
         return (
             <>
@@ -42,17 +50,24 @@ class WorldBaseMenu extends Component {
                         <DropDownAnchor>
                             <DropDownArea>
                                 {worlds.map(w => (
-                                    <Button onClick={() => this.handleSelectWorld(w)}>{w.worldName}</Button>
+                                    <Button onClick={() => this.handleSelectWorld(w)}>
+                                        {w.worldName}
+                                    </Button>
                                 ))}
                             </DropDownArea>
                         </DropDownAnchor>
                     )}
-                        <Button onClick={this.toggleShowWorld} active>
-                            {worldName}
-                        </Button>
+                    <Button onClick={this.toggleShowWorld} active>
+                        {worldName}
+                    </Button>
                     <Row>
-                        {withBases && bases.map((base, i) => (
-                            <Button key={i} onClick={() => selectBase(i)} active={selectedBase === i}>
+                        {withBases &&
+                        bases.map((base, i) => (
+                            <Button
+                                key={i}
+                                onClick={() => selectBase(i)}
+                                active={selectedBase === i}
+                            >
                                 {base.name}
                             </Button>
                         ))}

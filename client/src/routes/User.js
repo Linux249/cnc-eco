@@ -36,23 +36,23 @@ class User extends Component {
         };
     }
 
-    startLoading = () => this.setState(l => ({loading: l + 1}))
+    startLoading = () => this.setState(l => ({ loading: l + 1 }));
 
-    endLoading = () => this.setState(l => ({loading: l - 1}))
+    endLoading = () => this.setState(l => ({ loading: l - 1 }));
 
-    cleanError = () => this.setState({error: null})
+    cleanError = () => this.setState({ error: null });
 
     changeWorld = world => this.setState({ world });
 
     changeName = name => this.setState({ name });
 
     addPlayer = async () => {
-        this.cleanError()
+        this.cleanError();
         const { world, name } = this.state;
         const { token } = this.props;
         if (!name) return this.setState({ error: 'Ingame name missing' });
         if (!world) return this.setState({ error: 'Select a world' });
-        this.startLoading()
+        this.startLoading();
 
         const body = {
             name,
@@ -71,7 +71,7 @@ class User extends Component {
             console.error(e);
         });
         const player = await res.json();
-        this.endLoading()
+        this.endLoading();
         if (!res.ok || player.error) {
             return this.setState({ error: player.error.message });
         }
@@ -80,11 +80,11 @@ class User extends Component {
     };
 
     addWorld = async () => {
-        this.cleanError()
+        this.cleanError();
         const { world } = this.state;
         const { playerName: name, token } = this.props;
         if (!world) return this.setState({ error: 'Bitte Welt angeben' });
-        this.startLoading()
+        this.startLoading();
 
         const body = {
             name: name,
@@ -103,7 +103,7 @@ class User extends Component {
             console.error(e);
         });
         const player = await res.json();
-        this.endLoading()
+        this.endLoading();
         if (!res.ok || player.error) {
             return this.setState({ error: player.error.message });
         }
@@ -115,7 +115,7 @@ class User extends Component {
         const { token } = this.props;
         const { name } = this.state;
         if (!name) return this.setState({ error: 'Ingame name missing' });
-        this.startLoading()
+        this.startLoading();
         const url = `${api_url}/worlds?name=${name}`;
         const data = await fetch(url, {
             headers: {
@@ -125,12 +125,12 @@ class User extends Component {
         this.setState({
             worlds: data.worlds,
         });
-        this.endLoading()
-    }
+        this.endLoading();
+    };
 
     componentDidUpdate(prevProps) {
-        if(this.props.playerName !== prevProps.playerName) {
-            this.setState({name: this.props.playerName})
+        if (this.props.playerName !== prevProps.playerName) {
+            this.setState({ name: this.props.playerName });
         }
     }
 
@@ -155,15 +155,18 @@ class User extends Component {
                     <h5>you can only all 7 days change your username</h5>
                     <h2>Select a World</h2>
                     <Area>
-                        {loading ?
+                        {loading ? (
                             <h5>loading...</h5>
-                            :
+                        ) : (
                             worlds.map(w => (
-                            <Button
-                                onClick={() => this.changeWorld(w.worldId)}
-                                active={world === w.worldId}
-                            >{w.worldName}</Button>
-                        ))}
+                                <Button
+                                    onClick={() => this.changeWorld(w.worldId)}
+                                    active={world === w.worldId}
+                                >
+                                    {w.worldName}
+                                </Button>
+                            ))
+                        )}
                         <Button onClick={this.loadWorlds}>reload worlds</Button>
                     </Area>
 

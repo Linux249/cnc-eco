@@ -1,11 +1,11 @@
-import React from 'react'
-import {changeAuthEmail, changeAuthPassword, requestLogin} from '../store/actions/auth'
-import connect from 'react-redux/es/connect/connect'
-import Input from '../style/Input'
-import styled from 'styled-components'
-import {Button} from '../style/Button'
-import {Redirect} from 'react-router'
-import {StyledLink} from '../style/Link'
+import React from 'react';
+import { changeAuthEmail, changeAuthPassword, requestLogin } from '../store/actions/auth';
+import connect from 'react-redux/es/connect/connect';
+import Input from '../style/Input';
+import styled from 'styled-components';
+import { Button } from '../style/Button';
+import { Redirect } from 'react-router';
+import { StyledLink } from '../style/Link';
 
 const Middle = styled.div`
     display: flex;
@@ -19,18 +19,8 @@ const Container = styled.div`
     max-width: 60rem;
 `;
 
-
-
 function Login(props) {
-    const {
-        email,
-        password,
-        error,
-        isAuthenticated,
-        changeEmail,
-        changePassword,
-        login,
-    } = props;
+    const { email, password, error, isAuthenticated, changeEmail, changePassword, login } = props;
 
     return !isAuthenticated ? (
         <Middle>

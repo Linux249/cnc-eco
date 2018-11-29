@@ -12,7 +12,7 @@ import Login from './routes/Login';
 import Register from './routes/Register';
 import Alliance from './routes/Alliance';
 import User from './routes/User';
-import Home from './routes/Home'
+import Home from './routes/Home';
 import AppS from './style/App';
 import LoadingLine from './style/LoadingLine';
 
