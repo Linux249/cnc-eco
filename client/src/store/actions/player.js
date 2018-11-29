@@ -3,7 +3,7 @@ import {
     PLAYER_CHANGE_WORLD,
     PLAYER_UPDATE_BASES,
     PLAYER_UPDATE,
-    PLAYER_UPDATE_ALLIANCE_ID, REPLACE_BASE_FROM_URL,
+    PLAYER_UPDATE_ALLIANCE_ID, REPLACE_BASE_FROM_URL, PLAYER_CHANGE_SELECTED_BASE,
 } from '../constants/actionTypes';
 import { api_url } from '../../config';
 
@@ -71,5 +71,20 @@ export function changeLoading(loading) {
     return {
         type: PLAYER_CHANGE_LOADING,
         loading,
+    };
+}
+
+export function changeBase(i) {
+    return (dispatch, getStore) => {
+        const { bases } = getStore().player;
+        const base = bases[i]
+        dispatch({
+            type: PLAYER_CHANGE_SELECTED_BASE,
+            i
+        })
+        dispatch({
+            type: REPLACE_BASE_FROM_URL,
+            url: base.layout
+        })
     };
 }

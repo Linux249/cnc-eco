@@ -1,9 +1,9 @@
 import {
-    PLAYER_CHANGE_LOADING,
+    PLAYER_CHANGE_LOADING, PLAYER_CHANGE_SELECTED_BASE,
     PLAYER_CHANGE_WORLD,
     PLAYER_UPDATE, PLAYER_UPDATE_ALLIANCE_ID,
-    PLAYER_UPDATE_BASES
-} from '../constants/actionTypes'
+    PLAYER_UPDATE_BASES,
+} from '../constants/actionTypes';
 
 const initState = {
     a: 126,
@@ -51,6 +51,11 @@ export function player(state = initState, action) {
             return {
                 ...state,
                 allianceId: action.allianceId,
+            };
+        case PLAYER_CHANGE_SELECTED_BASE:
+            return {
+                ...state,
+                selectedBase: action.i,
             };
         default:
             return state;
