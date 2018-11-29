@@ -26,7 +26,6 @@ function Login(props) {
         email,
         password,
         error,
-        isFetching,
         isAuthenticated,
         changeEmail,
         changePassword,
@@ -66,7 +65,6 @@ function mapStateToProps(state) {
     return {
         email: state.auth.email,
         password: state.auth.password,
-        isFetching: state.auth.isFetching,
         error: state.auth.error,
         isAuthenticated: state.auth.isAuthenticated,
     };

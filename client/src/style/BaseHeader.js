@@ -11,7 +11,6 @@ export default styled.div`
     background-color: ${backgroundColorHeader};
 
     padding: 0 20px;
-    margin-bottom: 5px;
 
     border-bottom: ${border};
 `;

@@ -14,6 +14,7 @@ import Alliance from './routes/Alliance';
 import User from './routes/User';
 import Home from './routes/Home'
 import AppS from './style/App';
+import LoadingLine from './style/LoadingLine';
 
 class App extends Component {
     render() {
@@ -22,6 +23,7 @@ class App extends Component {
             <Router>
                 <AppS>
                     <BaseHeader ref="target" />
+                    <LoadingLine/>
                     <Route path="/" exact component={Home} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
