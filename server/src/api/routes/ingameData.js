@@ -123,7 +123,9 @@ export default async (req, res, next) => {
         // add world
     } catch (err) {
         console.log({ err });
-        console.log({ req });
+        console.log({ body: req.body });
+        console.log({ params: req.params });
+        console.log({ query: req.query });
         // res.send(err);
         next(err);
     }
