@@ -20,6 +20,14 @@ export default async (req, res, next) => {
             fraction,
         } = body;
 
+        if (!currentplayerName) return next(new Error('Request is currently not supported'));
+        console.log(
+            `IngameData from: ${currentplayerName} 
+            on: ${serverName}(${worldId}) 
+            a: ${allianceName}(${allianceId}) 
+            #${basecount}`,
+        );
+
         /*
          *   save Alliance Information's
          */
@@ -44,12 +52,86 @@ export default async (req, res, next) => {
         const collection = db.collection(`players_${worldId}`);
 
         // read all Bases and put them into array
-        const bases = [...Array(Number(basecount))].map((_, i) => ({
-            fraction,
-            name: body[`basename${i}`],
-            layout: body[`opt${i}`],
-            // TODO ad everything here
-        }));
+        let offBaseIndex = 0;
+
+        const offbase = {
+            off: 0,
+            def: 0,
+            rep: 0,
+            maxRep: 0,
+        };
+
+        let totalTib = 0;
+        let totalCris = 0;
+        let totalPower = 0;
+        let totalCredits = 0;
+
+        let avargDef = 0;
+        let avargSubLvl = 0;
+        let avargDfLvl = 0;
+        let avargDfHQLvl = 0;
+
+        const bases = [...Array(Number(basecount))].map((_, i) => {
+            // update max off base index
+            const off = body[`off${i}`];
+            const def = body[`def${i}`];
+            avargDef += Math.round((def / basecount) * 100) / 100;
+
+            const rep = body[`availrep${i}`];
+            const maxRep = body[`repmax${i}`];
+            if (i !== offBaseIndex && off > offbase.off) {
+                offBaseIndex = i;
+                offbase.off = off;
+                offbase.def = def;
+                offbase.rep = rep;
+                offbase.maxRep = maxRep;
+            }
+
+            const tib = body[`tib${i}`];
+            const cris = body[`cris${i}`];
+            const power = body[`power${i}`];
+            const cash = body[`cash${i}`];
+            totalTib += tib;
+            totalCris += cris;
+            totalPower += power;
+            totalCredits += cash;
+
+            const subLvl = body[`suplvl${i}`];
+            const dfLvl = body[`dflvl${i}`];
+            const dfHQLvl = body[`dfhqlvl${i}`];
+            avargSubLvl += Math.round((subLvl / basecount) * 100) / 100;
+            avargDfLvl += Math.round((dfLvl / basecount) * 100) / 100;
+            avargDfHQLvl += Math.round((dfHQLvl / basecount) * 100) / 100;
+
+            return {
+                fraction,
+                name: body[`basename${i}`],
+                layout: body[`opt${i}`],
+                points: body[`punkte${i}`],
+                level: body[`level${i}`],
+
+                off,
+                def,
+
+                rep: body[`availrep${i}`],
+                maxRep: body[`repmax${i}`],
+
+                subType: body[`suptype${i}`],
+                subLvl,
+                cyLvl: body[`cylvl${i}`],
+                dfLvl,
+                dfHQLvl,
+
+                tib,
+                cris,
+                power,
+                cash,
+
+                x: body[`x${i}`],
+                y: body[`y${i}`],
+            };
+        });
+
 
         // find or create player
         // let player = await Player.findOne({name: currentplayerName}) || new Player({name: currentplayerName})
@@ -76,14 +158,23 @@ export default async (req, res, next) => {
             creditsCount: body.CreditsCount, // amount of credits
             timeToMcv: body.timeTOmcv, // time left to next mcv
             rpNeeded: body.rpNeeded, // total rp that needed - %% this
+
             maxOff: 0,
             maxDef: 0,
             rep: 0, // in the highest off
             repMax: 0, // is every where the same
-            totalTib: 0,
-            totalPower: 0,
-            totalCris: 0,
-            totalCredits: 0,
+
+            totalTib,
+            totalPower,
+            totalCris,
+            totalCredits,
+
+            avargDef,
+            avargSubLvl,
+            avargDfLvl,
+            avargDfHQLvl,
+
+            offbase,
         };
 
         // set time for update
