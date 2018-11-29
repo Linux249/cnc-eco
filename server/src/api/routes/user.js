@@ -135,8 +135,8 @@ router.post('/user/addWorld', async (req, res, next) => {
     }
 
     // Test if world not added already
-    // TODO CHECK if the ui protects the user to get in this situation
-    if(user.worlds.find(e => e.worldId === worldId))
+    // UI protect this situation - raise higher error lvl for logging potential ui bugs
+    if (user.worlds.some(e => +e.worldId === +worldId))
         return next(new Error('Cannot add World: World is already added to your user'))
 
     // console.log(player)

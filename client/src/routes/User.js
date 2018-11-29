@@ -29,7 +29,7 @@ class User extends Component {
         super();
         this.state = {
             world: '',
-            name: '',
+            name: props.playerName,
             error: null,
             worlds: [],
             loading: 0,
@@ -112,7 +112,7 @@ class User extends Component {
 
     loadWorlds = async () => {
         // TODO add try catch and proper array handling
-        const { token } = this.props;
+        const { token, savedWorlds } = this.props;
         const { name } = this.state;
         if (!name) return this.setState({ error: 'Ingame name missing' });
         this.startLoading();
@@ -122,9 +122,9 @@ class User extends Component {
                 Authorization: 'Bearer  ' + token,
             },
         }).then(res => res.json());
-        this.setState({
-            worlds: data.worlds,
-        });
+
+        const worlds = data.worlds.filter(e => !savedWorlds.some(w => +w.worldId === +e.worldId));
+        this.setState({ worlds });
         this.endLoading();
     };
 
@@ -183,6 +183,7 @@ const mapStateToProps = state => ({
     _id: state.auth.user_id,
     playerName: state.player.name,
     token: state.auth.token,
+    savedWorlds: state.player.worlds,
 });
 
 export default connect(mapStateToProps)(User);
