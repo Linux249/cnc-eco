@@ -20,6 +20,7 @@ const initState = {
     ],
     bases: [],
     selectedWorld: 0,
+    selectedBase: 0,
     loading: false,
 };
 

@@ -3,7 +3,7 @@ import {
     PLAYER_CHANGE_WORLD,
     PLAYER_UPDATE_BASES,
     PLAYER_UPDATE,
-    PLAYER_UPDATE_ALLIANCE_ID,
+    PLAYER_UPDATE_ALLIANCE_ID, REPLACE_BASE_FROM_URL,
 } from '../constants/actionTypes';
 import { api_url } from '../../config';
 
@@ -30,9 +30,19 @@ export function changeWorld(world) {
 }
 
 export const updateBases = bases => {
-    return {
-        type: PLAYER_UPDATE_BASES,
-        bases,
+    return (dispatch, getStore) => {
+
+        const { selectedBase } = getStore().player;
+        const base = bases[selectedBase]
+
+        dispatch({
+            type: PLAYER_UPDATE_BASES,
+            bases,
+        })
+        dispatch({
+            type: REPLACE_BASE_FROM_URL,
+            url: base.layout
+        })
     };
 };
 
