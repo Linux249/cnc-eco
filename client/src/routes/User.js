@@ -29,7 +29,7 @@ class User extends Component {
         super();
         this.state = {
             world: '',
-            name: props.playerName,
+            name: '',
             error: null,
             worlds: [],
             loading: 0,
@@ -48,11 +48,11 @@ class User extends Component {
 
     addPlayer = async () => {
         this.cleanError()
-        this.startLoading()
         const { world, name } = this.state;
         const { token } = this.props;
-        if (!name) return this.setState({ error: 'Bitte Spieler angeben' });
-        if (!world) return this.setState({ error: 'Bitte Welt angeben' });
+        if (!name) return this.setState({ error: 'Ingame name missing' });
+        if (!world) return this.setState({ error: 'Select a world' });
+        this.startLoading()
 
         const body = {
             name,
@@ -81,13 +81,13 @@ class User extends Component {
 
     addWorld = async () => {
         this.cleanError()
-        this.startLoading()
         const { world } = this.state;
-        const { playerName, token } = this.props;
+        const { playerName: name, token } = this.props;
         if (!world) return this.setState({ error: 'Bitte Welt angeben' });
+        this.startLoading()
 
         const body = {
-            name: playerName,
+            name: name,
             worldId: world,
         };
 
@@ -112,9 +112,10 @@ class User extends Component {
 
     loadWorlds = async () => {
         // TODO add try catch and proper array handling
-        this.startLoading()
         const { token } = this.props;
-        const { name} = this.state;
+        const { name } = this.state;
+        if (!name) return this.setState({ error: 'Ingame name missing' });
+        this.startLoading()
         const url = `${api_url}/worlds?name=${name}`;
         const data = await fetch(url, {
             headers: {
@@ -127,28 +128,31 @@ class User extends Component {
         this.endLoading()
     }
 
+    componentDidUpdate(prevProps) {
+        if(this.props.playerName !== prevProps.playerName) {
+            this.setState({name: this.props.playerName})
+        }
+    }
+
     componentDidMount() {
-        this.props.playerName && this.loadWorlds();
+        this.props.name && this.loadWorlds();
     }
 
     render() {
-        const { playerName } = this.props;
         const { world, error, name, worlds, loading } = this.state;
 
         return (
             <Middle>
                 <Container>
                     <h3>add player (ingame) name to your account</h3>
-                    <h3>add "you can only all 7 days change username" stuff to ui</h3>
-                    <h3>add player (ingame) name to your account</h3>
+                    <h2>What is your ingame name?</h2>
                     <Error>{error}</Error>
-
-                            <h2>What is your ingame name?</h2>
-                            <Input
-                                name="name"
-                                value={name}
-                                onChange={e => this.changeName(e.target.value)}
-                            />
+                    <Input
+                        name="name"
+                        value={name}
+                        onChange={e => this.changeName(e.target.value)}
+                    />
+                    <h5>you can only all 7 days change your username</h5>
                     <h2>Select a World</h2>
                     <Area>
                         {loading ?
@@ -163,8 +167,8 @@ class User extends Component {
                         <Button onClick={this.loadWorlds}>reload worlds</Button>
                     </Area>
 
-                    <Button onClick={!playerName ? this.addPlayer : this.addWorld}>
-                        {!playerName ? 'Add player' : 'Add world'}
+                    <Button onClick={!name ? this.addPlayer : this.addWorld}>
+                        {!name ? 'Add player' : 'Add world'}
                     </Button>
                 </Container>
             </Middle>

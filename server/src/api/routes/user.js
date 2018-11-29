@@ -103,6 +103,8 @@ router.post('/user/addWorld', async (req, res, next) => {
     const { name, worldId } = req.body;
     // TODO worldName comes also from where user choose world later
     console.log({ name, worldId });
+    if(!name) return next(new Error('Player name missing'))
+    if(!worldId) return next(new Error('World missing'))
 
     const user = req.user;
     // TODO that schould never happen
