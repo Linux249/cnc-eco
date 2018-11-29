@@ -66,7 +66,7 @@ class Layouts extends Component {
 
 function mapStateToProps(state) {
     return {
-        pl: state.player.pl,
+        pl: state.player.name,
         w: state.player.w,
         allianceId: state.player.allianceId,
         worlds: state.player.worlds,

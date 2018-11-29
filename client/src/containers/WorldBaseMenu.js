@@ -36,7 +36,6 @@ class WorldBaseMenu extends Component {
             worlds,
             worldName,
             bases,
-            playerName,
             selectedBase,
             selectBase,
             withBases,
@@ -45,7 +44,6 @@ class WorldBaseMenu extends Component {
         return (
             <>
                 <Row>
-                    {playerName}
                     {showWorld && (
                         <DropDownAnchor>
                             <DropDownArea>
@@ -81,7 +79,6 @@ class WorldBaseMenu extends Component {
 const mapStateToProps = state => {
     return {
         selectedBase: state.player.selectedBase,
-        playerName: state.player.name,
         worlds: state.player.worlds,
         bases: state.player.bases,
         worldName: state.player.worldName,

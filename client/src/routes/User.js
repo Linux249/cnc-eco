@@ -115,6 +115,7 @@ class User extends Component {
         // TODO add try catch and proper array handling
         const { token, savedWorlds } = this.props;
         const { name } = this.state;
+        this.setState({ worlds: [] });
         if (!name) return this.setState({ error: 'Ingame name missing' });
         this.startLoading();
         const url = `${api_url}/worlds?name=${name}`;
@@ -136,7 +137,7 @@ class User extends Component {
     }
 
     componentDidMount() {
-        this.props.name && this.loadWorlds();
+        this.props.playerName && this.loadWorlds();
     }
 
     render() {

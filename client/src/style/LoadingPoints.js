@@ -39,7 +39,7 @@ const SpinnerBar = styled.div`
 
 export const LoadingPoints = ({ loading }) => (
     <SpinnerBar>
-        {loading !== -1 && (
+        {loading !== 0 && (
             <>
                 <Spinner/>
                 <Spinner/>

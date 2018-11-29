@@ -122,7 +122,6 @@ class Alliance extends Component {
 
 function mapStateToProps(state) {
     return {
-        pl: state.player.pl,
         w: state.player.w,
         allianceId: state.player.allianceId,
         worlds: state.player.worlds,

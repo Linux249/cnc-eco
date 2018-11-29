@@ -20,7 +20,7 @@ const Link = Button.withComponent(
 
 class BaseHeader extends Component {
     render() {
-        const { isAuthenticated } = this.props;
+        const { isAuthenticated, name } = this.props;
         return (
             <Header>
                 <Title>
@@ -45,7 +45,7 @@ class BaseHeader extends Component {
                     </Link>
                     {isAuthenticated ? (
                         <Link to="/user" activeClassName="active">
-                            User
+                            {name}
                         </Link>
                     ) : (
                         <Fragment>
@@ -63,6 +63,9 @@ class BaseHeader extends Component {
     }
 }
 
-const mapStateToProps = state => ({ isAuthenticated: state.auth.isAuthenticated });
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    name: state.player.name,
+});
 
 export default connect(mapStateToProps)(BaseHeader);
