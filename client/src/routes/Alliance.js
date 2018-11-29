@@ -3,12 +3,16 @@ import { connect } from 'react-redux';
 import Body from '../style/Body';
 import LayoutS from '../style/Layouts';
 import Row from '../style/Row';
-import styled from 'styled-components';
 import { shortenNumber } from '../util/service';
 import { api_url } from '../config';
 import Button from '../style/Button';
-import icon_credits from '../img/icon/icon_credits.png';
 import { changeLoading } from '../store/actions/player';
+import icon_credits from '../img/icon/credits_small.png';
+import researchPoints from '../img/icon/research_points.png';
+import supplyPoints from '../img/icon/supply_points.png';
+import funds from '../img/icon/funds.png';
+import commandoPoints from '../img/icon/commando_points.png';
+import styled from 'styled-components';
 // TODO time since last seen a layout shod be placed to the backend
 // TODO IDEA autmaticly remove layouts after X days (cronjobs)
 
@@ -74,24 +78,24 @@ class Alliance extends Component {
                     <Button onClick={this.getAlliance}>get</Button>
                     <Grid>
                         <Cell>Name</Cell>
-                        <Cell>Rang</Cell>
+                        <Cell>Ranking</Cell>
                         <Cell>Rolle</Cell>
-                        <Cell>Punkte</Cell>
-                        <Cell>R Punkte?</Cell>
-                        <Cell>Basen</Cell>
+                        <Cell>Score</Cell>
+                        <Cell><Icon src={researchPoints} alt="Research"/></Cell>
+                        <Cell>Bases</Cell>
                         <Cell>PVE Kills</Cell>
                         <Cell>PVP Kills</Cell>
                         <Cell>Code</Cell>
                         <Cell>
-                            <Icon src={icon_credits}>{}</Icon>
+                            <Icon src={icon_credits} alt="Credits"/>
                         </Cell>
-                        <Cell>Max CP</Cell>
-                        <Cell>Funds</Cell>
-                        <Cell>Schirme</Cell>
+                        <Cell> <Icon src={commandoPoints} alt="CP"/></Cell>
+                        <Cell> <Icon src={funds} alt="Funds"/></Cell>
+                        <Cell><Icon src={supplyPoints} alt="Supply"/></Cell>
                         <Cell>Time</Cell>
                         {members.map(member => {
                             return (
-                                member.data && (
+                                member.data ? (
                                     <Fragment key={member.name}>
                                         <Cell>{member.name}</Cell>
                                         <Cell>{member.rank}</Cell>
@@ -105,12 +109,33 @@ class Alliance extends Component {
                                         <Cell>{member.hascode}</Cell>
                                         <Cell>{shortenNumber(member.creditsCount)}</Cell>
 
-                                        <Cell>{member.maxcp}</Cell>
+                                        <Cell>{member.actcp + '/' + member.maxcp}</Cell>
                                         <Cell>{member.funds}</Cell>
                                         <Cell>{member.schirme}</Cell>
-                                        <Cell>{new Date(member.timeToMcv).toDateString()}</Cell>
+                                        <Cell>{Math.round(member.timeToMcv / (3600 * 24))}</Cell>
                                     </Fragment>
                                 )
+                                    :
+                                    (
+                                        <Fragment key={member.name}>
+                                            <Cell>{member.name}</Cell>
+                                            <Cell>{}</Cell>
+                                            <Cell>{member.role}</Cell>
+                                            <Cell>{}</Cell>
+                                            <Cell>{}</Cell>
+
+                                            <Cell>{}</Cell>
+                                            <Cell>{}</Cell>
+                                            <Cell>{}</Cell>
+                                            <Cell>{}</Cell>
+                                            <Cell>{}</Cell>
+
+                                            <Cell>{}</Cell>
+                                            <Cell>{}</Cell>
+                                            <Cell>{}</Cell>
+                                            <Cell>{}</Cell>
+                                        </Fragment>
+                                    )
                             );
                         })}
                     </Grid>
