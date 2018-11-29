@@ -160,6 +160,7 @@ class User extends Component {
                         <LoadingPoints loading={loading}/>
                         {worlds.length !== 0 && worlds.map(w => (
                             <Button
+                                key={w.worldId}
                                 onClick={() => this.changeWorld(w.worldId)}
                                 active={world === w.worldId}
                             >

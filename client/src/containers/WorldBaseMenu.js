@@ -48,7 +48,7 @@ class WorldBaseMenu extends Component {
                         <DropDownAnchor>
                             <DropDownArea>
                                 {worlds.map(w => (
-                                    <Button onClick={() => this.handleSelectWorld(w)}>
+                                    <Button onClick={() => this.handleSelectWorld(w)} key={w.worldId}>
                                         {w.worldName}
                                     </Button>
                                 ))}

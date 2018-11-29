@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import Body from '../style/Body';
 import LayoutS from '../style/Layouts';
@@ -92,7 +92,7 @@ class Alliance extends Component {
                         {members.map(member => {
                             return (
                                 member.data && (
-                                    <>
+                                    <Fragment key={member.name}>
                                         <Cell>{member.name}</Cell>
                                         <Cell>{member.rank}</Cell>
                                         <Cell>{member.role}</Cell>
@@ -109,7 +109,7 @@ class Alliance extends Component {
                                         <Cell>{member.funds}</Cell>
                                         <Cell>{member.schirme}</Cell>
                                         <Cell>{new Date(member.timeToMcv).toDateString()}</Cell>
-                                    </>
+                                    </Fragment>
                                 )
                             );
                         })}
