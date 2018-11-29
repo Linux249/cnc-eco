@@ -8,6 +8,7 @@ import {
 const initState = {
     a: 126,
     w: 373, // Toggle for showing help everywhere or not
+    worldName: '', // Toggle for showing help everywhere or not
     pl: 'Linux249',
     name: '',
     allianceId: null,
@@ -19,7 +20,6 @@ const initState = {
         { worldName: 'dumm with some löonger name' },
     ],
     bases: [],
-    selectedWorld: 0,
     selectedBase: 0,
     loading: false,
 };
@@ -35,6 +35,7 @@ export function player(state = initState, action) {
             return {
                 ...state,
                 w: action.w,
+                worldName: action.worldName,
             };
         case PLAYER_UPDATE:
             return {

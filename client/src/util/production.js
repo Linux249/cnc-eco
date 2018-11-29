@@ -764,7 +764,7 @@ export const calcBuildingProduction = (buildings, i) => {
 
     const building = buildings[i];
     if (building) {
-        if (building.lvl > 65) {
+        if (building.lvl >= 66) {
             console.error('Gebäude lvl über 65', { building }); //sollte niemals vorkommen
             building.lvl = 65;
         }

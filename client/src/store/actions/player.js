@@ -12,6 +12,7 @@ export function changeWorld(world) {
         await dispatch({
             type: PLAYER_CHANGE_WORLD,
             w: world.worldId,
+            worldName: world.worldName,
         });
         dispatch(changeLoading(true));
 
@@ -61,8 +62,8 @@ export const updatePlayer = user => {
             worlds: user.worlds,
         });
         // check if the world id changed - usefully for initial loading kick
-        const { selectedWorld, w } = getState().player;
-        const world = user.worlds[selectedWorld];
+        const { w } = getState().player;
+        const world = user.worlds[0];
         if (world && w !== world.worldId) dispatch(changeWorld(world));
     };
 };

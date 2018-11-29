@@ -8,6 +8,7 @@ import Row from '../style/Row';
 import Layout from '../components/Layout';
 import Loading from '../components/Loading';
 import { api_url } from '../config';
+import WorldBaseMenu from '../containers/WorldBaseMenu';
 
 // TODO time since last seen a layout shod be placed to the backend
 // TODO IDEA autmaticly remove layouts after X days (cronjobs)
@@ -27,8 +28,8 @@ class Layouts extends Component {
 
     getLayouts = () => {
         this.setState({ loading: true });
-        const { pl, w, a, token } = this.props;
-        const url = `${api_url}/layouts?pl=${pl}&w=${w}&a=${a}&limit=200`;
+        const { pl, w, allianceId, token } = this.props;
+        const url = `${api_url}/layouts?pl=${pl}&w=${w}&a=${allianceId}&limit=200`;
         fetch(url, {
             headers: {
                 Authorization: 'Bearer  ' + token,
@@ -44,16 +45,13 @@ class Layouts extends Component {
 
     render() {
         const { layouts, loading } = this.state;
-        const { w, a, pl } = this.props;
         return (
             <Body>
                 <Loading isLoading={loading} />
                 {!loading && (
                     <div>
                         <Row>
-                            <input disabled value={pl} />
-                            <input disabled value={w} />
-                            <input disabled value={a} />
+                            <WorldBaseMenu />
                             <Button onClick={() => this.getLayouts()}>Update</Button>
                             <Title>{layouts.length}</Title>
                         </Row>
@@ -73,7 +71,7 @@ function mapStateToProps(state) {
     return {
         pl: state.player.pl,
         w: state.player.w,
-        a: state.player.a,
+        allianceId: state.player.allianceId,
         worlds: state.player.worlds,
         token: state.auth.token,
     };

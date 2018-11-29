@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { Router } from 'express';
-import layouts from './layouts';
+import layouts from './layouts.js';
 import db from './db';
 import playerRouter from './player';
 import allianceRouter from './alliance';

@@ -19,7 +19,7 @@ router.get('/layout', (req, res, next) => {
     });
 });
 
-// POST /api/v1/Archiv
+// GET /api/v1/layouts
 // get all layouts from a world
 // TODO add a way to filter for "saw from player and/or alliance"
 router.get('/layouts', async (req, res, next) => {
