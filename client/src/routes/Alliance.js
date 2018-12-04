@@ -122,7 +122,6 @@ class Alliance extends Component {
                         </Cell>
 
                         <Cell>
-                            {' '}
                             <Icon src={tib} alt="Tib"/>
                             /h
                         </Cell>

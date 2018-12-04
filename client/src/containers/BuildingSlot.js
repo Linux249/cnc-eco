@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
-import { LvlNumber } from '../components/LvlNumber';
 import { DropTarget, DragSource } from 'react-dnd';
 import { replaceBuilding, switchBuilding } from '../store/actions/base';
 import Slot from '../style/BuildingSlot';
 import { buildingKeys } from '../util/buildings';
+import Number from '../style/LvLNumber';
 
 class BuildingSlot extends Component {
     contextClick = e => {
@@ -67,7 +67,7 @@ class BuildingSlot extends Component {
                 tabIndex="0"
                 onContextMenu={this.contextClick}
             >
-                {lvl && <LvlNumber lvl={lvl} />}
+                {lvl && <Number>{lvl}</Number>}
                 {type && <img src={img} alt={type} />}
             </Slot>
         );

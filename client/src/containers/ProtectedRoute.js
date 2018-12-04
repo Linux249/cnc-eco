@@ -7,12 +7,12 @@ export default ({ auth, path, name, component: Component }) => (
         render={() =>
             auth ? (
                 name || path === '/user' ? (
-                    <Component/>
+                    <Component />
                 ) : (
-                    <Redirect to="/user"/>
+                    <Redirect to="/user" />
                 )
             ) : (
-                <Redirect to="/login"/>
+                <Redirect to="/login" />
             )
         }
     />
