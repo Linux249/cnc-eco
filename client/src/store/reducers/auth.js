@@ -8,8 +8,8 @@ import {
 } from '../constants/actionTypes';
 
 const initState = {
-    email: process.env.NODE_ENV === 'development' ? 'julian.libor@gmail.com' : 0,
-    password: process.env.NODE_ENV === 'development' ? 'test123' : 0,
+    email: process.env.NODE_ENV === 'development' ? 'julian.libor@gmail.com' : '',
+    password: process.env.NODE_ENV === 'development' ? 'test123' : '',
     isFetching: false,
     isAuthenticated: false, // TODO check here for localStorage?
     token: null,
