@@ -142,6 +142,7 @@ class User extends Component {
 
     render() {
         const { world, error, name, worlds, loading } = this.state;
+        const { playerName } = this.props
 
         return (
             <Middle>
@@ -171,8 +172,8 @@ class User extends Component {
                         <Button onClick={this.loadWorlds}>reload worlds</Button>
                     </Area>
 
-                    <Button onClick={!name ? this.addPlayer : this.addWorld}>
-                        {!name ? 'Add player' : 'Add world'}
+                    <Button onClick={!playerName ? this.addPlayer : this.addWorld}>
+                        {!playerName ? 'Add player' : 'Add world'}
                     </Button>
                 </Container>
             </Middle>

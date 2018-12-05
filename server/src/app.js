@@ -7,7 +7,7 @@ import logging from 'morgan';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import apiRouter from './api/routes/index';
-import configurePassport from './api/config/passport'; // configurePassport
+import configurePassport from './api/config/passport';
 import { createReport } from './service/report';
 import { mongoURI } from './api/config/config';
 import setAuthRout from './api/routes/auth/index';
