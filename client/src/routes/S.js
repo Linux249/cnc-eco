@@ -26,9 +26,9 @@ export const S = props => {
         } else {
             setError(item.error.message);
         }
+        console.log(item)
         return null;
     }
-    console.log(item)
 
     useEffect(() => {
         !loaded && load();
