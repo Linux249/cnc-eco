@@ -8,17 +8,17 @@ import {
 } from '../constants/actionTypes';
 
 const initState = {
-    a: 126,
-    w: 373, // Toggle for showing help everywhere or not
+    a: null,
+    w: null, // Toggle for showing help everywhere or not
     worldName: '', // Toggle for showing help everywhere or not
     name: '',
     allianceId: null,
     worlds: [
-        { worldName: 'dumm' },
+        /*{ worldName: 'dumm' },
         { worldName: 'dumm with' },
         { worldName: 'dumm with some' },
         { worldName: 'dumm with some löonger' },
-        { worldName: 'dumm with some löonger name' },
+        { worldName: 'dumm with some löonger name' },*/
     ],
     bases: [],
     selectedBase: 0,

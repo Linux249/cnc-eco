@@ -28,7 +28,7 @@ Content-Type: application/json
 ###
 
 // DELETE A USER WITH ID
-DELETE http://{{host}}/api/v1/user/5bd74be8b1a6e966fb4ec55e
+DELETE http://{{host}}/api/v1/user/5c7947a8abbb3437f47c113e
 Content-Type: application/json
 
 

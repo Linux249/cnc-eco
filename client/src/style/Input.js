@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 export default styled.input`
-    width: 100%;
+    //width: 100%;
 
     //margin: 0.75rem 1.5rem;
-    margin: 0.25rem;
+    margin: 0.25rem 0;
     padding: 0.40em 0.75rem;
 
     font-size: 1rem;
