@@ -79,6 +79,7 @@ app.use('/', express.static(p));
 /*
 app.use(express.static(path.join(__dirname, 'public')));
 */
+
 app.use('/*', function (req, res) {
     const file = path.join(p, 'index.html')
     console.log(req.url)
