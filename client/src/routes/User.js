@@ -186,8 +186,6 @@ class User extends Component {
         const playerAdded = !!this.props.name
         return (
             <Middle>
-                {playerAdded}
-                {this.props.name}
                 <div>
                     <Area>
                         <Container>

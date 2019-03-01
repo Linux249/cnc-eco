@@ -3,7 +3,7 @@
  */
 
 import express from 'express';
-import Path from 'path';
+import path from 'path';
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { pingInterval: 1000 });
@@ -69,9 +69,9 @@ app.use('/api/v1', api);
 /**
  * add the public folder
  */
-const path = Path.join(__dirname, '../../client/build');
+const p = path.join(__dirname, '../../client/build');
 //console.log({path})
-app.use('/', express.static(path));
+app.use('/', express.static(p));
 
 
 //
@@ -79,9 +79,10 @@ app.use('/', express.static(path));
 /*
 app.use(express.static(path.join(__dirname, 'public')));
 */
-app.get('/*', function (req, res) {
-    const file = path.join(path, 'index.html')
-    //console.log(file)
+app.use('/*', function (req, res) {
+    const file = path.join(p, 'index.html')
+    console.log(req.url)
+    console.log(file)
     res.sendFile(file);
 });
 
