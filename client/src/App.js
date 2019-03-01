@@ -15,6 +15,7 @@ import User from './routes/User';
 import Home from './routes/Home';
 import AppS from './style/App';
 import LoadingLine from './style/LoadingLine';
+import { S } from './containers/S';
 
 class App extends Component {
     render() {
@@ -23,9 +24,9 @@ class App extends Component {
             <Router>
                 <AppS>
                     <BaseHeader ref="target" />
-                    <LoadingLine/>
+                    <LoadingLine />
                     <Route path="/" exact component={Home} />
-                    <Route path="/s" exact component={Home} />
+                    <Route path="/s/:url" component={S} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
                     <Route path="/scripts" component={Scripts} />

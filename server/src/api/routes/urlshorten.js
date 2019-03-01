@@ -1,21 +1,19 @@
 //const mongoose = require('mongoose');
 import UrlShorten from '../model/UrlShorten';
-
-const shortid = require('shortid');
 import { Router } from 'express';
 
 const router = Router();
-const errorUrl = 'http://localhost/error';
-const shortUrl = 'http://cnc-eco.de/u';
+const shortid = require('shortid');
+const shortUrl = 'www.cnc-eco.de/s';
 
 //GET API for redirecting to Original URL
-router.get('urlToBase/:code', async (req, res) => {
+router.get('/urlToBase/:code', async (req, res, next) => {
     const urlCode = req.params.code;
     const item = await UrlShorten.findOne({ urlCode: urlCode });
     if (item) {
-        return res.redirect(item);
+        return res.json(item);
     } else {
-        return res.redirect(errorUrl);
+        next(new Error('wrong URL'));
     }
 });
 
@@ -23,7 +21,7 @@ router.get('urlToBase/:code', async (req, res) => {
 router.post('/baseToUrl', async (req, res) => {
     const { url } = req.body;
     const { faction, name } = req.body;
-    if (!faction || !name || !url) return res.status(401).json('Missing name or faction');
+    if (!faction || !name || !url) return res.status(402).json('Missing name or faction');
     // todo test the url
 
     const urlCode = shortid.generate();
@@ -37,7 +35,7 @@ router.post('/baseToUrl', async (req, res) => {
         } else {
             const item = new UrlShorten({
                 url: url,
-                shortUrl: shortUrl + '/s/' + urlCode,
+                shortUrl: shortUrl + '/' + urlCode,
                 urlCode,
                 faction,
                 name
@@ -49,7 +47,7 @@ router.post('/baseToUrl', async (req, res) => {
     } catch (err) {
         console.log('error');
         console.log(err);
-        res.status(401).json(err);
+        res.status(405).json(err);
     }
 
     // TODO if player premium, save the url to his account

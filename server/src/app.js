@@ -128,6 +128,7 @@ app.use((err, req, res, next) => {
         error: {
             message: err.message,
         },
+        status: err.status || 500,
     });
 });
 
