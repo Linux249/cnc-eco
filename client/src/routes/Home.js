@@ -4,7 +4,11 @@ import { Share } from '../containers/Share';
 import { Row } from '../style/Row';
 import Column from '../style/Column';
 
-export default () => {
+// TODO BAse here
+// /s/ to shortand
+// /s/ to shortand
+
+export default (props) => {
     return (
         <Column center>
             <UrlInfo />

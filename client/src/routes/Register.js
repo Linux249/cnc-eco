@@ -3,10 +3,10 @@ import { changeAuthEmail, changeAuthPassword, requestRegister } from '../store/a
 import connect from 'react-redux/es/connect/connect';
 import Input from '../style/Input';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { Button } from '../style/Button';
 import { Redirect } from 'react-router';
 import { StyledLink } from '../style/Link';
+import Area from '../style/Area';
 
 const Middle = styled.div`
     display: flex;
@@ -18,6 +18,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     max-width: 60rem;
+    margin: 1rem;
 `;
 
 function Login(props) {
@@ -33,24 +34,26 @@ function Login(props) {
 
     return !isAuthenticated ? (
         <Middle>
-            <Container>
-                <h1>Sign up</h1>
-                <Input
-                    value={email}
-                    onChange={e => changeEmail(e.target.value)}
-                    type="email"
-                    placeholder="Email"
-                />
-                <Input
-                    value={password}
-                    onChange={e => changePassword(e.target.value)}
-                    type="password"
-                    placeholder="Password"
-                    minLength="4"
-                />
-                <Button onClick={register}>Sign up</Button>
-                <StyledLink to="/login">Have an account?</StyledLink>
-            </Container>
+            <Area>
+                <Container>
+                    <h1>Sign up</h1>
+                    <Input
+                        value={email}
+                        onChange={e => changeEmail(e.target.value)}
+                        type="email"
+                        placeholder="Email"
+                    />
+                    <Input
+                        value={password}
+                        onChange={e => changePassword(e.target.value)}
+                        type="password"
+                        placeholder="Password"
+                        minLength="4"
+                    />
+                    <Button onClick={register}>Sign up</Button>
+                    <StyledLink to="/login">Have an account?</StyledLink>
+                </Container>
+            </Area>
         </Middle>
     ) : (
         <Redirect to="bases"/>

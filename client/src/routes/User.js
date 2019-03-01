@@ -7,6 +7,8 @@ import { api_url } from '../config';
 import { updatePlayer } from '../store/actions/player';
 import Area from '../style/Area';
 import LoadingPoints from '../style/LoadingPoints';
+import Label from '../style/Label';
+import Error from '../style/Error';
 
 const Middle = styled.div`
     display: flex;
@@ -20,9 +22,10 @@ const Container = styled.div`
     max-width: 100rem;
 `;
 
-const Error = styled.div`
-    font-size: 1rem;
-    color: darkred;
+
+const InfoText = styled.div`
+    font-size: 0.5rem;
+    color: lightgrey;
 `;
 
 class User extends Component {
@@ -37,7 +40,7 @@ class User extends Component {
         };
     }
 
-    startLoading = () => this.setState(({ loading: l }) => ({ loading: l + 1 }));
+    startLoading = () => this.setState(({ loading: l }) => ({ loading: l + 1, error: null }));
 
     endLoading = () => this.setState(({ loading: l }) => ({ loading: l - 1 }));
 
@@ -146,15 +149,16 @@ class User extends Component {
         return (
             <Middle>
                 <Container>
-                    <h3>add player (ingame) name to your account</h3>
-                    <h2>What is your ingame name?</h2>
-                    <Error>{error}</Error>
-                    <Input
-                        name="name"
-                        value={name}
-                        onChange={e => this.changeName(e.target.value)}
-                    />
-                    <h5>you can only all 7 days change your username</h5>
+                    <div>
+                        <Label>Player name</Label>
+                        <InfoText>add your ingame name to your account please</InfoText>
+                        <Input
+                            name="name"
+                            value={name}
+                            onChange={e => this.changeName(e.target.value)}
+                        />
+                    </div>
+                    <InfoText>you can only all 7 days change your username</InfoText>
                     <h2>Select a World</h2>
                     <Area>
                         <LoadingPoints loading={loading}/>
@@ -174,6 +178,7 @@ class User extends Component {
                     <Button onClick={!name ? this.addPlayer : this.addWorld}>
                         {!name ? 'Add player' : 'Add world'}
                     </Button>
+                    <Error>{error}</Error>
                 </Container>
             </Middle>
         );

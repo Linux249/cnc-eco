@@ -9,11 +9,11 @@ import { Share } from '../containers/Share';
 export default () => (
     <>
         <WorldBaseMenu withBases/>
-        <Share></Share>
         <Body>
             <BuildingMenu />
             <Base />
             <Menu />
         </Body>
+        <Share></Share>
     </>
 );

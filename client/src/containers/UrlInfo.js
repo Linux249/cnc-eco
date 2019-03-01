@@ -3,12 +3,14 @@
  */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Info from '../style/UrlInfo';
-import Row from '../style/Row';
 import Button from '../style/Button';
-import Label from '../style/Label';
 import urlToBase from '../util/parseurl.js';
-import { replaceAllBase, replaceBaseFromUrl } from '../store/actions/base';
+import { replaceAllBase } from '../store/actions/base';
+import styled from 'styled-components';
+import { backgroundColor, border, borderRadius, shadow } from '../style/constants';
+import Input from '../style/Input';
+import Area from '../style/Area';
+import Row from '../style/Row';
 
 class UrlInfo extends Component {
     constructor(props) {
@@ -30,25 +32,14 @@ class UrlInfo extends Component {
 
     render() {
         return (
-            <Row>
-                <Info>
-                    <Label>CncOpt Url</Label>
-                    <input type="url" ref="url" />
+            <Area>
+                <Row>
                     <Button onClick={this.updateBase}> send</Button>
-                </Info>
-            </Row>
+                    <Input type="url" ref="url" placeholder="Enter CnC Opt URL..."/>
+                </Row>
+            </Area>
         );
     }
 }
-const mapStateToProps = () => {
-    return {};
-};
 
-// TODO was copy pasted here as a reminder for an old? way for changing base via url
-const mapDispatchToProps = dispatch => {
-    return {
-        replaceBaseFromUrl: url => dispatch(replaceBaseFromUrl(url)),
-    };
-};
-
-export default connect(mapStateToProps)(UrlInfo);
+export default connect()(UrlInfo);
