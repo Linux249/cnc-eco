@@ -16,6 +16,7 @@ import Home from './routes/Home';
 import AppS from './style/App';
 import LoadingLine from './style/LoadingLine';
 import { S } from './containers/S';
+import { B } from './containers/B';
 
 class App extends Component {
     render() {
@@ -27,6 +28,7 @@ class App extends Component {
                     <LoadingLine />
                     <Route path="/" exact component={Home} />
                     <Route path="/s/:url" component={S} />
+                    <Route path="/b/:url" component={B} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
                     <Route path="/scripts" component={Scripts} />

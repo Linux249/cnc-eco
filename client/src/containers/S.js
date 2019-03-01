@@ -8,19 +8,16 @@ import { Redirect } from 'react-router';
 
 export const S = props => {
     const [err, setError] = useState(null);
-    const { url } = props.match.params;
     const [loaded, setLoaded] = useState(false)
+    const { url } = props.match.params;
 
     async function load() {
         const item = await fetch(api_url + '/urlToBase/' + url)
             .then(r => r.json())
             .catch(e => {
                 console.log('ERROR');
-                console.error(e);
                 setError(e.message);
             });
-        console.log('after roror catch');
-        console.log(item);
         if(item.url) {
             const base = urlToBase('3|' + item.faction + '|' + 'item.faction' + '|' + item.name + '|' + item.url )
             console.log(base)
@@ -33,7 +30,7 @@ export const S = props => {
     }
 
     useEffect(() => {
-        load();
+        !loaded && load();
     });
 
     return loaded ?
