@@ -65,9 +65,25 @@ app.use('/api/v1', api);
 //     }
 //     console.log('Server running at:', server.info.uri);
 // });
+
+/**
+ * add the public folder
+ */
 const path = Path.join(__dirname, '../../client/build');
 //console.log({path})
-app.use('/', express.static(path));
+app.use('/*', express.static(path));
+
+
+//
+// app.use("/*", express.static(__dirname + 'public'))
+/*
+app.use(express.static(path.join(__dirname, 'public')));
+app.get('/*', function (req, res) {
+    const file = path.join(__dirname, 'public', 'index.html')
+    //console.log(file)
+    res.sendFile(file);
+});
+*/
 
 app.set('port', PORT);
 
