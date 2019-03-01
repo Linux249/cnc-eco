@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { api_url } from '../config';
 import Error from '../style/Error';
 import urlToBase from '../util/parseurl';
-import {store} from '../index';
+import {store} from '..';
 import { replaceAllBase } from '../store/actions/base';
 import { Redirect } from 'react-router';
 
@@ -28,6 +28,7 @@ export const S = props => {
         }
         return null;
     }
+    console.log(item)
 
     useEffect(() => {
         !loaded && load();

@@ -54,6 +54,7 @@ function urlToBase(url) {
                 }
                 lvl = +num;
             }
+            if(!lvl &&urlString[0] !== "t" && urlString[0] !== "c" ) lvl = 1
             building = urlString[0];
             urlString = urlString.slice(1);
             base.buildings.push({

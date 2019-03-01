@@ -15,8 +15,8 @@ import User from './routes/User';
 import Home from './routes/Home';
 import AppS from './style/App';
 import LoadingLine from './style/LoadingLine';
-import { S } from './containers/S';
-import { B } from './containers/B';
+import { S } from './routes/S';
+import { B } from './routes/B';
 
 class App extends Component {
     render() {

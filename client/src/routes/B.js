@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Error from '../style/Error';
 import urlToBase from '../util/parseurl';
-import { store } from '../index';
+import { store } from '..';
 import { replaceAllBase } from '../store/actions/base';
 import { Redirect } from 'react-router';
 
@@ -20,7 +20,6 @@ export const B = props => {
             console.warn(e);
             setError('no URL');
         }
-        return null;
     }
 
     useEffect(() => {
