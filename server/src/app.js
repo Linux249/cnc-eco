@@ -17,6 +17,7 @@ let DB;
 // configuration ===============================================================
 MongoClient.connect(
     mongoURI,
+    { useNewUrlParser: true },
     (err, db) => {
         DB = db;
         const j = schedule.scheduleJob({ hour: 0, minute: 32 }, () => {

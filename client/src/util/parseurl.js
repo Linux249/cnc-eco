@@ -10,7 +10,7 @@ function urlToBase(url) {
     let building, unit, lvl;
 
     let base = {
-        nod_buildings_keys: {
+        /*nod_buildings_keys: {
             r: 'NOD_Refinery',
             p: 'NOD_Power Plant',
             h: 'NOD_Harvester',
@@ -29,7 +29,7 @@ function urlToBase(url) {
             w: 'NOD_Defense Facility',
             t: 'tiberium',
             c: 'crystal',
-        },
+        },*/
         buildings: [],
         defens: [],
         army: [],
@@ -130,13 +130,13 @@ function urlToBase(url) {
         slot++;
     }
 
-    delete base.nod_buildings_keys;
+    // delete base.nod_buildings_keys;
 
     //@return base
     return base;
 }
 
-function parseToURL(base) {
+export function parseToURL(base) {
     let urlString = '';
     for (let building of base.buildings.concat(base.defens, base.army)) {
         if (building.type) {

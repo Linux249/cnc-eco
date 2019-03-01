@@ -17,7 +17,7 @@ if (process.env.NODE_ENV !== 'production') {
     //whyDidYouUpdate(React)
 }
 
-const store = configureStore(initial_state);
+export const store = configureStore(initial_state);
 
 ReactDOM.render(
     <Provider store={store}>
