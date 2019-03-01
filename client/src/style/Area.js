@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { shadow, backgroundColor, border, borderRadius } from './constants';
 
 export default styled.div`
-    display: flex;
-    flex-flow: column;
+    //display: flex;
+    //flex-flow: column;
     //flex-wrap: wrap;
     background-color: ${backgroundColor};
     border: ${border};

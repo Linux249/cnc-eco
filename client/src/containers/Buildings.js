@@ -6,7 +6,20 @@ import Menu from '../style/BuildingMenu';
 import Area from '../style/Area';
 import Button from '../style/Button';
 import BuildingMenuItem from './BuildingMenuItem';
-import Row from '../style/Row';
+import styled from 'styled-components';
+
+const Row = styled.div`
+    max-width: 250px;
+    display: flex;
+`;
+const Right = styled.div`
+    display: flex;
+    justify-content: flex-end;
+`;
+
+const Min = styled.div`
+    max-width: 250px;
+`;
 
 class BuildingMenu extends Component {
     render() {
@@ -20,13 +33,17 @@ class BuildingMenu extends Component {
             return <BuildingMenuItem img={img} type={type} building={building} key={type} />;
         });
         return (
-            <Area>
-                <Row>
-                    <Button onClick={() => changeFraction('N')}>NOD</Button>
-                    <Button onClick={() => changeFraction('G')}>GDI</Button>
-                </Row>
-                <Menu>{items}</Menu>
-            </Area>
+            <Right>
+                <Min>
+                    <Area>
+                        <Row>
+                            <Button onClick={() => changeFraction('N')}>NOD</Button>
+                            <Button onClick={() => changeFraction('G')}>GDI</Button>
+                        </Row>
+                        <Menu>{items}</Menu>
+                    </Area>
+                </Min>
+            </Right>
         );
     }
 }

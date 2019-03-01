@@ -42,6 +42,7 @@ router.post('/baseToUrl', async (req, res) => {
             });
             await item.save();
             console.log('saved new one');
+            console.log(item)
             res.status(200).json(item);
         }
     } catch (err) {

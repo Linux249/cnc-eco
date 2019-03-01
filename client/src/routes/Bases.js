@@ -5,9 +5,10 @@ import WorldBaseMenu from '../containers/WorldBaseMenu';
 import Menu from '../components/Menu';
 import Body from '../style/Body';
 import { Share } from '../containers/Share';
+import Column from '../style/Column';
 
 export default () => (
-    <>
+    <Column center>
         <WorldBaseMenu withBases/>
         <Body>
             <BuildingMenu />
@@ -15,5 +16,5 @@ export default () => (
             <Menu />
         </Body>
         <Share></Share>
-    </>
+    </Column>
 );
