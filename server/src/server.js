@@ -71,19 +71,19 @@ app.use('/api/v1', api);
  */
 const path = Path.join(__dirname, '../../client/build');
 //console.log({path})
-app.use('/*', express.static(path));
+app.use('/', express.static(path));
 
 
 //
 // app.use("/*", express.static(__dirname + 'public'))
 /*
 app.use(express.static(path.join(__dirname, 'public')));
+*/
 app.get('/*', function (req, res) {
-    const file = path.join(__dirname, 'public', 'index.html')
+    const file = path.join(_path, 'index.html')
     //console.log(file)
     res.sendFile(file);
 });
-*/
 
 app.set('port', PORT);
 

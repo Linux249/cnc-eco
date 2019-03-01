@@ -25,6 +25,7 @@ class App extends Component {
                     <BaseHeader ref="target" />
                     <LoadingLine/>
                     <Route path="/" exact component={Home} />
+                    <Route path="/s" exact component={Home} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
                     <Route path="/scripts" component={Scripts} />
