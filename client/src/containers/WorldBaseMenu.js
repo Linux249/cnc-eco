@@ -56,15 +56,15 @@ class WorldBaseMenu extends Component {
                     </Button>
                     <Row>
                         {withBases &&
-                        bases.map((base, i) => (
-                            <Button
-                                key={i}
-                                onClick={() => selectBase(i)}
-                                active={selectedBase === i}
-                            >
-                                {base.name}
-                            </Button>
-                        ))}
+                            bases.map((base, i) => (
+                                <Button
+                                    key={i}
+                                    onClick={() => selectBase(i)}
+                                    active={selectedBase === i}
+                                >
+                                    {base.name}
+                                </Button>
+                            ))}
                     </Row>
                 </Row>
             </>

@@ -2,6 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Area from '../style/Area';
 import styled from 'styled-components';
+
+const Square = styled.div`
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(50, 150, 120, 0.4);
+`;
+
+const Container = styled.div`
+    width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+`;
+
 const Tib = () => (
     <img
         width="20"
@@ -17,40 +30,27 @@ const Kris = () => (
     />
 );
 
-const Square = styled.div`
-    width: 20px;
-    height: 20px;
-    border: 1px solid rgba(50, 150, 120, 0.4);
-`;
-
-const Container = styled.div`
-    width: 200px;
-    display: flex;
-    flex-wrap: wrap;
-`;
-
 const Layout = ({ layout }) => {
-    const layouts = layout.layout.split('').map(slot => {
+    const slots = layout.layout.split('').map(slot => {
         if (slot === 't')
             return (
                 <Square>
                     <Tib />
                 </Square>
             );
-        if (slot === 'c')
+        else if (slot === 'c')
             return (
                 <Square>
                     <Kris />
                 </Square>
             );
-        return <Square />;
+        else return <Square />;
     });
-    const time = Math.round((new Date() - new Date(layout.time)) / 60 / 60 / 24 / 1000);
+    const time = Math.round((new Date() - new Date(layout.time)) / 3600 / 24 / 1000);
 
     return (
         <Area>
-            {/*<div>{`T: ${layout.tib}    - K: ${layout.cris}`}</div>*/}
-            <Container>{layouts}</Container>
+            <Container>{slots}</Container>
             <div>{`${layout.x}:${layout.y}   t:${layout.tib}   c:${layout.cris}`}</div>
             <div>{time}</div>
         </Area>
