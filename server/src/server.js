@@ -80,7 +80,7 @@ app.use('/', express.static(path));
 app.use(express.static(path.join(__dirname, 'public')));
 */
 app.get('/*', function (req, res) {
-    const file = path.join(_path, 'index.html')
+    const file = path.join(path, 'index.html')
     //console.log(file)
     res.sendFile(file);
 });

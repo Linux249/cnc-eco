@@ -4,7 +4,6 @@ import Header from '../style/BaseHeader';
 import Title from '../style/Title';
 import Button from '../style/Button';
 import Row from '../style/Row';
-import UrlInfo from './UrlInfo';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 

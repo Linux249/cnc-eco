@@ -6,8 +6,6 @@ import { connect } from 'react-redux';
 import Button from '../style/Button';
 import urlToBase from '../util/parseurl.js';
 import { replaceAllBase } from '../store/actions/base';
-import styled from 'styled-components';
-import { backgroundColor, border, borderRadius, shadow } from '../style/constants';
 import Input from '../style/Input';
 import Area from '../style/Area';
 import Row from '../style/Row';
