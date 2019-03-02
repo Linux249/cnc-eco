@@ -23,8 +23,6 @@ const initState = {
     error: null,
 };
 
-console.error(initState)
-
 export function auth(state = initState, action) {
     switch (action.type) {
         case CHANGE_AUTH_EMAIL:
