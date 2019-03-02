@@ -3,14 +3,17 @@ import styled from 'styled-components';
 export default styled.div`
     //    position: relative ;
     display: flex;
-    justify-content: space-between;
+    //justify-content: space-between;
     //align-content: space-around;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
 
     margin-bottom: 10px;
 
     & > div > img {
         margin-right: 5px;
+    }
+     & > div {
+        flex: 1;
     }
 
     & > div:hover {

@@ -18,34 +18,36 @@ class BuildingSlot extends Component {
         const { building } = this.props;
         event.preventDefault();
         const { key } = event; // get pressed key
+        console.log(building, key, event)
 
         //change building type
         if (buildingKeys.includes(key)) {
             building.type = key;
             if (!building.lvl) building.lvl = this.props.lvl;
-            this.props.replaceBuilding(building);
+            return this.props.replaceBuilding(building);
         }
         // + building lvl up
         if (key === '+' && building.lvl) {
             building.lvl += 1;
             building.lvl = !building.lvl ? 1 : building.lvl > 65 ? 65 : building.lvl;
-            this.props.replaceBuilding(building);
+            return this.props.replaceBuilding(building);
         }
         // - building lvl down
         if (key === '-' && building.lvl) {
             building.lvl -= 1;
             building.lvl = !building.lvl ? 1 : building.lvl > 65 ? 65 : building.lvl;
-            this.props.replaceBuilding(building);
+            return this.props.replaceBuilding(building);
         }
 
         //change lvl through numbers
         const digits = new RegExp('[0-9]');
         if (digits.exec(key) && building.lvl) {
             const rawLvl = `${building.lvl}${key}`;
-            const lvl = Number(rawLvl.length > 2 ? rawLvl.slice(1) : rawLvl);
+            const stringLvL =(rawLvl.length > 2 )? rawLvl.slice(1) : rawLvl;
+            const lvl = +stringLvL;
             building.lvl = !lvl ? 1 : lvl > 65 ? 65 : lvl;
             console.log({ rawLvl, building });
-            this.props.replaceBuilding(building);
+            return this.props.replaceBuilding(building);
         }
     };
 

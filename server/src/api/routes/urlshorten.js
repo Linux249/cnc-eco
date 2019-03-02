@@ -38,11 +38,11 @@ router.post('/baseToUrl', async (req, res) => {
                 shortUrl: shortUrl + '/' + urlCode,
                 urlCode,
                 faction,
-                name
+                name,
             });
             await item.save();
             console.log('saved new one');
-            console.log(item)
+            console.log(item);
             res.status(200).json(item);
         }
     } catch (err) {
