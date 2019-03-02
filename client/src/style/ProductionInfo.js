@@ -13,6 +13,8 @@ export default styled.div`
         margin-right: 5px;
     }
      & > div {
+        display: flex;
+        align-items: center;
         flex: 1;
     }
 

@@ -3,7 +3,6 @@
  */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Button from '../style/Button';
 import Info from '../style/ProductionInfo';
 import { shortenNumber } from '../util/service';
 import { calcProduction } from '../util/production';
@@ -29,6 +28,17 @@ const Diff = styled.div`
     font-size: 0.8rem;
 
     color: ${p => (p.positiv ? 'green' : '#e06161')};
+`;
+
+const Img = styled.img`
+    height: 24px;
+    //position: absolute;
+    // display: inline-block;
+    // animation: ${rotate} 2s ease-in-out;
+    // padding: 0 1rem;
+    // font-size: 0.8rem;
+    //
+    // color: ${p => (p.positiv ? 'green' : '#e06161')};
 `;
 
 class ProductionInfo extends Component {
@@ -64,26 +74,26 @@ class ProductionInfo extends Component {
 
         return (
             <Info>
-                <Button>
-                    <img src={icon_tib} alt={icon_tib} />
+                <div>
+                    <Img src={icon_tib} alt={icon_tib} />
                     {shortenNumber(tib, 2)}
                     <Diff positiv={diff.tib.charAt(0) !== '-'}>{diff.tib}</Diff>
-                </Button>
-                <Button>
-                    <img src={icon_cris} alt={icon_tib} />
+                </div>
+                <div>
+                    <Img src={icon_cris} alt={icon_tib} />
                     {shortenNumber(kris, 2)}
                     <Diff positiv={diff.kris.charAt(0) !== '-'}>{diff.kris}</Diff>
-                </Button>
-                <Button>
-                    <img src={icon_power} alt={icon_tib} />
+                </div>
+                <div>
+                    <Img src={icon_power} alt={icon_tib} />
                     {shortenNumber(power, 2)}
                     <Diff positiv={diff.power.charAt(0) !== '-'}>{diff.power}</Diff>
-                </Button>
-                <Button>
-                    <img src={icon_credits} alt={icon_tib} />
+                </div>
+                <div>
+                    <Img src={icon_credits} alt={icon_tib} />
                     {shortenNumber(credits, 2)}
                     <Diff positiv={diff.credits.charAt(0) !== '-'}>{diff.credits}</Diff>
-                </Button>
+                </div>
             </Info>
         );
     }

@@ -8,6 +8,7 @@ import { updatePlayer } from '../store/actions/player';
 import Area from '../style/Area';
 import LoadingPoints from '../style/LoadingPoints';
 import Label from '../style/Label';
+import { InfoText } from '../style/InfoText';
 import Error from '../style/Error';
 
 const Middle = styled.div`
@@ -22,11 +23,6 @@ const Container = styled.div`
     align-items: center;
     width: 100%;
     //max-width: 100rem;
-`;
-
-const InfoText = styled.div`
-    font-size: 0.5rem;
-    color: lightgrey;
 `;
 
 class User extends Component {
