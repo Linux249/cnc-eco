@@ -129,48 +129,82 @@ function getRandomLvlUpBase(buildings, count) {
     }
 }
 
-
+// todo too mutch time, 2 are 6s, 3 are 120s, 4...
 export function getBest5Buildings(base) {
     console.time('getBest5Buildings')
     //  find buildings to measure
-    const buildings = base.buildings.reduce((b, p) => {
-        // power plants missing
-        if(b.type && b.type in ['s', 'h', 'n', 'a', 'r']) p.push(b.slot)
+    const buildings = base.buildings.reduce((a, b) => {
+        if(b.type && ['s', 'h', 'n', 'a', 'r'].includes(b.type)) a.push(b.slot)
+        return a
     }, [])
 
     let bestBuildings = []
-    let bestProd
+    let bestProd = 0
+    console.log(buildings, buildings.length)
 
     buildings.map(b1 => {
         buildings.map(b2 => {
             buildings.map(b3 => {
-                buildings.map(b4 => {
-                    buildings.map( b5 => {
+            //     buildings.map(b4 => {
+            //         buildings.map( b5 => {
                         base.buildings[b1].lvl += 1
                         base.buildings[b2].lvl += 1
                         base.buildings[b3].lvl += 1
-                        base.buildings[b4].lvl += 1
-                        base.buildings[b5].lvl += 1
+                        // base.buildings[b4].lvl += 1
+                        // base.buildings[b5].lvl += 1
                         // calc and compare production
                         const { prod } = futureProduction(base.buildings)[119];
                         if(bestProd < prod.tib) {
                             bestProd = prod.tib
-                            bestBuildings = [b1, b2, b3, b4, b5]
+                            bestBuildings = [b1, b2, b3]//, b4, b5]
+                            console.log(bestBuildings, prod)
                         } else if(bestProd === prod.tib) {
                             // todo measure first time for equal
                         }
                         base.buildings[b1].lvl -= 1
                         base.buildings[b2].lvl -= 1
                         base.buildings[b3].lvl -= 1
-                        base.buildings[b4].lvl -= 1
-                        base.buildings[b5].lvl -= 1
-
-                    })
-                })
+            //             base.buildings[b4].lvl -= 1
+            //             base.buildings[b5].lvl -= 1
+            //
+            //         })
+            //     })
             })
         })
     })
 
     console.timeEnd('getBest5Buildings')
     return bestBuildings
+}
+
+
+export function easyLvLUp(base, count = 10) {
+    console.time('easyLvLUp')
+    //  find buildings to measure
+    const buildings = base.buildings.reduce((a, b) => {
+        if(b.type && ['s', 'h', 'n', 'a', 'r'].includes(b.type)) a.push(b.slot)
+        return a
+    }, [])
+
+    const bestBuildings = []
+
+    for (let c = 1; c <= count; c += 1) {
+        let best = {},
+            max = 0
+        buildings.forEach(b => {
+            base.buildings[b].lvl += 1;
+            const { prod } = futureProduction(base.buildings)[119];
+            base.buildings[b].lvl -= 1;
+            if(max < prod.tib) {
+                max = prod.tib
+                best = b
+            }
+        })
+        console.log(best, max)
+        bestBuildings.push(best)
+        base.buildings[best].lvl += 1
+    }
+    return bestBuildings
+    console.timeEnd('easyLvLUp')
+
 }

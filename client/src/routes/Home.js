@@ -6,6 +6,7 @@ import Base from '../components/Base'
 import { Row } from '../style/Row';
 import Column from '../style/Column';
 import Body from '../style/Body';
+import { BaseMenu } from '../containers/BaseMenu';
 
 // TODO BAse here
 // /s/ to shortand
@@ -21,6 +22,7 @@ export default (props) => {
             <Body>
                 <BuildingMenu />
                 <Base />
+                <BaseMenu />
             </Body>
         </Column>
     );

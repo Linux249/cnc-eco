@@ -25,7 +25,7 @@ router.use('/worlds', worlds);
 router.use('/', layoutsRouter);
 router.use('/', playerRouter);
 router.use('/', allianceRouter);
-router.use('/performance', performanceRouter);
+router.use('/', performanceRouter);
 
 // Protected through login
 router.use('/', user);
