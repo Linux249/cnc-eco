@@ -1,16 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Area from '../style/Area';
+import AreaRaw from '../style/Area';
 import styled from 'styled-components';
 
+const Area = styled(AreaRaw)`
+    padding: 10px 6px;
+    margin: 5px 3px;
+`
+
 const Square = styled.div`
-    width: 20px;
+    width: 18px;
     height: 20px;
-    border: 1px solid rgba(50, 150, 120, 0.4);
+    box-shadow: 0 0 3px -1px rgb(150,150,150);
 `;
 
 const Container = styled.div`
-    width: 200px;
+    width: 162px;
     display: flex;
     flex-wrap: wrap;
 `;
@@ -49,7 +54,7 @@ const Layout = ({ layout }) => {
     const time = Math.round((new Date() - new Date(layout.time)) / 3600 / 24 / 1000);
 
     return (
-        <Area>
+        <Area small>
             <Container>{slots}</Container>
             <div>{`${layout.x}:${layout.y}   t:${layout.tib}   c:${layout.cris}`}</div>
             <div>{time}</div>

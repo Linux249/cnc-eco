@@ -18,9 +18,9 @@ class Layouts extends Component {
         super();
         this.state = {
             layouts: [],
-            loading: false,
         };
     }
+
     componentWillMount() {
         //get layouts from api
         this.getLayouts();
@@ -29,6 +29,7 @@ class Layouts extends Component {
     getLayouts = () => {
         this.props.changeLoading(true);
         const { pl, w, allianceId, token } = this.props;
+        // todo limit 50 first and than load other
         const url = `${api_url}/layouts?pl=${pl}&w=${w}&a=${allianceId}&limit=200&skip=0`;
         fetch(url, {
             headers: {
@@ -44,9 +45,10 @@ class Layouts extends Component {
     };
 
     render() {
-        const { layouts, loading } = this.state;
+        const { layouts } = this.state;
         return (
             <Body>
+            <div />
             <div>
                 <Row>
                     <WorldBaseMenu/>
@@ -59,6 +61,7 @@ class Layouts extends Component {
                     ))}
                 </LayoutS>
             </div>
+            <div/>
             </Body>
         );
     }
