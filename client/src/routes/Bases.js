@@ -10,13 +10,14 @@ import { BaseMenu } from '../containers/BaseMenu';
 
 export default () => (
     <Column center>
-        <WorldBaseMenu withBases/>
+        <WorldBaseMenu withBases />
         <Body>
             <BuildingMenu />
             <Base />
-            <ChartMenu /> <BaseMenu />
-
+            <ChartMenu />
+            <div />
+            <BaseMenu />
         </Body>
-        <Share></Share>
+        <Share />
     </Column>
 );

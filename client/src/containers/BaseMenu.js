@@ -4,11 +4,22 @@ import { store } from '../index';
 import { api_url } from '../config';
 import Error from '../style/Error';
 import { replaceBuilding } from '../store/actions/base';
+import Row from '../style/Row';
+import styled from 'styled-components'
+
+
+const Img = styled.img`
+    height: 30px;
+
+`
+
 
 export function BaseMenu() {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+
+    const { buildings, faction } = store.getState().base
 
     async function handleClick() {
         console.log('get performance/base');
@@ -45,14 +56,23 @@ export function BaseMenu() {
         store.dispatch(replaceBuilding(building));
         setItems(items.filter((_, ii) => ii !== i));
     }
+
     return (
-        <div>
+
+        <Row wrap>
             {loading && <div>loading</div>}
             <Error>{error}</Error>
-            <Button onClick={handleClick}>best 5</Button>
-            {items.map((e, i) => (
-                <Button onClick={() => lvlBuildingUp(e, i)}>{e}</Button>
-            ))}
-        </div>
+            <Button onClick={handleClick}>find best tib</Button>
+            {items.map((e, i) => {
+                const img = require('./../img/buildings/' +
+                    faction +
+                    '/' +
+                    buildings[e].type +
+                    '.png');
+                return (
+                    <Button onClick={() => lvlBuildingUp(e, i)}><Img src={img} alt="rw"/>{buildings[e].lvl}</Button>
+                )
+            })}
+        </Row>
     );
 }
