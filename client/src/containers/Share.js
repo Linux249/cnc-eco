@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { parseToURL } from '../util/parseurl';
 import Button from '../style/Button';
 import { store } from '../index';
@@ -7,10 +6,7 @@ import { api_url } from '../config';
 import Input from '../style/Input';
 import Area from '../style/Area';
 import Row from '../style/Row';
-
-const Error = styled.div`
-    color: red;
-`;
+import Error from '../style/Error';
 
 export const Share = () => {
     const [url, setUrl] = useState('');
@@ -50,12 +46,11 @@ export const Share = () => {
             setError(e);
         }
         setLoading(false);
-        //
         // todo update url
     }
 
     return (
-        <Area>
+        <Area small>
             <Row>
                 <Input placeholder="click share..." value={loading ? 'loading ...' : url}/>
                 <Button onClick={handleClick}>share</Button>

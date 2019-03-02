@@ -4,7 +4,7 @@ export default styled.input`
     //width: 100%;
 
     //margin: 0.75rem 1.5rem;
-    margin: 0.25rem 0;
+    margin: 0.25rem 6px;
     padding: 0.40em 0.75rem;
 
     font-size: 1rem;

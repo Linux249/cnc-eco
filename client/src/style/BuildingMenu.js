@@ -6,5 +6,5 @@ export default styled.div`
     flex-wrap: wrap;
 
     max-width: 250px;
-    height: 450px;
+    max-height: 450px;
 `;

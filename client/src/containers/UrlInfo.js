@@ -24,16 +24,16 @@ class UrlInfo extends Component {
             this.props.dispatch(replaceAllBase(base));
         } catch (e) {
             console.log(e);
-            this.refs.url.value = 'Fehler';
+            this.refs.url.value = 'Error';
         }
     };
 
     render() {
         return (
-            <Area>
+            <Area small>
                 <Row>
-                    <Button onClick={this.updateBase}> send</Button>
-                    <Input type="url" ref="url" placeholder="Enter CnC Opt URL..."/>
+                    <Button onClick={this.updateBase}>load</Button>
+                    <Input type="url" ref="url" placeholder="full CnC Opt URL..." />
                 </Row>
             </Area>
         );

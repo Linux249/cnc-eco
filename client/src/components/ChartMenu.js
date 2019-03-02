@@ -4,7 +4,7 @@ import UpgradeBase from '../containers/UpgradeBase';
 import Area from '../style/Area';
 
 export default () => (
-    <Area>
+    <Area small>
         <LineChart />
         <UpgradeBase />
     </Area>

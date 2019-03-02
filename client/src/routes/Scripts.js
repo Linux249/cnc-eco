@@ -28,10 +28,7 @@ export default () => (
                     The 'CnC:TA CnC-Eco' Script provides the upload functionality for your ingame
                     data and give you access to a base scanner witch save all scanned bases.
                 </Description>
-                <a
-                    target="_blank"
-                    href="https://greasyfork.org/en/scripts/33978-c-c-ta-cnc-eco"
-                >
+                <a target="_blank" href="https://greasyfork.org/en/scripts/33978-c-c-ta-cnc-eco">
                     <Area>https://greasyfork.org/en/scripts/33978-c-c-ta-cnc-eco</Area>
                 </a>
                 <InfoText>This Script is necessary for full usage of cnc-eco.</InfoText>

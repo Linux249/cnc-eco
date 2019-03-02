@@ -2,7 +2,7 @@ import React from 'react';
 import Base from '../components/Base.js';
 import BuildingMenu from '../containers/Buildings';
 import WorldBaseMenu from '../containers/WorldBaseMenu';
-import Menu from '../components/Menu';
+import ChartMenu from '../components/ChartMenu';
 import Body from '../style/Body';
 import { Share } from '../containers/Share';
 import Column from '../style/Column';
@@ -13,7 +13,7 @@ export default () => (
         <Body>
             <BuildingMenu />
             <Base />
-            <Menu />
+            <ChartMenu />
         </Body>
         <Share></Share>
     </Column>
