@@ -6,6 +6,7 @@ import ChartMenu from '../components/ChartMenu';
 import Body from '../style/Body';
 import { Share } from '../containers/Share';
 import Column from '../style/Column';
+import { BaseMenu } from '../containers/BaseMenu';
 
 export default () => (
     <Column center>
@@ -13,7 +14,8 @@ export default () => (
         <Body>
             <BuildingMenu />
             <Base />
-            <ChartMenu />
+            <ChartMenu /> <BaseMenu />
+
         </Body>
         <Share></Share>
     </Column>

@@ -1186,12 +1186,29 @@ export const calcBaseUpCost = buildings => {
     return costs;
 };
 
-export const futureProduction = (buildings, days = 121) => {
+export const futureProduction = (buildings, b = null, days = 121) => {
     buildings = cloneObject(buildings);
     const data = [];
     let tibTimeLeft = 0,
         powerTimeLeft = 0;
     let time = 0;
+    if (b) {
+        buildings[b].lvl -= 1 // reduce already updated lvl
+        const costs = calcBuildingCost(buildings[b]);
+        const prod = calcBaseProduction(buildings);
+
+        let tibTime = costs.tib / prod.tib / 24;
+        let powerTime = costs.power / prod.power / 24;
+
+        if (powerTime > tibTime) {
+            time += powerTime;
+            tibTimeLeft += powerTime - tibTime;
+        } else {
+            time += tibTime;
+            powerTimeLeft += tibTime - powerTime;
+        }
+        buildings[b].lvl += 1
+    }
 
     // Falls die benöigte Zeit fürs tib änger dauert als fürs Strom (tibTime > powerTime) dann liegt nach überflüssiger Strom rum
     // dieser wird beim nächsten mal verwendet und die stromkosten verringer sind um den betrag der "rum liegt"
@@ -1227,7 +1244,7 @@ export const futureProduction = (buildings, days = 121) => {
                     }
                 }
 
-                // if (powerTime <= 0) powerTimeLeft = -1*powerTime
+                // use what takes longer
                 if (powerTime > tibTime) {
                     time += powerTime;
                     tibTimeLeft += powerTime - tibTime;
