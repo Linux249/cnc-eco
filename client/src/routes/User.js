@@ -10,6 +10,7 @@ import LoadingPoints from '../style/LoadingPoints';
 import Label from '../style/Label';
 import { InfoText } from '../style/InfoText';
 import Error from '../style/Error';
+import { logout } from '../store/actions/auth';
 
 const Middle = styled.div`
     display: flex;
@@ -235,6 +236,12 @@ class User extends Component {
                             <Button onClick={this.deleteWorld}>delete</Button>
                         </Container>
                     </Area>
+                    <Area>
+                        <Label>Logout</Label>
+                        <Container>
+                            <Button onClick={this.props.logout}>logout</Button>
+                        </Container>
+                    </Area>
                     <Error>{error}</Error>
                 </div>
             </Middle>
@@ -249,4 +256,8 @@ const mapStateToProps = state => ({
     savedWorlds: state.player.worlds,
 });
 
-export default connect(mapStateToProps)(User);
+const mapDispatchToProps = {
+    logout,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(User);

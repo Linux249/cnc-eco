@@ -4,6 +4,7 @@ import {
     CHANGE_AUTH_EMAIL,
     CHANGE_AUTH_PASSWORD,
     START_ASYNC_AUTH,
+    AUTH_LOGOUT,
 } from '../constants/actionTypes';
 import { api_url } from '../../config';
 import { updatePlayer } from './player';
@@ -34,6 +35,7 @@ export const requestLogin = () => {
             return dispatch(loginError(data.message));
         }
 
+        localStorage.setItem('data', JSON.stringify(data));
         dispatch(receiveLogin(data));
         dispatch(updatePlayer(data.user));
     };
@@ -72,7 +74,7 @@ export const requestRegister = () => {
     };
 };
 
-function receiveLogin(data) {
+export function receiveLogin(data) {
     return {
         type: LOGIN_SUCCESS,
         isFetching: false,
@@ -100,3 +102,11 @@ export const changeAuthPassword = password => ({
     type: CHANGE_AUTH_PASSWORD,
     password,
 });
+
+export const logout = () => {
+    console.log('LOGOUT');
+    localStorage.removeItem('data');
+    return {
+        type: AUTH_LOGOUT,
+    };
+};

@@ -56,7 +56,7 @@ function Login(props) {
             </Area>
         </Middle>
     ) : (
-        <Redirect to="bases"/>
+        <Redirect to="/"/>
     );
 }
 

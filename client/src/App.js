@@ -17,8 +17,20 @@ import AppS from './style/App';
 import LoadingLine from './style/LoadingLine';
 import { S } from './routes/S';
 import { B } from './routes/B';
+import { updatePlayer } from './store/actions/player';
+import { receiveLogin } from './store/actions/auth';
 
 class App extends Component {
+    componentWillMount() {
+        const data = JSON.parse(localStorage.getItem('data'));
+        console.log(data);
+
+        this.props.dispatch(receiveLogin(data));
+        this.props.dispatch(updatePlayer(data.user));
+        // dispatch();
+        // localStorage.setItem('data', JSON.stringify(data));
+    }
+
     render() {
         const { auth, name } = this.props;
         return (
@@ -29,9 +41,9 @@ class App extends Component {
                     <Route path="/" exact component={Home} />
                     <Route path="/s/:url" component={S} />
                     <Route path="/b/:url" component={B} />
+                    <Route path="/scripts" component={Scripts} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
-                    <Route path="/scripts" component={Scripts} />
                     <ProtectedRoute path="/bases" auth={auth} name={name} component={Bases} />
                     <ProtectedRoute path="/layouts" auth={auth} name={name} component={Layouts} />
                     <ProtectedRoute path="/alliance" auth={auth} name={name} component={Alliance} />
