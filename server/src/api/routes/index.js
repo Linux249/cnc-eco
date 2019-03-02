@@ -8,6 +8,7 @@ import urlRouter from './urlshorten';
 import ingameData from './ingameData';
 import user from './user';
 import worlds from './worlds';
+import performanceRouter from './performance/index';
 import layoutsRouter from './layouts/index';
 
 const router = Router();
@@ -24,6 +25,7 @@ router.use('/worlds', worlds);
 router.use('/', layoutsRouter);
 router.use('/', playerRouter);
 router.use('/', allianceRouter);
+router.use('/performance', performanceRouter);
 
 // Protected through login
 router.use('/', user);

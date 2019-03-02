@@ -128,3 +128,49 @@ function getRandomLvlUpBase(buildings, count) {
         }
     }
 }
+
+
+export function getBest5Buildings(base) {
+    console.time('getBest5Buildings')
+    //  find buildings to measure
+    const buildings = base.buildings.reduce((b, p) => {
+        // power plants missing
+        if(b.type && b.type in ['s', 'h', 'n', 'a', 'r']) p.push(b.slot)
+    }, [])
+
+    let bestBuildings = []
+    let bestProd
+
+    buildings.map(b1 => {
+        buildings.map(b2 => {
+            buildings.map(b3 => {
+                buildings.map(b4 => {
+                    buildings.map( b5 => {
+                        base.buildings[b1].lvl += 1
+                        base.buildings[b2].lvl += 1
+                        base.buildings[b3].lvl += 1
+                        base.buildings[b4].lvl += 1
+                        base.buildings[b5].lvl += 1
+                        // calc and compare production
+                        const { prod } = futureProduction(base.buildings)[119];
+                        if(bestProd < prod.tib) {
+                            bestProd = prod.tib
+                            bestBuildings = [b1, b2, b3, b4, b5]
+                        } else if(bestProd === prod.tib) {
+                            // todo measure first time for equal
+                        }
+                        base.buildings[b1].lvl -= 1
+                        base.buildings[b2].lvl -= 1
+                        base.buildings[b3].lvl -= 1
+                        base.buildings[b4].lvl -= 1
+                        base.buildings[b5].lvl -= 1
+
+                    })
+                })
+            })
+        })
+    })
+
+    console.timeEnd('getBest5Buildings')
+    return bestBuildings
+}
