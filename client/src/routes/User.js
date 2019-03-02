@@ -1,29 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Button from '../style/Button';
 import styled from 'styled-components';
-import Input from '../style/Input';
 import { api_url } from '../config';
 import { updatePlayer } from '../store/actions/player';
+import { logout } from '../store/actions/auth';
+import Button from '../style/Button';
+import Input from '../style/Input';
 import Area from '../style/Area';
 import LoadingPoints from '../style/LoadingPoints';
 import Label from '../style/Label';
 import { InfoText } from '../style/InfoText';
 import Error from '../style/Error';
-import { logout } from '../store/actions/auth';
-
-const Middle = styled.div`
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-`;
+import Row from '../style/Row';
+import Body from '../style/Body';
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    //max-width: 100rem;
 `;
 
 class User extends Component {
@@ -76,7 +71,8 @@ class User extends Component {
             return this.setState({ error: player.error.message });
         }
 
-        this.props.dispatch(updatePlayer(player));
+        if(player.error) return this.setState({ error: player.message })
+        this.props.updatePlayer(player);
         // update world lists
         this.loadWorlds();
     };
@@ -110,7 +106,8 @@ class User extends Component {
         if (!res.ok || player.error) {
             return this.setState({ error: player.error.message });
         }
-        this.props.dispatch(updatePlayer(player));
+        if(player.error) return this.setState({ error: player.message })
+        this.props.updatePlayer(player);
         // updateWorldLists
         this.loadWorlds();
     };
@@ -143,7 +140,9 @@ class User extends Component {
                 return this.setState({ error: e.message });
             });
         this.endLoading();
-        this.props.dispatch(updatePlayer(player));
+        console.log(player)
+        if(player.error) return this.setState({ error: player.message })
+        this.props.updatePlayer(player);
         // updateWorldLists
         this.loadWorlds();
     };
@@ -180,10 +179,11 @@ class User extends Component {
     render() {
         const { world, error, name, worlds, loading } = this.state;
         const { savedWorlds } = this.props;
-        const playerAdded = !!this.props.name
+        const playerAdded = !!this.props.name;
         return (
-            <Middle>
-                <div>
+            <Body>
+                <div />
+                <Row wrap>
                     <Area>
                         <Container>
                             <div>
@@ -242,9 +242,9 @@ class User extends Component {
                             <Button onClick={this.props.logout}>logout</Button>
                         </Container>
                     </Area>
-                    <Error>{error}</Error>
-                </div>
-            </Middle>
+                </Row>
+                <Error>{error}</Error>
+            </Body>
         );
     }
 }
@@ -258,6 +258,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     logout,
-}
+    updatePlayer,
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(User);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(User);

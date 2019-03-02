@@ -55,6 +55,10 @@ export const updateAllianceId = allianceId => {
 };
 
 export const updatePlayer = user => {
+    // update data in store
+    const data = JSON.parse(localStorage.getItem('data'))
+    data.user = user
+    localStorage.setItem('data', JSON.stringify(data));
     return (dispatch, getState) => {
         dispatch({
             type: PLAYER_UPDATE,

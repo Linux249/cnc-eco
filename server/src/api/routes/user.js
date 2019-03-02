@@ -209,10 +209,10 @@ router.post('/user/removeWorld', async (req, res, next) => {
 
     // Test if world not added already
     // UI protect this situation - raise higher error lvl for logging potential ui bugs
-    if (!user.worlds.some(e => +e.worldId === +worldId))
+    if (!user.worlds.some(e => +e.worldId === +worldId)) {
         // TODO record issue cause of ui bug potential
         return next(new Error('Cannot remove World: World is not in List'));
-
+    }
     // console.log(player)
 
     // Test if player is updated in last 2 min

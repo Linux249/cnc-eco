@@ -23,13 +23,10 @@ import { receiveLogin } from './store/actions/auth';
 class App extends Component {
     componentWillMount() {
         const data = JSON.parse(localStorage.getItem('data'));
-        console.log(data);
-        if(data) {
+        if (data) {
             this.props.dispatch(receiveLogin(data));
             this.props.dispatch(updatePlayer(data.user));
         }
-        // dispatch();
-        // localStorage.setItem('data', JSON.stringify(data));
     }
 
     render() {
