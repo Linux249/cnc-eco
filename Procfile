@@ -1,2 +1,3 @@
+worker: cd client && npm i && cd ../server && npm i
 web: cd server && npm start
-web: bin/boot
+release: /bin/boot
