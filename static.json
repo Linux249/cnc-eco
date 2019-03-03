@@ -6,7 +6,7 @@
   },
   "proxies": {
     "/api/v1": {
-      "origin": "localhost:{PORT}"
+      "origin": "localhost:${PORT}"
     }
   }
 }
