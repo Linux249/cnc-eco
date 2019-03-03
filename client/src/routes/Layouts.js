@@ -7,8 +7,8 @@ import Button from '../style/Button';
 import Row from '../style/Row';
 import Layout from '../components/Layout';
 import { api_url } from '../config';
-import WorldBaseMenu from '../containers/WorldsMenu';
 import { changeLoading } from '../store/actions/player';
+import { Column } from '../style/Column';
 
 // TODO time since last seen a layout shod be placed to the backend
 // TODO IDEA autmaticly remove layouts after X days (cronjobs)
@@ -48,20 +48,18 @@ class Layouts extends Component {
         const { layouts } = this.state;
         return (
             <Body>
-            <div />
-            <div>
-                <Row>
-                    <WorldBaseMenu/>
+                <div />
+                <div>
+                    <LayoutS>
+                        {layouts.map((layout, i) => (
+                            <Layout key={i} layout={layout} />
+                        ))}
+                    </LayoutS>
+                </div>
+                <Column>
                     <Button onClick={() => this.getLayouts()}>Update</Button>
-                    <Title>{layouts.length}</Title>
-                </Row>
-                <LayoutS>
-                    {layouts.map((layout, i) => (
-                        <Layout key={i} layout={layout}/>
-                    ))}
-                </LayoutS>
-            </div>
-            <div/>
+                    <Title>{'Loaded:' + layouts.length}</Title>
+                </Column>
             </Body>
         );
     }

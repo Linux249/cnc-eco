@@ -1,0 +1,11 @@
+{
+    "root": "/",
+    "routes": {
+    "/**": "client/build/index.html"
+},
+    "proxies": {
+    "/api/": {
+        "origin": "localhost:${PORT}/api/"
+    }
+}
+}

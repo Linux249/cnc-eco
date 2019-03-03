@@ -11,6 +11,12 @@ const api = require('./app');
 
 const PORT = process.env.PORT || 8000;
 
+app.use((req, res, next) => {
+    console.log("EVERY API CALL: ")
+    console.log(req.url)
+    return next()
+})
+
 // DB
 const mongo_uri = process.env.MONGODB_URI
     ? process.env.MONGODB_URI
