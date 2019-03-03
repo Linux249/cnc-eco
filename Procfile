@@ -1,1 +1,2 @@
-web: /app/bin/boot && cd server && npm start
+web: /app/bin/boot
+web: cd server && npm start
