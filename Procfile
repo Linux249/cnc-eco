@@ -1,1 +1,1 @@
-web: /app/bin/boot
+web: /bin/boot
