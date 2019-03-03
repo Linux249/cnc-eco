@@ -1,22 +1,22 @@
 import React from 'react';
 import Base from '../components/Base.js';
-import BuildingMenu from '../containers/Buildings';
-import WorldBaseMenu from '../containers/WorldBaseMenu';
 import ChartMenu from '../components/ChartMenu';
+import BuildingMenu from '../containers/Buildings';
+import BasesMenu from '../containers/BasesMenu';
+import Share from '../containers/Share';
+import BestBuildingsToUpgrade from '../containers/BestBuildingsToUpgrade';
 import Body from '../style/Body';
-import { Share } from '../containers/Share';
 import Column from '../style/Column';
-import { BaseMenu } from '../containers/BaseMenu';
 
 export default () => (
     <Column center>
-        <WorldBaseMenu withBases />
+        <BasesMenu />
         <Body>
             <BuildingMenu />
             <Base />
             <ChartMenu />
             <div />
-            <BaseMenu />
+            <BestBuildingsToUpgrade />
         </Body>
         <Share />
     </Column>

@@ -4,20 +4,22 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { changeBase, changeWorld } from '../store/actions/player';
+import Area from '../style/Area';
 
 const DropDownAnchor = styled.div`
     position: relative;
+    width: inherit;
 `;
 
-const DropDownArea = styled.div`
+const DropDownArea = styled(Area)`
     position: absolute;
     top: 2rem;
-    left: 0;
-
-    background-color: red;
+    right: 0;
+    z-index: 10;
+    //background-color: red;
 `;
 
-class WorldBaseMenu extends Component {
+class WorldsMenu extends Component {
     state = {
         showWorld: false,
     };
@@ -32,14 +34,17 @@ class WorldBaseMenu extends Component {
     };
 
     render() {
-        const { worlds, worldName, bases, selectedBase, selectBase, withBases } = this.props;
+        const { worlds, worldName } = this.props;
         const { showWorld } = this.state;
         return (
             <>
                 <Row>
+                    <DropDownAnchor>
+                    <Button onClick={this.toggleShowWorld} active>
+                        {worldName}
+                    </Button>
                     {showWorld && (
-                        <DropDownAnchor>
-                            <DropDownArea>
+                            <DropDownArea small>
                                 {worlds.map(w => (
                                     <Button
                                         onClick={() => this.handleSelectWorld(w)}
@@ -49,23 +54,8 @@ class WorldBaseMenu extends Component {
                                     </Button>
                                 ))}
                             </DropDownArea>
-                        </DropDownAnchor>
                     )}
-                    <Button onClick={this.toggleShowWorld} active>
-                        {worldName}
-                    </Button>
-                    <Row>
-                        {withBases &&
-                            bases.map((base, i) => (
-                                <Button
-                                    key={i}
-                                    onClick={() => selectBase(i)}
-                                    active={selectedBase === i}
-                                >
-                                    {base.name}
-                                </Button>
-                            ))}
-                    </Row>
+                        </DropDownAnchor>
                 </Row>
             </>
         );
@@ -74,9 +64,7 @@ class WorldBaseMenu extends Component {
 
 const mapStateToProps = state => {
     return {
-        selectedBase: state.player.selectedBase,
         worlds: state.player.worlds,
-        bases: state.player.bases,
         worldName: state.player.worldName,
         w: state.player.w,
     };
@@ -85,4 +73,4 @@ const mapStateToProps = state => {
 export default connect(
     mapStateToProps,
     { selectWorld: changeWorld, selectBase: changeBase }
-)(WorldBaseMenu);
+)(WorldsMenu);

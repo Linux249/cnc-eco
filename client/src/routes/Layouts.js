@@ -7,7 +7,7 @@ import Button from '../style/Button';
 import Row from '../style/Row';
 import Layout from '../components/Layout';
 import { api_url } from '../config';
-import WorldBaseMenu from '../containers/WorldBaseMenu';
+import WorldBaseMenu from '../containers/WorldsMenu';
 import { changeLoading } from '../store/actions/player';
 
 // TODO time since last seen a layout shod be placed to the backend

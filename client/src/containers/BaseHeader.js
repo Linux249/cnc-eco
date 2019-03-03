@@ -6,6 +6,8 @@ import Button from '../style/Button';
 import Row from '../style/Row';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import WorldsMenu from './WorldsMenu';
+
 
 const Link = Button.withComponent(
     styled(NavLink)`
@@ -28,6 +30,7 @@ class BaseHeader extends Component {
                 <Row wrap>
                     {isAuthenticated && (
                         <>
+                            <WorldsMenu />
                             <Link to="/bases" activeClassName="active">
                                 Basen
                             </Link>

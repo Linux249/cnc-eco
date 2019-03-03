@@ -5,21 +5,18 @@ import { api_url } from '../config';
 import Error from '../style/Error';
 import { replaceBuilding } from '../store/actions/base';
 import Row from '../style/Row';
-import styled from 'styled-components'
-
+import styled from 'styled-components';
 
 const Img = styled.img`
     height: 30px;
+`;
 
-`
-
-
-export function BaseMenu() {
+function BestBuildingsToUpgrade() {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
-    const { buildings, faction } = store.getState().base
+    const { buildings, faction } = store.getState().base;
 
     async function handleClick() {
         console.log('get performance/base');
@@ -58,7 +55,6 @@ export function BaseMenu() {
     }
 
     return (
-
         <Row wrap>
             {loading && <div>loading</div>}
             <Error>{error}</Error>
@@ -70,9 +66,14 @@ export function BaseMenu() {
                     buildings[e].type +
                     '.png');
                 return (
-                    <Button onClick={() => lvlBuildingUp(e, i)}><Img src={img} alt="rw"/>{buildings[e].lvl}</Button>
-                )
+                    <Button onClick={() => lvlBuildingUp(e, i)}>
+                        <Img src={img} alt="rw" />
+                        {buildings[e].lvl}
+                    </Button>
+                );
             })}
         </Row>
     );
 }
+
+export default BestBuildingsToUpgrade;

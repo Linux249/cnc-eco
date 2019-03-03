@@ -8,7 +8,7 @@ import Area from '../style/Area';
 import Row from '../style/Row';
 import Error from '../style/Error';
 
-export const Share = () => {
+const Share = () => {
     const [url, setUrl] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
@@ -28,16 +28,16 @@ export const Share = () => {
         const body = {
             url: baseUrl,
             faction: base.faction,
-            name: base.name
+            name: base.name,
         };
         // Post base to short url server and get Url
         try {
             const data = await fetch(api_url + '/baseToUrl', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json; charset=utf-8'
+                    'Content-Type': 'application/json; charset=utf-8',
                 },
-                body: JSON.stringify(body)
+                body: JSON.stringify(body),
             }).then(r => r.json());
 
             setUrl(data.shortUrl);
@@ -52,10 +52,12 @@ export const Share = () => {
     return (
         <Area small>
             <Row>
-                <Input placeholder="click share..." value={loading ? 'loading ...' : url}/>
+                <Input placeholder="click share..." value={loading ? 'loading ...' : url} />
                 <Button onClick={handleClick}>share</Button>
                 {error && <Error> {error.message} </Error>}
             </Row>
         </Area>
     );
 };
+
+export default Share;
