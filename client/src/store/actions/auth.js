@@ -6,7 +6,7 @@ import {
     START_ASYNC_AUTH,
     AUTH_LOGOUT,
 } from '../constants/actionTypes';
-import { api_url } from '../../config';
+import { api_url, LOCAL_STORE } from '../../config';
 import { updatePlayer } from './player';
 
 export const requestLogin = () => {
@@ -35,7 +35,7 @@ export const requestLogin = () => {
             return dispatch(loginError(data.message));
         }
 
-        localStorage.setItem('data', JSON.stringify(data));
+        localStorage.setItem(LOCAL_STORE, JSON.stringify(data));
         dispatch(receiveLogin(data));
         dispatch(updatePlayer(data.user));
     };
@@ -105,7 +105,7 @@ export const changeAuthPassword = password => ({
 
 export const logout = () => {
     console.log('LOGOUT');
-    localStorage.removeItem('data');
+    localStorage.removeItem(LOCAL_STORE);
     return {
         type: AUTH_LOGOUT,
     };

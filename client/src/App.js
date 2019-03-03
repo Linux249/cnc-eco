@@ -19,10 +19,11 @@ import { S } from './routes/S';
 import { B } from './routes/B';
 import { updatePlayer } from './store/actions/player';
 import { receiveLogin } from './store/actions/auth';
+import { LOCAL_STORE } from './config';
 
 class App extends Component {
     componentWillMount() {
-        const data = JSON.parse(localStorage.getItem('data'));
+        const data = JSON.parse(localStorage.getItem(LOCAL_STORE));
         if (data) {
             this.props.dispatch(receiveLogin(data));
             this.props.dispatch(updatePlayer(data.user));

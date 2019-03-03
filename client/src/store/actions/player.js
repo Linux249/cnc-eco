@@ -7,7 +7,7 @@ import {
     REPLACE_BASE_FROM_URL,
     PLAYER_CHANGE_SELECTED_BASE,
 } from '../constants/actionTypes';
-import { api_url } from '../../config';
+import { api_url, LOCAL_STORE } from '../../config';
 
 export function changeWorld(world) {
     return async (dispatch, getStore) => {
@@ -56,9 +56,9 @@ export const updateAllianceId = allianceId => {
 
 export const updatePlayer = user => {
     // update data in store
-    const data = JSON.parse(localStorage.getItem('data'))
+    const data = JSON.parse(localStorage.getItem(LOCAL_STORE))
     data.user = user
-    localStorage.setItem('data', JSON.stringify(data));
+    localStorage.setItem(LOCAL_STORE, JSON.stringify(data));
     return (dispatch, getState) => {
         dispatch({
             type: PLAYER_UPDATE,

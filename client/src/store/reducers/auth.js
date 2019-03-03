@@ -8,15 +8,10 @@ import {
     START_ASYNC_AUTH
 } from '../constants/actionTypes';
 
-const store = JSON.parse(localStorage.getItem('auth') || '{}')
-
 const initState = {
     email: process.env.NODE_ENV === 'development' ? 'julian.libor@gmail.com' : '',
     password: process.env.NODE_ENV === 'development' ? 'test123' : '',
     isFetching: false,
-    // isAuthenticated: store.isAuthenticated, // TODO check here for localStorage?
-    // token: store.token,
-    // user_id: store.user_id,
     isAuthenticated: false, // TODO check here for localStorage?
     token: null,
     user_id: null,
