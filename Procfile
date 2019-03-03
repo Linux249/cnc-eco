@@ -1,2 +1,2 @@
-worker: /app/bin/boot
-web: npm start
+web: /app/bin/boot
+release: npm start
