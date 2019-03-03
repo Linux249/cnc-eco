@@ -1,11 +1,11 @@
 {
-    "root": "/client/build",
-    "routes": {
+  "root": "/client/build",
+  "routes": {
     "/**": "index.html"
-},
-    "proxies": {
-    "/api/": {
-        "origin": "localhost:${PORT}/api/"
+  },
+  "proxies": {
+    "/api/v1": {
+      "origin": "https://cnc-eco.herokuapp.com/"
     }
-}
+  }
 }
