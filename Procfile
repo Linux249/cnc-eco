@@ -1,2 +1,2 @@
 worker: cd server && npm start
-web: /app/bin/root
+web: /app/bin/boot
