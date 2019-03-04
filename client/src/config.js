@@ -1,5 +1,5 @@
 export const api_url =
-    process.env.NODE_ENV === 'development'
+    process.env.NODE_ENV === 'deve5lopment'
         ? 'http://localhost:8000/api/v1'
         : 'https://cnc-eco.herokuapp.com/api/v1';
 
