@@ -9,7 +9,7 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server, { pingInterval: 1000 });
 const api = require('./app');
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.NODE_ENV === 'development' ? 8000 : 4444;
 
 app.use((req, res, next) => {
     console.log("EVERY API CALL: ")
