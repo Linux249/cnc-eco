@@ -3,13 +3,13 @@
  */
 
 import express from 'express';
-// import path from 'path';
+import path from 'path';
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { pingInterval: 1000 });
 const api = require('./app');
 
-const PORT = process.env.NODE_ENV === 'development' ? 8000 : 4444;
+const PORT = process.env.NODE_ENV || 8000 //: 4444;
 
 app.use((req, res, next) => {
     console.log("EVERY API CALL: ")
@@ -76,7 +76,6 @@ app.use('/api/v1', api);
  * add the public folder
  */
 const p = path.join(__dirname, '../../client/build');
-console.log({path})
 app.use('/', express.static(p));
 
 
