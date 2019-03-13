@@ -75,9 +75,9 @@ app.use('/api/v1', api);
 /**
  * add the public folder
  */
-// const p = path.join(__dirname, '../../client/build');
-//console.log({path})
-// app.use('/', express.static(p));
+const p = path.join(__dirname, '../../client/build');
+console.log({path})
+app.use('/', express.static(p));
 
 
 //
