@@ -20,19 +20,53 @@ import styled from 'styled-components';
 // TODO show last update in table
 
 const Grid = styled.div`
+    //height: available;
+    max-height: 100vh;
     display: grid;
     grid-template-columns: repeat(25, 1fr);
     grid-template-rows: repeat(50, 1fr);
 `;
 
-const AllianceS = styled.div``;
+const AllianceS = styled.div`
+    max-height: 90vh;
+    overflow: auto;
+    //font-weight: normal;
+    //font-size: 0.8rem;
+    
+    /*
+    Custom scrollbar style
+    */
+    /* width */
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+        height: 0.5rem;
+    }
+     /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+     /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+     /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+        width: 0.7rem;
+        height: 0.7rem;
+        // font-family: monospace;
+`;
 
 const Cell = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
 
-    border: 0.001rem solid rgba(74, 88, 128, 0.47);
+    padding: 0 0.4rem;
+    //border-color: rgba(37, 38, 39, 0.1);
+    //border-style: solid;
+    //border-width: 1px;
+    box-shadow: 0 0 3px -1px rgb(150, 150, 150);
 `;
 
 const Icon = styled.img`
@@ -82,7 +116,8 @@ class Alliance extends Component {
         const {} = this.props;
         return (
             <Body>
-            <AllianceS>
+                <div />
+                <AllianceS>
                     <Row>{name + ' (' + count + ')'}</Row>
                     <Button onClick={this.getAlliance}>get</Button>
                     <Grid>
@@ -91,65 +126,57 @@ class Alliance extends Component {
                         <Cell>Rolle</Cell>
                         <Cell>Score</Cell>
                         <Cell>
-                            <Icon src={researchPoints} alt="Research"/>
+                            <Icon src={researchPoints} alt="Research" />
                         </Cell>
                         <Cell>Bases</Cell>
-                        <Cell>PVE Kills</Cell>
-                        <Cell>PVP Kills</Cell>
+                        <Cell>PVE</Cell>
+                        <Cell>PVP</Cell>
                         <Cell>Code</Cell>
                         <Cell>
-                            <Icon src={credits} alt="Credits"/>
+                            <Icon src={credits} alt="Credits" />
                         </Cell>
                         <Cell>
-                            <Icon src={commandoPoints} alt="CP"/>
+                            <Icon src={commandoPoints} alt="CP" />
                         </Cell>
                         <Cell>
-                            <Icon src={funds} alt="Funds"/>
+                            <Icon src={funds} alt="Funds" />
                         </Cell>
                         <Cell>
-                            <Icon src={supplyPoints} alt="Supply"/>
+                            <Icon src={supplyPoints} alt="Supply" />
                         </Cell>
                         <Cell>Time</Cell>
 
                         <Cell>
-                            <Icon src={''} alt="max Off"/>
+                            <div>Off</div>
                         </Cell>
                         <Cell>
-                            <Icon src={''} alt="max Def"/>
+                            <div>Def</div>
                         </Cell>
                         <Cell>
-                            <Icon src={offenseRepair} alt="Repair"/>
+                            <Icon src={offenseRepair} alt="Repair" />
                         </Cell>
 
                         <Cell>
-                            <Icon src={tib} alt="Tib"/>
+                            <Icon src={tib} alt="Tib" />
                             /h
                         </Cell>
                         <Cell>
-                            <Icon src={cris} alt="Cris"/>
+                            <Icon src={cris} alt="Cris" />
                             /h
                         </Cell>
                         <Cell>
-                            <Icon src={power} alt="Power"/>
+                            <Icon src={power} alt="Power" />
                             /h
                         </Cell>
                         <Cell>
-                            <Icon src={credits} alt="Credits"/>
+                            <Icon src={credits} alt="Credits" />
                             /h
                         </Cell>
 
-                        <Cell>
-                            <Icon src={''} alt="avg Def"/>
-                        </Cell>
-                        <Cell>
-                            <Icon src={''} alt="avg Sub"/>
-                        </Cell>
-                        <Cell>
-                            <Icon src={''} alt="avg Df"/>
-                        </Cell>
-                        <Cell>
-                            <Icon src={''} alt="avg Df HQ"/>
-                        </Cell>
+                        <Cell>Def&#8709;</Cell>
+                        <Cell>Sub&#8709;</Cell>
+                        <Cell>Def Fa&#8709;</Cell>
+                        <Cell>Def HQ&#8709;</Cell>
 
                         {members.map(member => {
                             return member.data ? (
@@ -221,7 +248,8 @@ class Alliance extends Component {
                             );
                         })}
                     </Grid>
-            </AllianceS>
+                </AllianceS>
+                <div />
             </Body>
         );
     }

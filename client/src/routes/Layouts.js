@@ -2,17 +2,23 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Body from '../style/Body';
 import Title from '../style/Title';
-import LayoutS from '../style/Layouts';
 import Button from '../style/Button';
-import Row from '../style/Row';
+// import Row from '../style/Row';
 import Layout from '../components/Layout';
 import { api_url } from '../config';
 import { changeLoading } from '../store/actions/player';
 import { Column } from '../style/Column';
+import styled from 'styled-components';
 
 // TODO time since last seen a layout shod be placed to the backend
 // TODO IDEA autmaticly remove layouts after X days (cronjobs)
-
+const LayoutS = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    //align-items: center;
+    //padding: 2px;
+`;
 class Layouts extends Component {
     constructor(props) {
         super();
