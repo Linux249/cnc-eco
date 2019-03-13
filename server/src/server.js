@@ -9,13 +9,12 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server, { pingInterval: 1000 });
 const api = require('./app');
 
-const PORT = process.env.PORT || 8000 //: 4444;
+const PORT = process.env.PORT || 8000; //: 4444;
 
 app.use((req, res, next) => {
-    console.log("EVERY API CALL: ")
-    console.log(req.url)
-    return next()
-})
+    console.log('EVERY API/V1 CALL: ' + req.url);
+    return next();
+});
 
 // DB
 const mongo_uri = process.env.MONGODB_URI
@@ -78,7 +77,6 @@ app.use('/api/v1', api);
 const p = path.join(__dirname, '../../client/build');
 app.use('/', express.static(p));
 
-
 //
 // app.use("/*", express.static(__dirname + 'public'))
 /*
@@ -91,7 +89,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 //     console.log(file)
 //     res.sendFile(file);
 // });
-
 
 app.set('port', PORT);
 
