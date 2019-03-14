@@ -13,7 +13,7 @@ export const Button = styled.div`
     box-shadow: ${shadow};
 
     ${({ active }) => (active ? 'border-color: red;' : '')} ;//margin: 2px;
-    padding: 0.40em 0.75rem;
+    padding: ${({ small }) => (small ? '0.2rem' : '0.4rem')} 0.75rem;
     margin: 0.25rem;
     font-size: 1rem;
     line-height: 1;

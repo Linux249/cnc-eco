@@ -52,7 +52,7 @@ const Share = () => {
     return (
         <Area small>
             <Row>
-                <Input placeholder="click share..." value={loading ? 'loading ...' : url} />
+                <Input placeholder="click & share" value={loading ? 'loading ...' : url} />
                 <Button onClick={handleClick}>share</Button>
                 {error && <Error> {error.message} </Error>}
             </Row>

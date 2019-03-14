@@ -37,8 +37,8 @@ class BuildingMenu extends Component {
                 <Min>
                     <Area small>
                         <Row>
-                            <Button onClick={() => changeFraction('N')}>NOD</Button>
-                            <Button onClick={() => changeFraction('G')}>GDI</Button>
+                            <Button small onClick={() => changeFraction('N')}>NOD</Button>
+                            <Button small onClick={() => changeFraction('G')}>GDI</Button>
                         </Row>
                         <Menu>{items}</Menu>
                     </Area>

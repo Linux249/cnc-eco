@@ -4,10 +4,10 @@
   "private": true,
   "description": "see '/client'/'/server' for readme's",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cd server && npm start",
     "install": " cd client && npm i && cd ../server && npm i",
-    "postinstall": "cd client && npm run build && cd ../server && npm run build"
+    "build": "cd client && npm run build && cd ../server && npm run build"
+    "test": "echo \"Error: no test specified\" && exit 1",
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/Linux249/cnc-eco/issues"
   },
-  "homepage": "https://github.com/Linux249/cnc-eco#readme"
+  "homepage": "https://github.com/Linux249/cnc-eco#readme",
+  "engines": {
+    "node": "10.3.0"
+  }
 }

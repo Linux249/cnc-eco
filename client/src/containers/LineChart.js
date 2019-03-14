@@ -168,6 +168,7 @@ class LineChart extends Component {
                 <Row>
                     {ranges.map(n => (
                         <Button
+                            small
                             key={n}
                             onClick={() => this.changeRange(n)}
                             active={activeRange === n}
@@ -179,6 +180,7 @@ class LineChart extends Component {
                 <Row>
                     {days.map(n => (
                         <Button
+                            small
                             key={n}
                             onClick={() => this.changeDays(n)}
                             active={activeDays === n}
@@ -187,10 +189,10 @@ class LineChart extends Component {
                         </Button>
                     ))}
 
-                    <Button onClick={() => this.toogleRealLine()} active={toogleRealLines}>
+                    <Button small onClick={() => this.toogleRealLine()} active={toogleRealLines}>
                         Real Line
                     </Button>
-                    <Button onClick={() => this.toogleTrendLine()} active={toggleTrendLines}>
+                    <Button small onClick={() => this.toogleTrendLine()} active={toggleTrendLines}>
                         Trend Line
                     </Button>
                 </Row>

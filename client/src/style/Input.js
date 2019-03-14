@@ -5,9 +5,9 @@ export default styled.input`
 
     //margin: 0.75rem 1.5rem;
     margin: 0.25rem 6px;
-    padding: 0.40em 0.75rem;
+    padding: 0.40em 0.5rem;
 
-    font-size: 1rem;
+    //font-size: 1rem;
     line-height: 1;
 
     color: #55595c;

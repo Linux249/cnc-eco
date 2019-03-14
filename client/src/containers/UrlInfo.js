@@ -33,7 +33,7 @@ class UrlInfo extends Component {
             <Area small>
                 <Row>
                     <Button onClick={this.updateBase}>load</Button>
-                    <Input type="url" ref="url" placeholder="full CnC Opt URL..." />
+                    <Input type="url" ref="url" placeholder="old CnC Opt URL" />
                 </Row>
             </Area>
         );
