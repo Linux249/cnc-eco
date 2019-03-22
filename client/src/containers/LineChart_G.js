@@ -152,6 +152,7 @@ class LineChart_G extends Component {
                     ])
                 );
                 this.setState({ chartData });
+                console.log({chartData})
             });
     }
 
