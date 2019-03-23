@@ -4,7 +4,8 @@
       "targets": {
         "node": "current"
       }
-    }]
+    }],
+    "minify",
   ],
   "plugins": ["syntax-object-rest-spread", "babel-plugin-transform-strict-mode"]
 }

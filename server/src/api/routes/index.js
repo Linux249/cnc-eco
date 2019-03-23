@@ -8,6 +8,7 @@ import urlRouter from './urlshorten';
 import ingameData from './ingameData';
 import user from './user';
 import worlds from './worlds';
+import reports from './reports/index';
 import performanceRouter from './performance/index';
 import layoutsRouter from './layouts/index';
 
@@ -15,6 +16,7 @@ const router = Router();
 
 // unprotected Routes
 router.post('/ingameData', ingameData);
+router.use('/reports', reports);
 router.post('/layouts', layouts);
 router.use('/', urlRouter);
 

@@ -1,6 +1,9 @@
 // ==UserScript==
 // @name           Tiberium Alliances Report Stats
 // @version        0.5.3.1
+// @namespace     http://cnc-eco.herokuapp.com
+// @homepage      http://cnc-eco.herokuapp.com
+// @include       http*://*.alliances.commandandconquer.com/*/index.aspx*
 // @license        GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
 // @author         petui
 // @contributor    leo7044 (https://github.com/leo7044)
@@ -8,6 +11,14 @@
 // @updateURL      https://raw.githubusercontent.com/leo7044/CnC_TA/master/Tiberium_Alliances_Report_Stats_sumPerCp.user.js
 // @description    Calculates combined RT and CP costs and loot of multiple combat reports
 // @include        http*://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @include        http*://*.alliances.commandandconquer.com/*/index.aspx*
+// @grant          GM_log
+// @grant          GM_setValue
+// @grant          GM_getValue
+// @grant          GM_registerMenuCommand
+// @grant          GM_xmlhttpRequest
+// @grant          GM_updatingEnabled
+// @grant          unsafeWindow
 // ==/UserScript==
 'use strict';
 
@@ -380,6 +391,7 @@
                     },
 
                     /**
+                     * @description Start the process, get all Id's and load if not already send
                      * @param {webfrontend.data.ReportHeaderDataModel} tableModel
                      */
                     calculateCombinedRepairCosts: function(tableModel) {
@@ -389,14 +401,17 @@
 
                         var rowCount = tableModel.getRowCount(); // 4
 
+                        // collect row data ids
                         for (var row = 0; row < rowCount; row++) {
                             var rowData = tableModel.getRowData(row);
+                            // todo check if id is allready send to server
 
                             if (rowData) {
                                 this.reportsLoading.push(rowData.Id); // add report id
                             }
                         }
 
+                        // start the loading
                         if (this.reportsLoading.length > 0) {
                             var reports = ClientLib.Data.MainData.GetInstance().get_Reports();
 
@@ -414,10 +429,10 @@
                                 reports.RequestReportData(this.reportsLoading[i]);
                             }
 
-                            if (this.reportsLoading.length > 0) {
+                            /*if (this.reportsLoading.length > 0) {
                                 var table = this.getCurrentBaseInfoTab().getChildren()[0];
                                 table.getChildControl('statusbar').setValue('Please wait...');
-                            }
+                            }*/
                         } else {
                             this.onAllReportsLoaded();
                         }
@@ -439,6 +454,7 @@
                     },
 
                     /**
+                     * @description handler after a report was loaded, removes the id from loading and push the report to the loaded
                      * @param {ClientLib.Data.Reports.CombatReport} report
                      */
                     onReportDelivered: function(report) {
@@ -448,6 +464,7 @@
                             this.reportsLoading.splice(index, 1);
                             this.reportsLoaded.push(report);
 
+                            // last report was loaded
                             if (!this.reportsLoading.length) {
                                 this.onAllReportsLoaded();
                             }
@@ -459,7 +476,11 @@
                         }
                     },
 
-                    onAllReportsLoaded: function() {
+                    /**
+                     * @description build and send reports
+                     * @param {ClientLib.Data.Reports.CombatReport} report
+                     */
+                    onAllReportsLoaded: async function() {
                         // remove listener
                         phe.cnc.Util.detachNetEvent(
                             ClientLib.Data.MainData.GetInstance().get_Reports(),
@@ -468,6 +489,11 @@
                             this,
                             this.onReportDelivered
                         );
+
+                        console.log('Find reports')
+                        // request data on the own
+                        // const resp = await  ClientLib.Data.Reports.Reports.prototype.RequestReportHeaderDataAll()
+                        // console.log({resp})
 
                         var hasSelectedReports = this.reportsLoaded.length > 0;
                         // var table = this.getCurrentBaseInfoTab().getChildren()[0];
@@ -488,28 +514,23 @@
                         var reports = [];
 
                         // pve
-                        const { CombatReport } = ClientLib.Data.Reports
+                        const { CombatReport } = ClientLib.Data.Reports;
                         if (
                             this.reportsLoaded[0].get_PlayerReportType() ===
                             ClientLib.Data.Reports.EPlayerReportType.CombatOffense
                         ) {
                             getTotalLootMethod =
-                                CombatReport.prototype
-                                    .GetAttackerTotalResourceReceived;
-                            getRepairCostsMethod =
-                                CombatReport.prototype
-                                    .GetAttackerRepairCosts;
+                                CombatReport.prototype.GetAttackerTotalResourceReceived;
+                            getRepairCostsMethod = CombatReport.prototype.GetAttackerRepairCosts;
                         }
                         // pvp
                         else {
                             getTotalLootMethod =
-                                CombatReport.prototype
-                                    .GetDefenderTotalResourceCosts;
-                            getRepairCostsMethod =
-                                CombatReport.prototype
-                                    .GetDefenderRepairCosts;
+                                CombatReport.prototype.GetDefenderTotalResourceCosts;
+                            getRepairCostsMethod = CombatReport.prototype.GetDefenderRepairCosts;
                         }
 
+                        // init sever configs for cp costs
                         var server = ClientLib.Data.MainData.GetInstance().get_Server();
                         var combatCostMinimum = server.get_CombatCostMinimum();
                         var combatCostMinimumPvP = server.get_UsesRebalancingI()
@@ -518,11 +539,13 @@
                         var combatCostPerFieldInside = server.get_CombatCostPerField();
                         var combatCostPerFieldOutside = server.get_CombatCostPerFieldOutsideTerritory();
 
+                        // loop through all reports
                         for (var i = 0; i < this.reportsLoaded.length; i++) {
                             var report = this.reportsLoaded[i];
                             console.log({ report });
 
                             var rapport = {};
+                            rapport.id = report.get_Id();
 
                             if (!(report instanceof CombatReport)) {
                                 continue;
@@ -684,7 +707,20 @@
                             loot, //
                         });
 
+                        console.warn('All reports');
                         console.log({ reports });
+
+                        // fetch('https://cnc-eco.herokuapp.com/api/v1/reports/update', {
+                        fetch('http://localhost:8000/api/v1/reports/update', {
+                            method: 'POST',
+                            header: {
+                                "content-type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                reports,
+                                world: server.get_WorldId()
+                            })
+                        }).then(r => r.json()).catch(e => console.warn(e))
 
                         /*table.getChildControl('statusbar').setValue(
                                 attackerBaseIds.length + ' attacker' + (attackerBaseIds.length === 1 ? '' : 's') + ', ' +
