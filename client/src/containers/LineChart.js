@@ -40,6 +40,11 @@ const H1 = styled.h1`
 const Popup = styled.div`
     min-height: 50px;
 `;
+
+const SliderBar = styled.div`
+    min-height: 20px;
+    background: #25ddf5;
+`;
 const ChartBody = styled.div`
     margin: 50px;
     padding: 0;
@@ -99,17 +104,33 @@ const Rect = styled.rect`
 
 function ToolTip(props) {
     const { hoverLoc, activePoint } = props;
-    const svgLocation = document.getElementsByClassName('linechart')[0].getBoundingClientRect();
-
-    let placementStyles = {};
-    let width = 200;
-    placementStyles.width = width + 'px';
-    placementStyles.left = hoverLoc + svgLocation.left - width / 2;
+    const linechart = document.getElementsByClassName('linechart')[0]
+    if (!linechart) return null; // no chart loaded
+    const svgLocation = linechart.getBoundingClientRect();
+    let width = 200 + 'px';
+    let left = hoverLoc + svgLocation.left - 100;
 
     return (
-        <Hover className="hover" style={placementStyles}>
-            <Date className="date">{activePoint.d}</Date>
-            <Price className="price">{activePoint.p}</Price>
+        <Hover className="hover" style={{ width, left }}>
+            <Date className="date">{activePoint.d}dd</Date>
+            <Price className="price">{activePoint.p}pp</Price>
+        </Hover>
+    );
+}
+
+function Slider(props) {
+    const { hoverLoc, activePoint } = props;
+    const linechart = document.getElementsByClassName('linechart')[0]
+    if (!linechart) return null; // no chart loaded
+    const svgLocation = linechart.getBoundingClientRect();
+
+    let width = 200 + 'px';
+    let left = hoverLoc + svgLocation.left - 100;
+
+    return (
+        <Hover className="hover" style={{ width, left }}>
+            <Date className="date">{activePoint.d}dd</Date>
+            <Price className="price">{activePoint.p}pp</Price>
         </Hover>
     );
 }
@@ -118,15 +139,14 @@ class LineChart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [{x: 1, y: 1}],
+            data: [{ x: 1, y: 1 }],
             hoverLoc: null,
             activePoint: null,
             lineLeft: 175,
-            lineRight: 575,
             dragLeft: false,
-            dragRight: false,
         };
     }
+
     // GET X & Y || MAX & MIN
     getX() {
         const { data } = this.state;
@@ -142,6 +162,7 @@ class LineChart extends Component {
             max: data.reduce((max, p) => (p.y > max ? p.y : max), data[0].y),
         };
     }
+
     // GET SVG COORDINATES
     getSvgX(x) {
         const { svgWidth, yLabelSize } = this.props;
@@ -154,6 +175,7 @@ class LineChart extends Component {
             ((svgHeight - xLabelSize) * gY.max - (svgHeight - xLabelSize) * y) / (gY.max - gY.min)
         );
     }
+
     // BUILD SVG PATH
     makePath() {
         const { data, color } = this.props;
@@ -165,6 +187,7 @@ class LineChart extends Component {
 
         return <Path d={pathD} style={{ stroke: color }} />;
     }
+
     // BUILD SHADED AREA
     makeArea() {
         const { data } = this.state;
@@ -190,6 +213,7 @@ class LineChart extends Component {
 
         return <Area d={pathD} />;
     }
+
     // BUILD GRID AXIS
     makeAxis() {
         const { yLabelSize } = this.props;
@@ -215,6 +239,7 @@ class LineChart extends Component {
             </Axis>
         );
     }
+
     makeLabels() {
         const { svgHeight, svgWidth, xLabelSize, yLabelSize } = this.props;
         const padding = 5;
@@ -248,6 +273,7 @@ class LineChart extends Component {
             </Label>
         );
     }
+
     // FIND CLOSEST POINT TO MOUSE
     getCoords(e) {
         const { svgWidth, data, yLabelSize } = this.props;
@@ -263,7 +289,7 @@ class LineChart extends Component {
         }));
 
         let closestPoint = {};
-        for (let i = 0, c = 500; i < svgData.length; i++) {
+        for (let i = 0, c = 500000; i < svgData.length; i++) {
             if (Math.abs(svgData[i].svgX - this.state.hoverLoc) <= c) {
                 c = Math.abs(svgData[i].svgX - this.state.hoverLoc);
                 closestPoint = svgData[i];
@@ -279,9 +305,8 @@ class LineChart extends Component {
             });
             console.log({ relativeLoc, closestPoint });
             this.setState(prevState => {
-                const { dragLeft, dragRight } = prevState;
+                const { dragLeft } = prevState;
                 if (dragLeft) return { lineLeft: relativeLoc };
-                if (dragRight) return { lineRight: relativeLoc };
                 return {};
             });
         }
@@ -295,11 +320,9 @@ class LineChart extends Component {
     startDrag(line) {
         if (line) console.log(line);
         if (line === 'left') this.setState({ dragLeft: true });
-        else if (line === 'right') this.setState({ dragRight: true });
         const mouseup = event => {
             this.setState({
                 dragLeft: false,
-                dragRight: false,
             });
 
             document.removeEventListener('mouseup', mouseup);
@@ -346,22 +369,15 @@ class LineChart extends Component {
                     x2={this.state.lineLeft}
                     y2={svgHeight - xLabelSize}
                 />
-                <Line
-                    onMouseDown={() => this.startDrag('right')}
-                    x1={this.state.lineRight}
-                    y1={-8}
-                    x2={this.state.lineRight}
-                    y2={svgHeight - xLabelSize}
-                />
             </g>
         );
     }
 
-    makeRect() {
+    /*makeRect() {
         const { lineLeft, lineRight } = this.state;
         const width = lineRight - lineLeft;
         return <Rect x={lineLeft} y="0" width={width} height="278" />;
-    }
+    }*/
     componentDidUpdate(prevProps) {
         if (prevProps.buildings !== this.props.buildings)
             window.requestIdleCallback(() => {
@@ -397,7 +413,6 @@ class LineChart extends Component {
                     {this.makeLabels()}
                     {this.state.hoverLoc ? this.createLine() : null}
                     {this.state.hoverLoc ? this.makeActivePoint() : null}
-                    {this.makeRect()}
                     {this.makeLines()}
                     {this.makeAxis()}
                 </g>
@@ -409,6 +424,17 @@ class LineChart extends Component {
         return (
             <ChartBody>
                 <Row>
+                    <SliderBar>
+                        <Slider
+                            hoverLoc={this.state.hoverLoc}
+                            activePoint={this.state.activePoint}
+                        />
+                    </SliderBar>
+                </Row>
+                <Row>
+                    <div className="chart">{this.render_chart()}</div>
+                </Row>
+                <Row>
                     <Popup>
                         {this.state.hoverLoc ? (
                             <ToolTip
@@ -417,9 +443,6 @@ class LineChart extends Component {
                             />
                         ) : null}
                     </Popup>
-                </Row>
-                <Row>
-                    <div className="chart">{this.render_chart()}</div>
                 </Row>
             </ChartBody>
         );
@@ -442,5 +465,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(LineChart);
-
-
