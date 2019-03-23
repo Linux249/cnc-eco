@@ -22,18 +22,28 @@
                 type: 'singleton',
                 extend: qx.core.Object,
                 statics: {
-                    BaseInfoExtraWidth: 6,	// width to add to BaseInfoWindow to get rid of horizontal scroll bar
-                    StatusbarHeight: 35,	// height to add to BaseInfoWindow to accomodate statusbar being visible
+                    BaseInfoExtraWidth: 6, // width to add to BaseInfoWindow to get rid of horizontal scroll bar
+                    StatusbarHeight: 35, // height to add to BaseInfoWindow to accomodate statusbar being visible
                     CheckboxColumnWidth: 28,
-                    ResourceTypes: {}
+                    ResourceTypes: {},
                 },
                 defer: function(statics) {
                     var fileManager = ClientLib.File.FileManager.GetInstance();
-                    statics.ResourceTypes[ClientLib.Base.EResourceType.Tiberium] = fileManager.GetPhysicalPath('ui/common/icn_res_tiberium.png');
-                    statics.ResourceTypes[ClientLib.Base.EResourceType.Crystal] = fileManager.GetPhysicalPath('ui/common/icn_res_chrystal.png');
-                    statics.ResourceTypes[ClientLib.Base.EResourceType.Gold] = fileManager.GetPhysicalPath('ui/common/icn_res_dollar.png');
-                    statics.ResourceTypes[ClientLib.Base.EResourceType.Power] = fileManager.GetPhysicalPath('ui/common/icn_res_power.png');
-                    statics.ResourceTypes[ClientLib.Base.EResourceType.ResearchPoints] = fileManager.GetPhysicalPath('ui/common/icn_res_research.png');
+                    statics.ResourceTypes[
+                        ClientLib.Base.EResourceType.Tiberium
+                    ] = fileManager.GetPhysicalPath('ui/common/icn_res_tiberium.png');
+                    statics.ResourceTypes[
+                        ClientLib.Base.EResourceType.Crystal
+                    ] = fileManager.GetPhysicalPath('ui/common/icn_res_chrystal.png');
+                    statics.ResourceTypes[
+                        ClientLib.Base.EResourceType.Gold
+                    ] = fileManager.GetPhysicalPath('ui/common/icn_res_dollar.png');
+                    statics.ResourceTypes[
+                        ClientLib.Base.EResourceType.Power
+                    ] = fileManager.GetPhysicalPath('ui/common/icn_res_power.png');
+                    statics.ResourceTypes[
+                        ClientLib.Base.EResourceType.ResearchPoints
+                    ] = fileManager.GetPhysicalPath('ui/common/icn_res_research.png');
                 },
                 members: {
                     reportsLoading: [],
@@ -50,9 +60,13 @@
 
                         if (typeof qx.ui.table.model.Abstract.prototype.addColumn !== 'function') {
                             source = qx.ui.table.model.Abstract.prototype.getColumnId.toString();
-                            var columnIdsMemberName = source.match(/return this\.([A-Za-z_]+)\[[A-Z]\];/)[1];
+                            var columnIdsMemberName = source.match(
+                                /return this\.([A-Za-z_]+)\[[A-Z]\];/
+                            )[1];
                             source = qx.ui.table.model.Abstract.prototype.getColumnName.toString();
-                            var columnNamesMemberName = source.match(/return this\.([A-Za-z_]+)\[[A-Z]\];/)[1];
+                            var columnNamesMemberName = source.match(
+                                /return this\.([A-Za-z_]+)\[[A-Z]\];/
+                            )[1];
 
                             /**
                              * @param {String} id
@@ -68,18 +82,30 @@
                             };
                         }
 
-                        if (typeof qx.ui.table.columnmodel.Basic.prototype.addColumn !== 'function') {
+                        if (
+                            typeof qx.ui.table.columnmodel.Basic.prototype.addColumn !== 'function'
+                        ) {
                             source = qx.ui.table.columnmodel.Basic.prototype.getColumnWidth.toString();
-                            var columnsMemberName = source.match(/return this\.([A-Za-z_]+)\[[A-Z]\]\.width;/)[1];
+                            var columnsMemberName = source.match(
+                                /return this\.([A-Za-z_]+)\[[A-Z]\]\.width;/
+                            )[1];
                             source = qx.ui.table.columnmodel.Basic.prototype.getOverallColumnCount.toString();
-                            var columnOrderMemberName = source.match(/return this\.([A-Za-z_]+)\.length;/)[1];
+                            var columnOrderMemberName = source.match(
+                                /return this\.([A-Za-z_]+)\.length;/
+                            )[1];
                             source = qx.ui.table.columnmodel.Basic.prototype.getVisibleColumnAtX.toString();
-                            var columnVisibilityMemberName = source.match(/return this\.([A-Za-z_]+)\[[A-Z]\];/)[1];
+                            var columnVisibilityMemberName = source.match(
+                                /return this\.([A-Za-z_]+)\[[A-Z]\];/
+                            )[1];
                             source = qx.ui.table.columnmodel.Basic.prototype._getColToXPosMap.toString();
-                            var columnToXPosMapMemberName = source.match(/return this\.([A-Za-z_]+);\}$/)[1];
+                            var columnToXPosMapMemberName = source.match(
+                                /return this\.([A-Za-z_]+);\}$/
+                            )[1];
 
                             source = qx.ui.table.columnmodel.Basic.prototype.init.toString();
-                            var matches = source.match(/this\.([A-Za-z_]+)\|\|\(this\.\1=new qx\.ui\.table\.columnmodel\.Basic\.DEFAULT_HEADER_RENDERER\(\)\);.+this\.([A-Za-z_]+)\|\|\(this\.\2=new qx\.ui\.table\.columnmodel\.Basic\.DEFAULT_DATA_RENDERER\(\)\);.+this\.([A-Za-z_]+)\|\|\(this\.\3=new qx\.ui\.table\.columnmodel\.Basic\.DEFAULT_EDITOR_FACTORY\(\)\);/);
+                            var matches = source.match(
+                                /this\.([A-Za-z_]+)\|\|\(this\.\1=new qx\.ui\.table\.columnmodel\.Basic\.DEFAULT_HEADER_RENDERER\(\)\);.+this\.([A-Za-z_]+)\|\|\(this\.\2=new qx\.ui\.table\.columnmodel\.Basic\.DEFAULT_DATA_RENDERER\(\)\);.+this\.([A-Za-z_]+)\|\|\(this\.\3=new qx\.ui\.table\.columnmodel\.Basic\.DEFAULT_EDITOR_FACTORY\(\)\);/
+                            );
                             var headerRendererMemberName = matches[1];
                             var dataRendererMemberName = matches[2];
                             var editorFactoryMemberName = matches[3];
@@ -89,12 +115,13 @@
                              * @returns {Number}
                              */
                             qx.ui.table.columnmodel.Basic.prototype.addColumn = function(visible) {
-                                var columnIndex = this[columnsMemberName].push({
-                                    width: qx.ui.table.columnmodel.Basic.DEFAULT_WIDTH,
-                                    headerRenderer: this[headerRendererMemberName],
-                                    dataRenderer: this[dataRendererMemberName],
-                                    editorFactory: this[editorFactoryMemberName]
-                                }) - 1;
+                                var columnIndex =
+                                    this[columnsMemberName].push({
+                                        width: qx.ui.table.columnmodel.Basic.DEFAULT_WIDTH,
+                                        headerRenderer: this[headerRendererMemberName],
+                                        dataRenderer: this[dataRendererMemberName],
+                                        editorFactory: this[editorFactoryMemberName],
+                                    }) - 1;
 
                                 this[columnToXPosMapMemberName] = null;
                                 this[columnOrderMemberName].push(columnIndex);
@@ -109,46 +136,90 @@
                             };
                         }
 
-                        if (typeof webfrontend.gui.info.BaseInfoWindow.prototype.onCellClick !== 'function') {
-                            source = Function.prototype.toString.call(webfrontend.gui.info.BaseInfoWindow.constructor);
-                            var createOutgoingTabMethodName = source.match(/;[A-Za-z]+\.add\(this\.([A-Za-z_]+)\(\)\);this\.[A-Za-z_]+=new webfrontend\.gui\.widgets\.confirmationWidgets\.ProtectionConfirmationWidget\(\);/)[1];
-                            source = webfrontend.gui.info.BaseInfoWindow.prototype[createOutgoingTabMethodName].toString();
-                            var onCellClickMethodName = source.match(/([A-Za-z]+)\.set\(\{statusBarVisible:false,columnVisibilityButtonVisible:false\}\);\1\.addListener\([A-Za-z]+,this\.([A-Za-z_]+),this\.[A-Za-z_]+\);/)[2];
-                            webfrontend.gui.info.BaseInfoWindow.prototype.onCellClick = webfrontend.gui.info.BaseInfoWindow.prototype[onCellClickMethodName];
+                        if (
+                            typeof webfrontend.gui.info.BaseInfoWindow.prototype.onCellClick !==
+                            'function'
+                        ) {
+                            source = Function.prototype.toString.call(
+                                webfrontend.gui.info.BaseInfoWindow.constructor
+                            );
+                            var createOutgoingTabMethodName = source.match(
+                                /;[A-Za-z]+\.add\(this\.([A-Za-z_]+)\(\)\);this\.[A-Za-z_]+=new webfrontend\.gui\.widgets\.confirmationWidgets\.ProtectionConfirmationWidget\(\);/
+                            )[1];
+                            source = webfrontend.gui.info.BaseInfoWindow.prototype[
+                                createOutgoingTabMethodName
+                            ].toString();
+                            var onCellClickMethodName = source.match(
+                                /([A-Za-z]+)\.set\(\{statusBarVisible:false,columnVisibilityButtonVisible:false\}\);\1\.addListener\([A-Za-z]+,this\.([A-Za-z_]+),this\.[A-Za-z_]+\);/
+                            )[2];
+                            webfrontend.gui.info.BaseInfoWindow.prototype.onCellClick =
+                                webfrontend.gui.info.BaseInfoWindow.prototype[
+                                    onCellClickMethodName
+                                ];
                         }
 
-                        if (typeof webfrontend.gui.info.BaseInfoWindow.prototype.onTotalUnreadCountUpdated !== 'function') {
+                        if (
+                            typeof webfrontend.gui.info.BaseInfoWindow.prototype
+                                .onTotalUnreadCountUpdated !== 'function'
+                        ) {
                             source = webfrontend.gui.info.BaseInfoWindow.prototype._onClose.toString();
-                            var onTotalUnreadCountUpdatedMethodName = source.match(/ClientLib\.Data\.Reports\.TotalUnreadCountUpdated,this,this\.([A-Za-z_]+)\);/)[1];
-                            webfrontend.gui.info.BaseInfoWindow.prototype.onTotalUnreadCountUpdated = webfrontend.gui.info.BaseInfoWindow.prototype[onTotalUnreadCountUpdatedMethodName];
+                            var onTotalUnreadCountUpdatedMethodName = source.match(
+                                /ClientLib\.Data\.Reports\.TotalUnreadCountUpdated,this,this\.([A-Za-z_]+)\);/
+                            )[1];
+                            webfrontend.gui.info.BaseInfoWindow.prototype.onTotalUnreadCountUpdated =
+                                webfrontend.gui.info.BaseInfoWindow.prototype[
+                                    onTotalUnreadCountUpdatedMethodName
+                                ];
 
                             var context = this;
-                            webfrontend.gui.info.BaseInfoWindow.prototype[onTotalUnreadCountUpdatedMethodName] = function() {
+                            webfrontend.gui.info.BaseInfoWindow.prototype[
+                                onTotalUnreadCountUpdatedMethodName
+                            ] = function() {
                                 return context.onTotalUnreadCountUpdated(this, arguments);
                             };
                         }
 
-                        /* Detect and fix bug described in http://forum.alliances.commandandconquer.com/showthread.php?tid=30346 */ {
+                        /* Detect and fix bug described in http://forum.alliances.commandandconquer.com/showthread.php?tid=30346 */
+                        {
                             source = ClientLib.Data.Reports.Reports.prototype.AddReport.toString();
-                            var initMethodName = source.match(/break;\}\}[a-z]\.([A-Z]{6})\([a-z]\);if/)[1];
+                            var initMethodName = source.match(
+                                /break;\}\}[a-z]\.([A-Z]{6})\([a-z]\);if/
+                            )[1];
 
-                            source = ClientLib.Data.Reports.CombatReport.prototype[initMethodName].toString();
-                            var setDataMethodName = source.match(/this\.([A-Z]{6})\([A-Za-z]+\);/)[1];
+                            source = ClientLib.Data.Reports.CombatReport.prototype[
+                                initMethodName
+                            ].toString();
+                            var setDataMethodName = source.match(
+                                /this\.([A-Z]{6})\([A-Za-z]+\);/
+                            )[1];
 
-                            source = ClientLib.Data.Reports.CombatReport.prototype[setDataMethodName].toString();
-                            var matches = source.match(/this\.([A-Z]{6})=([a-z])\.abl;this\.[A-Z]{6}=\2\.abl;/);
+                            source = ClientLib.Data.Reports.CombatReport.prototype[
+                                setDataMethodName
+                            ].toString();
+                            var matches = source.match(
+                                /this\.([A-Z]{6})=([a-z])\.abl;this\.[A-Z]{6}=\2\.abl;/
+                            );
 
                             if (matches !== null) {
                                 var attackerBaseIdMemberName = matches[1];
-                                var original = ClientLib.Data.Reports.CombatReport.prototype[setDataMethodName];
+                                var original =
+                                    ClientLib.Data.Reports.CombatReport.prototype[
+                                        setDataMethodName
+                                    ];
 
-                                ClientLib.Data.Reports.CombatReport.prototype[setDataMethodName] = function(data) {
+                                ClientLib.Data.Reports.CombatReport.prototype[
+                                    setDataMethodName
+                                ] = function(data) {
                                     original.call(this, data);
                                     this[attackerBaseIdMemberName] = data.d.abi;
                                 };
-                            }
-                            else {
-                                console.warn('ReportStats::initializeHacks', 'Unable to patch ClientLib.Data.Reports.CombatReport.prototype.' + setDataMethodName + '. Its likely already fixed in the game code.');
+                            } else {
+                                console.warn(
+                                    'ReportStats::initializeHacks',
+                                    'Unable to patch ClientLib.Data.Reports.CombatReport.prototype.' +
+                                        setDataMethodName +
+                                        '. Its likely already fixed in the game code.'
+                                );
                             }
                         }
 
@@ -180,31 +251,53 @@
                             var tableModel = table.getTableModel();
                             var tableModelIndex = tableModel.addColumn('ReportStatsCheckbox', '');
                             tableModel.setColumnSortable(tableModelIndex, false);
-                            tableModel.addListener('dataChanged', this.onTableModelDataChange, this);
+                            tableModel.addListener(
+                                'dataChanged',
+                                this.onTableModelDataChange,
+                                this
+                            );
                             tableModel.setUserData('checkboxColumnIndex', tableModelIndex);
 
                             var columnModel = table.getTableColumnModel();
                             var columnModelIndex = columnModel.addColumn(true);
-                            columnModel.setDataCellRenderer(columnModelIndex, new qx.ui.table.cellrenderer.Boolean());
-                            columnModel.setColumnWidth(columnModelIndex, ReportStats.CheckboxColumnWidth);
+                            columnModel.setDataCellRenderer(
+                                columnModelIndex,
+                                new qx.ui.table.cellrenderer.Boolean()
+                            );
+                            columnModel.setColumnWidth(
+                                columnModelIndex,
+                                ReportStats.CheckboxColumnWidth
+                            );
                             columnModel.moveColumn(columnModelIndex, 0);
 
-                            var cellClickEventName = PerforceChangelist >= 434241 ? 'cellTap' : 'cellClick';
-                            table.removeListener(cellClickEventName, baseInfoWindow.onCellClick, tableModel);
+                            var cellClickEventName =
+                                PerforceChangelist >= 434241 ? 'cellTap' : 'cellClick';
+                            table.removeListener(
+                                cellClickEventName,
+                                baseInfoWindow.onCellClick,
+                                tableModel
+                            );
                             table.addListener(cellClickEventName, this.onCellClickDelegate, this);
                             table.getChildControl('statusbar').set({
                                 height: ReportStats.StatusbarHeight,
                                 rich: true,
                                 toolTip: new qx.ui.tooltip.ToolTip().set({
-                                    label: '<div>"Loot" is the sum of resources gained from destruction, plunder and own repair costs.</div><br/>'
-                                        + '<div>Tip: You can select multiple reports at once by holding down the Shift key.</div>',
-                                    rich: true
-                                })
+                                    label:
+                                        '<div>"Loot" is the sum of resources gained from destruction, plunder and own repair costs.</div><br/>' +
+                                        '<div>Tip: You can select multiple reports at once by holding down the Shift key.</div>',
+                                    rich: true,
+                                }),
                             });
                         }
 
-                        baseInfoWindow.setWidth(baseInfoWindow.getWidth() + ReportStats.CheckboxColumnWidth + ReportStats.BaseInfoExtraWidth);
-                        baseInfoWindow.setHeight(baseInfoWindow.getHeight() + ReportStats.StatusbarHeight);
+                        baseInfoWindow.setWidth(
+                            baseInfoWindow.getWidth() +
+                                ReportStats.CheckboxColumnWidth +
+                                ReportStats.BaseInfoExtraWidth
+                        );
+                        baseInfoWindow.setHeight(
+                            baseInfoWindow.getHeight() + ReportStats.StatusbarHeight
+                        );
                     },
 
                     /**
@@ -234,7 +327,7 @@
                             firstRow: data.firstRow,
                             lastRow: data.lastRow,
                             firstColumn: columnIndex,
-                            lastColumn: columnIndex
+                            lastColumn: columnIndex,
                         });
 
                         if (this.isReportTab(this.getCurrentBaseInfoTab())) {
@@ -246,13 +339,21 @@
                      * @param {qx.ui.table.pane.CellEvent} event
                      */
                     onCellClickDelegate: function(event) {
-                        var tableModel = event.getTarget().getTable().getTableModel();
+                        var tableModel = event
+                            .getTarget()
+                            .getTable()
+                            .getTableModel();
 
-                        if (event.getColumn() === tableModel.getUserData('checkboxColumnIndex') && tableModel.getRowData(event.getRow())) {
+                        if (
+                            event.getColumn() === tableModel.getUserData('checkboxColumnIndex') &&
+                            tableModel.getRowData(event.getRow())
+                        ) {
                             this.onCheckboxClick(event);
-                        }
-                        else {
-                            webfrontend.gui.info.BaseInfoWindow.prototype.onCellClick.call(tableModel, event);
+                        } else {
+                            webfrontend.gui.info.BaseInfoWindow.prototype.onCellClick.call(
+                                tableModel,
+                                event
+                            );
                         }
                     },
 
@@ -271,8 +372,7 @@
                             for (var row = start; row <= end; row++) {
                                 tableModel.setValue(event.getColumn(), row, newValue);
                             }
-                        }
-                        else {
+                        } else {
                             tableModel.setValue(event.getColumn(), event.getRow(), newValue);
                         }
 
@@ -287,13 +387,13 @@
                         this.reportsLoading = [];
                         this.reportsLoaded = [];
 
-                        var rowCount = tableModel.getRowCount();    // 4
+                        var rowCount = tableModel.getRowCount(); // 4
 
                         for (var row = 0; row < rowCount; row++) {
                             var rowData = tableModel.getRowData(row);
 
-                            if (rowData && rowData.ReportStatsCheckbox) {
-                                this.reportsLoading.push(rowData.Id);
+                            if (rowData) {
+                                this.reportsLoading.push(rowData.Id); // add report id
                             }
                         }
 
@@ -301,7 +401,13 @@
                             var reports = ClientLib.Data.MainData.GetInstance().get_Reports();
 
                             if (!wasLoading) {
-                                phe.cnc.Util.attachNetEvent(reports, 'ReportDelivered', ClientLib.Data.Reports.ReportDelivered, this, this.onReportDelivered);
+                                phe.cnc.Util.attachNetEvent(
+                                    reports,
+                                    'ReportDelivered',
+                                    ClientLib.Data.Reports.ReportDelivered,
+                                    this,
+                                    this.onReportDelivered
+                                );
                             }
 
                             for (var i = this.reportsLoading.length - 1; i >= 0; i--) {
@@ -312,8 +418,7 @@
                                 var table = this.getCurrentBaseInfoTab().getChildren()[0];
                                 table.getChildControl('statusbar').setValue('Please wait...');
                             }
-                        }
-                        else {
+                        } else {
                             this.onAllReportsLoaded();
                         }
                     },
@@ -324,9 +429,11 @@
                      */
                     onTotalUnreadCountUpdated: function(baseInfoWindow, parameters) {
                         if (!this.skipBaseInfoReportsReload) {
-                            baseInfoWindow.onTotalUnreadCountUpdated.apply(baseInfoWindow, parameters);
-                        }
-                        else {
+                            baseInfoWindow.onTotalUnreadCountUpdated.apply(
+                                baseInfoWindow,
+                                parameters
+                            );
+                        } else {
                             this.skipBaseInfoReportsReload--;
                         }
                     },
@@ -353,127 +460,233 @@
                     },
 
                     onAllReportsLoaded: function() {
-                        phe.cnc.Util.detachNetEvent(ClientLib.Data.MainData.GetInstance().get_Reports(), 'ReportDelivered', ClientLib.Data.Reports.ReportDelivered, this, this.onReportDelivered);
+                        // remove listener
+                        phe.cnc.Util.detachNetEvent(
+                            ClientLib.Data.MainData.GetInstance().get_Reports(),
+                            'ReportDelivered',
+                            ClientLib.Data.Reports.ReportDelivered,
+                            this,
+                            this.onReportDelivered
+                        );
 
                         var hasSelectedReports = this.reportsLoaded.length > 0;
-                        var table = this.getCurrentBaseInfoTab().getChildren()[0];
-                        table.setStatusBarVisible(hasSelectedReports);
+                        // var table = this.getCurrentBaseInfoTab().getChildren()[0];
+                        // table.setStatusBarVisible(hasSelectedReports);
 
-                        if (hasSelectedReports) {
-                            var attackerBaseIds = [];
-                            var defenderBaseIds = [];
-                            var repairTimeCosts = 0;
-                            var minCommandPointCosts = 0;
-                            var maxCommandPointCosts = 0;
-                            var firstAttack = null;
-                            var lastAttack = 0;
+                        if (!hasSelectedReports) return;
+                        // var attackerBaseIds = [];
+                        // var defenderBaseIds = [];
+                        var repairTimeCosts = 0;
+                        var minCommandPointCosts = 0;
+                        var maxCommandPointCosts = 0;
+                        // var firstAttack = null;
+                        // var lastAttack = 0;
 
-                            var loot = {};
-                            var getTotalLootMethod, getRepairCostsMethod;
+                        var loot = {};
+                        var getTotalLootMethod, getRepairCostsMethod;
 
-                            if (this.reportsLoaded[0].get_PlayerReportType() === ClientLib.Data.Reports.EPlayerReportType.CombatOffense) {
-                                getTotalLootMethod = ClientLib.Data.Reports.CombatReport.prototype.GetAttackerTotalResourceReceived;
-                                getRepairCostsMethod = ClientLib.Data.Reports.CombatReport.prototype.GetAttackerRepairCosts;
+                        var reports = [];
+
+                        // pve
+                        const { CombatReport } = ClientLib.Data.Reports
+                        if (
+                            this.reportsLoaded[0].get_PlayerReportType() ===
+                            ClientLib.Data.Reports.EPlayerReportType.CombatOffense
+                        ) {
+                            getTotalLootMethod =
+                                CombatReport.prototype
+                                    .GetAttackerTotalResourceReceived;
+                            getRepairCostsMethod =
+                                CombatReport.prototype
+                                    .GetAttackerRepairCosts;
+                        }
+                        // pvp
+                        else {
+                            getTotalLootMethod =
+                                CombatReport.prototype
+                                    .GetDefenderTotalResourceCosts;
+                            getRepairCostsMethod =
+                                CombatReport.prototype
+                                    .GetDefenderRepairCosts;
+                        }
+
+                        var server = ClientLib.Data.MainData.GetInstance().get_Server();
+                        var combatCostMinimum = server.get_CombatCostMinimum();
+                        var combatCostMinimumPvP = server.get_UsesRebalancingI()
+                            ? server.get_PvPCombatCostMinimum()
+                            : combatCostMinimum;
+                        var combatCostPerFieldInside = server.get_CombatCostPerField();
+                        var combatCostPerFieldOutside = server.get_CombatCostPerFieldOutsideTerritory();
+
+                        for (var i = 0; i < this.reportsLoaded.length; i++) {
+                            var report = this.reportsLoaded[i];
+                            console.log({ report });
+
+                            var rapport = {};
+
+                            if (!(report instanceof CombatReport)) {
+                                continue;
                             }
-                            else {
-                                getTotalLootMethod = ClientLib.Data.Reports.CombatReport.prototype.GetDefenderTotalResourceCosts;
-                                getRepairCostsMethod = ClientLib.Data.Reports.CombatReport.prototype.GetDefenderRepairCosts;
-                            }
 
-                            var server = ClientLib.Data.MainData.GetInstance().get_Server();
-                            var combatCostMinimum = server.get_CombatCostMinimum();
-                            var combatCostMinimumPvP = server.get_UsesRebalancingI() ? server.get_PvPCombatCostMinimum() : combatCostMinimum;
-                            var combatCostPerFieldInside = server.get_CombatCostPerField();
-                            var combatCostPerFieldOutside = server.get_CombatCostPerFieldOutsideTerritory();
+                            rapport.attackerBaseId = report.get_AttackerBaseId();
+                            rapport.defenderBaseId = report.get_DefenderBaseId();
 
-                            for (var i = 0; i < this.reportsLoaded.length; i++) {
-                                var report = this.reportsLoaded[i];
+                            // if (attackerBaseIds.indexOf(report.get_AttackerBaseId()) === -1) {
+                            //     attackerBaseIds.push(report.get_AttackerBaseId());
+                            // }
+                            //
+                            // if (defenderBaseIds.indexOf(report.get_DefenderBaseId()) === -1) {
+                            //     defenderBaseIds.push(report.get_DefenderBaseId());
+                            // }
 
-                                if (!(report instanceof ClientLib.Data.Reports.CombatReport)) {
-                                    continue;
-                                }
+                            // add repair time
+                            repairTimeCosts += report.GetAttackerMaxRepairTime();
+                            rapport.maxRep = report.GetAttackerMaxRepairTime();
+                            rapport.infRep = report.GetAttackerInfantryRepairCosts();
+                            rapport.vehRep = report.GetAttackerVehicleRepairCosts();
+                            rapport.airRep = report.GetAttackerAirRepairCosts();
 
-                                if (attackerBaseIds.indexOf(report.get_AttackerBaseId()) === -1) {
-                                    attackerBaseIds.push(report.get_AttackerBaseId());
-                                }
+                            var distance = Math.sqrt(
+                                Math.pow(
+                                    report.get_AttackerBaseXCoord() -
+                                        report.get_DefenderBaseXCoord(),
+                                    2
+                                ) +
+                                    Math.pow(
+                                        report.get_AttackerBaseYCoord() -
+                                            report.get_DefenderBaseYCoord(),
+                                        2
+                                    )
+                            );
 
-                                if (defenderBaseIds.indexOf(report.get_DefenderBaseId()) === -1) {
-                                    defenderBaseIds.push(report.get_DefenderBaseId());
-                                }
+                            rapport.distance = distance; // total distane between coords
 
-                                repairTimeCosts += report.GetAttackerMaxRepairTime();
-
-                                var distance = Math.sqrt(
-                                    Math.pow(report.get_AttackerBaseXCoord() - report.get_DefenderBaseXCoord(), 2) +
-                                    Math.pow(report.get_AttackerBaseYCoord() - report.get_DefenderBaseYCoord(), 2)
-                                );
-
-                                switch (report.get_Type()) {
-                                    case ClientLib.Data.Reports.EReportType.Combat:
-                                        var isFriendlyTerritory = report.get_AttackerAllianceName() === report.get_DefenderAllianceName();
-                                        var cost = Math.floor(combatCostMinimumPvP + (isFriendlyTerritory ? combatCostPerFieldInside : combatCostPerFieldOutside) * distance);
-                                        minCommandPointCosts += cost;
-                                        maxCommandPointCosts += cost;
-                                        break;
-                                    case ClientLib.Data.Reports.EReportType.NPCRaid:
-                                        switch (parseInt(report.get_DefenderBaseName(), 10)) {
-                                            case ClientLib.Data.Reports.ENPCCampType.Base:
-                                            case ClientLib.Data.Reports.ENPCCampType.Fortress:
-                                                var cost = Math.floor(combatCostMinimum + combatCostPerFieldOutside * distance);
-                                                minCommandPointCosts += cost;
-                                                maxCommandPointCosts += cost;
-                                                break;
-                                            default:
-                                                minCommandPointCosts += Math.floor(combatCostMinimum + combatCostPerFieldInside * distance);
-                                                maxCommandPointCosts += Math.floor(combatCostMinimum + combatCostPerFieldOutside * distance);
-                                        }
-                                        break;
-                                    case ClientLib.Data.Reports.EReportType.NPCPlayerCombat:
-                                        // No repair time or command point cost for Forgotten attacks
-                                        break;
-                                    default:
-                                        throw 'Unexpected report type (' + report.get_Type() + ')';
-                                }
-
-                                if (firstAttack === null || report.get_Time() < firstAttack) {
-                                    firstAttack = report.get_Time();
-                                }
-
-                                if (report.get_Time() > lastAttack) {
-                                    lastAttack = report.get_Time();
-                                }
-
-                                for (var resourceType in ReportStats.ResourceTypes) {
-                                    var resourceCount = getTotalLootMethod.call(report, resourceType) - getRepairCostsMethod.call(report, resourceType);
-
-                                    if (resourceCount !== 0) {
-                                        if (!(resourceType in loot)) {
-                                            loot[resourceType] = 0;
-                                        }
-
-                                        loot[resourceType] += resourceCount;
+                            switch (report.get_Type()) {
+                                case ClientLib.Data.Reports.EReportType.Combat: // 1, pvp
+                                    var isFriendlyTerritory =
+                                        report.get_AttackerAllianceName() ===
+                                        report.get_DefenderAllianceName();
+                                    var cost = Math.floor(
+                                        combatCostMinimumPvP +
+                                            (isFriendlyTerritory
+                                                ? combatCostPerFieldInside
+                                                : combatCostPerFieldOutside) *
+                                                distance
+                                    );
+                                    // minCommandPointCosts += cost;
+                                    // maxCommandPointCosts += cost;
+                                    rapport.pvp = true;
+                                    rapport.minCp = cost;
+                                    rapport.maxCp = cost;
+                                    break;
+                                case ClientLib.Data.Reports.EReportType.NPCRaid: // 2, pvp
+                                    switch (parseInt(report.get_DefenderBaseName(), 10)) {
+                                        case ClientLib.Data.Reports.ENPCCampType.Base: // 4
+                                        case ClientLib.Data.Reports.ENPCCampType.Fortress: // 6
+                                            var cost = Math.floor(
+                                                combatCostMinimum +
+                                                    combatCostPerFieldOutside * distance
+                                            );
+                                            // minCommandPointCosts += cost;
+                                            // maxCommandPointCosts += cost;
+                                            rapport.pve = true;
+                                            rapport.minCp = cost;
+                                            rapport.maxCp = cost;
+                                            break;
+                                        default:
+                                            const minCp = Math.floor(
+                                                combatCostMinimum +
+                                                    combatCostPerFieldInside * distance
+                                            );
+                                            const maxCp = Math.floor(
+                                                combatCostMinimum +
+                                                    combatCostPerFieldOutside * distance
+                                            );
+                                            // minCommandPointCosts += minCp;
+                                            // maxCommandPointCosts += maxCp;
+                                            rapport.pve = true;
+                                            rapport.minCp = minCp;
+                                            rapport.maxCp = maxCp;
                                     }
-                                }
+                                    break;
+                                case ClientLib.Data.Reports.EReportType.NPCPlayerCombat: // 5
+                                    // No repair time or command point cost for Forgotten attacks
+                                    break;
+                                default:
+                                    throw 'Unexpected report type (' + report.get_Type() + ')';
                             }
 
-                            var lootRow = 'Loot:';
-                            var sumRes = 0;
-                            for (var resourceType in loot) {
-                                lootRow += ' <img width="17" height="17" src="' + ReportStats.ResourceTypes[resourceType] + '" style="vertical-align: text-bottom;"/>';
+                            rapport.time = report.get_Time();
+                            // if (firstAttack === null || reportTime < firstAttack) {
+                            //     firstAttack = reportTime;
+                            // }
+                            //
+                            // if (reportTime > lastAttack) {
+                            //     lastAttack = reportTime;
+                            // }
 
-                                if (loot[resourceType] < 0) {
-                                    lootRow += '<span style="color: #d00;">' + phe.cnc.gui.util.Numbers.formatNumbersCompact(loot[resourceType]) + '</span>';
-                                }
-                                else {
-                                    lootRow += phe.cnc.gui.util.Numbers.formatNumbersCompact(loot[resourceType]);
-                                    sumRes += loot[resourceType];
+                            /**
+                                    @discroption: calc the loot with out the rep res costs
+                                 */
+                            for (var resourceType in ReportStats.ResourceTypes) {
+                                var resourceCount =
+                                    getTotalLootMethod.call(report, resourceType) -
+                                    getRepairCostsMethod.call(report, resourceType);
+
+                                if (resourceCount !== 0) {
+                                    if (!(resourceType in loot)) {
+                                        loot[resourceType] = 0;
+                                    }
+
+                                    loot[resourceType] += resourceCount;
                                 }
                             }
-                            lootRow += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sum: ' + phe.cnc.gui.util.Numbers.formatNumbersCompact(sumRes);
-                            lootRow += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sum/CP (max): ' + phe.cnc.gui.util.Numbers.formatNumbersCompact(sumRes / minCommandPointCosts);
-                            lootRow += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sum/CP (min): ' + phe.cnc.gui.util.Numbers.formatNumbersCompact(sumRes / maxCommandPointCosts);
+                            report.loot = loot;
 
-                            table.getChildControl('statusbar').setValue(
+                            reports.push(rapport);
+                        }
+
+                        // var lootRow = 'Loot:';
+                        // var sumRes = 0;
+                        // for (var resourceType in loot) {
+                        //     lootRow += ' <img width="17" height="17" src="' + ReportStats.ResourceTypes[resourceType] + '" style="vertical-align: text-bottom;"/>';
+                        //
+                        //     if (loot[resourceType] < 0) {
+                        //         lootRow += '<span style="color: #d00;">' + phe.cnc.gui.util.Numbers.formatNumbersCompact(loot[resourceType]) + '</span>';
+                        //     }
+                        //     else {
+                        //         lootRow += phe.cnc.gui.util.Numbers.formatNumbersCompact(loot[resourceType]);
+                        //         sumRes += loot[resourceType];
+                        //     }
+                        // }
+                        // lootRow += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sum: ' + phe.cnc.gui.util.Numbers.formatNumbersCompact(sumRes);
+                        // lootRow += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sum/CP (max): ' + phe.cnc.gui.util.Numbers.formatNumbersCompact(sumRes / minCommandPointCosts);
+                        // lootRow += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sum/CP (min): ' + phe.cnc.gui.util.Numbers.formatNumbersCompact(sumRes / maxCommandPointCosts);
+
+                        console.log({
+                            server,
+                            combatCostMinimum,
+                            combatCostMinimumPvP,
+                            combatCostPerFieldInside,
+                            combatCostPerFieldOutside,
+
+                            minCommandPointCosts,
+                            maxCommandPointCosts,
+                            // firstAttack,
+                            // lastAttack,
+                            getTotalLootMethod,
+                            getRepairCostsMethod,
+
+                            // attackerBaseIds, // id off attacker bases, the player pvp attacker maybe
+                            // defenderBaseIds,    // id of defender bases, the bases who got attacked, maybe the player also in pvp
+
+                            repairTimeCosts, // total time in s
+                            loot, //
+                        });
+
+                        console.log({ reports });
+
+                        /*table.getChildControl('statusbar').setValue(
                                 attackerBaseIds.length + ' attacker' + (attackerBaseIds.length === 1 ? '' : 's') + ', ' +
                                 defenderBaseIds.length + ' defender' + (defenderBaseIds.length === 1 ? '' : 's') + ', ' +
                                 this.reportsLoaded.length + ' attack' + (this.reportsLoaded.length === 1 ? '' : 's') + ', ' +
@@ -484,15 +697,16 @@
                                     ? ' in ' + phe.cnc.Util.getTimespanString((lastAttack - firstAttack) / 1000)
                                     : ''
                                 ) + '<br/>' + lootRow
-                            );
-                        }
+                            );*/
                     },
 
                     /**
                      * @returns {qx.ui.tabview.Page}
                      */
                     getCurrentBaseInfoTab: function() {
-                        return webfrontend.gui.info.BaseInfoWindow.getInstance().getChildren()[0].getSelection()[0];
+                        return webfrontend.gui.info.BaseInfoWindow.getInstance()
+                            .getChildren()[0]
+                            .getSelection()[0];
                     },
 
                     /**
@@ -504,22 +718,24 @@
                         var tabIndex = tabView.getChildren().indexOf(tab);
 
                         return 1 <= tabIndex && tabIndex <= 2;
-                    }
-                }
+                    },
+                },
             });
         }
 
         function waitForGame() {
             try {
-                if (typeof qx !== 'undefined' && qx.core.Init.getApplication() && qx.core.Init.getApplication().initDone) {
+                if (
+                    typeof qx !== 'undefined' &&
+                    qx.core.Init.getApplication() &&
+                    qx.core.Init.getApplication().initDone
+                ) {
                     createReportStats();
                     ReportStats.getInstance().initialize();
-                }
-                else {
+                } else {
                     setTimeout(waitForGame, 1000);
                 }
-            }
-            catch (e) {
+            } catch (e) {
                 console.log('ReportStats: ', e.toString());
             }
         }
