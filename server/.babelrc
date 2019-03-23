@@ -5,7 +5,7 @@
         "node": "current"
       }
     }],
-    "minify",
+//    "minify",
   ],
   "plugins": ["syntax-object-rest-spread", "babel-plugin-transform-strict-mode"]
 }
