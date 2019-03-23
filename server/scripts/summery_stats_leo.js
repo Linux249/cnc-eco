@@ -532,6 +532,7 @@
 
                         // init sever configs for cp costs
                         var server = ClientLib.Data.MainData.GetInstance().get_Server();
+                        var player = ClientLib.Data.MainData.GetInstance().get_Player();
                         var combatCostMinimum = server.get_CombatCostMinimum();
                         var combatCostMinimumPvP = server.get_UsesRebalancingI()
                             ? server.get_PvPCombatCostMinimum()
@@ -688,6 +689,7 @@
 
                         console.log({
                             server,
+                            player,
                             combatCostMinimum,
                             combatCostMinimumPvP,
                             combatCostPerFieldInside,
@@ -713,12 +715,16 @@
                         // fetch('https://cnc-eco.herokuapp.com/api/v1/reports/update', {
                         fetch('http://localhost:8000/api/v1/reports/update', {
                             method: 'POST',
-                            header: {
+                            headers: {
                                 "content-type": "application/json",
                             },
                             body: JSON.stringify({
                                 reports,
-                                world: server.get_WorldId()
+                                world: server.get_WorldId(),
+                                player: player.get_Name(),
+                                playerId: player.get_Id(),
+                                accountId: player.get_AccountId(),
+
                             })
                         }).then(r => r.json()).catch(e => console.warn(e))
 
