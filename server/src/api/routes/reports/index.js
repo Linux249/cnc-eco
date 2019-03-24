@@ -136,29 +136,30 @@ router.post('/update', async (req, res, next) => {
     console.log('update reports from ingame');
     const { reports, world, accountId, playerId } = req.body;
     // console.log(req.body);
-    console.log(world);
+    console.log({ world, playerId, accountId });
     // console.log(reports);
+    const collection = req.db.collection(`reports_${world}`);
+    console.log(`POST:\t${collection.namespace} - reports: ${reports.length}`);
 
     if (!reports.length) return res.json([]);
-    if(!accountId) return res.code(404).json({message: 'accountId missing'});
-    if(!playerId) return res.code(404).json({message: 'playerId missing'});
+    if (!accountId) return res.code(404).json({ message: 'accountId missing' });
+    if (!playerId) return res.code(404).json({ message: 'playerId missing' });
     // const { w, x, y } = req.query;
     // TODO auth require
     const ids = await Promise.all(
         reports.map(async report => {
-            report.playerId = playerId
-            report.accountId = accountId
-            const collection = req.db.collection(`reports_${world}`);
+            report.playerId = playerId;
+            report.accountId = accountId;
             const old = await collection.findOne({ id: report.id });
             if (old) {
-                console.log('old: ' + report.id)
+                console.log('old: ' + report.id);
                 return report.id;
             } else {
-                console.log('save: ' + report.id)
+                console.log('save: ' + report.id);
                 return await collection
                     .save(report)
                     .then(() => report.id)
-                    .catch(e => console.error(e));
+                    .catch(e => next(e));
             }
         })
     );
@@ -181,20 +182,14 @@ router.post('/update', async (req, res, next) => {
 // GET /api/v1/layouts
 // get all layouts from a world
 // TODO add a way to filter for "saw from player and/or alliance"
-router.get('/fsdfsdfsdf', async (req, res, next) => {
-    let { w, skip, limit } = req.query;
-    limit = limit ? +limit : 50;
-    skip = skip ? +skip : 50;
+router.get('/:type/:world/:playerId/:baseId', async (req, res, next) => {
+    let { type, world, playerId, baseId } = req.params;
+    console.log({ world, playerId, baseId });
+    if ((type !== 'off' && type !== 'def' )|| !world || !playerId || !baseId) next(new Error('wrong url param'))
     try {
-        const collection = req.db.collection(`layouts_${w}`);
-        const layouts = await collection
-            .find()
-            .sort({ tib: -1 })
-            .limit(limit)
-            .skip(skip * limit)
-            .toArray();
-        console.log(`GET:\t${collection.namespace} - items: ${layouts.length}`);
-        res.json(layouts);
+        const reports = await getReportsStats(world, playerId, baseId, type, req.db);
+        console.log(reports);
+        res.json(reports);
     } catch (err) {
         console.log({ err });
         next(err);
@@ -202,3 +197,28 @@ router.get('/fsdfsdfsdf', async (req, res, next) => {
 });
 
 export default router;
+
+export async function getReportsStats(world, playerId, baseId, type, db) {
+    const collection = db.collection(`reports_${world}`);
+    const reports = {};
+    reports.reports = await collection.find({ playerId: +playerId, [type]: true}).toArray();
+    console.log(`GET:\t${collection.namespace} - reports: ${reports.reports.length}`);
+
+    // reports count
+    reports.c = reports.length;
+    // rep total
+    reports.repTotal = reports.reports.reduce((a, r) => a + r.maxRep, 0);
+    reports.infTotal = reports.reports.reduce(
+        (a, r) => (r.infRep.d['9'] ? a + r.infRep.d['9'] : a),
+        0
+    );
+    reports.vehTotal = reports.reports.reduce(
+        (a, r) => (r.vehRep.d['9'] ? a + r.vehRep.d['9'] : a),
+        0
+    );
+    reports.airTotal = reports.reports.reduce(
+        (a, r) => (r.airRep.d['9'] ? a + r.airRep.d['9'] : a),
+        0
+    );
+    return reports;
+}

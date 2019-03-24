@@ -462,7 +462,8 @@
                     },
 
                     /**
-                     * @description handler after a report was loaded, removes the id from loading and push the report to the loaded
+                     * @description handler after a report was loaded, removes the id from loading and push the report
+                     *     to the loaded
                      * @param {ClientLib.Data.Reports.CombatReport} report
                      */
                     onReportDelivered: function(report) {
@@ -521,7 +522,7 @@
 
                         var reports = [];
 
-                        // pve
+                        // off
                         const { CombatReport } = ClientLib.Data.Reports;
                         if (
                             this.reportsLoaded[0].get_PlayerReportType() ===
@@ -531,7 +532,7 @@
                                 CombatReport.prototype.GetAttackerTotalResourceReceived;
                             getRepairCostsMethod = CombatReport.prototype.GetAttackerRepairCosts;
                         }
-                        // pvp
+                        // def
                         else {
                             getTotalLootMethod =
                                 CombatReport.prototype.GetDefenderTotalResourceCosts;
@@ -607,7 +608,7 @@
                                     );
                                     // minCommandPointCosts += cost;
                                     // maxCommandPointCosts += cost;
-                                    rapport.pvp = true;
+                                    rapport.def = true;
                                     rapport.minCp = cost;
                                     rapport.maxCp = cost;
                                     break;
@@ -621,7 +622,7 @@
                                             );
                                             // minCommandPointCosts += cost;
                                             // maxCommandPointCosts += cost;
-                                            rapport.pve = true;
+                                            rapport.off = true;
                                             rapport.minCp = cost;
                                             rapport.maxCp = cost;
                                             break;
@@ -636,7 +637,7 @@
                                             );
                                             // minCommandPointCosts += minCp;
                                             // maxCommandPointCosts += maxCp;
-                                            rapport.pve = true;
+                                            rapport.off = true;
                                             rapport.minCp = minCp;
                                             rapport.maxCp = maxCp;
                                     }
@@ -732,7 +733,6 @@
                                 player: player.get_Name(),
                                 playerId: player.get_Id(),
                                 accountId: player.get_AccountId(),
-
                             })
                         }).then(r => r.json()).catch(e => console.warn(e))
 
