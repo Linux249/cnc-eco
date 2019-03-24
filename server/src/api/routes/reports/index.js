@@ -132,14 +132,36 @@ const router = Router();
  */
 // GET /api/v1/reports/update
 // get a single labtop with world + coords as params
-router.post('/update', (req, res, next) => {
-    console.log('update reports')
-    const { reports, world } = req.body
-    console.log( req.body)
-    console.log(world)
-    console.log(reports)
+router.post('/update', async (req, res, next) => {
+    console.log('update reports');
+    const { reports, world, accountId, playerId } = req.body;
+    console.log(req.body);
+    console.log(world);
+    console.log(reports);
+
+    if (!reports.length) return res.json([]);
+    if(!accountId) return res.code(404).json({message: 'accountId missing'});
+    if(!playerId) return res.code(404).json({message: 'playerId missing'});
     // const { w, x, y } = req.query;
     // TODO auth require
+    const ids = await Promise.all(
+        reports.map(async report => {
+            report.playerId = playerId
+            report.accountId = accountId
+            const collection = req.db.collection(`reports_${world}`);
+            const old = await collection.findOne({ id: report.id });
+            console.log({ old });
+            if (old) {
+            } else {
+                return await collection
+                    .save(report)
+                    .then(() => report.id)
+                    .catch(e => console.error(e));
+            }
+            return report.id;
+        })
+    );
+    console.log(ids);
 
     // const collection = req.db.collection(`layouts_${w}`);
     // collection.findOne({ x, y }, (err, layout) => {
@@ -150,7 +172,7 @@ router.post('/update', (req, res, next) => {
     //     // console.log(`GET:\t${collection.namespace} - items: ${layout.length}`)
     //     res.json(layout);
     // });
-    res.send('danke')
+    res.send(ids);
 
     // todo send saved id's back to put them "out of sight" in the client
 });
