@@ -7,14 +7,16 @@ import Row from '../style/Row';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import WorldsMenu from './WorldsMenu';
-
+import { backgroundColorButtonHeader } from '../style/constants';
 
 const Link = Button.withComponent(
     styled(NavLink)`
-        &.active {
-            background-color: #46004d;
-            color: white;
-            border: none;
+        color: white;
+        //background-color: inherit;
+        border: none !important;
+
+        &:hover {
+            background-color: ${backgroundColorButtonHeader};
         }
     `
 );

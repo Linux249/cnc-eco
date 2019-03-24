@@ -1,7 +1,8 @@
 export const focusColor = '#b6b6b6';
 export const hoverColor = '#dadada';
 export const backgroundColor = '#fff';
-export const backgroundColorHeader = '';
+export const backgroundColorHeader = '#551A8B';
+export const backgroundColorButtonHeader = '#8328d5';
 export const borderColor = '#CCC';
 export const shadowColor = 'rgba(150, 150, 150, 0.1)';
 

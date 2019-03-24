@@ -5,6 +5,15 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { changeBase, changeWorld } from '../store/actions/player';
 import Area from '../style/Area';
+import { backgroundColorButtonHeader } from '../style/constants';
+
+const ButtonHeader = styled(Button)`
+    background-color: ${({ active }) => (active ? backgroundColorButtonHeader : 'inherit')};
+    color: white;
+    &:hover {
+        background-color: ${backgroundColorButtonHeader};
+    }
+`;
 
 const DropDownAnchor = styled.div`
     position: relative;
@@ -17,6 +26,7 @@ const DropDownArea = styled(Area)`
     right: 0;
     z-index: 10;
     //background-color: red;
+    transition: height 0.25s linear 0.1s;
 `;
 
 class WorldsMenu extends Component {
@@ -40,10 +50,10 @@ class WorldsMenu extends Component {
             <>
                 <Row>
                     <DropDownAnchor>
-                    <Button onClick={this.toggleShowWorld} active>
-                        {worldName}
-                    </Button>
-                    {showWorld && (
+                        <ButtonHeader onClick={this.toggleShowWorld} active={showWorld}>
+                            {worldName}
+                        </ButtonHeader>
+                        {showWorld && (
                             <DropDownArea small>
                                 {worlds.map(w => (
                                     <Button
@@ -54,8 +64,8 @@ class WorldsMenu extends Component {
                                     </Button>
                                 ))}
                             </DropDownArea>
-                    )}
-                        </DropDownAnchor>
+                        )}
+                    </DropDownAnchor>
                 </Row>
             </>
         );
