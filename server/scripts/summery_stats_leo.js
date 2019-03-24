@@ -674,7 +674,7 @@
                                     loot[resourceType] += resourceCount;
                                 }
                             }
-                            report.loot = loot;
+                            rapport.loot = loot;
 
                             reports.push(rapport);
                         }
@@ -721,8 +721,8 @@
                         console.warn('All reports');
                         console.log({ reports });
 
-                        fetch('https://cnc-eco.herokuapp.com/api/v1/reports/update', {
-                        // fetch('http://localhost:8000/api/v1/reports/update', {
+                        // fetch('https://cnc-eco.herokuapp.com/api/v1/reports/update', {
+                        fetch('http://localhost:8000/api/v1/reports/update', {
                             method: 'POST',
                             headers: {
                                 "content-type": "application/json",

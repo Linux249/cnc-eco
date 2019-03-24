@@ -188,7 +188,7 @@ router.get('/:type/:world/:playerId/:baseId', async (req, res, next) => {
     if ((type !== 'off' && type !== 'def' )|| !world || !playerId || !baseId) next(new Error('wrong url param'))
     try {
         const reports = await getReportsStats(world, playerId, baseId, type, req.db);
-        console.log(reports);
+        // console.log(reports);
         res.json(reports);
     } catch (err) {
         console.log({ err });
@@ -205,7 +205,8 @@ export async function getReportsStats(world, playerId, baseId, type, db) {
     console.log(`GET:\t${collection.namespace} - reports: ${reports.reports.length}`);
 
     // reports count
-    reports.c = reports.length;
+    reports.c = reports.reports.length;
+
     // rep total
     reports.repTotal = reports.reports.reduce((a, r) => a + r.maxRep, 0);
     reports.infTotal = reports.reports.reduce(
@@ -220,5 +221,25 @@ export async function getReportsStats(world, playerId, baseId, type, db) {
         (a, r) => (r.airRep.d['9'] ? a + r.airRep.d['9'] : a),
         0
     );
+
+    // res
+    reports.tibTotal = reports.reports.reduce(
+        (a, r) => (r.loot['1'] ? a + r.loot['1'] : a),
+        0
+    );
+    reports.crisTotal = reports.reports.reduce(
+        (a, r) => (r.loot['2'] ? a + r.loot['2'] : a),
+        0
+    );
+    reports.creditsTotal = reports.reports.reduce(
+        (a, r) => (r.loot['3'] ? a + r.loot['3'] : a),
+        0
+    );
+    reports.researchTotal = reports.reports.reduce(
+        (a, r) => (r.loot['6'] ? a + r.loot['6'] : a),
+        0
+    );
+
+
     return reports;
 }
