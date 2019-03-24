@@ -16,6 +16,8 @@ import Body from '../style/Body';
 import Row from '../style/Row';
 import Button from '../style/Button';
 import styled from 'styled-components';
+import { msToTime } from '../util/secToTime';
+import Column from '../style/Column';
 
 // TODO show last update in table
 
@@ -30,8 +32,7 @@ const Grid = styled.div`
 const AllianceS = styled.div`
     max-height: 90vh;
     overflow: auto;
-    //font-weight: normal;
-    //font-size: 0.8rem;
+    font-size: 0.7rem;
     
     /*
     Custom scrollbar style
@@ -62,11 +63,11 @@ const Cell = styled.div`
     justify-content: center;
     align-items: center;
 
-    padding: 0 0.4rem;
+    padding: 0.1rem 0.5rem;
     //border-color: rgba(37, 38, 39, 0.1);
     //border-style: solid;
     //border-width: 1px;
-    box-shadow: 0 0 3px -1px rgb(150, 150, 150);
+    box-shadow: 0 0 2px -1px rgb(150, 150, 150);
 `;
 
 const Icon = styled.img`
@@ -85,9 +86,13 @@ class Alliance extends Component {
             lastUpdate: null,
         };
     }
-    componentWillMount() {
+    componentDidMount() {
         //get layouts from api
-        this.props.isAuthenticated && this.getAlliance();
+        console.log('wewewewewe');
+        console.log(this.props.auth);
+        const { w, allianceId, token } = this.props;
+        console.log(w, allianceId, token);
+        if (this.props.auth) this.getAlliance();
     }
 
     getAlliance = async () => {
@@ -118,8 +123,6 @@ class Alliance extends Component {
             <Body>
                 <div />
                 <AllianceS>
-                    <Row>{name + ' (' + count + ')'}</Row>
-                    <Button onClick={this.getAlliance}>get</Button>
                     <Grid>
                         <Cell>Name</Cell>
                         <Cell>Ranking</Cell>
@@ -200,7 +203,11 @@ class Alliance extends Component {
 
                                     <Cell>{member.offbase.off}</Cell>
                                     <Cell>{member.offbase.def}</Cell>
-                                    <Cell>{member.offbase.rep + '/' + member.offbase.maxRep}</Cell>
+                                    <Cell>
+                                        {msToTime(member.offbase.rep) +
+                                            '/' +
+                                            msToTime(member.offbase.maxRep)}
+                                    </Cell>
 
                                     <Cell>{shortenNumber(member.totalTib)}</Cell>
                                     <Cell>{shortenNumber(member.totalPower)}</Cell>
@@ -249,7 +256,12 @@ class Alliance extends Component {
                         })}
                     </Grid>
                 </AllianceS>
-                <div />
+                <Column>
+                    <Row center>
+                        <Row>{name + ' (' + count + ')'}</Row>
+                        <Button onClick={this.getAlliance}>update</Button>
+                    </Row>
+                </Column>
             </Body>
         );
     }
