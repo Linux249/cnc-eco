@@ -425,6 +425,14 @@
                                 );
                             }
 
+                            phe.cnc.Util.attachNetEvent(
+                                reports,
+                                'ReportsDelivered',
+                                ClientLib.Data.Reports.ReportsDelivered,
+                                this,
+                                () => console.error('HIER LÄUFTS JA GUT')
+                            );
+
                             for (var i = this.reportsLoading.length - 1; i >= 0; i--) {
                                 reports.RequestReportData(this.reportsLoading[i]);
                             }
@@ -712,8 +720,8 @@
                         console.warn('All reports');
                         console.log({ reports });
 
-                        // fetch('https://cnc-eco.herokuapp.com/api/v1/reports/update', {
-                        fetch('http://localhost:8000/api/v1/reports/update', {
+                        fetch('https://cnc-eco.herokuapp.com/api/v1/reports/update', {
+                        // fetch('http://localhost:8000/api/v1/reports/update', {
                             method: 'POST',
                             headers: {
                                 "content-type": "application/json",

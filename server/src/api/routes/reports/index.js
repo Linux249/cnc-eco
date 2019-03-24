@@ -133,11 +133,11 @@ const router = Router();
 // GET /api/v1/reports/update
 // get a single labtop with world + coords as params
 router.post('/update', async (req, res, next) => {
-    console.log('update reports');
+    console.log('update reports from ingame');
     const { reports, world, accountId, playerId } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     console.log(world);
-    console.log(reports);
+    // console.log(reports);
 
     if (!reports.length) return res.json([]);
     if(!accountId) return res.code(404).json({message: 'accountId missing'});
@@ -150,15 +150,16 @@ router.post('/update', async (req, res, next) => {
             report.accountId = accountId
             const collection = req.db.collection(`reports_${world}`);
             const old = await collection.findOne({ id: report.id });
-            console.log({ old });
             if (old) {
+                console.log('old: ' + report.id)
+                return report.id;
             } else {
+                console.log('save: ' + report.id)
                 return await collection
                     .save(report)
                     .then(() => report.id)
                     .catch(e => console.error(e));
             }
-            return report.id;
         })
     );
     console.log(ids);
