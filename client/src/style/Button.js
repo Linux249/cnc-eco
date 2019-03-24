@@ -15,10 +15,16 @@ export const Button = styled.div`
     ${({ active }) => (active ? 'border-color: red;' : '')} ;//margin: 2px;
     padding: ${({ small }) => (small ? '0.2rem' : '0.4rem')} 0.75rem;
     margin: 0.25rem;
-    font-size: 1rem;
-    line-height: 1;
+    font-size: 0.8rem;
+    //line-height: 1;
+    
+    //height: 1rem;
+	//overflow: hidden;
+	//transition: height .25s linear .1s;
+
 
     &:hover {
+        //height: 2rem;
         box-shadow: 0 4px 8px 0 rgba(30, 136, 229, 0.2), 0 6px 20px 0 rgba(30, 136, 229, 0.19);
     }
 
