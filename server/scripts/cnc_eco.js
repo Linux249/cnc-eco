@@ -157,7 +157,7 @@
                         doMenu: function() {
                             var c = CncEcomain.getInstance(),
                                 f = c.AddSubMainMenu('MainOptions');
-                            c.AddSubMenu(f, 'open Memberstats.de', function() {
+                            c.AddSubMenu(f, 'open cnc-eco.de', function() {
                                 CncEcomain.getInstance().openurl();
                             });
                             c.AddSubMenu(

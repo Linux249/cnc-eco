@@ -13,6 +13,14 @@ const report = {
          *
          */
     ],
+    worldsReports: [
+        /* {
+         * world: name,
+         * deletedReports: count,
+         * stats: collection.stats()
+         *
+         */
+    ],
     player: {
         /*
          * collection.stats()
@@ -29,6 +37,7 @@ export const createReport = async db => {
         // collections for the layouts
         const collections = await db.listCollections().toArray();
         const layoutsColl = collections.filter(coll => coll.name.includes('layouts'));
+        const reportsColl = collections.filter(coll => coll.name.includes('reports_'));
 
         // got throug each World/collection
         await Promise.all(
@@ -50,6 +59,27 @@ export const createReport = async db => {
                 reportWorld.stats = await collection.stats({ scale: 1024 });
 
                 report.worlds.push(reportWorld);
+            })
+        );
+        await Promise.all(
+            reportsColl.map(async ({ name }) => {
+                const collection = await db.collection(name);
+                const reportWorld = {
+                    name,
+                    deletedReports: null,
+                    stats: null
+                };
+
+                // deleting old layouts
+                const { result } = await collection.remove({ time: { $lt: date } });
+                if (!result.ok) console.log('FEHLER BEIM LÖSCHEN VON Reports'); // TODO bedder error handling
+                reportWorld.deletedReports = result.n;
+
+                // getting db stats
+                // TODO analyzing stas document and pic only relevant infos
+                reportWorld.stats = await collection.stats({ scale: 1024 });
+
+                report.worldsReports.push(reportWorld);
             })
         );
 
