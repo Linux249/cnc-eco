@@ -103,6 +103,7 @@ export default async (req, res, next) => {
 
             return {
                 fraction,
+                id: body[`baseid${i}`],
                 name: body[`basename${i}`],
                 layout: body[`opt${i}`],
                 points: body[`punkte${i}`],

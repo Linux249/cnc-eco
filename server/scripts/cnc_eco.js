@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name          C&C:TA CnC-Eco
-// @version       1.0.5
+// @version       1.0.6
 // @namespace     http://cnc-eco.herokuapp.com
 // @homepage      http://cnc-eco.herokuapp.com
 // @description   Sammelt Informationen ueber Basenausbau der Allianzmitglieder (basierend auf Skripte / Routinen von neobsen, JimBeamJD, KRS_L, F.D, und Dooki)
-// @author        F.D
+// @author        F.D, J.L.
 // @include       http*://*.alliances.commandandconquer.com/*/index.aspx*
 // @icon          https://cnc-eco.herokuapp.com/favicon.ico
 // @copyright     2018, J.L.
@@ -664,6 +664,7 @@
                                 b.PPall = b.PP + b.PBP + b.PAB;
                                 b.CPall = b.CP + b.CBP;
                                 c.setFormField('basename' + g, b.Na);
+                                c.setFormField('baseid' + g, b.Id);
                                 c.setFormField('punkte' + g, b.Po);
                                 c.setFormField('level' + g, b.Lvl);
                                 c.setFormField('off' + g, b.Off);
@@ -4051,7 +4052,7 @@
                                         l.push(f);
                 return l;
             }
-            function V(l, r, d) {
+            function V(baseId, r, d) {
                 h('CNCOpt Link loaded');
                 var c = {
                     selected_base: null,
@@ -4402,7 +4403,7 @@
                         }
                     },
                 };
-                c.selected_base = l;
+                c.selected_base = baseId;
                 c.make_sharelink();
             }
             function Z(h, r) {
