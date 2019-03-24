@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AreaRaw from '../style/Area';
 import styled from 'styled-components';
+import Row from '../style/Row';
 
 const Area = styled(AreaRaw)`
     padding: 10px 6px;
     margin: 5px 3px;
+    font-size: 14px;
 `
 
 const Square = styled.div`
@@ -18,6 +20,8 @@ const Container = styled.div`
     width: 162px;
     display: flex;
     flex-wrap: wrap;
+    
+    margin-bottom: 0.1rem;
 `;
 
 const Tib = () => (
@@ -56,8 +60,11 @@ const Layout = ({ layout }) => {
     return (
         <Area small>
             <Container>{slots}</Container>
-            <div>{`${layout.x}:${layout.y}   t:${layout.tib}   c:${layout.cris}`}</div>
-            <div>{time}</div>
+            {/*<div>{`${layout.x}:${layout.y} /!*  t:${layout.tib}   c:${layout.cris}*!/`}</div>*/}
+            <Row center>
+                <div>{`${layout.x}:${layout.y}`}</div>
+                <div>{time}</div>
+            </Row>
         </Area>
     );
 };
