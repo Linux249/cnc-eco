@@ -1,21 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { DragSource } from 'react-dnd';
 import { replaceBuilding } from '../store/actions/base';
 import MenuItem from '../style/BuildingMenuItem';
 import { findDOMNode } from 'react-dom';
 
-class BuildingMenuItem extends Component {
-    render() {
-        const { img, type, connectDragSource } = this.props;
-
-        return (
-            <MenuItem ref={instance => connectDragSource(findDOMNode(instance))}>
-                <img src={img} alt={type} />
-                <div>{type}</div>
-            </MenuItem>
-        );
-    }
+function BuildingMenuItem(props) {
+    const { faction, type, connectDragSource } = props;
+    const img = require('./../img/buildings/' + faction + '/' + type + '.png');
+    return (
+        <MenuItem ref={instance => connectDragSource(findDOMNode(instance))}>
+            <img src={img} alt={type}/>
+            <div>{type}</div>
+        </MenuItem>
+    );
 }
 
 const buildingSource = {

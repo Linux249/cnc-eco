@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { changeFraction } from '../store/actions/base';
 import { buildingKeys } from '../util/buildings';
@@ -21,32 +21,30 @@ const Min = styled.div`
     max-width: 250px;
 `;
 
-class BuildingMenu extends Component {
-    render() {
-        const { changeFraction, faction, lvl } = this.props;
-        const items = buildingKeys.map(type => {
-            const img = require('./../img/buildings/' + faction + '/' + type + '.png');
-            const building = {
-                type,
-                lvl: type !== 't' && type !== 'c' ? lvl : undefined,
-            };
-            return <BuildingMenuItem img={img} type={type} building={building} key={type} />;
-        });
-        return (
-            <Right>
-                <Min>
-                    <Area small>
-                        <Row>
-                            <Button small onClick={() => changeFraction('N')}>NOD</Button>
-                            <Button small onClick={() => changeFraction('G')}>GDI</Button>
-                        </Row>
-                        <Menu>{items}</Menu>
-                    </Area>
-                </Min>
-            </Right>
-        );
-    }
+function BuildingMenu(props) {
+    const { changeFraction, faction, lvl } = props;
+    const items = buildingKeys.map(type => {
+        const building = {
+            type,
+            lvl: type !== 't' && type !== 'c' ? lvl : undefined,
+        };
+        return <BuildingMenuItem faction={faction} type={type} building={building} key={type}/>;
+    });
+    return (
+        <Right>
+            <Min>
+                <Area small>
+                    <Row>
+                        <Button small onClick={() => changeFraction('N')}>NOD</Button>
+                        <Button small onClick={() => changeFraction('G')}>GDI</Button>
+                    </Row>
+                    <Menu>{items}</Menu>
+                </Area>
+            </Min>
+        </Right>
+    );
 }
+
 function mapStateToProps(state) {
     return {
         faction: state.base.faction,
