@@ -1,5 +1,5 @@
 import React from 'react';
-import BuildingMenu from '../containers/Buildings';
+import BuildingMenu from '../containers/BuildingMenu';
 import UrlInfo from '../containers/UrlInfo';
 import Share from '../containers/Share';
 import Base from '../components/Base'
