@@ -7,6 +7,7 @@ import { Row } from '../style/Row';
 import Column from '../style/Column';
 import Body from '../style/Body';
 import Army from '../containers/Army';
+import Defense from '../containers/Defense';
 
 
 export default () => {
@@ -19,6 +20,10 @@ export default () => {
             <Body>
                 <BuildingMenu />
                 <Base />
+            </Body>
+            <Body>
+                <div />
+                <Defense />
             </Body>
             <Body>
                 <div />
