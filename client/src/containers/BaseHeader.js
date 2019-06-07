@@ -47,9 +47,9 @@ class BaseHeader extends Component {
                     <Link to="/scripts" activeClassName="active">
                         Scripte
                     </Link>
-                    <Link to="/demo" activeClassName="active">
+                    {/*<Link to="/demo" activeClassName="active">
                         Demo
-                    </Link>
+                    </Link>*/}
                     {isAuthenticated ? (
                         <Link to="/user" activeClassName="active">
                             {name}
