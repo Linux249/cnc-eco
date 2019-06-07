@@ -20,6 +20,7 @@ import { B } from './routes/B';
 import { updatePlayer } from './store/actions/player';
 import { receiveLogin } from './store/actions/auth';
 import { LOCAL_STORE } from './config';
+import Demo from './routes/Demo';
 
 class App extends Component {
     componentWillMount() {
@@ -41,6 +42,7 @@ class App extends Component {
                     <Route path="/s/:url" component={S} />
                     <Route path="/b/:url" component={B} />
                     <Route path="/scripts" component={Scripts} />
+                    <Route path="/demo" component={Demo} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
                     <ProtectedRoute path="/bases" auth={auth} name={name} component={Bases} />
