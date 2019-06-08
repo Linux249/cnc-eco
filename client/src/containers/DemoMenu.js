@@ -4,13 +4,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { shortenNumber } from '../util/service';
-import { calcProduction } from '../util/production';
+import { calcBuildingCost, calcProduction } from '../util/production';
 import icon_tib from '../img/icon/icon_tiberium.png';
 import icon_cris from '../img/icon/icon_crystal.png';
 import icon_power from '../img/icon/icon_power.png';
 import icon_credits from '../img/icon/icon_credits.png';
 import styled, { keyframes } from 'styled-components';
 import Button from '../style/Button';
+import DemoLayouts from './DemoLayouts';
 
 function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -94,15 +95,15 @@ const Row = styled.div`
 
 function DemoMenu(props) {
     const [timerId, setTimerId] = useState(0);
-    const [tickCounter, setTickCounter] = useState(0)
-    const [buildings, setBuildings] = useState(props.buildings)
+    const [tickCounter, setTickCounter] = useState(0);
+    const [buildings, setBuildings] = useState(props.buildings);
 
     const [upgradeMode, setUpgradeMode] = useState(0);
     function toogleUpgradeMode() {
         // todo
         //  - show mouse as update Button or green background color behind buildings
         //  - show costs over buildings
-        setUpgradeMode(!upgradeMode)
+        setUpgradeMode(!upgradeMode);
     }
 
     // todo army
@@ -130,12 +131,11 @@ function DemoMenu(props) {
         setK(k + prodK);
         setP(p + prodP);
         setC(c + prodC);
-        if(tickCounter === 10) {
+        if (tickCounter === 10) {
             // todo update data to server
-            console.log('update data to server')
-            setTickCounter(0)
+            console.log('update data to server');
+            setTickCounter(0);
         }
-
     }
     useInterval(tick, 500);
 
@@ -153,44 +153,58 @@ function DemoMenu(props) {
     }
 
     useEffect(() => {
-        console.log(buildings)
-        buildings.forEach((b, i) => {
-            if(b !== props.buildings[i]) {
-                console.error('new building')
-                console.log(b)
+        // console.log(buildings);
+        if (buildings !== props.buildings) {
+            console.warn('DIFFERENT BUILDINGS');
+            buildings.forEach((b, i) => {
+                // building changed
+                if (b !== props.buildings[i] && upgradeMode) {
+                    console.error('new building');
+                    console.log(b);
+                    const cost = calcBuildingCost(props.buildings[i])
+                    console.log(cost)
+                    setT(t - cost.tib)
+                    setP(p - cost.power)
 
-                // todo calc buildings costs and subs from counter
-                setBuildings(props.buildings)
-                updateProd()
-            }
-        })
+                    // todo calc buildings costs and subs from counter
 
-    }, [props.buildings])
+                }
+            });
+             updateProd();
+            // update for comparison with next props
+            setBuildings(props.buildings);
+        }
+    }, [props.buildings]);
 
     function reset() {
+        console.log('reset')
         // reset prod
         setProdT(0);
+        setT(0)
         setProdK(0);
+        setK(0)
         setProdP(0);
+        setP(0)
         setProdC(0);
+        setC(0)
 
         // reset army
-        setArmyLvl(0)
-        setArmyProd(0)
+        setArmyLvl(0);
+        setArmyProd(0);
+
+        // reset base
     }
 
     function upgradeArmy() {
-
         // reduce cris+power by amryCosts
 
-
         // update Army prod via faktor?
-        setArmyProd(armyProd + 100)
+        setArmyProd(armyProd + 100);
 
         // update
 
         // update army lvl
-        setArmyLvl(armyLvl + 1)
+        setArmyLvl(armyLvl + 1);
     }
 
     // componentDidUpdate(prevProps) {
@@ -237,7 +251,7 @@ function DemoMenu(props) {
             <Row>
                 <Button onClick={() => reset()}>reset</Button>
                 <Button onClick={() => updateProd()}>prod</Button>
-                <Button onClick={() => toogleUpgradeMode()}>update</Button>
+                <Button  active={upgradeMode} onClick={() => toogleUpgradeMode()}>update</Button>
             </Row>
             <Row>
                 <div>Army Icon</div>
@@ -245,6 +259,8 @@ function DemoMenu(props) {
                 {shortenNumber(armyProd, 2)}
                 <Button onClick={() => upgradeArmy()}>+1 {armyCosts}</Button>
             </Row>
+
+            <DemoLayouts reset={reset}/>
         </Info>
     );
 }
