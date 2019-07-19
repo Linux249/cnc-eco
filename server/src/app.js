@@ -20,7 +20,6 @@ MongoClient.connect(
     { useNewUrlParser: true },
     (err, db) => {
         DB = db;
-        createReport(DB)
         const j = schedule.scheduleJob({ hour: 0, minute: 32 }, () => {
             console.log('SCHEUDLER');
             createReport(DB);

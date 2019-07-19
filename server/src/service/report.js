@@ -89,7 +89,7 @@ export const createReport = async db => {
         );
 
         // PLAYER
-        report.player.stats = await db.collection('players').stats({ scale: 1024 });
+        // report.player.stats = await db.collection('players').stats({ scale: 1024 });
 
         // save and return report
         await db.collection('reports').save(report);
