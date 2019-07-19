@@ -17,10 +17,10 @@ app.use((req, res, next) => {
 });
 
 // DB
-const mongo_uri = process.env.MONGODB_URI
-    ? process.env.MONGODB_URI
-    : 'mongodb://localhost:27017/cnc';
-console.log({ mongo_uri });
+// const mongo_uri = process.env.MONGODB_URI
+//     ? process.env.MONGODB_URI
+//     : 'mongodb://localhost:27017/cnc';
+// console.log({ mongo_uri });
 // mongoose.connect(mongo_uri, { useMongoClient: true, promiseLibrary: global.Promise })
 // const db = mongoose.connection //simplification
 

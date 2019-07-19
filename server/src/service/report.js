@@ -46,7 +46,7 @@ export const createReport = async db => {
                 const reportWorld = {
                     name,
                     deletedLayouts: null,
-                    stats: null
+                    stats: null,
                 };
 
                 // deleting old layouts
@@ -58,6 +58,11 @@ export const createReport = async db => {
                 // TODO analyzing stas document and pic only relevant infos
                 reportWorld.stats = await collection.stats({ scale: 1024 });
 
+                if (reportWorld.stats.count === 0) {
+                    await collection.drop();
+                    console.log('delete collection: ' + name);
+                }
+
                 report.worlds.push(reportWorld);
             })
         );
@@ -67,7 +72,7 @@ export const createReport = async db => {
                 const reportWorld = {
                     name,
                     deletedReports: null,
-                    stats: null
+                    stats: null,
                 };
 
                 // deleting old layouts
