@@ -13,13 +13,8 @@ import { InfoText } from '../style/InfoText';
 import Error from '../style/Error';
 import Row from '../style/Row';
 import Body from '../style/Body';
-
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-`;
+import Container from '../style/Container';
+import Alert from '../style/Alert';
 
 class User extends Component {
     constructor(props) {
@@ -71,7 +66,7 @@ class User extends Component {
             return this.setState({ error: player.error.message });
         }
 
-        if(player.error) return this.setState({ error: player.message })
+        if (player.error) return this.setState({ error: player.message });
         this.props.updatePlayer(player);
         // update world lists
         this.loadWorlds();
@@ -106,7 +101,7 @@ class User extends Component {
         if (!res.ok || player.error) {
             return this.setState({ error: player.error.message });
         }
-        if(player.error) return this.setState({ error: player.message })
+        if (player.error) return this.setState({ error: player.message });
         this.props.updatePlayer(player);
         // updateWorldLists
         this.loadWorlds();
@@ -140,8 +135,8 @@ class User extends Component {
                 return this.setState({ error: e.message });
             });
         this.endLoading();
-        console.log(player)
-        if(player.error) return this.setState({ error: player.message })
+        console.log(player);
+        if (player.error) return this.setState({ error: player.message });
         this.props.updatePlayer(player);
         // updateWorldLists
         this.loadWorlds();
@@ -184,66 +179,55 @@ class User extends Component {
             <Body>
                 <div />
                 <Row wrap>
-                    <Area>
-                        <Container>
-                            <div>
-                                <Label>Player name</Label>
-                                <InfoText>add your ingame name to your account please</InfoText>
-                                <Input
-                                    name="name"
-                                    value={name}
-                                    onChange={e => this.changeName(e.target.value)}
-                                    disabled={playerAdded}
-                                />
-                                <InfoText>you can only all 7 days change your username</InfoText>
-                            </div>
-                        </Container>
-                    </Area>
-                    <Area>
+                    <Container>
+                        <Label>Player name</Label>
+                        <InfoText>add your ingame name to your account please</InfoText>
+                        <Input
+                            name="name"
+                            value={name}
+                            onChange={e => this.changeName(e.target.value)}
+                            disabled={playerAdded}
+                        />
+                        <InfoText>you can only all 7 days change your username</InfoText>
+                    </Container>
+                    <Container>
                         <Label>Select a World</Label>
-                        <Container>
-                            <LoadingPoints loading={loading} />
-                            {worlds.length !== 0 &&
-                                worlds.map(w => (
-                                    <Button
-                                        key={w.worldId}
-                                        onClick={() => this.changeWorld(w.worldId)}
-                                        active={world === w.worldId}
-                                    >
-                                        {w.worldName}
-                                    </Button>
-                                ))}
-                            <Button onClick={this.loadWorlds}>load</Button>
-
-                            <Button onClick={!this.props.name ? this.addPlayer : this.addWorld}>
-                                {!playerAdded ? 'add player' : !world ? 'select world' : 'add'}
-                            </Button>
-                        </Container>
-                    </Area>
-
-                    <Area>
-                        <Label>Remove a World</Label>
-                        <Container>
-                            {savedWorlds.map(w => (
+                        <LoadingPoints loading={loading} />
+                        {worlds.length !== 0 &&
+                            worlds.map(w => (
                                 <Button
-                                    key={w.worldId * 100}
+                                    key={w.worldId}
                                     onClick={() => this.changeWorld(w.worldId)}
                                     active={world === w.worldId}
                                 >
                                     {w.worldName}
                                 </Button>
                             ))}
-                            <Button onClick={this.deleteWorld}>delete</Button>
-                        </Container>
-                    </Area>
-                    <Area>
+                        <Button onClick={this.loadWorlds}>load</Button>
+
+                        <Button onClick={!this.props.name ? this.addPlayer : this.addWorld}>
+                            {!playerAdded ? 'add player' : !world ? 'select world' : 'add'}
+                        </Button>
+                    </Container>
+                    <Container>
+                        <Label>Remove a World</Label>
+                        {savedWorlds.map(w => (
+                            <Button
+                                key={w.worldId * 100}
+                                onClick={() => this.changeWorld(w.worldId)}
+                                active={world === w.worldId}
+                            >
+                                {w.worldName}
+                            </Button>
+                        ))}
+                        <Button onClick={this.deleteWorld}>delete</Button>
+                    </Container>
+                    <Container>
                         <Label>Logout</Label>
-                        <Container>
-                            <Button onClick={this.props.logout}>logout</Button>
-                        </Container>
-                    </Area>
+                        <Button onClick={this.props.logout}>logout</Button>
+                    </Container>
+                <Alert>{error}</Alert>
                 </Row>
-                <Error>{error}</Error>
             </Body>
         );
     }
