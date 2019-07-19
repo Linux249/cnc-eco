@@ -14,7 +14,7 @@ export default ({ auth, path, name, component: Component }) => {
                     name || (path === '/user') ? (
                         <Component />
                     ) : (
-                        // if no user is set but auth allready
+                        // if no user is set but auth already
                         <Redirect to="/user" />
                     )
                 ) : (

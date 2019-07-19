@@ -17,6 +17,7 @@ const Link = Button.withComponent(
 
         &:hover {
             background-color: ${backgroundColorButtonHeader};
+            transition: background 0.1s linear;
         }
     `
 );
@@ -30,7 +31,7 @@ class BaseHeader extends Component {
                     <NavLink to="/">CNC-ECO</NavLink>
                 </Title>
                 <Row wrap>
-                    {isAuthenticated && (
+                    {isAuthenticated && name && (
                         <>
                             <WorldsMenu />
                             <Link to="/bases" activeClassName="active">
@@ -49,7 +50,7 @@ class BaseHeader extends Component {
                     </Link>
                     {isAuthenticated ? (
                         <Link to="/user" activeClassName="active">
-                            {name}
+                            {name || 'Add a player name first'}
                         </Link>
                     ) : (
                         <Fragment>

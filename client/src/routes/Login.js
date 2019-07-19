@@ -2,56 +2,71 @@ import React from 'react';
 import { changeAuthEmail, changeAuthPassword, requestLogin } from '../store/actions/auth';
 import connect from 'react-redux/es/connect/connect';
 import Input from '../style/Input';
-import styled from 'styled-components';
-import { Button } from '../style/Button';
 import { Redirect } from 'react-router';
 import { StyledLink } from '../style/Link';
-import Area from '../style/Area';
-
-const Middle = styled.div`
-    display: flex;
-    justify-content: center;
-`;
-
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 60rem;
-    margin: 1rem;
-`;
+import InputGroup from '../style/InputGroup';
+import Label from '../style/Label';
+import Container from '../style/Container';
+import Form from '../style/Form';
+import Submit from '../style/Submit';
+import Center from '../style/Center';
+import Alert from '../style/Alert';
 
 function Login(props) {
-    const { email, password, error, isAuthenticated, changeEmail, changePassword, login } = props;
+    const {
+        email,
+        password,
+        error,
+        isAuthenticated,
+        changeEmail,
+        changePassword,
+        login,
+        playerName,
+    } = props;
 
+    function handleSubmit(e) {
+        e.preventDefault();
+        login();
+    }
     return !isAuthenticated ? (
-        <Middle>
-            <Area>
-                <Container>
+        <Center>
+            <Container>
+                <Form onSubmit={handleSubmit}>
                     <h1>Login</h1>
-                    {error && <div>{error}</div>}
-                    <Input
-                        name="name"
-                        value={email}
-                        onChange={e => changeEmail(e.target.value)}
-                        type="email"
-                        placeholder="Email"
-                    />
-                    <Input
-                        name="password"
-                        value={password}
-                        onChange={e => changePassword(e.target.value)}
-                        type="password"
-                        placeholder="Password"
-                        minLength="4"
-                    />
-                    <Button onClick={() => login()}>Sign in</Button>
-                    <StyledLink to="/register">Need an account?</StyledLink>
-                </Container>
-            </Area>
-        </Middle>
+                    {error && <Alert>{error}</Alert>}
+                    <InputGroup>
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                            name="email"
+                            value={email}
+                            onChange={e => changeEmail(e.target.value)}
+                            type="email"
+                            placeholder="Email"
+                        />
+                    </InputGroup>
+                    <InputGroup>
+                        <Label htmlFor="password">Password</Label>
+                        <Input
+                            name="password"
+                            value={password}
+                            onChange={e => changePassword(e.target.value)}
+                            type="password"
+                            placeholder="Password"
+                            minLength="4"
+                        />
+                    </InputGroup>
+                    <InputGroup>
+                        <Submit type="submit" value="Login" />
+                    </InputGroup>
+                    New to CnC-Exo? <br />
+                    <StyledLink to="/register">Sign Up</StyledLink>
+                </Form>
+            </Container>
+        </Center>
+    ) : playerName ? (
+        <Redirect to="/" />
     ) : (
-        <Redirect to="/"/>
+        <Redirect to="/user" />
     );
 }
 
@@ -61,6 +76,7 @@ function mapStateToProps(state) {
         password: state.auth.password,
         error: state.auth.error,
         isAuthenticated: state.auth.isAuthenticated,
+        playerName: state.player.name,
     };
 }
 

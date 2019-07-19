@@ -1,15 +1,11 @@
 import styled from 'styled-components';
 
 export default styled.input`
-    //width: 100%;
+    width: 100%;
 
-    //margin: 0.75rem 1.5rem;
-    margin: 0.25rem 6px;
-    padding: 0.40em 0.5rem;
+    padding: 10px;
 
-    //font-size: 1rem;
-    line-height: 1;
-
+    box-sizing: border-box;
     color: #55595c;
     background-color: #fff;
 

@@ -32,7 +32,7 @@ export const requestLogin = () => {
 
         if (!resp.ok) {
             console.warn('LOGIN FAILURE');
-            return dispatch(loginError(data.message));
+            return dispatch(loginError(data.err));
         }
 
         localStorage.setItem(LOCAL_STORE, JSON.stringify(data));
@@ -65,9 +65,10 @@ export const requestRegister = () => {
 
         if (!resp.ok) {
             console.warn('LOGIN FAILURE');
-            return dispatch(loginError(data.message));
+            return dispatch(loginError(data.err));
         }
 
+        localStorage.setItem(LOCAL_STORE, JSON.stringify(data));
         console.log(resp);
         dispatch(receiveLogin(data));
         dispatch(updatePlayer(data.user));
