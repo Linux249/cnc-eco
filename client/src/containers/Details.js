@@ -121,7 +121,6 @@ class Details extends Component {
                     </div>
                 )}
                 {showNextBuildings && <NextBuildings />}
-
             </div>
             //
 

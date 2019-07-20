@@ -8,19 +8,19 @@ const Area = styled(AreaRaw)`
     padding: 10px 6px;
     margin: 5px 3px;
     font-size: 14px;
-`
+`;
 
 const Square = styled.div`
     width: 18px;
     height: 20px;
-    box-shadow: 0 0 3px -1px rgb(150,150,150);
+    box-shadow: 0 0 3px -1px rgb(150, 150, 150);
 `;
 
 const Container = styled.div`
     width: 162px;
     display: flex;
     flex-wrap: wrap;
-    
+
     margin-bottom: 0.1rem;
 `;
 

@@ -41,10 +41,10 @@ export const LoadingPoints = ({ loading }) => (
     <SpinnerBar>
         {loading !== 0 && (
             <>
-                <Spinner/>
-                <Spinner/>
-                <Spinner/>
-                <Spinner/>
+                <Spinner />
+                <Spinner />
+                <Spinner />
+                <Spinner />
             </>
         )}
     </SpinnerBar>

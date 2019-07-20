@@ -18,7 +18,7 @@ class BuildingSlot extends Component {
         const { building } = this.props;
         event.preventDefault();
         const { key } = event; // get pressed key
-        console.log(building, key, event)
+        console.log(building, key, event);
 
         //change building type
         if (buildingKeys.includes(key)) {
@@ -43,7 +43,7 @@ class BuildingSlot extends Component {
         const digits = new RegExp('[0-9]');
         if (digits.exec(key) && building.lvl) {
             const rawLvl = `${building.lvl}${key}`;
-            const stringLvL =(rawLvl.length > 2 )? rawLvl.slice(1) : rawLvl;
+            const stringLvL = rawLvl.length > 2 ? rawLvl.slice(1) : rawLvl;
             const lvl = +stringLvL;
             building.lvl = !lvl ? 1 : lvl > 65 ? 65 : lvl;
             console.log({ rawLvl, building });

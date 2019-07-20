@@ -12,7 +12,7 @@ export default styled.div`
     & > div > img {
         margin-right: 5px;
     }
-     & > div {
+    & > div {
         display: flex;
         align-items: center;
         flex: 1;

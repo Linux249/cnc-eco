@@ -179,7 +179,7 @@ class User extends Component {
                 <div />
                 <Row wrap>
                     <Container>
-                        <Label htmlFor="name">{playerAdded? 'Change' : 'add'} player name</Label>
+                        <Label htmlFor="name">{playerAdded ? 'Change' : 'add'} player name</Label>
                         <Input
                             name="name"
                             value={name}
@@ -224,7 +224,11 @@ class User extends Component {
                         <Title>Logout</Title>
                         <Button onClick={this.props.logout}>logout</Button>
                     </Container>
-                    {error && <><Alert>{error}</Alert></> }
+                    {error && (
+                        <>
+                            <Alert>{error}</Alert>
+                        </>
+                    )}
                 </Row>
                 <BodySide>
                     {!playerAdded && <Alert>Add your ingame name to your account please</Alert>}

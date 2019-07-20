@@ -13,6 +13,6 @@ export default styled.div`
     //height: 100%;
     width: fit-content;
 
-    padding: ${({small})=> small ? '2px' : '10px'};
+    padding: ${({ small }) => (small ? '2px' : '10px')};
     margin: 5px;
 `;

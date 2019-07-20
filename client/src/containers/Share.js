@@ -4,10 +4,9 @@ import Button from '../style/Button';
 import { store } from '../index';
 import { api_url } from '../config';
 import Input from '../style/Input';
-import Area from '../style/Area';
 import Row from '../style/Row';
 import Alert from '../style/Alert';
-import { ReactComponent as ShareIcon } from '../icons/Share.svg'
+import { ReactComponent as ShareIcon } from '../icons/Share.svg';
 import Title from '../style/Title';
 import Container from '../style/Container';
 

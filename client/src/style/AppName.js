@@ -8,7 +8,5 @@ export default styled.div`
         font-size: 2rem;
         font-weight: 900;
         color: white;
-    
-    } 
-   
+    }
 `;
