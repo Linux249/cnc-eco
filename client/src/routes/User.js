@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import { api_url } from '../config';
 import { updatePlayer } from '../store/actions/player';
 import { logout } from '../store/actions/auth';
 import Button from '../style/Button';
 import Input from '../style/Input';
-import Area from '../style/Area';
 import LoadingPoints from '../style/LoadingPoints';
 import Label from '../style/Label';
 import { InfoText } from '../style/InfoText';
-import Error from '../style/Error';
 import Row from '../style/Row';
 import Body from '../style/Body';
 import Container from '../style/Container';
@@ -226,7 +223,7 @@ class User extends Component {
                         <Label>Logout</Label>
                         <Button onClick={this.props.logout}>logout</Button>
                     </Container>
-                <Alert>{error}</Alert>
+                    <Alert>{error}</Alert>
                 </Row>
             </Body>
         );

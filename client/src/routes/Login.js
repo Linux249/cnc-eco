@@ -3,7 +3,7 @@ import { changeAuthEmail, changeAuthPassword, requestLogin } from '../store/acti
 import connect from 'react-redux/es/connect/connect';
 import Input from '../style/Input';
 import { Redirect } from 'react-router';
-import { StyledLink } from '../style/Link';
+import { Link } from 'react-router-dom';
 import InputGroup from '../style/InputGroup';
 import Label from '../style/Label';
 import Container from '../style/Container';
@@ -59,7 +59,7 @@ function Login(props) {
                         <Submit type="submit" value="Login" />
                     </InputGroup>
                     New to CnC-Exo? <br />
-                    <StyledLink to="/register">Sign Up</StyledLink>
+                    <Link to="/register">Sign Up</Link>
                 </Form>
             </Container>
         </Center>

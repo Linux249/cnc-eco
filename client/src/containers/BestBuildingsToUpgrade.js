@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from '../style/Button';
 import { store } from '../index';
 import { api_url } from '../config';
-import Error from '../style/Error';
+import Alert from '../style/Alert';
 import { replaceBuilding } from '../store/actions/base';
 import Row from '../style/Row';
 import styled from 'styled-components';
@@ -57,7 +57,7 @@ function BestBuildingsToUpgrade() {
     return (
         <Row wrap>
             {loading && <div>loading</div>}
-            <Error>{error}</Error>
+            <Alert>{error}</Alert>
             <Button onClick={handleClick}>find best tib</Button>
             {items.map((e, i) => {
                 const img = require('./../img/buildings/' +

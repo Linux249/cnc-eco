@@ -3,7 +3,7 @@ import { changeAuthEmail, changeAuthPassword, requestRegister } from '../store/a
 import connect from 'react-redux/es/connect/connect';
 import Input from '../style/Input';
 import { Redirect } from 'react-router';
-import { StyledLink } from '../style/Link';
+import { Link } from 'react-router-dom';
 import Form from '../style/Form';
 import Label from '../style/Label';
 import InputGroup from '../style/InputGroup';
@@ -59,7 +59,7 @@ function Login(props) {
                         <Submit type="submit" value="Sign Up" />
                     </InputGroup>
                     Already have an account? <br />
-                    <StyledLink to="/login">Login</StyledLink>
+                    <Link to="/login">Login</Link>
                 </Form>
             </Container>
         </Center>

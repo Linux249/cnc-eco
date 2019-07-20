@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { api_url } from '../config';
-import Error from '../style/Error';
+import Alert from '../style/Alert';
 import urlToBase from '../util/parseurl';
 import {store} from '..';
 import { replaceAllBase } from '../store/actions/base';
@@ -39,7 +39,7 @@ export const S = props => {
         :(
         <div>
             loading
-            <Error>{err}</Error>
+            <Alert>{err}</Alert>
         </div>
     );
 };
