@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../style/DropDown.css';
+import './DropDown.css';
 
 // code from https://codepen.io/ariona/pen/pENkXW
 
@@ -107,7 +107,7 @@ menuSubs.forEach(el => {
     el.addEventListener('mouseleave', () => startCloseTimeout(), false);
 });
 
-export default class DropDown extends Component {
+export default class StripeDropdown extends Component {
     state = {
         closeDropdownTimeout: null,
     };

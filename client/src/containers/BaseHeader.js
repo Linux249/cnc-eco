@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import Header from '../style/BaseHeader';
-import Title from '../style/Title';
+import Title from '../style/AppName';
 import Button from '../style/Button';
 import Row from '../style/Row';
 import styled from 'styled-components';
@@ -11,7 +11,7 @@ import { backgroundColorButtonHeader } from '../style/constants';
 
 const Link = Button.withComponent(
     styled(NavLink)`
-        color: white;
+        color: white !important;
         //background-color: inherit;
         border: none !important;
 

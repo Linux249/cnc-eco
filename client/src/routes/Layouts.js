@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Body from '../style/Body';
-import Title from '../style/Title';
+import Title from '../style/AppName';
 import Button from '../style/Button';
 // import Row from '../style/Row';
 import Layout from '../components/Layout';

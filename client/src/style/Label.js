@@ -1,6 +1,4 @@
 import styled from 'styled-components';
+import Title from './Title';
 
-export default styled.div`
-    display: block;
-    padding-bottom: 5px;
-`;
+export default styled(Title).attrs({ as: 'div' })``;

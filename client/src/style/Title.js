@@ -1,14 +1,8 @@
 import styled from 'styled-components';
 
 export default styled.div`
-    display: flex;
-
-    a {
-        font-family: 'Lucida Console', Courier, monospace;
-        font-size: 2rem;
-        font-weight: 900;
-        color: white;
-    
-    } 
-   
+    display: block;
+    padding-bottom: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 300;
 `;

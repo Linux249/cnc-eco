@@ -6,12 +6,14 @@ import { logout } from '../store/actions/auth';
 import Button from '../style/Button';
 import Input from '../style/Input';
 import LoadingPoints from '../style/LoadingPoints';
+import Title from '../style/Title';
 import Label from '../style/Label';
 import { InfoText } from '../style/InfoText';
 import Row from '../style/Row';
 import Body from '../style/Body';
 import Container from '../style/Container';
 import Alert from '../style/Alert';
+import BodySide from '../style/BodySide';
 
 class User extends Component {
     constructor(props) {
@@ -177,8 +179,7 @@ class User extends Component {
                 <div />
                 <Row wrap>
                     <Container>
-                        <Label>Player name</Label>
-                        <InfoText>add your ingame name to your account please</InfoText>
+                        <Label htmlFor="name">{playerAdded? 'Change' : 'add'} player name</Label>
                         <Input
                             name="name"
                             value={name}
@@ -188,7 +189,7 @@ class User extends Component {
                         <InfoText>you can only all 7 days change your username</InfoText>
                     </Container>
                     <Container>
-                        <Label>Select a World</Label>
+                        <Title>Add a World</Title>
                         <LoadingPoints loading={loading} />
                         {worlds.length !== 0 &&
                             worlds.map(w => (
@@ -207,7 +208,7 @@ class User extends Component {
                         </Button>
                     </Container>
                     <Container>
-                        <Label>Remove a World</Label>
+                        <Title>Remove a World</Title>
                         {savedWorlds.map(w => (
                             <Button
                                 key={w.worldId * 100}
@@ -220,11 +221,14 @@ class User extends Component {
                         <Button onClick={this.deleteWorld}>delete</Button>
                     </Container>
                     <Container>
-                        <Label>Logout</Label>
+                        <Title>Logout</Title>
                         <Button onClick={this.props.logout}>logout</Button>
                     </Container>
-                    <Alert>{error}</Alert>
+                    {error && <><Alert>{error}</Alert></> }
                 </Row>
+                <BodySide>
+                    {!playerAdded && <Alert>Add your ingame name to your account please</Alert>}
+                </BodySide>
             </Body>
         );
     }

@@ -23,6 +23,8 @@ export const Button = styled.div`
     margin: 0.25rem;
 
     font-size: 0.8rem;
+    font-weight: 700;
+    color: #4d3e13;
 
     &:hover {
         //height: 2rem;
