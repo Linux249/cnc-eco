@@ -33,12 +33,12 @@ class UrlLoader extends Component {
     render() {
         return (
             <Container>
-                <Title>Load base from old cnc opt url</Title>
+                <Title>Load from cnc opt url</Title>
                 <Row>
-                    <Button onClick={this.updateBase}>
-                        load <DownloadIcon />
-                    </Button>
                     <Input small type="url" ref="url" placeholder="Paste the link here" />
+                    <Button onClick={this.updateBase}>
+                        <DownloadIcon />
+                    </Button>
                 </Row>
             </Container>
         );

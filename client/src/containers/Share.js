@@ -9,6 +9,7 @@ import Row from '../style/Row';
 import Alert from '../style/Alert';
 import { ReactComponent as ShareIcon } from '../icons/Share.svg'
 import Title from '../style/Title';
+import Container from '../style/Container';
 
 const Share = () => {
     const [url, setUrl] = useState('');
@@ -52,7 +53,7 @@ const Share = () => {
     }
 
     return (
-        <Area>
+        <Container>
             <Title>Share your bases</Title>
             <Row>
                 <Input
@@ -61,11 +62,11 @@ const Share = () => {
                     value={loading ? 'loading ...' : url}
                 />
                 <Button onClick={handleClick}>
-                    share <ShareIcon></ShareIcon>
+                    <ShareIcon></ShareIcon>
                 </Button>
                 {error && <Alert> {error.message} </Alert>}
             </Row>
-        </Area>
+        </Container>
     );
 };
 
