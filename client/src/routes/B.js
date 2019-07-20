@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router';
 import Alert from '../style/Alert';
 import urlToBase from '../util/parseurl';
 import { store } from '..';
 import { replaceAllBase } from '../store/actions/base';
-import { Redirect } from 'react-router';
 
 export const B = props => {
     const [err, setError] = useState(null);

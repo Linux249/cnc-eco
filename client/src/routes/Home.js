@@ -6,17 +6,15 @@ import Base from '../components/Base';
 import Column from '../style/Column';
 import Body from '../style/Body';
 
-export default () => {
-    return (
-        <Column center>
-            <Body>
-                <BuildingMenu />
-                <Base />
-                <div>
-                    <Share />
-                    <UrlInfo />
-                </div>
-            </Body>
-        </Column>
-    );
-};
+export default () => (
+    <Column center>
+        <Body>
+            <BuildingMenu />
+            <Base />
+            <div>
+                <Share />
+                <UrlInfo />
+            </div>
+        </Body>
+    </Column>
+);

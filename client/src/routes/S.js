@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router';
 import { api_url } from '../config';
 import Alert from '../style/Alert';
 import urlToBase from '../util/parseurl';
 import { store } from '..';
 import { replaceAllBase } from '../store/actions/base';
-import { Redirect } from 'react-router';
 
 export const S = props => {
     const [err, setError] = useState(null);
@@ -12,7 +12,7 @@ export const S = props => {
     const { url } = props.match.params;
 
     async function load() {
-        const item = await fetch(api_url + '/urlToBase/' + url)
+        const item = await fetch(`${api_url}/urlToBase/${url}`)
             .then(r => r.json())
             .catch(e => {
                 console.log('ERROR');
@@ -20,7 +20,7 @@ export const S = props => {
             });
         if (item.url) {
             const base = urlToBase(
-                '3|' + item.faction + '|' + 'item.faction' + '|' + item.name + '|' + item.url
+                `3|${item.faction}|` + 'item.faction' + `|${item.name}|${item.url}`
             );
             console.log(base);
             store.dispatch(replaceAllBase(base));

@@ -2,7 +2,6 @@
   "name": "cnc-eco-client",
   "version": "0.1.2",
   "devDependencies": {
-    "eslint": "^5.16.0",
     "prettier": "^1.18.2",
     "redux-logger": "^3.0.6",
     "why-did-you-update": "0.0.8"
