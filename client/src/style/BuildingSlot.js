@@ -11,6 +11,8 @@ export default styled.div`
     border-color: rgba(37, 38, 39, 0.1);
     border-style: solid;
     border-width: 1px;
+    
+    font-size: 0.75rem;
 
     & > img {
         //position: absolute;

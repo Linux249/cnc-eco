@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import Area from './Area';
+import { sizes } from './constants';
 
 const Container = styled(Area)`
     display: block;
     width: 332px;
 
-    @media (max-width: 768px) {
+    @media ${sizes.mobile} {
         width: 100%;
     }
 `;
