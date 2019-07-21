@@ -20,7 +20,7 @@ export const Button = styled.div`
 
     ${({ active }) => (active ? 'border-color: #551A8B;' : '')}; //margin: 2px;
     padding: ${({ small }) => (small ? '0.2rem' : '0.4rem')} 0.75rem;
-    margin: 0.25rem;
+    margin: ${({ small }) => (small ? '0' : '0.25rem')};
 
     font-size: 0.8rem;
     font-weight: 700;
