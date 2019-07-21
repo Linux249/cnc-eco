@@ -3,6 +3,8 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { googleAuth } from './config';
 import User from '../model/User';
+import { sendMail } from '../../service/mail';
+import Token from '../model/Token';
 
 const passportJWT = require('passport-jwt');
 
@@ -56,6 +58,9 @@ export default passport => {
                     if (!user.validPassword(password)) {
                         return done(new Error('Wrong password.'), false);
                     }
+                    if (!user.isVerified) {
+                        return done(new Error('Email not verified'), false);
+                    }
                     // all is well, return user
                     return done(null, user);
                 } catch (err) {
@@ -87,7 +92,7 @@ export default passport => {
                 process.nextTick(() => {
                     // if the user is not already logged in:
                     if (!req.user) {
-                        User.findOne({ 'local.email': email }, (err, user) => {
+                        User.findOne({ 'local.email': email }, async (err, user) => {
                             // console.log("no user???")
                             // console.log({err, user, email, password})
                             // console.log(password)
@@ -96,7 +101,12 @@ export default passport => {
 
                             // check to see if theres already a user with that email
                             if (user) {
-                                return done(new Error('That email is already taken.'), false);
+                                if (user.isVerified)
+                                    return done(new Error('That email is already taken.'), false);
+                                else {
+                                    console.log(await User.remove(user));
+                                    console.log(await Token.remove({ _userId: user.id }));
+                                }
                             }
                             // create the user
                             const newUser = new User();
@@ -107,6 +117,24 @@ export default passport => {
                             newUser.save((err, savedUser) => {
                                 if (err) return done(err);
                                 savedUser.local.password = undefined;
+                                // const token = new Token({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
+                                const token = new Token({
+                                    _userId: savedUser._id,
+                                    token: Math.random()
+                                        .toString(36)
+                                        .substr(2),
+                                });
+
+                                // console.log(newUser)
+                                console.log(savedUser);
+                                console.log(token);
+                                token.save(async function(err) {
+                                    if (err)
+                                        return done(new Error('Token could not be saved.'), false);
+                                    // Send the email
+                                    await sendMail(token, savedUser.local.email);
+                                });
+
                                 return done(null, savedUser);
                             });
                         });
@@ -151,7 +179,7 @@ export default passport => {
                 clientSecret: googleAuth.clientSecret,
                 callbackURL: '/api/v1/auth/google/callback',
                 proxy: true, // do this only if you trust your provider!
-                passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+                passReqToCallback: true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
             },
             async (req, accessToken, refreshToken, profile, done) => {
                 try {
@@ -204,7 +232,7 @@ export default passport => {
         new JWTStrategy(
             {
                 jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-                secretOrKey: process.env.JWT_SECRET || 'dummy1234556'
+                secretOrKey: process.env.JWT_SECRET || 'dummy1234556',
             },
             // SECURE CHECK check user in db prevents for sending false payload
             (jwtPayload, done) =>

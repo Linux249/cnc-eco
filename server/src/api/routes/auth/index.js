@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+import Token from '../../model/Token';
+import User from '../../model/User';
 
 module.exports = function(app, passport) {
     // app.delete()
@@ -79,6 +81,34 @@ module.exports = function(app, passport) {
                 return res.json({ user, token });
             });
         })(req, res);
+    });
+
+    app.get('/local/verify', async (req, res, next) => {
+        console.log('VERIFY');
+        const { token } = req.query;
+        if (!token) return next(new Error('Token missing'));
+
+        // Find a matching token
+        Token.findOne({ token }, function(err, doc) {
+            if (!doc)
+                return next(new Error('Unable to find a valid token. Your token my have expired.'));
+            console.log(doc);
+            // If we found a token, find a matching user
+            console.log(doc._userId);
+            User.findOne({ _id: doc._userId }, function(err, user) {
+                if (!user) return next(new Error('Unable to find a user for this token.'));
+                if (user.isVerified) return next(new Error('User has already been verified.'));
+
+                // Verify and save the user
+                user.isVerified = true;
+                user.save(function(err) {
+                    if (err) {
+                        return next(new Error('Error updating user'));
+                    }
+                    res.status(200).redirect('http://www.cnc-eco.de/login');
+                });
+            });
+        });
     });
 
     // SIGNUP =================================

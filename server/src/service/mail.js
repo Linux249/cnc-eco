@@ -1,24 +1,30 @@
-const nodemailer = require('nodemailer');
-
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'cncecoserver@gmail.com', // TODO config for Login dev/prod
-        pass: 'yourpassword',
-    },
-});
-
-const mailOptions = {
-    from: 'cncecoserver@gmail.com',
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(
+    process.env.SENDGRID_API_KEY ||
+        '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'
+);
+const msg = {
     to: 'julian.libor@gmail.com',
-    subject: 'CnCEco Web-Server status',
-    text: 'That was easy!',
+    from: 'login@cnc-eco.de',
+    subject: 'Please verify your email for cnc-eco.de',
+    text: 'and easy to do anywhere, even with Node.js',
+    html: '<strong>and easy to do anywhere, even with Node.js</strong>',
 };
 
-transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-        console.log(error);
-    } else {
-        console.log(`Email sent: ${info.response}`);
+export async function sendMail(token, mail) {
+    console.log('sendMail');
+    msg.to = mail;
+    const body =
+        'Hello,\n\n' +
+        'Please verify your account by clicking the link: \nhttp://www.cnc-eco.de/api/v1/local/verify?token=' +
+        token.token +
+        '.\n';
+    msg.text = body;
+    msg.html = body;
+    console.log(msg);
+    try {
+        return await sgMail.send(msg);
+    } catch (e) {
+        console.error(e);
     }
-});
+}
