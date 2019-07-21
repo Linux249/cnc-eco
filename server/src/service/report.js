@@ -41,7 +41,7 @@ export const createReport = async db => {
         const collections = await db.listCollections().toArray();
         const layoutsColl = collections.filter(coll => coll.name.includes('layouts'));
         const reportsColl = collections.filter(coll => coll.name.includes('reports_'));
-        const playerColl = collections.filter(coll => coll.name.includes('player_'));
+        const playerColl = collections.filter(coll => coll.name.includes('player_y'));
 
         // got throug each World/collection
         await Promise.all(
@@ -99,6 +99,7 @@ export const createReport = async db => {
                 report.worldsReports.push(reportWorld);
             })
         );
+        console.log({report})
 
         await Promise.all(
             playerColl.map(async ({ name }) => {
