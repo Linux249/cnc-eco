@@ -12,12 +12,15 @@ import supplyPoints from '../img/icon/supply_points.png';
 import funds from '../img/icon/funds.png';
 import commandoPoints from '../img/icon/commando_points.png';
 import offenseRepair from '../img/icon/offense_repair.png';
-import Body from '../style/Body';
+import BodyRaw from '../style/Body';
 import Row from '../style/Row';
 import Button from '../style/Button';
 import styled from 'styled-components';
 import { msToTime } from '../util/secToTime';
 import Column from '../style/Column';
+import { border, borderRadius } from '../style/constants';
+import Container from '../style/Container';
+import Title from '../style/Title';
 
 // TODO show last update in table
 
@@ -33,6 +36,10 @@ const AllianceS = styled.div`
     max-height: 90vh;
     overflow: auto;
     font-size: 0.7rem;
+    
+    padding: 5px;
+    
+    font-weight: 700;
     
     /*
     Custom scrollbar style
@@ -64,16 +71,18 @@ const Cell = styled.div`
     align-items: center;
 
     padding: 0.1rem 0.5rem;
-    //border-color: rgba(37, 38, 39, 0.1);
-    //border-style: solid;
-    //border-width: 1px;
-    box-shadow: 0 0 2px -1px rgb(150, 150, 150);
+    border: ${border};
+    border-radius: ${borderRadius};
 `;
 
 const Icon = styled.img`
     width: 1.4rem;
     height: 1.4rem;
     margin: 0.2rem;
+`;
+const Body = styled(BodyRaw)`
+    grid-column-end: 2;
+    grid-template-columns: minmax(100px, 90%) 1fr;
 `;
 
 class Alliance extends Component {
@@ -121,12 +130,11 @@ class Alliance extends Component {
         const {} = this.props;
         return (
             <Body>
-                <div />
                 <AllianceS>
                     <Grid>
                         <Cell>Name</Cell>
-                        <Cell>Ranking</Cell>
-                        <Cell>Rolle</Cell>
+                        <Cell>Rank</Cell>
+                        <Cell>Roll</Cell>
                         <Cell>Score</Cell>
                         <Cell>
                             <Icon src={researchPoints} alt="Research" />
@@ -257,10 +265,13 @@ class Alliance extends Component {
                     </Grid>
                 </AllianceS>
                 <Column>
-                    <Row center>
-                        <Row>{name + ' (' + count + ')'}</Row>
+                    <Container center>
+                        <Title>{name + ' (' + count + ')'}</Title>
+                        <Row>
+
                         <Button onClick={this.getAlliance}>update</Button>
-                    </Row>
+                        </Row>
+                    </Container>
                 </Column>
             </Body>
         );
