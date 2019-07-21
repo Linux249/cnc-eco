@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/Linux249/cnc-eco#readme",
   "engines": {
-    "node": "10.3."
+    "node": "10.3.0"
   }
 }
