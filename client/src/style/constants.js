@@ -3,6 +3,7 @@ export const hoverColor = '#dadada';
 export const backgroundColor = '#fff';
 export const backgroundColorHeader = '#3d1466';
 export const backgroundColorButtonHeader = '#8128d4';
+export const baseLight = '#c2bacc';
 export const borderColor = '#CCC';
 export const shadowColor = 'rgba(150, 150, 150, 0.1)';
 
