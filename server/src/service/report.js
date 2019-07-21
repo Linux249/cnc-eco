@@ -33,8 +33,8 @@ export const createReport = async db => {
     const date = new Date();
     date.setDate(date.getDate() - 14); // date 14 days before now
 
-    const date2 = new Data();
-    date2.setData(date2.getDate() - 60);
+    const date2 = new Date();
+    date2.setDate(date2.getDate() - 60);
 
     try {
         // collections for the layouts
