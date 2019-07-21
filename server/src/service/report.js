@@ -64,11 +64,11 @@ export const createReport = async db => {
 
                 // getting db stats
                 // TODO analyzing stas document and pic only relevant infos
-                reportWorld.stats = await collection.stats({
+                const stats = await collection.stats({
                     scale: 1024,
                 });
 
-                if (reportWorld.stats.count === 0) {
+                if (stats.count === 0) {
                     await collection.drop();
                     console.log('delete collection: ' + name);
                 }

@@ -18,7 +18,7 @@ import Button from '../style/Button';
 import styled from 'styled-components';
 import { msToTime } from '../util/secToTime';
 import Column from '../style/Column';
-import { border, borderRadius } from '../style/constants';
+import { backgroundColorButtonHeader, border, borderRadius } from '../style/constants';
 import Container from '../style/Container';
 import Title from '../style/Title';
 
@@ -73,6 +73,8 @@ const Cell = styled.div`
     padding: 0.1rem 0.5rem;
     border: ${border};
     border-radius: ${borderRadius};
+    
+    ${p => p.active ? 'background-color: ' + backgroundColorButtonHeader : ''};
 `;
 
 const Icon = styled.img`
@@ -90,6 +92,7 @@ class Alliance extends Component {
         super();
         this.state = {
             members: [],
+            s: 'rank',
             name: '',
             count: 0,
             lastUpdate: null,
@@ -124,38 +127,55 @@ class Alliance extends Component {
         });
         this.props.changeLoading(false);
     };
+    sort = s => {
+        console.log('SORT');
+        console.log(s);
+        const { members } = this.state;
+        // console.log({ members });
+
+        const sorted = [
+            ...members.sort((a, b) => {
+                return !a[s] || !b[s] ?  -1 : b[s] - a[s];
+            }),
+        ];
+        // console.log({ sorted });
+        this.setState({
+            members: sorted,
+            s
+        });
+    };
 
     render() {
-        const { members, name, count, lastUpdate } = this.state;
+        const { members, name, count, s } = this.state;
         const {} = this.props;
         return (
             <Body>
                 <AllianceS>
                     <Grid>
                         <Cell>Name</Cell>
-                        <Cell>Rank</Cell>
+                        <Cell active={s === 'rank'} onClick={() => this.sort('rank')}>Rank</Cell>
                         <Cell>Roll</Cell>
-                        <Cell>Score</Cell>
-                        <Cell>
+                        <Cell  active={s === 'points'} onClick={() => this.sort('points')}>Score</Cell>
+                        <Cell active={s === 'rPoints'}  onClick={() => this.sort('rPoints')}>
                             <Icon src={researchPoints} alt="Research" />
                         </Cell>
-                        <Cell>Bases</Cell>
-                        <Cell>PVE</Cell>
-                        <Cell>PVP</Cell>
+                        <Cell active={s === 'basecount'}  onClick={() => this.sort('basecount')}>Bases</Cell>
+                        <Cell  active={s === 'pvekills'} onClick={() => this.sort('pvekills')}>PVE</Cell>
+                        <Cell  active={s === 'pvpkills'} onClick={() => this.sort('pvpkills')}>PVP</Cell>
                         <Cell>Code</Cell>
-                        <Cell>
+                        <Cell  active={s === 'creditsCount'} onClick={() => this.sort('creditsCount')}>
                             <Icon src={credits} alt="Credits" />
                         </Cell>
-                        <Cell>
+                        <Cell  active={s === 'actcp'} onClick={() => this.sort('actcp')}>
                             <Icon src={commandoPoints} alt="CP" />
                         </Cell>
-                        <Cell>
+                        <Cell  active={s === 'funds'} onClick={() => this.sort('funds')}>
                             <Icon src={funds} alt="Funds" />
                         </Cell>
-                        <Cell>
+                        <Cell  active={s === 'schirme'} onClick={() => this.sort('schirme')}>
                             <Icon src={supplyPoints} alt="Supply" />
                         </Cell>
-                        <Cell>Time</Cell>
+                        <Cell  active={s === 'timeToMcv'} onClick={() => this.sort('timeToMcv')}>Time</Cell>
 
                         <Cell>
                             <div>Off</div>
@@ -167,27 +187,27 @@ class Alliance extends Component {
                             <Icon src={offenseRepair} alt="Repair" />
                         </Cell>
 
-                        <Cell>
+                        <Cell  active={s === 'totalTib'} onClick={() => this.sort('totalTib')}>
                             <Icon src={tib} alt="Tib" />
                             /h
                         </Cell>
-                        <Cell>
+                        <Cell  active={s === 'totalPower'} onClick={() => this.sort('totalPower')}>
                             <Icon src={cris} alt="Cris" />
                             /h
                         </Cell>
-                        <Cell>
+                        <Cell  active={s === 'totalCris'} onClick={() => this.sort('totalCris')}>
                             <Icon src={power} alt="Power" />
                             /h
                         </Cell>
-                        <Cell>
+                        <Cell  active={s === 'totalCredits'} onClick={() => this.sort('totalCredits')}>
                             <Icon src={credits} alt="Credits" />
                             /h
                         </Cell>
 
-                        <Cell>Def&#8709;</Cell>
-                        <Cell>Sub&#8709;</Cell>
-                        <Cell>Def Fa&#8709;</Cell>
-                        <Cell>Def HQ&#8709;</Cell>
+                        <Cell active={s === 'avargDef'}  onClick={() => this.sort('avargDef')}>Def&#8709;</Cell>
+                        <Cell  active={s === 'avargSubLvl'} onClick={() => this.sort('avargSubLvl')}>Sub&#8709;</Cell>
+                        <Cell  active={s === 'avargDfLvl'} onClick={() => this.sort('avargDfLvl')}>Def Fa&#8709;</Cell>
+                        <Cell  active={s === 'avargDfHQLvl'} onClick={() => this.sort('avargDfHQLvl')}>Def HQ&#8709;</Cell>
 
                         {members.map(member => {
                             return member.data ? (
@@ -268,8 +288,7 @@ class Alliance extends Component {
                     <Container center>
                         <Title>{name + ' (' + count + ')'}</Title>
                         <Row>
-
-                        <Button onClick={this.getAlliance}>update</Button>
+                            <Button onClick={this.getAlliance}>update</Button>
                         </Row>
                     </Container>
                 </Column>
