@@ -92,7 +92,7 @@ class Alliance extends Component {
         console.log(this.props.auth);
         const { w, allianceId, token } = this.props;
         console.log(w, allianceId, token);
-        if (this.props.auth) this.getAlliance();
+        if (this.props.auth && this.props.allianceId) this.getAlliance();
     }
 
     getAlliance = async () => {
