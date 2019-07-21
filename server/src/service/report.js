@@ -99,7 +99,7 @@ export const createReport = async db => {
                 report.worldsReports.push(reportWorld);
             })
         );
-        console.log({report})
+        console.log({ report, playerColl });
 
         await Promise.all(
             playerColl.map(async ({ name }) => {
@@ -110,7 +110,7 @@ export const createReport = async db => {
                     _updated: { $lt: date2 },
                 });
                 if (!result.ok) console.log('FEHLER BEIM LÖSCHEN VON Playern'); // TODO bedder error handling
-                console.log(result)
+                // console.log(result);
 
                 // todo add logging into reports
             })
