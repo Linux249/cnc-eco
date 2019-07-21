@@ -69,7 +69,7 @@ class BaseHeader extends Component {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
+    isAuthenticated: state.auth.isAuthenticated && state.auth.isVerified,
     name: state.player.name,
     world: state.player.w,
 });

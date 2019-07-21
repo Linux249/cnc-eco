@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import User from '../model/User';
+import Token from '../model/Token';
 
 const router = Router();
 
@@ -13,12 +14,11 @@ router.get('/user', async (req, res) => {
 // DELETE /api/v1/user/5bd708bfd279eb34d088bc69
 router.delete('/user/:id', async (req, res) => {
     const { id } = req.params;
-    // TODO auth require
-    // console.log({id})
 
     try {
         const user = await User.remove({ _id: id });
-        res.json(user);
+        const token = await Token.remove({ _userId: id });
+        res.json({ user, token });
     } catch (e) {
         res.json(e);
     }
@@ -93,7 +93,9 @@ router.post('/user/addPlayer', async (req, res, next) => {
         } else {
             return next(
                 new Error(
-                    `Cannot add Player: Player was not updated in the last 3 minutes (${Math.round(minutes)}) - please update data ingame`
+                    `Cannot add Player: Player was not updated in the last 3 minutes (${Math.round(
+                        minutes
+                    )}) - please update data ingame`
                 )
             );
         }
@@ -123,7 +125,7 @@ router.post('/user/addWorld', async (req, res, next) => {
 
     // ANTI HACK Test if the player really is in User saved already
     if (user.player !== name) {
-        return next(new Error('Cannot add Player: Player doesn\'t belong to this Account'));
+        return next(new Error("Cannot add Player: Player doesn't belong to this Account"));
     }
 
     // Test if player exists on the world
@@ -162,9 +164,7 @@ router.post('/user/addWorld', async (req, res, next) => {
         user.save((err, doc) => {
             if (err) return next(err);
             console.log(
-                `Player ${player.name} added world  ${player.serverName} to user ${
-                    user.local.email
-                    }`
+                `Player ${player.name} added world  ${player.serverName} to user ${user.local.email}`
             );
             return res.json(doc);
         });
@@ -178,7 +178,7 @@ router.post('/user/addWorld', async (req, res, next) => {
 });
 router.post('/user/removeWorld', async (req, res, next) => {
     // name is player name given from user
-    const {  worldId } = req.body;
+    const { worldId } = req.body;
     // TODO worldName comes also from where user choose world later
     console.log(req.body);
     //if (!name) return next(new Error('Player name missing'));
@@ -198,7 +198,7 @@ router.post('/user/removeWorld', async (req, res, next) => {
     }
 
     // find player
-   /* const player = await collection.findOne({ name });
+    /* const player = await collection.findOne({ name });
     if (!player) {
         // TODO rework error - this route should not be accessible without existing player name
         return next(
@@ -217,7 +217,7 @@ router.post('/user/removeWorld', async (req, res, next) => {
 
     // Test if player is updated in last 2 min
     try {
-        user.worlds = user.worlds.filter(o => o.worldId !== worldId)
+        user.worlds = user.worlds.filter(o => o.worldId !== worldId);
         // const r = await collection.update({_id: player._id}, player)
         user.save((err, doc) => {
             if (err) return next(err);
@@ -225,7 +225,7 @@ router.post('/user/removeWorld', async (req, res, next) => {
             return res.json(doc);
         });
     } catch (e) {
-        return next(e)
+        return next(e);
     }
 
     // add player to user and time

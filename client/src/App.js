@@ -54,5 +54,5 @@ class App extends Component {
 }
 
 export default DragDropContext(HTML5Backend)(
-    connect(s => ({ auth: s.auth.isAuthenticated, name: s.player.name }))(App)
+    connect(s => ({ auth: s.auth.isAuthenticated && s.auth.isVerified, name: s.player.name }))(App)
 );

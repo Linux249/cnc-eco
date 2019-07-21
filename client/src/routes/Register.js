@@ -73,7 +73,7 @@ function mapStateToProps(state) {
         email: state.auth.email,
         password: state.auth.password,
         error: state.auth.error,
-        isAuthenticated: state.auth.isAuthenticated,
+        isAuthenticated: state.auth.isAuthenticated && state.auth.isVerified,
     };
 }
 

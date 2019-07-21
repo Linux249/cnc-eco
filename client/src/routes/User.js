@@ -141,6 +141,31 @@ class User extends Component {
         this.loadWorlds();
     };
 
+    deleteUser = async ( ) => {
+        const { token, _id } = this.props;
+        this.startLoading();
+
+        const res = await fetch(api_url + '/user/' + _id, {
+            method: 'Delete',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                Authorization: 'Bearer  ' + token,
+            },
+        }).catch(e => {
+            console.warn('catched error');
+            console.error(e);
+        });
+        const result = await res.json();
+        this.endLoading();
+        if (!res.ok || result.error) {
+            return this.setState({ error: result.error.message });
+        }
+        if (result.error) return this.setState({ error: result.message });
+
+        console.log(result)
+        this.props.logout()
+    }
+
     loadWorlds = async () => {
         // TODO add try catch and proper array handling
         const { token, savedWorlds } = this.props;
@@ -223,6 +248,10 @@ class User extends Component {
                     <Container>
                         <Title>Logout</Title>
                         <Button onClick={this.props.logout}>logout</Button>
+                    </Container>
+                    <Container>
+                        <Title>Delete Account</Title>
+                        <Alert onClick={this.deleteUser}>DELETE</Alert>
                     </Container>
                     {error && (
                         <>

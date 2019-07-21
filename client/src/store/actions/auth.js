@@ -82,6 +82,7 @@ export function receiveLogin(data) {
         isAuthenticated: true,
         token: data.token,
         user_id: data.user._id,
+        isVerified: data.user.isVerified
     };
 }
 

@@ -16,6 +16,7 @@ const initState = {
     token: null,
     user_id: null,
     error: null,
+    isVerified: false,
 };
 
 export function auth(state = initState, action) {
@@ -49,6 +50,7 @@ export function auth(state = initState, action) {
                 isAuthenticated: action.isAuthenticated,
                 token: action.token,
                 user_id: action.user_id,
+                isVerified: action.isVerified,
                 error: null,
             };
         case LOGIN_FAILURE:
@@ -65,6 +67,7 @@ export function auth(state = initState, action) {
                 isAuthenticated: false,
                 token: null,
                 user_id: null,
+                isVerified: false,
             };
         default:
             return state;
