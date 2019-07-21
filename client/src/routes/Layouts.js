@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Body from '../style/Body';
 import Title from '../style/AppName';
 import Button from '../style/Button';
-// import Row from '../style/Row';
 import Layout from '../components/Layout';
 import { api_url } from '../config';
 import { changeLoading } from '../store/actions/player';
 import { Column } from '../style/Column';
 import styled from 'styled-components';
+import { Redirect } from 'react-router-dom';
 
 // TODO time since last seen a layout shod be placed to the backend
 // TODO IDEA autmaticly remove layouts after X days (cronjobs)
@@ -19,22 +19,17 @@ const LayoutS = styled.div`
     //align-items: center;
     //padding: 2px;
 `;
-class Layouts extends Component {
-    constructor(props) {
-        super();
-        this.state = {
-            layouts: [],
-        };
-    }
+function Layouts(props) {
+    const [layouts, changeLayouts] = useState([]);
 
-    componentWillMount() {
-        //get layouts from api
-        this.getLayouts();
-    }
+    useEffect(() => {
+        console.error('EFFEKT');
+        getLayouts();
+    }, [props.w]);
 
-    getLayouts = () => {
-        this.props.changeLoading(true);
-        const { pl, w, allianceId, token } = this.props;
+    function getLayouts() {
+        props.changeLoading(true);
+        const { pl, w, allianceId, token } = props;
         // todo limit 50 first and than load other
         const url = `${api_url}/layouts?pl=${pl}&w=${w}&a=${allianceId}&limit=200&skip=0`;
         fetch(url, {
@@ -46,35 +41,36 @@ class Layouts extends Component {
             .then(layouts => {
                 console.log(layouts);
                 // maybe this is bedder for ux
-                this.setState({ layouts }, () => this.props.changeLoading(false));
+                changeLayouts(layouts);
+                props.changeLoading(false);
             });
-    };
-
-    render() {
-        const { layouts } = this.state;
-        return (
-            <Body>
-                <div />
-                <div>
-                    <LayoutS>
-                        {layouts.map((layout, i) => (
-                            <Layout key={i} layout={layout} />
-                        ))}
-                    </LayoutS>
-                </div>
-                <Column>
-                    <Button onClick={() => this.getLayouts()}>Update</Button>
-                    <Title>{'Loaded:' + layouts.length}</Title>
-                </Column>
-            </Body>
-        );
     }
+
+    return props.world !== props.w ? (
+        <Redirect to={'/layouts/' + props.w} />
+    ) : (
+        <Body>
+            <div />
+            <div>
+                <LayoutS>
+                    {layouts.map((layout, i) => (
+                        <Layout key={i} layout={layout} />
+                    ))}
+                </LayoutS>
+            </div>
+            <Column>
+                <Button onClick={getLayouts}>Update</Button>
+                <Title>{'Loaded:' + layouts.length}</Title>
+            </Column>
+        </Body>
+    );
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
     return {
         pl: state.player.name,
         w: state.player.w,
+        world: ownProps.match.params.world,
         allianceId: state.player.allianceId,
         worlds: state.player.worlds,
         token: state.auth.token,

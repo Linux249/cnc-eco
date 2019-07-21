@@ -11,6 +11,9 @@ import { api_url, LOCAL_STORE } from '../../config';
 
 export function changeWorld(world) {
     return async (dispatch, getStore) => {
+        const data = JSON.parse(localStorage.getItem(LOCAL_STORE));
+        data.world = world;
+        localStorage.setItem(LOCAL_STORE, JSON.stringify(data));
         await dispatch({
             type: PLAYER_CHANGE_WORLD,
             w: world.worldId,
@@ -67,7 +70,7 @@ export const updatePlayer = user => {
         });
         // check if the world id changed - usefully for initial loading kick
         const { w } = getState().player;
-        const world = user.worlds[0];
+        const world = data.world || user.worlds[0];
         if (world && w !== world.worldId) dispatch(changeWorld(world));
     };
 };
