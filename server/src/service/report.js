@@ -33,11 +33,15 @@ export const createReport = async db => {
     const date = new Date();
     date.setDate(date.getDate() - 14); // date 14 days before now
 
+    const date2 = new Data();
+    date2.setData(date2.getDate() - 60);
+
     try {
         // collections for the layouts
         const collections = await db.listCollections().toArray();
         const layoutsColl = collections.filter(coll => coll.name.includes('layouts'));
         const reportsColl = collections.filter(coll => coll.name.includes('reports_'));
+        const playerColl = collections.filter(coll => coll.name.includes('player_'));
 
         // got throug each World/collection
         await Promise.all(
@@ -50,13 +54,17 @@ export const createReport = async db => {
                 };
 
                 // deleting old layouts
-                const { result } = await collection.remove({ time: { $lt: date } });
+                const { result } = await collection.remove({
+                    time: { $lt: date },
+                });
                 if (!result.ok) console.log('FEHLER BEIM LÖSCHEN VON LAYOUTS'); // TODO bedder error handling
                 reportWorld.deletedLayouts = result.n;
 
                 // getting db stats
                 // TODO analyzing stas document and pic only relevant infos
-                reportWorld.stats = await collection.stats({ scale: 1024 });
+                reportWorld.stats = await collection.stats({
+                    scale: 1024,
+                });
 
                 if (reportWorld.stats.count === 0) {
                     await collection.drop();
@@ -76,15 +84,34 @@ export const createReport = async db => {
                 };
 
                 // deleting old layouts
-                const { result } = await collection.remove({ time: { $lt: date } });
+                const { result } = await collection.remove({
+                    time: { $lt: date },
+                });
                 if (!result.ok) console.log('FEHLER BEIM LÖSCHEN VON Reports'); // TODO bedder error handling
                 reportWorld.deletedReports = result.n;
 
                 // getting db stats
                 // TODO analyzing stas document and pic only relevant infos
-                reportWorld.stats = await collection.stats({ scale: 1024 });
+                reportWorld.stats = await collection.stats({
+                    scale: 1024,
+                });
 
                 report.worldsReports.push(reportWorld);
+            })
+        );
+
+        await Promise.all(
+            playerColl.map(async ({ name }) => {
+                const collection = await db.collection(name);
+
+                // deleting old layouts
+                const { result } = await collection.remove({
+                    _updated: { $lt: date2 },
+                });
+                if (!result.ok) console.log('FEHLER BEIM LÖSCHEN VON Playern'); // TODO bedder error handling
+                console.log(result)
+
+                // todo add logging into reports
             })
         );
 
