@@ -36,6 +36,8 @@ export const createReport = async db => {
     const date2 = new Date();
     date2.setDate(date2.getDate() - 60);
 
+    console.log({date, date2})
+
     try {
         // collections for the layouts
         const collections = await db.listCollections().toArray();
@@ -103,6 +105,7 @@ export const createReport = async db => {
 
         await Promise.all(
             playerColl.map(async ({ name }) => {
+                console.log('Deleting: ' + name)
                 const collection = await db.collection(name);
 
                 // deleting old layouts
