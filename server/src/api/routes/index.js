@@ -20,6 +20,8 @@ router.use('/reports', reports);
 router.post('/layouts', layouts);
 router.use('/', urlRouter);
 
+// TODO that should be higher protected (Admin role)
+router.use('/', db);
 // AUTH Only for members area
 router.use('/', passport.authenticate('jwt', { session: false }));
 
@@ -32,7 +34,5 @@ router.use('/', performanceRouter);
 // Protected through login
 router.use('/', user);
 
-// TODO that should be higher protected (Admin role)
-router.use('/', db);
 
 export default router;
