@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AreaRaw from '../style/Area';
 import styled from 'styled-components';
-import Row from '../style/Row';
+import { backgroundColorButtonHeader } from '../style/constants';
 
 const Area = styled(AreaRaw)`
-    padding: 10px 6px;
-    margin: 5px 3px;
+    padding: 6px;
+    margin: 3px;
     font-size: 14px;
 `;
 
@@ -22,6 +22,26 @@ const Container = styled.div`
     flex-wrap: wrap;
 
     margin-bottom: 0.1rem;
+`;
+
+const Time = styled.div`
+    color: ${backgroundColorButtonHeader};
+    font-weight: 600;
+    
+`;
+
+const Coords = styled.div`
+    color: ${backgroundColorButtonHeader};
+    font-weight: 600;
+    
+`;
+
+const Row = styled.div`
+    display: flex;
+    justify-content: space-around;
+    
+    padding-top: 6px;
+    
 `;
 
 const Tib = () => (
@@ -62,8 +82,8 @@ const Layout = ({ layout }) => {
             <Container>{slots}</Container>
             {/*<div>{`${layout.x}:${layout.y} /!*  t:${layout.tib}   c:${layout.cris}*!/`}</div>*/}
             <Row center>
-                <div>{`${layout.x}:${layout.y}`}</div>
-                <div>{time}</div>
+                <Coords>{`${layout.x}:${layout.y}`}</Coords>
+                <Time>{time}</Time>
             </Row>
         </Area>
     );

@@ -9,6 +9,8 @@ import { changeLoading } from '../store/actions/player';
 import { Column } from '../style/Column';
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
+import Row from '../style/Row';
+import Container from '../style/Container';
 
 // TODO time since last seen a layout shod be placed to the backend
 // TODO IDEA autmaticly remove layouts after X days (cronjobs)
@@ -20,10 +22,10 @@ const LayoutS = styled.div`
     //padding: 2px;
 `;
 function Layouts(props) {
-    const [layouts, changeLayouts] = useState([]);
+    const [layouts, setLayouts] = useState([]);
+    const [sort, setSort] = useState('tib');
 
     useEffect(() => {
-        console.error('EFFEKT');
         getLayouts();
     }, [props.w]);
 
@@ -41,9 +43,19 @@ function Layouts(props) {
             .then(layouts => {
                 console.log(layouts);
                 // maybe this is bedder for ux
-                changeLayouts(layouts);
+                setLayouts(layouts);
                 props.changeLoading(false);
             });
+    }
+
+    function changeSort(t) {
+        console.log('changeSort');
+        setSort(t);
+        setLayouts([
+            ...layouts.sort((a, b) =>
+                t === 'time' ? new Date(b[t]) - new Date(a[t]) : b[t] - a[t]
+            ),
+        ]);
     }
 
     return props.world !== props.w ? (
@@ -59,8 +71,34 @@ function Layouts(props) {
                 </LayoutS>
             </div>
             <Column>
-                <Button onClick={getLayouts}>Update</Button>
-                <Title>{'Loaded:' + layouts.length}</Title>
+                <Container>
+                    <Title>Sort layouts</Title>
+                    <Row>
+                        <Button first active={sort === 'tib'} onClick={() => changeSort('tib')}>
+                            Tib
+                        </Button>
+                        <Button active={sort === 'cris'} onClick={() => changeSort('cris')}>
+                            Kris
+                        </Button>
+                        <Button active={sort === 'time'} onClick={() => changeSort('time')}>
+                            Time
+                        </Button>
+                    </Row>
+                </Container>
+                <Container>
+                    <Title>{'Loaded: ' + layouts.length}</Title>
+                    <Row>
+                        <Button first onClick={getLayouts}>
+                            Update
+                        </Button>
+                    </Row>
+                </Container>
+                <Container>
+                    <Title>Save Layout</Title>
+                    <Row>
+                        <Button first>Coming soon...</Button>
+                    </Row>
+                </Container>
             </Column>
         </Body>
     );

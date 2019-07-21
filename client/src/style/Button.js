@@ -4,7 +4,6 @@ import {
     backgroundColor,
     border,
     borderRadius,
-    backgroundColorButtonHeader,
 } from './constants';
 
 export const Button = styled.div`
@@ -26,6 +25,10 @@ export const Button = styled.div`
     font-weight: 700;
     color: #4d3e13;
 
+    &:first-child {
+       ${p => p.first ? ' margin-left: 0;' : ''}
+    }
+    
     &:hover {
         //height: 2rem;
         box-shadow: 0 4px 8px 0 rgba(30, 136, 229, 0.2), 0 6px 20px 0 rgba(30, 136, 229, 0.19);
