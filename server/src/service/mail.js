@@ -16,7 +16,7 @@ export async function sendMail(token, mail) {
     msg.to = mail;
     const body =
         'Hello,\n\n' +
-        'Please verify your account by clicking the link: \nhttp://www.cnc-eco.de/api/v1/local/verify?token=' +
+        'Please verify your account by clicking the link: \nhttps://cnc-eco.herokuapp.com/api/v1/local/verify?token=' +
         token.token +
         '.\n';
     msg.text = body;
