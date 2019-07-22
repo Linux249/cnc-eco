@@ -27,7 +27,7 @@ function Slot(props) {
         // todo update with keys for army gdi/nod
         if (keys[area][faction].includes(key)) {
             unit.type = key;
-            if (!unit.lvl) unit.lvl = this.props.lvl;
+            if (!unit.lvl) unit.lvl = props.lvl;
             return props.switchSlot(unit, {}, area);
         }
         // + unit lvl up
