@@ -4,7 +4,6 @@ import {
     PLAYER_UPDATE_BASES,
     PLAYER_UPDATE,
     PLAYER_UPDATE_ALLIANCE_ID,
-    REPLACE_BASE_FROM_URL,
     PLAYER_CHANGE_SELECTED_BASE,
 } from '../constants/actionTypes';
 import { api_url, LOCAL_STORE } from '../../config';
@@ -40,18 +39,18 @@ export const updateBases = bases => {
     return {
         type: PLAYER_UPDATE_BASES,
         bases,
-    }
+    };
     // return dispatch => {
-        // const base = bases[0]; // action create is only used after player update
+    // const base = bases[0]; // action create is only used after player update
 
-        // dispatch({
-        //     type: PLAYER_UPDATE_BASES,
-        //     bases,
-        // });
-        // dispatch({
-        //     type: REPLACE_BASE_FROM_URL,
-        //     url: base.layout,
-        // });
+    // dispatch({
+    //     type: PLAYER_UPDATE_BASES,
+    //     bases,
+    // });
+    // dispatch({
+    //     type: REPLACE_BASE_FROM_URL,
+    //     url: base.layout,
+    // });
     // };
 };
 

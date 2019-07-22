@@ -20,7 +20,7 @@ export const S = props => {
             });
         if (item.url) {
             const base = urlToBase(
-                `3|${item.faction}|` + 'item.faction' + `|${item.name}|${item.url}`
+                `3|${item.faction}|` + item.faction + `|${item.name}|${item.url}`
             );
             console.log(base);
             store.dispatch(replaceAllBase(base));

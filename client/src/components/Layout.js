@@ -27,21 +27,18 @@ const Container = styled.div`
 const Time = styled.div`
     color: ${backgroundColorButtonHeader};
     font-weight: 600;
-    
 `;
 
 const Coords = styled.div`
     color: ${backgroundColorButtonHeader};
     font-weight: 600;
-    
 `;
 
 const Row = styled.div`
     display: flex;
     justify-content: space-around;
-    
+
     padding-top: 6px;
-    
 `;
 
 const Tib = () => (

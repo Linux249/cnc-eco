@@ -6,7 +6,6 @@ import { changeBase } from '../store/actions/player';
 
 function BasesMenu({ bases, selectedBase, selectBase }) {
     useEffect(function() {
-        console.error('init');
         bases.length && selectBase(selectedBase);
     }, []);
 

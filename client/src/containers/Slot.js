@@ -67,13 +67,12 @@ function Slot(props) {
                 lvl: item.lvl,
                 slot, // already the new slot
             };
-            const from =  item.slot || item.slot === 0 ? { type, slot: item.slot, lvl } : {};
+            const from = item.slot || item.slot === 0 ? { type, slot: item.slot, lvl } : {};
             console.log({ item, from, to });
             // item come from Menu
             ref.current.focus();
-            if(item.new) return props.replaceSlot(to, area)
+            if (item.new) return props.replaceSlot(to, area);
             props.switchSlot(from, to, area);
-
         },
     });
 

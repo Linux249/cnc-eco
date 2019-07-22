@@ -140,7 +140,6 @@ class Alliance extends Component {
 
     render() {
         const { members, name, count, s } = this.state;
-        const {} = this.props;
         return (
             <Body>
                 <AllianceS>

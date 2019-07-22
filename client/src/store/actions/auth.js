@@ -106,7 +106,6 @@ export const requestResendToken = () => {
             return dispatch(loginError(data.error.message));
         }
         return dispatch(loginError(data.success));
-
     };
 };
 
@@ -117,7 +116,7 @@ export function receiveLogin(data) {
         isAuthenticated: true,
         token: data.token,
         user_id: data.user._id,
-        isVerified: data.user.isVerified
+        isVerified: data.user.isVerified,
     };
 }
 

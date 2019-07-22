@@ -3,7 +3,12 @@ import connect from 'react-redux/es/connect/connect';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import Input from '../style/Input';
-import { changeAuthEmail, changeAuthPassword, requestLogin, requestResendToken } from '../store/actions/auth';
+import {
+    changeAuthEmail,
+    changeAuthPassword,
+    requestLogin,
+    requestResendToken,
+} from '../store/actions/auth';
 import InputGroup from '../style/InputGroup';
 import Label from '../style/Label';
 import Container from '../style/Container';

@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { shortenNumber } from '../util/service';
 import { Chart } from 'react-google-charts';
 import { futureProduction } from '../util/production.js';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 // Colors for lines
 const tibColor = '#23ff1d';
@@ -31,9 +31,7 @@ const ranges = [
     1000000000000,
 ];
 
-const Button = styled(ButtonOrg)`
-
-`
+const Button = styled(ButtonOrg)``;
 class LineChart_G extends Component {
     constructor(props) {
         super(props);
@@ -83,8 +81,8 @@ class LineChart_G extends Component {
                         min: 0,
                     },
                 },
-                chartArea:{left:10,top:20,width:"80%",height:"100px"},
-                'legend': {'position': 'bottom'}
+                chartArea: { left: 10, top: 20, width: '80%', height: '100px' },
+                legend: { position: 'bottom' },
             },
             chartData,
         };
@@ -193,7 +191,9 @@ class LineChart_G extends Component {
                     <Column />
                 </Row>
                 <Row wrap>
-                    <Button active small>Tage</Button>
+                    <Button active small>
+                        Tage
+                    </Button>
                     {days.map(n => (
                         <Button
                             small

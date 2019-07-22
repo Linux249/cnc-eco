@@ -117,5 +117,5 @@ export default {
             y: require('./buildings/N/y.png'),
             z: require('./buildings/N/z.png'),
         },
-    }
+    },
 };

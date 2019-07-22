@@ -44,8 +44,48 @@ export default {
         G: ['a', 'o', 'f', 'k', 'g', 'p', 'd', 'm', 'j', 'r', 'q', 'z', 'c', 's'],
     },
     defense: {
-        N: ['w', 'c', 't', 'b', 'a', 'f', 'r', 'e', 'm', 'g', 'd', 'p', 'q', 's', 'z', 'h', 'j', 'k', 'l'],
-        G: ['w', 'c', 't', 'b', 'a', 'f', 'r', 'e', 'm', 'g', 'd', 'p', 'q', 's', 'z', 'h', 'j', 'k', 'l'],
+        N: [
+            'w',
+            'c',
+            't',
+            'b',
+            'a',
+            'f',
+            'r',
+            'e',
+            'm',
+            'g',
+            'd',
+            'p',
+            'q',
+            's',
+            'z',
+            'h',
+            'j',
+            'k',
+            'l',
+        ],
+        G: [
+            'w',
+            'c',
+            't',
+            'b',
+            'a',
+            'f',
+            'r',
+            'e',
+            'm',
+            'g',
+            'd',
+            'p',
+            'q',
+            's',
+            'z',
+            'h',
+            'j',
+            'k',
+            'l',
+        ],
     },
     buildings: {
         N: [
@@ -91,7 +131,6 @@ export default {
     },
 };
 
-
 // export const nod_buildings = {
 //     r: 'NOD_Refinery',
 //     p: 'NOD_Power Plant',
@@ -110,7 +149,6 @@ export default {
 //     x: 'NOD_Support_Air',
 //     w: 'NOD_Defense Facility',
 // };
-
 
 /*var nod_buildings_names = {
  "NOD_Refinery": "r",
@@ -150,4 +188,3 @@ export default {
  "w": "NOD_Defense Facility"
  }
  */
-

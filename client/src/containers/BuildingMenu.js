@@ -47,7 +47,7 @@ function BuildingMenu(props) {
     });
 
     function handleChangeLvl(lvl) {
-        props.changeLvl((lvl < 1)  ? 1 : (lvl > 65) ? 65 : Math.round(lvl));
+        props.changeLvl(lvl < 1 ? 1 : lvl > 65 ? 65 : Math.round(lvl));
     }
     return (
         <Right>

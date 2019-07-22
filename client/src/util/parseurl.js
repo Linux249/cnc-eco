@@ -107,7 +107,7 @@ function urlToBase(url) {
         lvl = false;
         if (urlString[0] === '.') {
             urlString = urlString.slice(1);
-            base.army.push({slot});
+            base.army.push({ slot });
         } else {
             if (!isNaN(urlString[0])) {
                 let num = urlString[0];

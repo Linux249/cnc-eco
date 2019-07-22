@@ -141,7 +141,7 @@ class User extends Component {
         this.loadWorlds();
     };
 
-    deleteUser = async ( ) => {
+    deleteUser = async () => {
         const { token, _id } = this.props;
         this.startLoading();
 
@@ -162,9 +162,9 @@ class User extends Component {
         }
         if (result.error) return this.setState({ error: result.message });
 
-        console.log(result)
-        this.props.logout()
-    }
+        console.log(result);
+        this.props.logout();
+    };
 
     loadWorlds = async () => {
         // TODO add try catch and proper array handling

@@ -13,10 +13,6 @@ import Title from '../style/Title';
 import Container from '../style/Container';
 
 class UrlLoader extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     updateBase = () => {
         const url = this.refs.url.value;
         try {
