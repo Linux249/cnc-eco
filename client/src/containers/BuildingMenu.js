@@ -12,16 +12,11 @@ import MenuItemStyle from '../style/BuildingMenuItem';
 import Input from '../style/Input';
 
 const Row = styled.div`
-    max-width: 250px;
     display: flex;
 `;
 const Right = styled.div`
     display: flex;
     justify-content: flex-end;
-`;
-
-const Min = styled.div`
-    max-width: 250px;
 `;
 
 function MenuItem(props) {
@@ -51,16 +46,17 @@ function BuildingMenu(props) {
     }
     return (
         <Right>
-            <Min>
-                <Area small>
+            <div>
+                <Area>
                     <Row>
-                        <Button small onClick={() => changeFraction('N')}>
+                        <Button onClick={() => changeFraction('N')}>
                             NOD
                         </Button>
-                        <Button small onClick={() => changeFraction('G')}>
+                        <Button onClick={() => changeFraction('G')}>
                             GDI
                         </Button>
                         <Input
+                            small
                             onChange={({ target }) => handleChangeLvl(target.value)}
                             value={lvl}
                             type="number"
@@ -70,7 +66,7 @@ function BuildingMenu(props) {
                     </Row>
                     <Menu>{items}</Menu>
                 </Area>
-            </Min>
+            </div>
         </Right>
     );
 }

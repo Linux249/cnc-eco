@@ -11,7 +11,7 @@ export default styled.div`
     box-shadow: ${shadow};
 
     //height: 100%;
-    width: fit-content;
+    //width: fit-content;
 
     padding: ${({ small }) => (small ? '2px' : '10px')};
     margin: 5px;
