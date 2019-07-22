@@ -36,18 +36,22 @@ export function changeWorld(world) {
 }
 
 export const updateBases = bases => {
-    return dispatch => {
-        const base = bases[0]; // action create is only used after player update
+    return {
+        type: PLAYER_UPDATE_BASES,
+        bases,
+    }
+    // return dispatch => {
+        // const base = bases[0]; // action create is only used after player update
 
-        dispatch({
-            type: PLAYER_UPDATE_BASES,
-            bases,
-        });
-        dispatch({
-            type: REPLACE_BASE_FROM_URL,
-            url: base.layout,
-        });
-    };
+        // dispatch({
+        //     type: PLAYER_UPDATE_BASES,
+        //     bases,
+        // });
+        // dispatch({
+        //     type: REPLACE_BASE_FROM_URL,
+        //     url: base.layout,
+        // });
+    // };
 };
 
 export const updateAllianceId = allianceId => {

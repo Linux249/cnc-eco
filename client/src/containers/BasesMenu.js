@@ -1,10 +1,15 @@
 import Row from '../style/Row';
 import Button from '../style/Button';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { changeBase } from '../store/actions/player';
 
 function BasesMenu({ bases, selectedBase, selectBase }) {
+    useEffect(function() {
+        console.error('init');
+        bases.length && selectBase(selectedBase);
+    }, []);
+
     return (
         <Row>
             {bases.map((base, i) => (
