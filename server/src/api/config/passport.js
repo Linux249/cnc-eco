@@ -3,7 +3,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { googleAuth } from './config';
 import User from '../model/User';
-import { sendMail } from '../../service/mail';
+import { sendMail } from '../service/mail';
 import Token from '../model/Token';
 
 const passportJWT = require('passport-jwt');
