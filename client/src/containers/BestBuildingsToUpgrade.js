@@ -3,7 +3,7 @@ import Button from '../style/Button';
 import { store } from '../index';
 import { api_url } from '../config';
 import Alert from '../style/Alert';
-import { replaceBuilding } from '../store/actions/base';
+import { replaceSlot } from '../store/actions/base';
 import Row from '../style/Row';
 import styled from 'styled-components';
 
@@ -50,7 +50,7 @@ function BestBuildingsToUpgrade() {
     function lvlBuildingUp(e, i) {
         const building = store.getState().base.buildings[e];
         building.lvl += 1;
-        store.dispatch(replaceBuilding(building));
+        store.dispatch(replaceSlot(building, 'buildings'));
         setItems(items.filter((_, ii) => ii !== i));
     }
 

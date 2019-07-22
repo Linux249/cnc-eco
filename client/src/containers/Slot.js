@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { connect } from 'react-redux';
-import { switchSlot } from '../store/actions/base';
+import { replaceSlot, switchSlot } from '../store/actions/base';
 import SlotStyle from '../style/BuildingSlot';
 import keys from '../util/keys';
 import Number from '../style/LvLNumber';
@@ -17,18 +17,16 @@ function Slot(props) {
     };
 
     const handleKeyDown = event => {
-        console.log(imgs);
         const { unit } = props;
         event.preventDefault();
         const { key } = event; // get pressed key
-        console.log(event, key, unit);
+        // console.log(event, key, unit);
 
         //change unit type
         // todo update with keys for army gdi/nod
         if (keys[area][faction].includes(key)) {
             unit.type = key;
-            if (!unit.lvl) unit.lvl = props.lvl;
-            return props.switchSlot(unit, {}, area);
+            return props.replaceSlot(unit, area);
         }
         // + unit lvl up
         if (key === '+' && unit.lvl) {
@@ -57,33 +55,25 @@ function Slot(props) {
 
     const img = imgs[area][faction][type];
     const ref = useRef(null);
-    const [collectedPropsDrag, drag] = useDrag({
+    const [, drag] = useDrag({
         item: { slot, type: area, lvl, bType: type },
-        begin: monitor => {
-            console.log('begin');
-            console.log(monitor);
-            console.log(collectedPropsDrag);
-            console.log('from', { type, slot, lvl });
-        },
     });
 
-    const [collectedPropsDrop, drop] = useDrop({
+    const [, drop] = useDrop({
         accept: area,
-        drop: (item, monitor) => {
-            const from = {
+        drop: item => {
+            const to = {
                 type: item.bType,
                 lvl: item.lvl,
                 slot, // already the new slot
             };
-            console.log('drop');
-            console.log(item);
-            console.log(monitor);
-            console.log(collectedPropsDrop);
-            console.log('to', { type, slot, lvl });
-            console.log({ from });
-            props.switchSlot(from, { type, slot: item.slot, lvl }, area);
-            console.log(ref)
-            ref.current.focus()
+            const from = item.slot ? { type, slot: item.slot, lvl } : {};
+            console.log({ item, from, to });
+            // item come from Menu
+            ref.current.focus();
+            if(!item.lvl) return props.replaceSlot({type: item.bType, slot}, area)
+            props.switchSlot(from, to, area);
+
         },
     });
 
@@ -108,11 +98,11 @@ function mapStateToProps(state, props) {
     return {
         unit: state.base[props.area][props.slot],
         faction: state.base.faction,
-        lvl: state.menu.lvl,
     };
 }
 const mapDispatchToProps = {
     switchSlot,
+    replaceSlot,
 };
 
 export default connect(

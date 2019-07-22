@@ -1,12 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { changeFraction } from '../store/actions/base';
-import { buildingKeys } from '../util/keys';
+import { changeBaseLvl, changeFraction } from '../store/actions/base';
+import keys from '../util/keys';
 import Menu from '../style/BuildingMenu';
 import Area from '../style/Area';
 import Button from '../style/Button';
-import BuildingMenuItem from './BuildingMenuItem';
 import styled from 'styled-components';
+import imgs from '../img/imgs';
+import { useDrag } from 'react-dnd';
+import MenuItemStyle from '../style/BuildingMenuItem';
+import Input from '../style/Input';
 
 const Row = styled.div`
     max-width: 250px;
@@ -21,15 +24,31 @@ const Min = styled.div`
     max-width: 250px;
 `;
 
-function BuildingMenu(props) {
-    const { changeFraction, faction, lvl } = props;
-    const items = buildingKeys.map(type => {
-        const building = {
-            type,
-            lvl: type !== 't' && type !== 'c' ? lvl : undefined,
-        };
-        return <BuildingMenuItem faction={faction} type={type} building={building} key={type} />;
+function MenuItem(props) {
+    const { faction, type, area } = props;
+    const img = imgs[area][faction][type];
+
+    const [, drag] = useDrag({
+        item: { type: area, bType: type },
     });
+    return (
+        <MenuItemStyle ref={drag}>
+            <img src={img} alt={type} />
+            <div>{type}</div>
+        </MenuItemStyle>
+    );
+}
+
+function BuildingMenu(props) {
+    const { changeFraction, faction, area, lvl } = props;
+    const items = keys[area][faction].map(type => {
+        // const lvl = type !== 't' && type !== 'c' ? props.lvl : undefined;
+        return <MenuItem faction={faction} type={type} area={area} key={type} />;
+    });
+
+    function handleChangeLvl(lvl) {
+        props.changeLvl((lvl < 1)  ? 1 : (lvl > 65) ? 65 : Math.round(lvl));
+    }
     return (
         <Right>
             <Min>
@@ -41,6 +60,13 @@ function BuildingMenu(props) {
                         <Button small onClick={() => changeFraction('G')}>
                             GDI
                         </Button>
+                        <Input
+                            onChange={({ target }) => handleChangeLvl(target.value)}
+                            value={lvl}
+                            type="number"
+                            min={0}
+                            max={65}
+                        />
                     </Row>
                     <Menu>{items}</Menu>
                 </Area>
@@ -52,12 +78,13 @@ function BuildingMenu(props) {
 function mapStateToProps(state) {
     return {
         faction: state.base.faction,
-        lvl: state.menu.lvl,
+        lvl: state.base.baseLvl,
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
+        changeLvl: lvl => dispatch(changeBaseLvl(lvl)),
         changeFraction: fraction => dispatch(changeFraction(fraction)),
     };
 };

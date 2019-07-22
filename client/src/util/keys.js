@@ -41,7 +41,7 @@ export const buildings = {
 export default {
     army: {
         N: ['v', 't', 'r', 'l', 'b', 'a', 'o', 'p', 'k', 'm', 'q', 'z', 'c', 's'],
-        G: ['a', 'o', 'f', 'k', 'g', 'p', 'd', 'm', 'j', 'r', 'd', 'z', 'c', 's'],
+        G: ['a', 'o', 'f', 'k', 'g', 'p', 'd', 'm', 'j', 'r', 'q', 'z', 'c', 's'],
     },
     defense: {
         N: ['w', 'c', 't', 'b', 'a', 'f', 'r', 'e', 'm', 'g', 'd', 'p', 'q', 's', 'z', 'h', 'j', 'k', 'l'],
