@@ -1,7 +1,7 @@
 import React from 'react';
 import Slot from '../containers/Slot';
 import Area from '../style/Area';
-import BaseStyle from '../style/Base';
+import Grid from '../style/Grid';
 import ProductionInfo from '../containers/ProductionInfo';
 
 const slots = [0, 1, 2, 3, 4, 5, 6, 7].map(function(y) {
@@ -14,6 +14,6 @@ const slots = [0, 1, 2, 3, 4, 5, 6, 7].map(function(y) {
 export default () => (
     <Area>
         <ProductionInfo />
-        <BaseStyle>{slots}</BaseStyle>
+        <Grid rows={4}>{slots}</Grid>
     </Area>
 );

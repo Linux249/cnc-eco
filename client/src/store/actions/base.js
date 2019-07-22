@@ -24,6 +24,18 @@ export function replaceSlot(unit, area = 'buildings') {
     };
 }
 
+export function replaceArea(area) {
+    return (dispatch, getStore) => {
+        const { base } = getStore();
+        console.log({base, area})
+        base[area] = [...base[area].map((_, i) => ({ slot: i }))];
+        dispatch({
+            type: REPLACE_ALL_BASE,
+            base,
+        });
+    };
+}
+
 export function switchSlot(from, to, area) {
     return {
         type: SWITCH_SLOT,

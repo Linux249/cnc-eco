@@ -89,6 +89,7 @@ function Slot(props) {
         >
             {lvl && <Number>{lvl}</Number>}
             {type && <img src={img} alt={type} />}
+            {/*{!lvl && !type && slot}*/}
         </SlotStyle>
     );
 }

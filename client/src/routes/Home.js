@@ -7,6 +7,7 @@ import Column from '../style/Column';
 import Body from '../style/Body';
 import Army from '../components/Army';
 import Defense from '../components/Defense';
+import ResetArea from '../containers/ResetArea';
 
 export default () => (
     <Column center>
@@ -14,6 +15,7 @@ export default () => (
             <BuildingMenu area="buildings" />
             <Base />
             <div>
+                <ResetArea />
                 <Share />
                 <UrlInfo />
             </div>
