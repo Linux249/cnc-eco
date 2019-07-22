@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux';
-import ProtectedRoute from './containers/ProtectedRoute';
+import ProtectedRoute from './components/ProtectedRoute';
 import BaseHeader from './containers/BaseHeader.js';
 import Bases from './routes/Bases';
 import Scripts from './routes/Scripts';

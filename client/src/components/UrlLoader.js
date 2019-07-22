@@ -2,7 +2,6 @@
  * Created by Bombassd on 05.02.2017.
  */
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import Button from '../style/Button';
 import urlToBase from '../util/parseurl.js';
 import { replaceAllBase } from '../store/actions/base';
@@ -41,4 +40,4 @@ class UrlLoader extends Component {
     }
 }
 
-export default connect()(UrlLoader);
+export default UrlLoader;

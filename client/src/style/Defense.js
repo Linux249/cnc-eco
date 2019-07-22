@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export default styled.div`
     display: grid;
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(8, 1fr);
     grid-template-columns: repeat(9, 1fr);
     //max-width: 810px;
     max-width: 720px;

@@ -3,12 +3,12 @@ import Base from '../components/Base.js';
 import ChartMenu from '../components/ChartMenu';
 import BuildingMenu from '../containers/BuildingMenu';
 import BasesMenu from '../containers/BasesMenu';
-import Share from '../containers/Share';
-import BestBuildingsToUpgrade from '../containers/BestBuildingsToUpgrade';
+import Share from '../components/Share';
+import BestBuildingsToUpgrade from '../components/BestBuildingsToUpgrade';
 import Body from '../style/Body';
 import Column from '../style/Column';
-import Defense from '../containers/Defense';
-import Army from '../containers/Army';
+import Defense from '../components/Defense';
+import Army from '../components/Army';
 
 export default () => (
     <Column center>
