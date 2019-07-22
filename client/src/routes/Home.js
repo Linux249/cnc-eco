@@ -11,19 +11,16 @@ import Defense from '../containers/Defense';
 export default () => (
     <Column center>
         <Body>
-            <BuildingMenu area="buildings"/>
+            <BuildingMenu area="buildings" />
             <Base />
             <div>
                 <Share />
                 <UrlInfo />
             </div>
-        </Body>
-        <Body>
-            <BuildingMenu area="defense"/>
+            <BuildingMenu area="defense" />
             <Defense />
-        </Body>
-        <Body>
-            <BuildingMenu area="army"/>
+            <div />
+            <BuildingMenu area="army" />
             <Army />
         </Body>
     </Column>
