@@ -5,6 +5,7 @@ import SlotStyle from '../style/BuildingSlot';
 import keys from '../util/keys';
 import Number from '../style/LvLNumber';
 import { useDrag, useDrop } from 'react-dnd';
+import imgs from '../img/imgs';
 
 function Slot(props) {
     const { unit, faction, area } = props;
@@ -16,6 +17,7 @@ function Slot(props) {
     };
 
     const handleKeyDown = event => {
+        console.log(imgs);
         const { unit } = props;
         event.preventDefault();
         const { key } = event; // get pressed key
@@ -53,10 +55,10 @@ function Slot(props) {
         }
     };
 
-    const img = type ? require('./../img/off/' + faction + '/' + type + '.png') : 'undefined';
+    const img = imgs[area][faction][type];
     const ref = useRef(null);
     const [collectedPropsDrag, drag] = useDrag({
-        item: { slot, type: 'army', lvl, bType: type },
+        item: { slot, type: area, lvl, bType: type },
         begin: monitor => {
             console.log('begin');
             console.log(monitor);
@@ -66,7 +68,7 @@ function Slot(props) {
     });
 
     const [collectedPropsDrop, drop] = useDrop({
-        accept: 'army',
+        accept: area,
         drop: (item, monitor) => {
             const from = {
                 type: item.bType,
@@ -80,6 +82,8 @@ function Slot(props) {
             console.log('to', { type, slot, lvl });
             console.log({ from });
             props.switchSlot(from, { type, slot: item.slot, lvl }, area);
+            console.log(ref)
+            ref.current.focus()
         },
     });
 

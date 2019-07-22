@@ -55,7 +55,7 @@ class BuildingSlot extends Component {
         const { unit, faction, connectDragSource, connectDropTarget } = this.props;
         const { type, slot, lvl } = unit;
         const img = type
-            ? require('./../img/def/' + faction + '/' + type + '.png')
+            ? require('./../img/defense/' + faction + '/' + type + '.png')
             : 'undefined';
 
         return (

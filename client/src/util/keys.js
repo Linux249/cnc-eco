@@ -19,25 +19,6 @@ export const buildingKeys = [
     'i',
 ];
 
-export const nod_buildings = {
-    r: 'NOD_Refinery',
-    p: 'NOD_Power Plant',
-    h: 'NOD_Harvester',
-    y: 'NOD_Construction Yard',
-    d: 'NOD_Airport',
-    q: 'NOD_Defense HQ',
-    b: 'NOD_Barracks',
-    s: 'NOD_Silo',
-    f: 'NOD_Factory',
-    n: 'NOD_Harvester_Crystal',
-    e: 'NOD_Command Post',
-    z: 'NOD_Support_Art',
-    i: 'NOD_Support_Ion',
-    a: 'NOD_Accumulator',
-    x: 'NOD_Support_Air',
-    w: 'NOD_Defense Facility',
-};
-
 export const buildings = {
     r: 'Refinery',
     p: 'Power Plant',
@@ -56,6 +37,80 @@ export const buildings = {
     x: 'Support_Air',
     w: 'Defense Facility',
 };
+
+export default {
+    army: {
+        N: ['v', 't', 'r', 'l', 'b', 'a', 'o', 'p', 'k', 'm', 'q', 'z', 'c', 's'],
+        G: ['a', 'o', 'f', 'k', 'g', 'p', 'd', 'm', 'j', 'r', 'd', 'z', 'c', 's'],
+    },
+    defense: {
+        N: ['w', 'c', 't', 'b', 'a', 'f', 'r', 'e', 'm', 'g', 'd', 'p', 'q', 's', 'z', 'h', 'j', 'k', 'l'],
+        G: ['w', 'c', 't', 'b', 'a', 'f', 'r', 'e', 'm', 'g', 'd', 'p', 'q', 's', 'z', 'h', 'j', 'k', 'l'],
+    },
+    buildings: {
+        N: [
+            't',
+            'c',
+            'h',
+            'n',
+            's',
+            'r',
+            'a',
+            'p',
+            'y',
+            'd',
+            'b',
+            'f',
+            'q',
+            'w',
+            'e',
+            'z',
+            'x',
+            'i',
+        ],
+        G: [
+            't',
+            'c',
+            'h',
+            'n',
+            's',
+            'r',
+            'a',
+            'p',
+            'y',
+            'd',
+            'b',
+            'f',
+            'q',
+            'w',
+            'e',
+            'z',
+            'x',
+            'i',
+        ],
+    },
+};
+
+
+// export const nod_buildings = {
+//     r: 'NOD_Refinery',
+//     p: 'NOD_Power Plant',
+//     h: 'NOD_Harvester',
+//     y: 'NOD_Construction Yard',
+//     d: 'NOD_Airport',
+//     q: 'NOD_Defense HQ',
+//     b: 'NOD_Barracks',
+//     s: 'NOD_Silo',
+//     f: 'NOD_Factory',
+//     n: 'NOD_Harvester_Crystal',
+//     e: 'NOD_Command Post',
+//     z: 'NOD_Support_Art',
+//     i: 'NOD_Support_Ion',
+//     a: 'NOD_Accumulator',
+//     x: 'NOD_Support_Air',
+//     w: 'NOD_Defense Facility',
+// };
+
 
 /*var nod_buildings_names = {
  "NOD_Refinery": "r",
@@ -96,13 +151,3 @@ export const buildings = {
  }
  */
 
-export default {
-    army: {
-        N: 'vtlbaopkrmqzcs',
-        G: 'fgdjaopkrmqzcs'
-    },
-    defense: {
-        N: '',
-        G: '',
-    },
-}
