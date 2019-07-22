@@ -95,3 +95,14 @@ export const buildings = {
  "w": "NOD_Defense Facility"
  }
  */
+
+export default {
+    army: {
+        N: 'vtlbaopkrmqzcs',
+        G: 'fgdjaopkrmqzcs'
+    },
+    defense: {
+        N: '',
+        G: '',
+    },
+}

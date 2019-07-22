@@ -7,6 +7,7 @@ import {
     REPLACE_BASE_FROM_URL,
     REPLACE_BUILDING,
     SWITCH_BUILDINGS,
+    SWITCH_SLOT,
 } from '../constants/actionTypes';
 
 const initBase = urlToBase(
@@ -26,6 +27,13 @@ export function base(state = initBase, action) {
             return {
                 ...state,
                 buildings: state.buildings.map((b, i) =>
+                    i === action.from.slot ? action.from : i === action.to.slot ? action.to : b
+                ),
+            };
+        case SWITCH_SLOT:
+            return {
+                ...state,
+                [action.area]: state[action.area].map((b, i) =>
                     i === action.from.slot ? action.from : i === action.to.slot ? action.to : b
                 ),
             };

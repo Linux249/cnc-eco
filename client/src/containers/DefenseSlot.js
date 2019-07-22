@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { DropTarget, DragSource } from 'react-dnd';
 import { replaceBuilding, switchBuilding } from '../store/actions/base';
 import Slot from '../style/BuildingSlot';
-import { buildingKeys } from '../util/buildings';
+import { buildingKeys } from '../util/keys';
 import Number from '../style/LvLNumber';
 
 class BuildingSlot extends Component {
@@ -78,7 +78,7 @@ class BuildingSlot extends Component {
 
 function mapStateToProps(state, props) {
     return {
-        unit: props.slot ? state.base.defens[props.slot] : {},
+        unit: props.slot ? state.base.defense[props.slot] : {},
         faction: state.base.faction,
         lvl: state.menu.lvl,
     };

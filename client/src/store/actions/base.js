@@ -6,6 +6,7 @@ import {
     REPLACE_BASE_FROM_URL,
     REPLACE_BUILDING,
     SWITCH_BUILDINGS,
+    SWITCH_SLOT,
 } from '../constants/actionTypes'; // ad a new building a current location
 // ad a new building a current location
 // ad a new building a current location
@@ -25,6 +26,15 @@ export function switchBuilding(from, to) {
         type: SWITCH_BUILDINGS,
         from: { ...from },
         to: { ...to },
+    };
+}
+
+export function switchSlot(from, to, area) {
+    return {
+        type: SWITCH_SLOT,
+        from: { ...from },
+        to: { ...to },
+        area,
     };
 }
 

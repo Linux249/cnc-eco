@@ -31,7 +31,7 @@ function urlToBase(url) {
             c: 'crystal',
         },*/
         buildings: [],
-        defens: [],
+        defense: [],
         army: [],
         faction: faction,
         name: baseName,
@@ -76,7 +76,7 @@ function urlToBase(url) {
         lvl = false;
         if (urlString[0] === '.') {
             urlString = urlString.slice(1);
-            base.defens.push({ slot });
+            base.defense.push({ slot });
         } else {
             if (!isNaN(urlString[0])) {
                 let num = urlString[0];
@@ -89,7 +89,7 @@ function urlToBase(url) {
             }
             unit = urlString[0];
             urlString = urlString.slice(1);
-            base.defens.push({
+            base.defense.push({
                 type: unit,
                 lvl: lvl,
                 slot: slot,
@@ -139,7 +139,7 @@ function urlToBase(url) {
 
 export function parseToURL(base) {
     let urlString = '';
-    for (let building of base.buildings.concat(base.defens, base.army)) {
+    for (let building of base.buildings.concat(base.defense, base.army)) {
         if (building.type) {
             if (building.lvl) {
                 urlString += building.lvl;

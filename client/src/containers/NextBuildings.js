@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import FlipMove from 'react-flip-move';
 
 import { showBuildingMenu } from '../store/actions/menu';
-import { buildings as buildingNames } from '../util/buildings';
+import { buildings as buildingNames } from '../util/keys';
 import io from 'socket.io-client';
 const socketURL = `http://cnc-eco.herokuapp.com`;
 const socket = io(socketURL);

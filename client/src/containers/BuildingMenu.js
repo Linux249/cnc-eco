@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { changeFraction } from '../store/actions/base';
-import { buildingKeys } from '../util/buildings';
+import { buildingKeys } from '../util/keys';
 import Menu from '../style/BuildingMenu';
 import Area from '../style/Area';
 import Button from '../style/Button';

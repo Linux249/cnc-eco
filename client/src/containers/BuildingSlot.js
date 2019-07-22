@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { DropTarget, DragSource } from 'react-dnd';
 import { replaceBuilding, switchBuilding } from '../store/actions/base';
 import Slot from '../style/BuildingSlot';
-import { buildingKeys } from '../util/buildings';
+import { buildingKeys } from '../util/keys';
 import Number from '../style/LvLNumber';
 
 class BuildingSlot extends Component {
