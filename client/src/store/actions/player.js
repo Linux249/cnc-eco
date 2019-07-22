@@ -8,6 +8,7 @@ import {
     PLAYER_CHANGE_SELECTED_BASE,
 } from '../constants/actionTypes';
 import { api_url, LOCAL_STORE } from '../../config';
+import { replaceBaseFromUrl } from './base';
 
 export function changeWorld(world) {
     return async (dispatch, getStore) => {
@@ -94,9 +95,6 @@ export function changeBase(i) {
             type: PLAYER_CHANGE_SELECTED_BASE,
             i,
         });
-        dispatch({
-            type: REPLACE_BASE_FROM_URL,
-            url: base.layout,
-        });
+        dispatch(replaceBaseFromUrl(base.layout));
     };
 }

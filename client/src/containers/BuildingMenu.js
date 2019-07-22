@@ -29,7 +29,7 @@ function MenuItem(props) {
     const img = imgs[area][faction][type];
 
     const [, drag] = useDrag({
-        item: { type: area, bType: type },
+        item: { type: area, bType: type, new: true },
     });
     return (
         <MenuItemStyle ref={drag}>
