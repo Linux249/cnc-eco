@@ -5,7 +5,7 @@ import {
     END_ASYNC_AUTH,
     LOGIN_FAILURE,
     LOGIN_SUCCESS,
-    START_ASYNC_AUTH
+    START_ASYNC_AUTH,
 } from '../constants/actionTypes';
 
 const initState = {
@@ -16,6 +16,7 @@ const initState = {
     token: null,
     user_id: null,
     error: null,
+    isVerified: false,
 };
 
 export function auth(state = initState, action) {
@@ -34,6 +35,7 @@ export function auth(state = initState, action) {
             return {
                 ...state,
                 isFetching: true,
+                error: null,
             };
         case END_ASYNC_AUTH:
             return {
@@ -48,6 +50,7 @@ export function auth(state = initState, action) {
                 isAuthenticated: action.isAuthenticated,
                 token: action.token,
                 user_id: action.user_id,
+                isVerified: action.isVerified,
                 error: null,
             };
         case LOGIN_FAILURE:
@@ -63,7 +66,8 @@ export function auth(state = initState, action) {
                 ...state,
                 isAuthenticated: false,
                 token: null,
-                user_id: null
+                user_id: null,
+                isVerified: false,
             };
         default:
             return state;

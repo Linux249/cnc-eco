@@ -1,32 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { api_url } from '../config';
-import Error from '../style/Error';
-import urlToBase from '../util/parseurl';
-import {store} from '..';
-import { replaceAllBase } from '../store/actions/base';
 import { Redirect } from 'react-router';
+import { api_url } from '../config';
+import Alert from '../style/Alert';
+import urlToBase from '../util/parseurl';
+import { store } from '..';
+import { replaceAllBase } from '../store/actions/base';
 
 export const S = props => {
     const [err, setError] = useState(null);
-    const [loaded, setLoaded] = useState(false)
+    const [loaded, setLoaded] = useState(false);
     const { url } = props.match.params;
 
     async function load() {
-        const item = await fetch(api_url + '/urlToBase/' + url)
+        const item = await fetch(`${api_url}/urlToBase/${url}`)
             .then(r => r.json())
             .catch(e => {
                 console.log('ERROR');
                 setError(e.message);
             });
-        if(item.url) {
-            const base = urlToBase('3|' + item.faction + '|' + 'item.faction' + '|' + item.name + '|' + item.url )
-            console.log(base)
-            store.dispatch(replaceAllBase(base))
-            setLoaded(true)
+        if (item.url) {
+            const base = urlToBase(
+                `3|${item.faction}|` + 'item.faction' + `|${item.name}|${item.url}`
+            );
+            console.log(base);
+            store.dispatch(replaceAllBase(base));
+            setLoaded(true);
         } else {
             setError(item.error.message);
         }
-        console.log(item)
+        console.log(item);
         return null;
     }
 
@@ -34,12 +36,12 @@ export const S = props => {
         !loaded && load();
     });
 
-    return loaded ?
-            <Redirect to="/"/>
-        :(
+    return loaded ? (
+        <Redirect to="/" />
+    ) : (
         <div>
             loading
-            <Error>{err}</Error>
+            <Alert>{err}</Alert>
         </div>
     );
 };

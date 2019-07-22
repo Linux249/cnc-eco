@@ -1,21 +1,11 @@
+import generateToken from '../../utils/generateToken';
+
 const jwt = require('jsonwebtoken');
+import Token from '../../model/Token';
+import User from '../../model/User';
+import { sendToken } from '../../service/mail';
 
 module.exports = function(app, passport) {
-    // app.delete()
-    // normal routes ===============================================================
-
-    // show the home page (will also have our login links)
-    /* app.get('/', function(req, res) {
-        res.render('index.ejs');
-    });
-
-    // PROFILE SECTION =========================
-    app.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile.ejs', {
-            user : req.user
-        });
-    });
-    */
     // LOGOUT ==============================
     app.get('/logout', (req, res) => {
         req.logout();
@@ -25,14 +15,6 @@ module.exports = function(app, passport) {
     // =============================================================================
     // AUTHENTICATE (FIRST LOGIN) ==================================================
     // =============================================================================
-
-    // locally --------------------------------
-    // LOGIN ===============================
-    // show the login form
-    /* app.get('/login', function(req, res) {
-        res.render('login.ejs', { message: req.flash('loginMessage') });
-    });
-    */
 
     // process the login form
     app.post('/local/login', (req, res, next) => {
@@ -81,6 +63,59 @@ module.exports = function(app, passport) {
         })(req, res);
     });
 
+    app.get('/local/verify', async (req, res, next) => {
+        console.log('VERIFY');
+        const { token } = req.query;
+        if (!token) return next(new Error('Token missing'));
+
+        // Find a matching token
+        Token.findOne({ token }, function(err, doc) {
+            if (!doc)
+                return next(new Error('Unable to find a valid token. Your token my have expired.'));
+            console.log(doc);
+            // If we found a token, find a matching user
+            console.log(doc._userId);
+            User.findOne({ _id: doc._userId }, function(err, user) {
+                if (!user) return next(new Error('Unable to find a user for this token.'));
+                if (user.isVerified) return next(new Error('User has already been verified.'));
+
+                // Verify and save the user
+                user.isVerified = true;
+                user.save(function(err) {
+                    if (err) {
+                        return next(new Error('Error updating user'));
+                    }
+                    res.status(200).redirect('http://www.cnc-eco.de/login');
+                });
+            });
+        });
+    });
+
+    app.post('/local/resendToken', async (req, res, next) => {
+        console.log('resendToken');
+        const { email } = req.body
+        if (!email) return next(new Error('Token missing'));
+
+        User.findOne({ 'local.email': email }, function (err, user) {
+            console.log(email, user)
+            if (!user) return next(new Error('Unable to find a user with that email.' ));
+            if (user.isVerified) return next(new Error('User has already been verified.'));
+
+            // Create a verification token, save it, and send email
+            const token = new Token({
+                _userId: user._id,
+                token: generateToken(),
+            });
+
+            // console.log(newUser)
+            token.save(async function(err) {
+                if (err) return next(new Error('Token could not be saved.'));
+                // Send the email
+                await sendToken(token, user.local.email);
+                return res.json({success: 'New E-Mail send'})
+            });
+        });
+    });
     // SIGNUP =================================
     // show the signup form
     /* app.get('/local/signup', function(req, res) {

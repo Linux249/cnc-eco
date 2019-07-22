@@ -4,9 +4,11 @@ import Button from '../style/Button';
 import { store } from '../index';
 import { api_url } from '../config';
 import Input from '../style/Input';
-import Area from '../style/Area';
 import Row from '../style/Row';
-import Error from '../style/Error';
+import Alert from '../style/Alert';
+import { ReactComponent as ShareIcon } from '../icons/Share.svg';
+import Title from '../style/Title';
+import Container from '../style/Container';
 
 const Share = () => {
     const [url, setUrl] = useState('');
@@ -50,13 +52,20 @@ const Share = () => {
     }
 
     return (
-        <Area small>
+        <Container>
+            <Title>Share your bases</Title>
             <Row>
-                <Input placeholder="click & share" value={loading ? 'loading ...' : url} />
-                <Button onClick={handleClick}>share</Button>
-                {error && <Error> {error.message} </Error>}
+                <Input
+                    small
+                    placeholder="Here comes your shortlink"
+                    value={loading ? 'loading ...' : url}
+                />
+                <Button onClick={handleClick}>
+                    <ShareIcon></ShareIcon>
+                </Button>
+                {error && <Alert> {error.message} </Alert>}
             </Row>
-        </Area>
+        </Container>
     );
 };
 

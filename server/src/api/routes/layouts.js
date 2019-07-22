@@ -1,4 +1,4 @@
-import { layoutStats } from '../../utils/layout';
+import { layoutStats } from '../utils/layout';
 // POST /api/v1/layouts
 export default async (req, res, next) => {
     res.setHeader(

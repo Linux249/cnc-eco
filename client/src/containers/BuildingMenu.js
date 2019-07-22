@@ -28,15 +28,19 @@ function BuildingMenu(props) {
             type,
             lvl: type !== 't' && type !== 'c' ? lvl : undefined,
         };
-        return <BuildingMenuItem faction={faction} type={type} building={building} key={type}/>;
+        return <BuildingMenuItem faction={faction} type={type} building={building} key={type} />;
     });
     return (
         <Right>
             <Min>
                 <Area small>
                     <Row>
-                        <Button small onClick={() => changeFraction('N')}>NOD</Button>
-                        <Button small onClick={() => changeFraction('G')}>GDI</Button>
+                        <Button small onClick={() => changeFraction('N')}>
+                            NOD
+                        </Button>
+                        <Button small onClick={() => changeFraction('G')}>
+                            GDI
+                        </Button>
                     </Row>
                     <Menu>{items}</Menu>
                 </Area>

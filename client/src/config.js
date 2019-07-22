@@ -3,4 +3,4 @@ export const api_url =
         ? 'http://localhost:8000/api/v1'
         : 'https://cnc-eco.herokuapp.com/api/v1';
 
-export const LOCAL_STORE = "cnc-eco-store"
+export const LOCAL_STORE = 'cnc-eco-store';

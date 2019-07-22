@@ -6,11 +6,11 @@ import cors from 'cors';
 import logging from 'morgan';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import apiRouter from './api/routes/index';
-import configurePassport from './api/config/passport';
+import apiRouter from './routes';
+import configurePassport from './config/passport';
 import { createReport } from './service/report';
-import { mongoURI } from './api/config/config';
-import setAuthRout from './api/routes/auth/index';
+import { mongoURI } from './config/config';
+import setAuthRout from './routes/auth';
 
 let DB;
 

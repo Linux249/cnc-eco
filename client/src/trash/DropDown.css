@@ -7,7 +7,7 @@
 body {
     min-height: 100vh;
     background: linear-gradient(15deg, #25ddf5, #53f);
-    font-family: karla;
+    font-family: karla, serif;
     color: #666;
     font-size: 18px;
     -webkit-font-smoothing: antialiased;

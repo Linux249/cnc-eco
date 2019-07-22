@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { easyLvLUp, getBest5Buildings } from '../../../performance';
+import { easyLvLUp, getBest5Buildings } from '../../utils/performance';
 
 const router = Router();
 

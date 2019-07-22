@@ -32,7 +32,7 @@ export const requestLogin = () => {
 
         if (!resp.ok) {
             console.warn('LOGIN FAILURE');
-            return dispatch(loginError(data.message));
+            return dispatch(loginError(data.err));
         }
 
         localStorage.setItem(LOCAL_STORE, JSON.stringify(data));
@@ -65,12 +65,48 @@ export const requestRegister = () => {
 
         if (!resp.ok) {
             console.warn('LOGIN FAILURE');
-            return dispatch(loginError(data.message));
+            return dispatch(loginError(data.err));
         }
 
+        localStorage.setItem(LOCAL_STORE, JSON.stringify(data));
         console.log(resp);
         dispatch(receiveLogin(data));
         dispatch(updatePlayer(data.user));
+    };
+};
+
+export const requestResendToken = () => {
+    return async (dispatch, getState) => {
+        dispatch({ type: START_ASYNC_AUTH });
+        const { email } = getState().auth;
+        const body = JSON.stringify({ email });
+
+        const resp = await fetch(api_url + '/local/resendToken', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            },
+            body,
+        }).catch(e => {
+            console.warn('requestResendToken FAILURE');
+            console.error(e);
+            return dispatch(loginError(e.message));
+        });
+
+        console.log(resp);
+        const data = await resp.json().catch(e => {
+            console.warn('requestResendToken FAILURE');
+            console.error(e);
+            return dispatch(loginError(e.message));
+        });
+        console.log(data);
+
+        if (!resp.ok) {
+            console.warn('requestResendToken FAILURE');
+            return dispatch(loginError(data.error.message));
+        }
+        return dispatch(loginError(data.success));
+
     };
 };
 
@@ -81,6 +117,7 @@ export function receiveLogin(data) {
         isAuthenticated: true,
         token: data.token,
         user_id: data.user._id,
+        isVerified: data.user.isVerified
     };
 }
 

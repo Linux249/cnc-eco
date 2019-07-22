@@ -12,6 +12,8 @@ export default styled.div`
     border-style: solid;
     border-width: 1px;
 
+    font-size: 0.75rem;
+
     & > img {
         //position: absolute;
         height: 100%;

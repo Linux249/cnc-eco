@@ -38,6 +38,10 @@ const userSchema = Schema({
             worldName: String,
         },
     ],
+    isVerified: { type: Boolean, default: false },
+    password: String,
+    passwordResetToken: String,
+    passwordResetExpires: Date
 });
 
 // generating a hash

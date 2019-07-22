@@ -10,7 +10,7 @@ function BuildingMenuItem(props) {
     const img = require('./../img/buildings/' + faction + '/' + type + '.png');
     return (
         <MenuItem ref={instance => connectDragSource(findDOMNode(instance))}>
-            <img src={img} alt={type}/>
+            <img src={img} alt={type} />
             <div>{type}</div>
         </MenuItem>
     );

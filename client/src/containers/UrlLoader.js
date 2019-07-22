@@ -7,10 +7,12 @@ import Button from '../style/Button';
 import urlToBase from '../util/parseurl.js';
 import { replaceAllBase } from '../store/actions/base';
 import Input from '../style/Input';
-import Area from '../style/Area';
 import Row from '../style/Row';
+import { ReactComponent as DownloadIcon } from '../icons/Download.svg';
+import Title from '../style/Title';
+import Container from '../style/Container';
 
-class UrlInfo extends Component {
+class UrlLoader extends Component {
     constructor(props) {
         super(props);
     }
@@ -30,14 +32,17 @@ class UrlInfo extends Component {
 
     render() {
         return (
-            <Area small>
+            <Container>
+                <Title>Load from cnc opt url</Title>
                 <Row>
-                    <Button onClick={this.updateBase}>load</Button>
-                    <Input type="url" ref="url" placeholder="old CnC Opt URL" />
+                    <Input small type="url" ref="url" placeholder="Paste the link here" />
+                    <Button onClick={this.updateBase}>
+                        <DownloadIcon />
+                    </Button>
                 </Row>
-            </Area>
+            </Container>
         );
     }
 }
 
-export default connect()(UrlInfo);
+export default connect()(UrlLoader);

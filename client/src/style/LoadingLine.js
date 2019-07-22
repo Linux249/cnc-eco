@@ -46,9 +46,9 @@ export const LoadingLine = ({ loading }) => (
     <LoadingBar>
         {loading && (
             <>
-                <Bar/>
-                <Bar/>
-                <Bar/>
+                <Bar />
+                <Bar />
+                <Bar />
             </>
         )}
     </LoadingBar>

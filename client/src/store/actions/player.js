@@ -11,6 +11,9 @@ import { api_url, LOCAL_STORE } from '../../config';
 
 export function changeWorld(world) {
     return async (dispatch, getStore) => {
+        const data = JSON.parse(localStorage.getItem(LOCAL_STORE));
+        data.world = world;
+        localStorage.setItem(LOCAL_STORE, JSON.stringify(data));
         await dispatch({
             type: PLAYER_CHANGE_WORLD,
             w: world.worldId,
@@ -33,18 +36,22 @@ export function changeWorld(world) {
 }
 
 export const updateBases = bases => {
-    return dispatch => {
-        const base = bases[0]; // action create is only used after player update
+    return {
+        type: PLAYER_UPDATE_BASES,
+        bases,
+    }
+    // return dispatch => {
+        // const base = bases[0]; // action create is only used after player update
 
-        dispatch({
-            type: PLAYER_UPDATE_BASES,
-            bases,
-        });
-        dispatch({
-            type: REPLACE_BASE_FROM_URL,
-            url: base.layout,
-        });
-    };
+        // dispatch({
+        //     type: PLAYER_UPDATE_BASES,
+        //     bases,
+        // });
+        // dispatch({
+        //     type: REPLACE_BASE_FROM_URL,
+        //     url: base.layout,
+        // });
+    // };
 };
 
 export const updateAllianceId = allianceId => {
@@ -56,8 +63,8 @@ export const updateAllianceId = allianceId => {
 
 export const updatePlayer = user => {
     // update data in store
-    const data = JSON.parse(localStorage.getItem(LOCAL_STORE))
-    data.user = user
+    const data = JSON.parse(localStorage.getItem(LOCAL_STORE));
+    data.user = user;
     localStorage.setItem(LOCAL_STORE, JSON.stringify(data));
     return (dispatch, getState) => {
         dispatch({
@@ -67,7 +74,7 @@ export const updatePlayer = user => {
         });
         // check if the world id changed - usefully for initial loading kick
         const { w } = getState().player;
-        const world = user.worlds[0];
+        const world = data.world || user.worlds[0];
         if (world && w !== world.worldId) dispatch(changeWorld(world));
     };
 };

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
+import Title from './Title';
 
-export default styled.div`
-    font-size: 1.5rem;
-`;
+export default styled(Title).attrs({ as: 'div' })``;
