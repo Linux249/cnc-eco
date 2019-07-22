@@ -4,6 +4,8 @@ import App from './App';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
 import urlToBase from './util/parseurl';
+import { DndProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import './style/index.css';
 
 const initial_state = urlToBase(
@@ -13,15 +15,17 @@ const initial_state = urlToBase(
 if (process.env.NODE_ENV !== 'production') {
     console.log('INITIAL STATE - FROM URL');
     console.log({ initial_state });
-    const { whyDidYouUpdate } = require('why-did-you-update');
+    // const { whyDidYouUpdate } = require('why-did-you-update');
     //whyDidYouUpdate(React)
 }
 
 export const store = configureStore(initial_state);
 
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
+    <DndProvider backend={HTML5Backend}>
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </DndProvider>,
     document.getElementById('app')
 );

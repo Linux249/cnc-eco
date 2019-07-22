@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+// import { DragDropContext } from 'react-dnd';
+// import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
 import BaseHeader from './containers/BaseHeader.js';
@@ -58,6 +58,7 @@ class App extends Component {
     }
 }
 
-export default DragDropContext(HTML5Backend)(
-    connect(s => ({ auth: s.auth.isAuthenticated && s.auth.isVerified, name: s.player.name }))(App)
-);
+export default connect(s => ({
+    auth: s.auth.isAuthenticated && s.auth.isVerified,
+    name: s.player.name,
+}))(App);
