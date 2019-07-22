@@ -74,7 +74,6 @@ const Cell = styled.div`
     border: ${border};
     border-radius: ${borderRadius};
     border-color: ${baseLight};
-    
 
     ${p => (p.active ? 'background-color: ' + baseLight : '')};
 `;
@@ -123,26 +122,18 @@ class Alliance extends Component {
             name: alliance.name,
             count: alliance.count,
             lastUpdated: alliance.date,
-            members: alliance.members.sort((m1, m2) =>
-                !m1.rank || !m2.rank ? -1 : m1.rank < m2.rank ? 1 : -1
-            ),
+            members: alliance.members.sort((a, b) => +b.rank || 0 - +a.rank || 0),
         });
         this.props.changeLoading(false);
     };
+
     sort = s => {
         console.log('SORT');
         console.log(s);
         const { members } = this.state;
-        // console.log({ members });
-
-        const sorted = [
-            ...members.sort((a, b) => {
-                return !a[s] || !b[s] ? -1 : b[s] - a[s];
-            }),
-        ];
-        // console.log({ sorted });
+        members.sort((a, b) => +b[s] || 0 - +a[s] || 0);
         this.setState({
-            members: sorted,
+            members: [...members],
             s,
         });
     };
@@ -154,7 +145,9 @@ class Alliance extends Component {
             <Body>
                 <AllianceS>
                     <Grid>
-                        <Cell>Name</Cell>
+                        <Cell active={s === 'name'} onClick={() => this.sort('name')}>
+                            Name
+                        </Cell>
                         <Cell active={s === 'rank'} onClick={() => this.sort('rank')}>
                             Rank
                         </Cell>
