@@ -3,8 +3,9 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { googleAuth } from './config';
 import User from '../model/User';
-import { sendMail } from '../service/mail';
+import { sendToken } from '../service/mail';
 import Token from '../model/Token';
+import generateToken from '../utils/generateToken';
 
 const passportJWT = require('passport-jwt');
 
@@ -43,14 +44,6 @@ export default passport => {
                 // asynchronous
                 try {
                     const user = await User.findOne({ 'local.email': email });
-                    /* console.log({
-                        user,
-                        email,
-                        password,
-                        done,
-                    }); */
-                    // if there are any errors, return the error
-                    // if (err) return done(err);
 
                     // if no user is found, return the message
                     if (!user) return done(new Error('No user found - check email adress'), false);
@@ -120,9 +113,7 @@ export default passport => {
                                 // const token = new Token({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
                                 const token = new Token({
                                     _userId: savedUser._id,
-                                    token: Math.random()
-                                        .toString(36)
-                                        .substr(2),
+                                    token: generateToken(),
                                 });
 
                                 // console.log(newUser)
@@ -132,7 +123,7 @@ export default passport => {
                                     if (err)
                                         return done(new Error('Token could not be saved.'), false);
                                     // Send the email
-                                    await sendMail(token, savedUser.local.email);
+                                    await sendToken(token, savedUser.local.email);
                                 });
 
                                 return done(null, savedUser);

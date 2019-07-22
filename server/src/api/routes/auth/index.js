@@ -1,23 +1,11 @@
+import generateToken from '../../utils/generateToken';
+
 const jwt = require('jsonwebtoken');
 import Token from '../../model/Token';
 import User from '../../model/User';
+import { sendToken } from '../../service/mail';
 
 module.exports = function(app, passport) {
-    // app.delete()
-    // normal routes ===============================================================
-
-    // show the home page (will also have our login links)
-    /* app.get('/', function(req, res) {
-        res.render('index.ejs');
-    });
-
-    // PROFILE SECTION =========================
-    app.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile.ejs', {
-            user : req.user
-        });
-    });
-    */
     // LOGOUT ==============================
     app.get('/logout', (req, res) => {
         req.logout();
@@ -27,14 +15,6 @@ module.exports = function(app, passport) {
     // =============================================================================
     // AUTHENTICATE (FIRST LOGIN) ==================================================
     // =============================================================================
-
-    // locally --------------------------------
-    // LOGIN ===============================
-    // show the login form
-    /* app.get('/login', function(req, res) {
-        res.render('login.ejs', { message: req.flash('loginMessage') });
-    });
-    */
 
     // process the login form
     app.post('/local/login', (req, res, next) => {
@@ -111,6 +91,31 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.post('/local/resendToken', async (req, res, next) => {
+        console.log('resendToken');
+        const { email } = req.body
+        if (!email) return next(new Error('Token missing'));
+
+        User.findOne({ 'local.email': email }, function (err, user) {
+            console.log(email, user)
+            if (!user) return next(new Error('Unable to find a user with that email.' ));
+            if (user.isVerified) return next(new Error('User has already been verified.'));
+
+            // Create a verification token, save it, and send email
+            const token = new Token({
+                _userId: user._id,
+                token: generateToken(),
+            });
+
+            // console.log(newUser)
+            token.save(async function(err) {
+                if (err) return next(new Error('Token could not be saved.'));
+                // Send the email
+                await sendToken(token, user.local.email);
+                return res.json({success: 'New E-Mail send'})
+            });
+        });
+    });
     // SIGNUP =================================
     // show the signup form
     /* app.get('/local/signup', function(req, res) {

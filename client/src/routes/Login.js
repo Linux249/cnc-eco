@@ -3,7 +3,7 @@ import connect from 'react-redux/es/connect/connect';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import Input from '../style/Input';
-import { changeAuthEmail, changeAuthPassword, requestLogin } from '../store/actions/auth';
+import { changeAuthEmail, changeAuthPassword, requestLogin, requestResendToken } from '../store/actions/auth';
 import InputGroup from '../style/InputGroup';
 import Label from '../style/Label';
 import Container from '../style/Container';
@@ -11,6 +11,7 @@ import Form from '../style/Form';
 import Submit from '../style/Submit';
 import Center from '../style/Center';
 import Alert from '../style/Alert';
+import Button from '../style/Button';
 
 function Login(props) {
     const {
@@ -21,6 +22,7 @@ function Login(props) {
         changeEmail,
         changePassword,
         login,
+        resend,
         playerName,
     } = props;
 
@@ -28,6 +30,7 @@ function Login(props) {
         e.preventDefault();
         login();
     }
+
     return !isAuthenticated ? (
         <Center>
             <Container>
@@ -58,8 +61,12 @@ function Login(props) {
                     <InputGroup>
                         <Submit type="submit" value="Login" />
                     </InputGroup>
-                    New to CnC-Exo? <br />
+                    <div>New to CnC-Exo?</div>
                     <Link to="/register">Sign Up</Link>
+                    <br />
+                    <br />
+                    <div>Email verification expired?</div>
+                    <Button onClick={resend}>Resend token</Button>
                 </Form>
             </Container>
         </Center>
@@ -84,6 +91,7 @@ const mapDispatchToProps = {
     changeEmail: changeAuthEmail,
     changePassword: changeAuthPassword,
     login: requestLogin,
+    resend: requestResendToken,
 };
 
 export default connect(

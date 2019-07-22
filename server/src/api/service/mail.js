@@ -11,7 +11,7 @@ const msg = {
     html: '<strong>and easy to do anywhere, even with Node.js</strong>',
 };
 
-export async function sendMail(token, mail) {
+export async function sendToken(token, mail) {
     console.log('sendMail');
     msg.to = mail;
     const body =

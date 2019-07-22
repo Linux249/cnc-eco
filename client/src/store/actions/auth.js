@@ -75,6 +75,41 @@ export const requestRegister = () => {
     };
 };
 
+export const requestResendToken = () => {
+    return async (dispatch, getState) => {
+        dispatch({ type: START_ASYNC_AUTH });
+        const { email } = getState().auth;
+        const body = JSON.stringify({ email });
+
+        const resp = await fetch(api_url + '/local/resendToken', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            },
+            body,
+        }).catch(e => {
+            console.warn('requestResendToken FAILURE');
+            console.error(e);
+            return dispatch(loginError(e.message));
+        });
+
+        console.log(resp);
+        const data = await resp.json().catch(e => {
+            console.warn('requestResendToken FAILURE');
+            console.error(e);
+            return dispatch(loginError(e.message));
+        });
+        console.log(data);
+
+        if (!resp.ok) {
+            console.warn('requestResendToken FAILURE');
+            return dispatch(loginError(data.error.message));
+        }
+        return dispatch(loginError(data.success));
+
+    };
+};
+
 export function receiveLogin(data) {
     return {
         type: LOGIN_SUCCESS,
