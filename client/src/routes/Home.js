@@ -1,6 +1,6 @@
 import React from 'react';
 import BuildingMenu from '../containers/BuildingMenu';
-import UrlInfo from '../components/UrlLoader';
+import UrlLoader from '../components/UrlLoader';
 import Share from '../components/Share';
 import Base from '../components/Base';
 import Column from '../style/Column';
@@ -15,9 +15,9 @@ export default () => (
             <BuildingMenu area="buildings" />
             <Base />
             <div>
-                <ResetArea />
                 <Share />
-                <UrlInfo />
+                <UrlLoader />
+                <ResetArea />
             </div>
             <BuildingMenu area="defense" />
             <Defense />
