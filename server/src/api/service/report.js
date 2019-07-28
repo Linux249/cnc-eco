@@ -1,69 +1,36 @@
-const report = {
-    date: new Date(), // current time
-    server: [
-        /*
-         * size: MB  // DB size
-         */
-    ],
-    worlds: [
-        /* {
-         * world: name,
-         * deletedLayouts: count,
-         * stats: collection.stats()
-         *
-         */
-    ],
-    worldsReports: [
-        /* {
-         * world: name,
-         * deletedReports: count,
-         * stats: collection.stats()
-         *
-         */
-    ],
-    player: {
-        /*
-         * collection.stats()
-         * newestPlayer: [{ playername , worlds }]
-         */
-    },
-};
+import Report from '../model/Report';
 
 export const createReport = async db => {
-    const date = new Date();
-    date.setDate(date.getDate() - 14); // date 14 days before now
+    const removeLayoutDate = new Date();
+    removeLayoutDate.setDate(removeLayoutDate.getDate() - 14); // date 14 days before now
 
-    const date2 = new Date();
-    date2.setDate(date2.getDate() - 60);
+    const removePlayerDate = new Date();
+    removePlayerDate.setDate(removePlayerDate.getDate() - 120);
 
-    console.log({date, date2})
+    const report = new Report();
 
     try {
-        // collections for the layouts
+        // all collections
         const collections = await db.listCollections().toArray();
+        // get layouts collection
         const layoutsColl = collections.filter(coll => coll.name.includes('layouts'));
-        const reportsColl = collections.filter(coll => coll.name.includes('reports_'));
+        // const reportsColl = collections.filter(coll => coll.name.includes('reports_'));
+        // get all player collections
         const playerColl = collections.filter(coll => coll.name.includes('players_'));
 
-        // got throug each World/collection
+        // got through each World/collection
         await Promise.all(
             layoutsColl.map(async ({ name }) => {
                 const collection = await db.collection(name);
-                const reportWorld = {
-                    name,
-                    deletedLayouts: null,
-                    stats: null,
-                };
 
                 // deleting old layouts
                 const { result } = await collection.remove({
-                    time: { $lt: date },
+                    time: { $lt: removeLayoutDate },
                 });
+
                 if (!result.ok) console.log('FEHLER BEIM LÖSCHEN VON LAYOUTS'); // TODO bedder error handling
-                reportWorld.deletedLayouts = result.n;
 
                 // getting db stats
-                // TODO analyzing stas document and pic only relevant infos
                 const stats = await collection.stats({
                     scale: 1024,
                 });
@@ -73,10 +40,15 @@ export const createReport = async db => {
                     console.log('delete collection: ' + name);
                 }
 
-                report.worlds.push(reportWorld);
+                report.layouts.push({
+                    worldId: name.split('_')[1],
+                    del: result.n, // how many deleted player
+                    count: stats.count, // how many player after
+                    size: stats.size,
+                });
             })
         );
-        await Promise.all(
+        /*await Promise.all(
             reportsColl.map(async ({ name }) => {
                 const collection = await db.collection(name);
                 const reportWorld = {
@@ -87,7 +59,7 @@ export const createReport = async db => {
 
                 // deleting old layouts
                 const { result } = await collection.remove({
-                    time: { $lt: date },
+                    time: { $lt: removeLayoutDate },
                 });
                 if (!result.ok) console.log('FEHLER BEIM LÖSCHEN VON Reports'); // TODO bedder error handling
                 reportWorld.deletedReports = result.n;
@@ -101,16 +73,15 @@ export const createReport = async db => {
                 report.worldsReports.push(reportWorld);
             })
         );
-        console.log({ report, playerColl });
+        console.log({ report, playerColl });*/
 
         await Promise.all(
             playerColl.map(async ({ name }) => {
-                console.log('Deleting: ' + name)
                 const collection = await db.collection(name);
 
                 // deleting old layouts
                 const { result } = await collection.remove({
-                    _updated: { $lt: date2 },
+                    _updated: { $lt: removePlayerDate },
                 });
                 if (!result.ok) console.log('FEHLER BEIM LÖSCHEN VON Playern'); // TODO bedder error handling
                 // console.log(result);
@@ -123,16 +94,19 @@ export const createReport = async db => {
                     console.log('delete collection: ' + name);
                 }
 
-                // todo add logging into reports
+                report.layouts.push({
+                    worldId: name.split('_')[1],
+                    del: result.n, // how many deleted player
+                    count: stats.count, // how many player after
+                    size: stats.size,
+                });
             })
         );
-        console.log(report)
-
-        // PLAYER
-        // report.player.stats = await db.collection('players').stats({ scale: 1024 });
-
+        console.log(report);
         // save and return report
-        await db.collection('reports').save(report);
+        const result = await report.save()
+        console.log(result)
+        //await db.collection('reports').save(report);
         return report;
     } catch (e) {
         // TODO proper error handling
