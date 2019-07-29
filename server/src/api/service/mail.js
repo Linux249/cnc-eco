@@ -7,18 +7,24 @@ sgMail.setApiKey(
 );
 const msg = {
     to: 'julian.libor@gmail.com',
-    from: 'info@cnceco.de',
+    from: 'info@cnc-eco.de',
     subject: 'Please verify your email for cnc-eco.de',
     text: 'and easy to do anywhere, even with Node.js',
     html: '<strong>and easy to do anywhere, even with Node.js</strong>',
 };
 
 var transporter = nodemailer.createTransport({
-    host: 'cnc-eco.de',
+    // host: "ha01s001.org-dns.com",
+    host: 'smtp.cnc-eco.de',
+    port: 587,
+    // secure: false, // upgrade later with STARTTLS
     auth: {
-        user: process.env.GMAIL_USER || 'email',
-        pass: process.env.GMAIL_PASS || 'pass'
-    }
+        user: process.env.EMAIL_USER || 'email',
+        pass: process.env.EMAIL_PASS || 'pass',
+    },
+    tls: {
+        rejectUnauthorized: false,
+    },
 });
 
 export async function sendToken(token, mail) {
@@ -34,7 +40,8 @@ export async function sendToken(token, mail) {
     console.log(msg);
     try {
         const info = await transporter.sendMail(msg);
-        console.log("Message sent: ", info.messageId);
+        console.log('Message sent: ', info.messageId);
+        console.log(info);
     } catch (e) {
         console.error(e);
     }
