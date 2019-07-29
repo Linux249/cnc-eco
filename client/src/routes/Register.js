@@ -12,12 +12,13 @@ import Center from '../style/Center';
 import Container from '../style/Container';
 import Alert from '../style/Alert';
 
-function Login(props) {
+function Register(props) {
     const {
         email,
         password,
         error,
         isAuthenticated,
+        isVerified,
         changeEmail,
         changePassword,
         register,
@@ -63,8 +64,10 @@ function Login(props) {
                 </Form>
             </Container>
         </Center>
-    ) : (
+    ) : isVerified ? (
         <Redirect to="/user" />
+    ) : (
+        <Redirect to="/login" />
     );
 }
 
@@ -73,7 +76,8 @@ function mapStateToProps(state) {
         email: state.auth.email,
         password: state.auth.password,
         error: state.auth.error,
-        isAuthenticated: state.auth.isAuthenticated && state.auth.isVerified,
+        isAuthenticated: state.auth.isAuthenticated,
+        isVerified: state.auth.isVerified,
     };
 }
 
@@ -86,4 +90,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Login);
+)(Register);

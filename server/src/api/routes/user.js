@@ -94,8 +94,8 @@ router.post('/user/addPlayer', async (req, res, next) => {
             return next(
                 new Error(
                     `Cannot add Player: Player was not updated in the last 3 minutes (${Math.round(
-                        minutes
-                    )}) - please update data ingame`
+                        minutes * -1
+                    )}min's) - please update data ingame`
                 )
             );
         }

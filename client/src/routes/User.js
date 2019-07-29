@@ -14,6 +14,8 @@ import Body from '../style/Body';
 import Container from '../style/Container';
 import Alert from '../style/Alert';
 import BodySide from '../style/BodySide';
+import Info from '../style/Info';
+import { Link } from 'react-router-dom';
 
 class User extends Component {
     constructor(props) {
@@ -204,7 +206,7 @@ class User extends Component {
                 <div />
                 <Row wrap>
                     <Container>
-                        <Label htmlFor="name">{playerAdded ? 'Change' : 'add'} player name</Label>
+                        <Label htmlFor="name">{playerAdded ? 'Change' : 'Add a '} player name</Label>
                         <Input
                             name="name"
                             value={name}
@@ -229,7 +231,7 @@ class User extends Component {
                         <Button onClick={this.loadWorlds}>load</Button>
 
                         <Button onClick={!this.props.name ? this.addPlayer : this.addWorld}>
-                            {!playerAdded ? 'add player' : !world ? 'select world' : 'add'}
+                            {!playerAdded ? 'add player' : !world ? 'add world' : 'add'}
                         </Button>
                     </Container>
                     <Container>
@@ -260,7 +262,11 @@ class User extends Component {
                     )}
                 </Row>
                 <BodySide>
-                    {!playerAdded && <Alert>Add your ingame name to your account please</Alert>}
+                    {!playerAdded && <>
+                        <Info>Add your ingame name to your account first</Info>
+                        <Info>You have to install the <Link to='/scripts'> script </Link></Info>
+                        <Info>Update your data from one world ingame </Info>
+                    </>}
                 </BodySide>
             </Body>
         );
