@@ -14,6 +14,7 @@ const msg = {
 };
 
 var transporter = nodemailer.createTransport({
+    host: 'cnc-eco.de',
     auth: {
         user: process.env.GMAIL_USER || 'email',
         pass: process.env.GMAIL_PASS || 'pass'
@@ -21,7 +22,7 @@ var transporter = nodemailer.createTransport({
 });
 
 export async function sendToken(token, mail) {
-    console.log('sendMail');
+    console.log('sendToken');
     msg.to = mail;
     const body =
         'Hello,\n\n' +
@@ -32,7 +33,8 @@ export async function sendToken(token, mail) {
     msg.html = body;
     console.log(msg);
     try {
-        return await transporter.sendMail(msg);
+        const info = await transporter.sendMail(msg);
+        console.log("Message sent: ", info.messageId);
     } catch (e) {
         console.error(e);
     }
