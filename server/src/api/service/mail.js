@@ -1,3 +1,5 @@
+import nodemailer from 'nodemailer';
+
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(
     process.env.SENDGRID_API_KEY ||
@@ -5,11 +7,18 @@ sgMail.setApiKey(
 );
 const msg = {
     to: 'julian.libor@gmail.com',
-    from: 'login@cnc-eco.de',
+    from: 'info@cnceco.de',
     subject: 'Please verify your email for cnc-eco.de',
     text: 'and easy to do anywhere, even with Node.js',
     html: '<strong>and easy to do anywhere, even with Node.js</strong>',
 };
+
+var transporter = nodemailer.createTransport({
+    auth: {
+        user: process.env.GMAIL_USER || 'email',
+        pass: process.env.GMAIL_PASS || 'pass'
+    }
+});
 
 export async function sendToken(token, mail) {
     console.log('sendMail');
@@ -23,7 +32,7 @@ export async function sendToken(token, mail) {
     msg.html = body;
     console.log(msg);
     try {
-        return await sgMail.send(msg);
+        return await transporter.sendMail(msg);
     } catch (e) {
         console.error(e);
     }
