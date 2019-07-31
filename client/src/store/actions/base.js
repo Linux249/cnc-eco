@@ -2,29 +2,46 @@ import {
     BUILDING_TYP_DOWN,
     BUILDING_TYP_UP,
     CHANGE_FRACTION,
+    BASE_CHANGE_BASELVL,
     REPLACE_ALL_BASE,
     REPLACE_BASE_FROM_URL,
-    REPLACE_BUILDING,
-    SWITCH_BUILDINGS,
+    REPLACE_SLOT,
+    SWITCH_SLOT,
 } from '../constants/actionTypes'; // ad a new building a current location
 // ad a new building a current location
 // ad a new building a current location
 
 // number where the building is set is inside building.slot
-export function replaceBuilding(building) {
-    return {
-        type: REPLACE_BUILDING,
-        building: {
-            ...building,
-        },
+export function replaceSlot(unit, area = 'buildings') {
+    return (dispatch, getStore) => {
+        if (unit.type === 't' || unit.type === 'c') unit.lvl = undefined;
+        else if (!unit.lvl) unit.lvl = getStore().base.baseLvl;
+        dispatch({
+            type: REPLACE_SLOT,
+            unit,
+            area,
+        });
     };
 }
 
-export function switchBuilding(from, to) {
+export function replaceArea(area) {
+    return (dispatch, getStore) => {
+        const { base } = getStore();
+        console.log({base, area})
+        base[area] = [...base[area].map((_, i) => ({ slot: i }))];
+        dispatch({
+            type: REPLACE_ALL_BASE,
+            base,
+        });
+    };
+}
+
+export function switchSlot(from, to, area) {
     return {
-        type: SWITCH_BUILDINGS,
+        type: SWITCH_SLOT,
         from: { ...from },
         to: { ...to },
+        area,
     };
 }
 
@@ -62,3 +79,10 @@ export function buildingsDown(building) {
         building,
     };
 }
+
+export const changeBaseLvl = lvl => {
+    return {
+        type: BASE_CHANGE_BASELVL,
+        lvl,
+    };
+};

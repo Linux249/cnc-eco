@@ -1,9 +1,6 @@
-/**
- * Created by Bombassd on 13.01.2017.
- */
 import React, { Component } from 'react';
 import '../style/LineChart';
-import Button from './../style/Button';
+import ButtonOrg from './../style/Button';
 import { backgroundColor } from './../style/constants';
 import Row from './../style/Row';
 import ChartS from './../style/LineChart';
@@ -12,7 +9,7 @@ import { connect } from 'react-redux';
 import { shortenNumber } from '../util/service';
 import { Chart } from 'react-google-charts';
 import { futureProduction } from '../util/production.js';
-// import { calcProduction } from '../util/production';
+import styled from 'styled-components';
 
 // Colors for lines
 const tibColor = '#23ff1d';
@@ -34,6 +31,7 @@ const ranges = [
     1000000000000,
 ];
 
+const Button = styled(ButtonOrg)``;
 class LineChart_G extends Component {
     constructor(props) {
         super(props);
@@ -78,12 +76,13 @@ class LineChart_G extends Component {
                     },
                 },
                 hAxis: {
-                    title: 'Tage',
                     viewWindow: {
                         max: 120,
                         min: 0,
                     },
                 },
+                chartArea: { left: 10, top: 20, width: '80%', height: '100px' },
+                legend: { position: 'bottom' },
             },
             chartData,
         };
@@ -165,7 +164,7 @@ class LineChart_G extends Component {
         const days = [30, 60, 90, 120];
         return (
             <div>
-                <Row>
+                <Row wrap>
                     {ranges.map(n => (
                         <Button
                             small
@@ -177,7 +176,24 @@ class LineChart_G extends Component {
                         </Button>
                     ))}
                 </Row>
+
                 <Row>
+                    <ChartS>
+                        <Chart
+                            chartType="LineChart"
+                            data={chartData}
+                            options={this.state.options}
+                            graph_id="LineChart"
+                            width="100%"
+                            height="200px"
+                        />
+                    </ChartS>
+                    <Column />
+                </Row>
+                <Row wrap>
+                    <Button active small>
+                        Tage
+                    </Button>
                     {days.map(n => (
                         <Button
                             small
@@ -185,7 +201,7 @@ class LineChart_G extends Component {
                             onClick={() => this.changeDays(n)}
                             active={activeDays === n}
                         >
-                            {n + ' Tage'}
+                            {n}
                         </Button>
                     ))}
 
@@ -195,19 +211,6 @@ class LineChart_G extends Component {
                     <Button small onClick={() => this.toogleTrendLine()} active={toggleTrendLines}>
                         Trend Line
                     </Button>
-                </Row>
-                <Row>
-                    <ChartS>
-                        <Chart
-                            chartType="LineChart"
-                            data={chartData}
-                            options={this.state.options}
-                            graph_id="LineChart"
-                            width="100%"
-                            legend_toggle
-                        />
-                    </ChartS>
-                    <Column />
                 </Row>
             </div>
         );

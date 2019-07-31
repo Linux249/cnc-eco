@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export default styled.div`
-    width: 500px;
+    width: 100%;
 
     //flex-basis: 880px;
 `;

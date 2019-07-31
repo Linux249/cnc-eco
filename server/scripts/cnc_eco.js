@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          C&C:TA CnC-Eco
-// @version       1.0.6
+// @version       1.0.7
 // @namespace     http://cnc-eco.herokuapp.com
 // @homepage      http://cnc-eco.herokuapp.com
 // @description   Sammelt Informationen ueber Basenausbau der Allianzmitglieder (basierend auf Skripte / Routinen von neobsen, JimBeamJD, KRS_L, F.D, und Dooki)
@@ -156,13 +156,12 @@
                         },
                         doMenu: function() {
                             var c = CncEcomain.getInstance(),
-                                f = c.AddSubMainMenu('MainOptions');
-                            c.AddSubMenu(f, 'open cnc-eco.de', function() {
+                            f //= c.AddSubMainMenu('MainOptions');
+                            c.AddMainMenu('open cnc-eco.de', function() {
                                 CncEcomain.getInstance().openurl();
                             });
-                            c.AddSubMenu(
-                                f,
-                                'send BaseData',
+                            c.AddMainMenu(
+                                'update data',
                                 function() {
                                     CncEcomain.getInstance().doAfter();
                                 },
@@ -171,7 +170,7 @@
                             !0 ===
                                 ClientLib.Data.MainData.GetInstance()
                                     .get_Alliance()
-                                    .get_IsAdmin() &&
+                                    .get_IsAdmin() && false && // todo remove false
                                 ((f = c.AddSubMainMenu('State of War')),
                                 c.AddSubMenu(
                                     f,
@@ -3803,7 +3802,7 @@
                         initialize: function() {
                             try {
                                 CncEcomain.getInstance().AddMainMenu(
-                                    'Hide targets',
+                                    'hide targets',
                                     function() {
                                         CncEcoHIDE.window.Window.getInstance().open();
                                     },

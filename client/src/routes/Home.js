@@ -1,24 +1,29 @@
 import React from 'react';
 import BuildingMenu from '../containers/BuildingMenu';
-import UrlInfo from '../containers/UrlInfo';
-import Share from '../containers/Share';
-import Base from '../components/Base'
-import { Row } from '../style/Row';
+import UrlLoader from '../components/UrlLoader';
+import Share from '../components/Share';
+import Base from '../components/Base';
 import Column from '../style/Column';
 import Body from '../style/Body';
+import Army from '../components/Army';
+import Defense from '../components/Defense';
+import ResetArea from '../containers/ResetArea';
 
-
-export default () => {
-    return (
-        <Column center>
-            <Row>
-                <UrlInfo />
-                <Share/>
-            </Row>
-            <Body>
-                <BuildingMenu />
-                <Base />
-            </Body>
-        </Column>
-    );
-};
+export default () => (
+    <Column center>
+        <Body>
+            <BuildingMenu area="buildings" />
+            <Base />
+            <div>
+                <Share />
+                <UrlLoader />
+                <ResetArea />
+            </div>
+            <BuildingMenu area="defense" />
+            <Defense />
+            <div />
+            <BuildingMenu area="army" />
+            <Army />
+        </Body>
+    </Column>
+);

@@ -1,13 +1,9 @@
-/**
- * Created by Bombassd on 08.06.2017.
- */
-
 import express from 'express';
 import path from 'path';
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { pingInterval: 1000 });
-const api = require('./app');
+const api = require('./api/app');
 
 const PORT = process.env.PORT || 8000; //: 4444;
 
@@ -17,10 +13,10 @@ app.use((req, res, next) => {
 });
 
 // DB
-const mongo_uri = process.env.MONGODB_URI
-    ? process.env.MONGODB_URI
-    : 'mongodb://localhost:27017/cnc';
-console.log({ mongo_uri });
+// const mongo_uri = process.env.MONGODB_URI
+//     ? process.env.MONGODB_URI
+//     : 'mongodb://localhost:27017/cnc';
+// console.log({ mongo_uri });
 // mongoose.connect(mongo_uri, { useMongoClient: true, promiseLibrary: global.Promise })
 // const db = mongoose.connection //simplification
 
@@ -44,10 +40,10 @@ console.log({ mongo_uri });
 // server.route(layouts);
 
 io.on('connect', socket => {
-    console.log('someone conecceted');
+    console.log('someone connected');
 
     socket.on('buildings', buildings => {
-        console.log('buildings emited - start searching');
+        console.log('buildings emitted - start searching');
         // findBestToLvlUpNext(buildings, foundNewBest)
 
         socket.on('disconnect', () => {

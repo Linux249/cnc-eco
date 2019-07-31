@@ -12,12 +12,15 @@ import supplyPoints from '../img/icon/supply_points.png';
 import funds from '../img/icon/funds.png';
 import commandoPoints from '../img/icon/commando_points.png';
 import offenseRepair from '../img/icon/offense_repair.png';
-import Body from '../style/Body';
+import BodyRaw from '../style/Body';
 import Row from '../style/Row';
 import Button from '../style/Button';
 import styled from 'styled-components';
 import { msToTime } from '../util/secToTime';
 import Column from '../style/Column';
+import { baseLight, border, borderRadius } from '../style/constants';
+import Container from '../style/Container';
+import Title from '../style/Title';
 
 // TODO show last update in table
 
@@ -33,6 +36,10 @@ const AllianceS = styled.div`
     max-height: 90vh;
     overflow: auto;
     font-size: 0.7rem;
+    
+    padding: 5px;
+    
+    font-weight: 700;
     
     /*
     Custom scrollbar style
@@ -64,10 +71,11 @@ const Cell = styled.div`
     align-items: center;
 
     padding: 0.1rem 0.5rem;
-    //border-color: rgba(37, 38, 39, 0.1);
-    //border-style: solid;
-    //border-width: 1px;
-    box-shadow: 0 0 2px -1px rgb(150, 150, 150);
+    border: ${border};
+    border-radius: ${borderRadius};
+    border-color: ${baseLight};
+
+    ${p => (p.active ? 'background-color: ' + baseLight : '')};
 `;
 
 const Icon = styled.img`
@@ -75,12 +83,17 @@ const Icon = styled.img`
     height: 1.4rem;
     margin: 0.2rem;
 `;
+const Body = styled(BodyRaw)`
+    grid-column-end: 2;
+    grid-template-columns: minmax(100px, 90%) 1fr;
+`;
 
 class Alliance extends Component {
     constructor(props) {
         super();
         this.state = {
             members: [],
+            s: 'rank',
             name: '',
             count: 0,
             lastUpdate: null,
@@ -92,7 +105,7 @@ class Alliance extends Component {
         console.log(this.props.auth);
         const { w, allianceId, token } = this.props;
         console.log(w, allianceId, token);
-        if (this.props.auth) this.getAlliance();
+        if (this.props.auth && this.props.allianceId) this.getAlliance();
     }
 
     getAlliance = async () => {
@@ -109,45 +122,69 @@ class Alliance extends Component {
             name: alliance.name,
             count: alliance.count,
             lastUpdated: alliance.date,
-            members: alliance.members.sort((m1, m2) =>
-                !m1.rank || !m2.rank ? -1 : m1.rank < m2.rank ? 1 : -1
-            ),
+            members: alliance.members.sort((a, b) => +b.rank || 0 - +a.rank || 0),
         });
         this.props.changeLoading(false);
     };
 
+    sort = s => {
+        console.log('SORT');
+        console.log(s);
+        const { members } = this.state;
+        members.sort((a, b) => +b[s] || 0 - +a[s] || 0);
+        this.setState({
+            members: [...members],
+            s,
+        });
+    };
+
     render() {
-        const { members, name, count, lastUpdate } = this.state;
-        const {} = this.props;
+        const { members, name, count, s } = this.state;
         return (
             <Body>
-                <div />
                 <AllianceS>
                     <Grid>
-                        <Cell>Name</Cell>
-                        <Cell>Ranking</Cell>
-                        <Cell>Rolle</Cell>
-                        <Cell>Score</Cell>
-                        <Cell>
+                        <Cell active={s === 'name'} onClick={() => this.sort('name')}>
+                            Name
+                        </Cell>
+                        <Cell active={s === 'rank'} onClick={() => this.sort('rank')}>
+                            Rank
+                        </Cell>
+                        <Cell>Roll</Cell>
+                        <Cell active={s === 'points'} onClick={() => this.sort('points')}>
+                            Score
+                        </Cell>
+                        <Cell active={s === 'rPoints'} onClick={() => this.sort('rPoints')}>
                             <Icon src={researchPoints} alt="Research" />
                         </Cell>
-                        <Cell>Bases</Cell>
-                        <Cell>PVE</Cell>
-                        <Cell>PVP</Cell>
+                        <Cell active={s === 'basecount'} onClick={() => this.sort('basecount')}>
+                            Bases
+                        </Cell>
+                        <Cell active={s === 'pvekills'} onClick={() => this.sort('pvekills')}>
+                            PVE
+                        </Cell>
+                        <Cell active={s === 'pvpkills'} onClick={() => this.sort('pvpkills')}>
+                            PVP
+                        </Cell>
                         <Cell>Code</Cell>
-                        <Cell>
+                        <Cell
+                            active={s === 'creditsCount'}
+                            onClick={() => this.sort('creditsCount')}
+                        >
                             <Icon src={credits} alt="Credits" />
                         </Cell>
-                        <Cell>
+                        <Cell active={s === 'actcp'} onClick={() => this.sort('actcp')}>
                             <Icon src={commandoPoints} alt="CP" />
                         </Cell>
-                        <Cell>
+                        <Cell active={s === 'funds'} onClick={() => this.sort('funds')}>
                             <Icon src={funds} alt="Funds" />
                         </Cell>
-                        <Cell>
+                        <Cell active={s === 'schirme'} onClick={() => this.sort('schirme')}>
                             <Icon src={supplyPoints} alt="Supply" />
                         </Cell>
-                        <Cell>Time</Cell>
+                        <Cell active={s === 'timeToMcv'} onClick={() => this.sort('timeToMcv')}>
+                            Time
+                        </Cell>
 
                         <Cell>
                             <div>Off</div>
@@ -159,27 +196,41 @@ class Alliance extends Component {
                             <Icon src={offenseRepair} alt="Repair" />
                         </Cell>
 
-                        <Cell>
+                        <Cell active={s === 'totalTib'} onClick={() => this.sort('totalTib')}>
                             <Icon src={tib} alt="Tib" />
                             /h
                         </Cell>
-                        <Cell>
+                        <Cell active={s === 'totalPower'} onClick={() => this.sort('totalPower')}>
                             <Icon src={cris} alt="Cris" />
                             /h
                         </Cell>
-                        <Cell>
+                        <Cell active={s === 'totalCris'} onClick={() => this.sort('totalCris')}>
                             <Icon src={power} alt="Power" />
                             /h
                         </Cell>
-                        <Cell>
+                        <Cell
+                            active={s === 'totalCredits'}
+                            onClick={() => this.sort('totalCredits')}
+                        >
                             <Icon src={credits} alt="Credits" />
                             /h
                         </Cell>
 
-                        <Cell>Def&#8709;</Cell>
-                        <Cell>Sub&#8709;</Cell>
-                        <Cell>Def Fa&#8709;</Cell>
-                        <Cell>Def HQ&#8709;</Cell>
+                        <Cell active={s === 'avargDef'} onClick={() => this.sort('avargDef')}>
+                            Def&#8709;
+                        </Cell>
+                        <Cell active={s === 'avargSubLvl'} onClick={() => this.sort('avargSubLvl')}>
+                            Sub&#8709;
+                        </Cell>
+                        <Cell active={s === 'avargDfLvl'} onClick={() => this.sort('avargDfLvl')}>
+                            Def Fa&#8709;
+                        </Cell>
+                        <Cell
+                            active={s === 'avargDfHQLvl'}
+                            onClick={() => this.sort('avargDfHQLvl')}
+                        >
+                            Def HQ&#8709;
+                        </Cell>
 
                         {members.map(member => {
                             return member.data ? (
@@ -257,10 +308,12 @@ class Alliance extends Component {
                     </Grid>
                 </AllianceS>
                 <Column>
-                    <Row center>
-                        <Row>{name + ' (' + count + ')'}</Row>
-                        <Button onClick={this.getAlliance}>update</Button>
-                    </Row>
+                    <Container center>
+                        <Title>{name + ' (' + count + ')'}</Title>
+                        <Row>
+                            <Button onClick={this.getAlliance}>update</Button>
+                        </Row>
+                    </Container>
                 </Column>
             </Body>
         );

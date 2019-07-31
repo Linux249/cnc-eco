@@ -1,25 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import { api_url } from '../config';
 import { updatePlayer } from '../store/actions/player';
 import { logout } from '../store/actions/auth';
 import Button from '../style/Button';
 import Input from '../style/Input';
-import Area from '../style/Area';
 import LoadingPoints from '../style/LoadingPoints';
+import Title from '../style/Title';
 import Label from '../style/Label';
 import { InfoText } from '../style/InfoText';
-import Error from '../style/Error';
 import Row from '../style/Row';
 import Body from '../style/Body';
-
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-`;
+import Container from '../style/Container';
+import Alert from '../style/Alert';
+import BodySide from '../style/BodySide';
+import Info from '../style/Info';
+import { Link } from 'react-router-dom';
 
 class User extends Component {
     constructor(props) {
@@ -71,7 +67,7 @@ class User extends Component {
             return this.setState({ error: player.error.message });
         }
 
-        if(player.error) return this.setState({ error: player.message })
+        if (player.error) return this.setState({ error: player.message });
         this.props.updatePlayer(player);
         // update world lists
         this.loadWorlds();
@@ -106,7 +102,7 @@ class User extends Component {
         if (!res.ok || player.error) {
             return this.setState({ error: player.error.message });
         }
-        if(player.error) return this.setState({ error: player.message })
+        if (player.error) return this.setState({ error: player.message });
         this.props.updatePlayer(player);
         // updateWorldLists
         this.loadWorlds();
@@ -140,11 +136,36 @@ class User extends Component {
                 return this.setState({ error: e.message });
             });
         this.endLoading();
-        console.log(player)
-        if(player.error) return this.setState({ error: player.message })
+        console.log(player);
+        if (player.error) return this.setState({ error: player.message });
         this.props.updatePlayer(player);
         // updateWorldLists
         this.loadWorlds();
+    };
+
+    deleteUser = async () => {
+        const { token, _id } = this.props;
+        this.startLoading();
+
+        const res = await fetch(api_url + '/user/' + _id, {
+            method: 'Delete',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                Authorization: 'Bearer  ' + token,
+            },
+        }).catch(e => {
+            console.warn('catched error');
+            console.error(e);
+        });
+        const result = await res.json();
+        this.endLoading();
+        if (!res.ok || result.error) {
+            return this.setState({ error: result.error.message });
+        }
+        if (result.error) return this.setState({ error: result.message });
+
+        console.log(result);
+        this.props.logout();
     };
 
     loadWorlds = async () => {
@@ -184,66 +205,69 @@ class User extends Component {
             <Body>
                 <div />
                 <Row wrap>
-                    <Area>
-                        <Container>
-                            <div>
-                                <Label>Player name</Label>
-                                <InfoText>add your ingame name to your account please</InfoText>
-                                <Input
-                                    name="name"
-                                    value={name}
-                                    onChange={e => this.changeName(e.target.value)}
-                                    disabled={playerAdded}
-                                />
-                                <InfoText>you can only all 7 days change your username</InfoText>
-                            </div>
-                        </Container>
-                    </Area>
-                    <Area>
-                        <Label>Select a World</Label>
-                        <Container>
-                            <LoadingPoints loading={loading} />
-                            {worlds.length !== 0 &&
-                                worlds.map(w => (
-                                    <Button
-                                        key={w.worldId}
-                                        onClick={() => this.changeWorld(w.worldId)}
-                                        active={world === w.worldId}
-                                    >
-                                        {w.worldName}
-                                    </Button>
-                                ))}
-                            <Button onClick={this.loadWorlds}>load</Button>
-
-                            <Button onClick={!this.props.name ? this.addPlayer : this.addWorld}>
-                                {!playerAdded ? 'add player' : !world ? 'select world' : 'add'}
-                            </Button>
-                        </Container>
-                    </Area>
-
-                    <Area>
-                        <Label>Remove a World</Label>
-                        <Container>
-                            {savedWorlds.map(w => (
+                    <Container>
+                        <Label htmlFor="name">{playerAdded ? 'Change' : 'Add a '} player name</Label>
+                        <Input
+                            name="name"
+                            value={name}
+                            onChange={e => this.changeName(e.target.value)}
+                            disabled={playerAdded}
+                        />
+                        <InfoText>you can only all 7 days change your username</InfoText>
+                    </Container>
+                    <Container>
+                        <Title>Add a World</Title>
+                        <LoadingPoints loading={loading} />
+                        {worlds.length !== 0 &&
+                            worlds.map(w => (
                                 <Button
-                                    key={w.worldId * 100}
+                                    key={w.worldId}
                                     onClick={() => this.changeWorld(w.worldId)}
                                     active={world === w.worldId}
                                 >
                                     {w.worldName}
                                 </Button>
                             ))}
-                            <Button onClick={this.deleteWorld}>delete</Button>
-                        </Container>
-                    </Area>
-                    <Area>
-                        <Label>Logout</Label>
-                        <Container>
-                            <Button onClick={this.props.logout}>logout</Button>
-                        </Container>
-                    </Area>
+                        <Button onClick={this.loadWorlds}>load</Button>
+
+                        <Button onClick={!this.props.name ? this.addPlayer : this.addWorld}>
+                            {!playerAdded ? 'add player' : !world ? 'add world' : 'add'}
+                        </Button>
+                    </Container>
+                    <Container>
+                        <Title>Remove a World</Title>
+                        {savedWorlds.map(w => (
+                            <Button
+                                key={w.worldId * 100}
+                                onClick={() => this.changeWorld(w.worldId)}
+                                active={world === w.worldId}
+                            >
+                                {w.worldName}
+                            </Button>
+                        ))}
+                        <Button onClick={this.deleteWorld}>delete</Button>
+                    </Container>
+                    <Container>
+                        <Title>Logout</Title>
+                        <Button onClick={this.props.logout}>logout</Button>
+                    </Container>
+                    <Container>
+                        <Title>Delete Account</Title>
+                        <Alert onClick={this.deleteUser}>DELETE</Alert>
+                    </Container>
+                    {error && (
+                        <>
+                            <Alert>{error}</Alert>
+                        </>
+                    )}
                 </Row>
-                <Error>{error}</Error>
+                <BodySide>
+                    {!playerAdded && <>
+                        <Info>Add your ingame name to your account first</Info>
+                        <Info>You have to install the <Link to='/scripts'> script </Link></Info>
+                        <Info>Update your data from one world ingame </Info>
+                    </>}
+                </BodySide>
             </Body>
         );
     }

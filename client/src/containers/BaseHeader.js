@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import Header from '../style/BaseHeader';
-import Title from '../style/Title';
+import Title from '../style/AppName';
 import Button from '../style/Button';
 import Row from '../style/Row';
 import styled from 'styled-components';
@@ -11,32 +11,33 @@ import { backgroundColorButtonHeader } from '../style/constants';
 
 const Link = Button.withComponent(
     styled(NavLink)`
-        color: white;
+        color: white !important;
         //background-color: inherit;
         border: none !important;
 
         &:hover {
             background-color: ${backgroundColorButtonHeader};
+            transition: background 0.1s linear;
         }
     `
 );
 
 class BaseHeader extends Component {
     render() {
-        const { isAuthenticated, name } = this.props;
+        const { isAuthenticated, name, world } = this.props;
         return (
             <Header>
                 <Title>
                     <NavLink to="/">CNC-ECO</NavLink>
                 </Title>
                 <Row wrap>
-                    {isAuthenticated && (
+                    {isAuthenticated && name && (
                         <>
                             <WorldsMenu />
                             <Link to="/bases" activeClassName="active">
                                 Basen
                             </Link>
-                            <Link to="/layouts" activeClassName="active">
+                            <Link to={'/layouts/' + world} activeClassName="active">
                                 Layouts
                             </Link>
                             <Link to="/alliance" activeClassName="active">
@@ -52,7 +53,7 @@ class BaseHeader extends Component {
                     </Link>*/}
                     {isAuthenticated ? (
                         <Link to="/user" activeClassName="active">
-                            {name}
+                            {name || 'Add a player name first'}
                         </Link>
                     ) : (
                         <Fragment>
@@ -71,8 +72,9 @@ class BaseHeader extends Component {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
+    isAuthenticated: state.auth.isAuthenticated && state.auth.isVerified,
     name: state.player.name,
+    world: state.player.w,
 });
 
 export default connect(mapStateToProps)(BaseHeader);

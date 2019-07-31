@@ -8,7 +8,7 @@ import styled from 'styled-components';
 
 import { shortenNumber } from '../util/service';
 import { calcBuildingCost } from '../util/production';
-import { buildings as buildingNames } from '../util/buildings';
+import { keys as buildingNames } from '../util/keys';
 
 import icon_tib from '../img/icon/icon_tiberium.png';
 import icon_cris from '../img/icon/icon_crystal.png';
@@ -121,7 +121,6 @@ class Details extends Component {
                     </div>
                 )}
                 {showNextBuildings && <NextBuildings />}
-
             </div>
             //
 

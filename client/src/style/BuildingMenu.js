@@ -5,6 +5,8 @@ export default styled.div`
     justify-content: center;
     flex-wrap: wrap;
 
+    font-size: 0.75rem;
+
     max-width: 250px;
     max-height: 450px;
 `;

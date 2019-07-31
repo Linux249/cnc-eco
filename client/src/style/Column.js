@@ -6,4 +6,4 @@ export const Column = styled.div`
     align-items: ${p => (p.center ? 'center' : 'flex-start')};
 `;
 
-export default Column
+export default Column;

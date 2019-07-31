@@ -70,13 +70,13 @@ export default async (req, res, next) => {
 
         const bases = [...Array(Number(basecount))].map((_, i) => {
             // update max off base index
-            const off = +body[`off${i}`];
-            const def = +body[`def${i}`];
+            const off = +body[`off${i}`] || 0;
+            const def = +body[`def${i}`] || 0;
             avargDef += Math.round((def / basecount) * 100) / 100;
 
-            const rep = +body[`availrep${i}`];
-            const maxRep = +body[`repmax${i}`];
-            if ((i !== offBaseIndex && off >= offbase.off) || i === 0) {
+            const rep = +body[`availrep${i}`] || 0;
+            const maxRep = +body[`repmax${i}`] || 0;
+            if ((i !== offBaseIndex && off > offbase.off) || i === 0) {
                 console.log({ i, off, def, rep, maxRep });
                 offBaseIndex = i;
                 offbase.off = off;

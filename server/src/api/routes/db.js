@@ -1,6 +1,6 @@
-import { layoutStats } from '../../utils/layout';
+import { layoutStats } from '../utils/layout';
 import { Router } from 'express';
-import { createReport } from '../../service/report';
+import { createReport } from '../service/report';
 
 const router = Router();
 
@@ -98,11 +98,9 @@ router.get('/repairLayouts', async (req, res, next) => {
     res.json('all docs clean');
 });
 
-router.get('/layoutsFrom/:world', (req, res, next) => {
+router.get('/layoutsFrom/:world', (req, res) => {
     console.log('layoutsFrom');
-    // const { a, w } = req.query
     // TODO auth require
-    const collName = '';
     req.db.collection(`layouts_${req.params.world}`).distinct('player', (err, players) => {
         console.log(players);
 

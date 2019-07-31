@@ -38,6 +38,14 @@ const userSchema = Schema({
             worldName: String,
         },
     ],
+    isVerified: { type: Boolean, default: false },
+    password: String,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
+    role: {type: String,
+        enum: ['player', 'admin '],
+        default: 'player'
+    }
 });
 
 // generating a hash
