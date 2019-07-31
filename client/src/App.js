@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-// import { DragDropContext } from 'react-dnd';
-// import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
 import BaseHeader from './containers/BaseHeader.js';
@@ -20,6 +18,8 @@ import { B } from './routes/B';
 import { updatePlayer } from './store/actions/player';
 import { receiveLogin } from './store/actions/auth';
 import { LOCAL_STORE } from './config';
+import Reset from './routes/Reset';
+import Resend from './routes/Resend';
 
 class App extends Component {
     componentWillMount() {
@@ -35,7 +35,7 @@ class App extends Component {
         return (
             <Router>
                 <AppS>
-                    <BaseHeader ref="target" />
+                    <BaseHeader />
                     <LoadingLine />
                     <Route path="/" exact component={Home} />
                     <Route path="/s/:url" component={S} />
@@ -43,6 +43,8 @@ class App extends Component {
                     <Route path="/scripts" component={Scripts} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
+                    <Route path="/resend" component={Resend} />
+                    <Route path="/reset" component={Reset} />
                     <ProtectedRoute path="/bases" auth={auth} name={name} component={Bases} />
                     <ProtectedRoute
                         path="/layouts/:world"

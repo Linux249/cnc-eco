@@ -18,6 +18,7 @@ const LayoutS = styled.div`
     display: flex;
     flex-wrap: wrap;
     max-width: 1200px;
+    justify-content: center;
     //align-items: center;
     //padding: 2px;
 `;
