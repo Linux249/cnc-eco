@@ -46,3 +46,23 @@ export async function sendToken(token, mail) {
         console.error(e);
     }
 }
+
+export async function sendPassword(token, mail) {
+    console.log('sendToken');
+    msg.to = mail;
+    const body =
+        'Hello,\n\n' +
+        'Please update your password by clicking the link: \nhttps://cnc-eco.de/reset?token=' +
+        token.token +
+        '.\n';
+    msg.text = body;
+    msg.html = body;
+    console.log(msg);
+    try {
+        const info = await transporter.sendMail(msg);
+        console.log('Message sent: ', info.messageId);
+        console.log(info);
+    } catch (e) {
+        console.error(e);
+    }
+}

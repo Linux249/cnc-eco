@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom';
 import Input from '../style/Input';
 import {
     changeAuthEmail,
-    changeAuthPassword,
-    requestLogin,
+    requestResendToken,
 } from '../store/actions/auth';
 import InputGroup from '../style/InputGroup';
 import Label from '../style/Label';
@@ -19,25 +18,23 @@ import Alert from '../style/Alert';
 function Login(props) {
     const {
         email,
-        password,
         error,
         isAuthenticated,
         changeEmail,
-        changePassword,
-        login,
+        resend,
         playerName,
     } = props;
 
     function handleSubmit(e) {
         e.preventDefault();
-        login();
+        resend();
     }
 
     return !isAuthenticated ? (
         <Center>
             <Container>
                 <Form onSubmit={handleSubmit}>
-                    <h1>Login</h1>
+                    <h1>Resend token</h1>
                     {error && <Alert>{error}</Alert>}
                     <InputGroup>
                         <Label htmlFor="email">Email</Label>
@@ -50,29 +47,12 @@ function Login(props) {
                         />
                     </InputGroup>
                     <InputGroup>
-                        <Label htmlFor="password">Password</Label>
-                        <Input
-                            name="password"
-                            value={password}
-                            onChange={e => changePassword(e.target.value)}
-                            type="password"
-                            placeholder="Password"
-                            minLength="4"
-                        />
-                    </InputGroup>
-                    <InputGroup>
-                        <Submit type="submit" value="Login" />
+                        <Submit type="submit" value="Resend" />
                     </InputGroup>
                     <div>New to CnC-Exo?</div>
                     <Link to="/register">Sign Up</Link>
                     <br />
                     <br />
-                    <div>Email verification expired?</div>
-                    <Link to="/resend">Resend token</Link>
-                    <br />
-                    <br />
-                    <div>Forget password</div>
-                    <Link to="/reset">Reset password</Link>
                 </Form>
             </Container>
         </Center>
@@ -86,7 +66,6 @@ function Login(props) {
 function mapStateToProps(state) {
     return {
         email: state.auth.email,
-        password: state.auth.password,
         error: state.auth.error,
         isAuthenticated: state.auth.isAuthenticated && state.auth.isVerified,
         playerName: state.player.name,
@@ -95,8 +74,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
     changeEmail: changeAuthEmail,
-    changePassword: changeAuthPassword,
-    login: requestLogin,
+    resend: requestResendToken,
 };
 
 export default connect(

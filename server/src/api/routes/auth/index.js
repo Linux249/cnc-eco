@@ -1,9 +1,8 @@
 import generateToken from '../../utils/generateToken';
-
-const jwt = require('jsonwebtoken');
 import Token from '../../model/Token';
 import User from '../../model/User';
-import { sendToken } from '../../service/mail';
+import { sendPassword, sendToken } from '../../service/mail';
+const jwt = require('jsonwebtoken');
 
 module.exports = function(app, passport) {
     // LOGOUT ==============================
@@ -94,7 +93,7 @@ module.exports = function(app, passport) {
     app.post('/local/resendToken', async (req, res, next) => {
         console.log('resendToken');
         const { email } = req.body
-        if (!email) return next(new Error('Token missing'));
+        if (!email) return next(new Error('Email missing'));
 
         User.findOne({ 'local.email': email }, function (err, user) {
             console.log(email, user)
@@ -115,6 +114,33 @@ module.exports = function(app, passport) {
                 return res.json({success: 'New E-Mail send'})
             });
         });
+    });
+
+
+    app.post('/local/resetPassword', async (req, res, next) => {
+        console.log('resetPassword');
+        const { email } = req.body
+        if (!email) return next(new Error('Email missing'));
+
+        // get user for this Email
+        try {
+            const user = await User.findOne({'local.email': email})
+            if (!user) return next(new Error('No user found - incorrect email'));
+            const token = await Token.findOne({_userId: user._id}) || new Token({
+                _userId: user._id,
+                token: generateToken(),
+            });
+            console.log(token)
+            token.save(async function(err) {
+                if (err) return next(new Error('Token could not be saved.'));
+                // Send the email
+                await sendPassword(token, user.local.email);
+                return res.json({success: 'E-Mail with password rest link send'})
+            });
+        } catch (e) {
+            next(e)
+        }
+        // check if token already exists or create new onw
     });
     // SIGNUP =================================
     // show the signup form
