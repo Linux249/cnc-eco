@@ -31,7 +31,8 @@ function Login(props) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        reset();
+        // todo remove comment below
+        // reset();
     }
 
     return !isAuthenticated ? (
@@ -39,6 +40,7 @@ function Login(props) {
             <Container>
                 <Form onSubmit={handleSubmit}>
                     <h1>Reset password</h1>
+                    <Alert>In Progress - don't use</Alert>
                     {error && <Alert>{error}</Alert>}
                     {!token ? <InputGroup>
                         <Label htmlFor="email">Email</Label>
