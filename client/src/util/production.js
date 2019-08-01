@@ -96,32 +96,32 @@ const roundTwoPoints = (p1, p2, day) => {
     return prod;
 };
 
-
 /*
     Costs of each building
  */
 export const calcBuildingCost = building => {
     let costs = {
-        tib: 0,
-        power: 0,
+        t: 1,
+        p: 0,
     };
     // if (building.lvl > 65) building.lvl = 65
 
     if (building.type && building.lvl <= 65) {
+        const tib = costs_tib[building.lvl - 1];
         switch (building.type) {
             case 'n': // kris harvester
             case 'h': // tib harvester
-                costs.tib += costs_tib[building.lvl];
-                costs.power += Math.round((costs_tib[building.lvl] / 4) * 3); //power costs for a harvester
+                costs.t = tib;
+                costs.p = Math.round((tib / 4) * 3); //power costs for a harvester
                 break;
             case 's': // silo
             case 'a': // accu
-                costs.tib += costs_tib[building.lvl];
-                costs.power += Math.round(costs_tib[building.lvl] / 4);
+                costs.t = tib;
+                costs.p = Math.round(tib / 4);
                 break;
             case 'r': // rafenerie
-                costs.tib += costs_tib[building.lvl] * 2; // dubble costs
-                costs.power += Math.round(costs_tib[building.lvl] / 2); //power costs for a raf
+                costs.t = tib * 2; // dubble costs
+                costs.p = Math.round(tib / 2); //power costs for a raf
                 break;
             default:
                 break;

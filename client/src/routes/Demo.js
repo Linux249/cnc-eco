@@ -46,7 +46,14 @@ function SlotC(props) {
     // console.log({costs})
     const contextClick = e => {
         e.preventDefault();
-        props.replace({ slot: props.slot });
+        // return new empty building
+        props.replace({
+            slot: props.slot,
+            costs: {
+                t: 1,
+                p: 0,
+            },
+        });
     };
 
     const handleKeyDown = event => {
@@ -97,7 +104,7 @@ function SlotC(props) {
 
     drop(drag(ref));
 
-    function update() {
+    function updateLvl() {
         if (upgrade && unit.lvl) {
             if (!fundTib || !fundPower) return console.log('building costs to high');
             unit.lvl += 1;
@@ -115,14 +122,14 @@ function SlotC(props) {
             onKeyDown={handleKeyDown}
             tabIndex="0"
             onContextMenu={contextClick}
-            onClick={update}
+            onClick={updateLvl}
         >
             {lvl && <Number>{lvl}</Number>}
             {upgrade && costs.tib !== 0 && (
-                <TibCosts found={fundTib}>{shortenNumber(costs.tib)}</TibCosts>
+                <TibCosts found={fundTib}>{shortenNumber(costs.t)}</TibCosts>
             )}
             {upgrade && costs.power !== 0 && (
-                <KrisCosts found={fundPower}>{shortenNumber(costs.power)}</KrisCosts>
+                <KrisCosts found={fundPower}>{shortenNumber(costs.p)}</KrisCosts>
             )}
             <img src={type ? img : empty} alt={type} />
         </SlotStyle>
@@ -130,13 +137,10 @@ function SlotC(props) {
 }
 
 const mapStateToPropsS = (state, props) => {
-    const costs = calcBuildingCost(state.demo.buildings[props.slot]);
-    // todo only if upgrade is active
-
     return {
         unit: state.demo.buildings[props.slot],
-        fundTib: state.demo.loot.t - costs.tib >= 0,
-        fundPower: state.demo.loot.p - costs.power >= 0,
+        fundTib: state.demo.loot.t - state.demo.buildings[props.slot].costs.t >= 0,
+        fundPower: state.demo.loot.p - state.demo.buildings[props.slot].costs.p >= 0,
         upgrade: state.demo.upgrade,
     };
 };

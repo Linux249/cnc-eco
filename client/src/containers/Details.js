@@ -71,11 +71,11 @@ class Details extends Component {
                         <Row>Production: (arrowUp) </Row>
                         <Row>Upgrade costs: </Row>
                         <Row>
-                            {shortenNumber(buildingProd.tib, 2)}
+                            {shortenNumber(buildingProd.t, 2)}
                             <img src={icon_tib} alt={icon_tib} />
                         </Row>
                         <Row>
-                            {shortenNumber(buildingProd.power, 2)}
+                            {shortenNumber(buildingProd.p, 2)}
                             <img src={icon_power} alt={icon_tib} />
                         </Row>
                         {/*<div>+production: </div>*/}

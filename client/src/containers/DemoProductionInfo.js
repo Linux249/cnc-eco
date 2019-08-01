@@ -47,50 +47,48 @@ class ProductionInfo extends Component {
     };
 
     componentDidUpdate(prevProps) {
-        if (prevProps.prod !== this.props.prod)
-            console.log(prevProps, this.props)
-            window.requestIdleCallback(() =>
-                this.setState(() => {
-                    const diff = {
-                        tib: shortenNumber(prevProps.prod.t - this.props.prod.t, 2),
-                        kris: shortenNumber(prevProps.prod.k - this.props.prod.k, 2),
-                        power: shortenNumber(prevProps.prod.p - this.props.prod.p, 2),
-                        credits: shortenNumber(prevProps.prod.c - this.props.prod.c, 2),
-                    };
-                    return {
-                        diff,
-                    };
-                })
-            );
+        if (prevProps.loot !== this.props.loot) console.log(prevProps, this.props);
+        window.requestIdleCallback(() =>
+            this.setState(() => {
+                const diff = {
+                    tib: shortenNumber(prevProps.loot.t - this.props.loot.t, 2),
+                    kris: shortenNumber(prevProps.loot.k - this.props.loot.k, 2),
+                    power: shortenNumber(prevProps.loot.p - this.props.loot.p, 2),
+                    credits: shortenNumber(prevProps.loot.c - this.props.loot.c, 2),
+                };
+                return {
+                    diff,
+                };
+            })
+        );
     }
-
 
     render() {
         //return null;
 
         const { diff } = this.state;
-        const { prod } = this.props;
+        const { loot } = this.props;
 
         return (
             <Info>
                 <div>
                     <Img src={icon_tib} alt={icon_tib} />
-                    {shortenNumber(prod.t, 2)}
+                    {shortenNumber(loot.t, 2)}
                     <Diff positiv={diff.tib.charAt(0) !== '-'}>{diff.tib}</Diff>
                 </div>
                 <div>
                     <Img src={icon_cris} alt={icon_tib} />
-                    {shortenNumber(prod.k, 2)}
+                    {shortenNumber(loot.k, 2)}
                     <Diff positiv={diff.kris.charAt(0) !== '-'}>{diff.kris}</Diff>
                 </div>
                 <div>
                     <Img src={icon_power} alt={icon_tib} />
-                    {shortenNumber(prod.p, 2)}
+                    {shortenNumber(loot.p, 2)}
                     <Diff positiv={diff.power.charAt(0) !== '-'}>{diff.power}</Diff>
                 </div>
                 <div>
                     <Img src={icon_credits} alt={icon_tib} />
-                    {shortenNumber(prod.c, 2)}
+                    {shortenNumber(loot.c, 2)}
                     <Diff positiv={diff.credits.charAt(0) !== '-'}>{diff.credits}</Diff>
                 </div>
             </Info>
@@ -99,7 +97,7 @@ class ProductionInfo extends Component {
 }
 function mapStateToProps(state) {
     return {
-        prod: state.demo.prod,
+        loot: state.demo.loot,
     };
 }
 

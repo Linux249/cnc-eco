@@ -1,19 +1,21 @@
 import {
     DEMO_REPLACE,
-    DEMO_RESET,
+    DEMO_RESET_STATE,
     DEMO_SET_LOOT,
-    DEMO_SET_PROD,
+    // DEMO_SET_PROD,
     DEMO_TOGGLE_UPGRADE,
 } from '../constants/actionTypes';
+import { calcBuildingCost } from '../../util/production';
 
 export const replace = building => {
+    building.costs = calcBuildingCost(building)
     return {
         type: DEMO_REPLACE,
         building: { ...building },
     };
 };
 
-export const reset = () => ({type: DEMO_RESET})
+export const reset = () => ({type: DEMO_RESET_STATE})
 
 export const setLoot = loot => ({
     type: DEMO_SET_LOOT,
