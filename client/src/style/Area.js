@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { shadow, backgroundColor, border, borderRadius } from './constants';
 
-export default styled.div`
+export const Area = styled.div`
     //display: flex;
     //flex-flow: column;
     //flex-wrap: wrap;
@@ -16,3 +16,5 @@ export default styled.div`
     padding: ${({ small }) => (small ? '2px' : '10px')};
     margin: 5px;
 `;
+
+export default Area;

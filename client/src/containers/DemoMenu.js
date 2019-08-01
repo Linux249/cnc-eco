@@ -11,8 +11,8 @@ import icon_credits from '../img/icon/icon_credits.png';
 import { shortenNumber } from '../util/service';
 import { calcBuildingCost, calcProduction } from '../util/production';
 import Button from '../style/Button';
-import DemoLayouts from './DemoLayouts';
-import { reset } from '../store/actions/demo';
+import { reset, setLoot, toogleUpgrade } from '../store/actions/demo';
+import Area from '../style/Area';
 
 function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -34,7 +34,8 @@ function useInterval(callback, delay) {
     }, [delay]);
 }
 
-const Info = styled.div`
+
+const Info = styled(Area)`
     width: 100%;
     //    position: relative ;
     // display: flex;
@@ -96,7 +97,7 @@ const Row = styled.div`
 
 function DemoMenu(props) {
     // const [state, action] = useDemoState();
-    const { buildings } = props;
+    const { buildings, loot, upgrade, prod } = props;
 
     const [timerId, setTimerId] = useState(0);
     const [tickCounter, setTickCounter] = useState(0);
@@ -107,7 +108,7 @@ function DemoMenu(props) {
         // todo
         //  - show mouse as update Button or green background color behind buildings
         //  - show costs over buildings
-        setUpgradeMode(!upgradeMode);
+        props.toogleUpgrade()
     }
 
     // todo army
@@ -117,14 +118,14 @@ function DemoMenu(props) {
     // const [armyProd, setArmyProd] = useState(0);
     // const [armyCosts, setArmyCosts] = useState(0);
 
-    const [loot, setLoot] = useState({ t: 0, k: 0, p: 0, c: 0 });
-    const [prod, setProd] = useState({ t: 0, k: 0, p: 0, c: 0 });
+    // const [loot, setLoot] = useState({ t: 0, k: 0, p: 0, c: 0 });
+    // const [prod, setProd] = useState({ t: 0, k: 0, p: 0, c: 0 });
 
     function tick() {
         console.log('tick');
         setTickCounter(tickCounter + 1);
         // update total resources
-        setLoot({
+        props.setLoot({
             t: loot.t + prod.t,
             k: loot.k + prod.k,
             p: loot.p + prod.p,
@@ -140,18 +141,18 @@ function DemoMenu(props) {
     // after building levels up
     function updateProd() {
         console.log('updateProd');
-        window.requestIdleCallback(() => {
-            const newProd = calcProduction(props.buildings);
-            // todo diff to old production
-            setProd({ t: newProd.tib, k: newProd.kris, p: newProd.power, c: newProd.credits });
-        });
+        // window.requestIdleCallback(() => {
+        //     const newProd = calcProduction(buildings);
+        //     // todo diff to old production
+        //     setProd({ t: newProd.tib, k: newProd.kris, p: newProd.power, c: newProd.credits });
+        // });
     }
 
     function reset() {
         console.log('reset');
         // reset prod
-        setLoot({ t: 0, k: 0, p: 0, c: 0 });
-        setProd({ t: 0, k: 0, p: 0, c: 0 });
+        props.setLoot({ t: 0, k: 0, p: 0, c: 0 });
+        //setProd({ t: 0, k: 0, p: 0, c: 0 });
 
         // reset army
         // setArmyLvl(0);
@@ -200,7 +201,7 @@ function DemoMenu(props) {
             <Row>
                 <Button onClick={() => reset()}>reset</Button>
                 <Button onClick={() => updateProd()}>prod</Button>
-                <Button active={upgradeMode} onClick={() => toogleUpgradeMode()}>
+                <Button active={upgrade} onClick={() => toogleUpgradeMode()}>
                     update
                 </Button>
             </Row>
@@ -211,12 +212,13 @@ function DemoMenu(props) {
             {/*    <Button onClick={() => upgradeArmy()}>+1 {armyCosts}</Button>*/}
             {/*</Row>*/}
 
-            <DemoLayouts reset={reset} />
+            {/*<Button onClick={}>Restart</Button>*/}
+            <Row>{`Ticks: ${tickCounter}`}</Row>
         </Info>
     );
 }
 
 export default connect(
-    state => ({ buildings: state.demo.buildings }),
-    { reset }
+    state => ({ buildings: state.demo.buildings, loot: state.demo.loot, upgrade: state.demo.upgrade, prod: state.demo.prod }),
+    { reset, setLoot, toogleUpgrade, }
 )(DemoMenu);

@@ -3,7 +3,7 @@ import Body from '../style/Body';
 import Column from '../style/Column';
 import DemoMenu from '../containers/DemoMenu';
 import BuildingMenu from '../containers/BuildingMenu';
-import ProductionInfo from '../containers/ProductionInfo';
+import ProductionInfo from '../containers/DemoProductionInfo';
 import Grid from '../style/Grid';
 import Area from '../style/Area';
 // import Slot from '../containers/Slot';
@@ -35,8 +35,8 @@ const KrisCosts = styled(TibCosts)`
 `;
 
 function SlotC(props) {
-    const { faction, slot, unit, upgrade, fundTib, fundKris } = props;
-    const costs = calcBuildingCost(state.demo.buildings[props.slot])
+    const { faction, slot, unit, upgrade, fundTib, fundPower } = props;
+    const costs = calcBuildingCost(unit);
     // const [, actions] = useDemoState();
     // const unit = actions.demo.getUnit(slot);
     const { type, lvl } = unit;
@@ -62,6 +62,7 @@ function SlotC(props) {
         }
         // + unit lvl up
         if (key === '+' && unit.lvl) {
+            if (!fundTib || !fundPower) return console.log('building costs to high');
             unit.lvl += 1;
             unit.lvl = !unit.lvl ? 1 : unit.lvl > 65 ? 65 : unit.lvl;
             return props.replace(unit);
@@ -96,6 +97,16 @@ function SlotC(props) {
 
     drop(drag(ref));
 
+    function update() {
+        if (upgrade && unit.lvl) {
+            if (!fundTib || !fundPower) return console.log('building costs to high');
+            unit.lvl += 1;
+            unit.lvl = !unit.lvl ? 1 : unit.lvl > 65 ? 65 : unit.lvl;
+            return props.replace(unit);
+            // todo change production + loot
+        }
+    }
+
     return (
         <SlotStyle
             ref={ref}
@@ -104,21 +115,29 @@ function SlotC(props) {
             onKeyDown={handleKeyDown}
             tabIndex="0"
             onContextMenu={contextClick}
+            onClick={update}
         >
             {lvl && <Number>{lvl}</Number>}
-            {upgrade && <TibCosts found={fundTib}>{shortenNumber(costs.tib)}</TibCosts>}
-            {upgrade && <KrisCosts found={fundKris}>{shortenNumber(costs.power)}</KrisCosts>}
+            {upgrade && costs.tib !== 0 && (
+                <TibCosts found={fundTib}>{shortenNumber(costs.tib)}</TibCosts>
+            )}
+            {upgrade && costs.power !== 0 && (
+                <KrisCosts found={fundPower}>{shortenNumber(costs.power)}</KrisCosts>
+            )}
             <img src={type ? img : empty} alt={type} />
         </SlotStyle>
     );
 }
 
 const mapStateToPropsS = (state, props) => {
-    const costs = calcBuildingCost(state.demo.buildings[props.slot])
+    const costs = calcBuildingCost(state.demo.buildings[props.slot]);
+    // todo only if upgrade is active
+
     return {
         unit: state.demo.buildings[props.slot],
-        fundTib: true,
-        fundKris: true,
+        fundTib: state.demo.loot.t - costs.tib >= 0,
+        fundPower: state.demo.loot.p - costs.power >= 0,
+        upgrade: state.demo.upgrade,
     };
 };
 
@@ -131,7 +150,7 @@ const slots = (faction, upgrade) =>
     [0, 1, 2, 3, 4, 5, 6, 7].map(function(y) {
         return [0, 1, 2, 3, 4, 5, 6, 7, 8].map(function(x) {
             const slot = x + y * 9;
-            return <Slot key={slot} slot={slot} faction={faction} upgrade={upgrade} />;
+            return <Slot key={slot} slot={slot} faction={faction} />;
         });
     });
 
@@ -150,7 +169,7 @@ function Demo({ faction }) {
     );
 }
 
-function mapStateToProps(state, props) {
+function mapStateToProps(state) {
     return {
         faction: state.base.faction,
     };

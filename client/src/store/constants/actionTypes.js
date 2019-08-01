@@ -31,4 +31,7 @@ export const PLAYER_UPDATE_ALLIANCE_ID = 'PLAYER_UPDATE_ALLIANCE_ID';
 
 // demo
 export const DEMO_REPLACE = 'DEMO_REPLACE';
-export const DEMO_RESET = 'DEMO_RESET'
+export const DEMO_RESET = 'DEMO_RESET';
+export const DEMO_SET_LOOT = 'DEMO_SET_LOOT';
+export const DEMO_SET_PROD = 'DEMO_SET_PROD';
+export const DEMO_TOGGLE_UPGRADE = 'DEMO_TOGGLE_UPGRADE';
