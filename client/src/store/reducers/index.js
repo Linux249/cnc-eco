@@ -3,6 +3,7 @@ import { base } from './base';
 import { menu } from './menu';
 import { player } from './player';
 import { auth } from './auth';
+import { demo } from './demo';
 //
 //
 // /**
@@ -61,4 +62,5 @@ export default combineReducers({
     base,
     player,
     auth,
+    demo
 });

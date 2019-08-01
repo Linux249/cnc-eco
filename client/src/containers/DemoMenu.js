@@ -3,15 +3,16 @@
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import { shortenNumber } from '../util/service';
-import { calcBuildingCost, calcProduction } from '../util/production';
+import styled, { keyframes } from 'styled-components';
 import icon_tib from '../img/icon/icon_tiberium.png';
 import icon_cris from '../img/icon/icon_crystal.png';
 import icon_power from '../img/icon/icon_power.png';
 import icon_credits from '../img/icon/icon_credits.png';
-import styled, { keyframes } from 'styled-components';
+import { shortenNumber } from '../util/service';
+import { calcBuildingCost, calcProduction } from '../util/production';
 import Button from '../style/Button';
 import DemoLayouts from './DemoLayouts';
+import { reset } from '../store/actions/demo';
 
 function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -59,11 +60,11 @@ const Info = styled.div`
 `;
 
 const rotate = keyframes`
- from {top: -10px; left: 0; visibility: visible;}
-to {top: 30px; left: 0; visibility: hidden;}
-/*0% {top: -10px; left: 0;}
+    from {top: -10px; left: 0; visibility: visible;}
+    to {top: 30px; left: 0; visibility: hidden;}
+    /*0% {top: -10px; left: 0;}
 
-  100% {top: 30px; left: 0;}*/
+    100% {top: 30px; left: 0;}*/
 `;
 
 const Diff = styled.div`
@@ -94,9 +95,12 @@ const Row = styled.div`
 `;
 
 function DemoMenu(props) {
+    // const [state, action] = useDemoState();
+    const { buildings } = props;
+
     const [timerId, setTimerId] = useState(0);
     const [tickCounter, setTickCounter] = useState(0);
-    const [buildings, setBuildings] = useState(props.buildings);
+    // const [buildings, setBuildings] = useState(state.buildings);
 
     const [upgradeMode, setUpgradeMode] = useState(0);
     function toogleUpgradeMode() {
@@ -109,165 +113,110 @@ function DemoMenu(props) {
     // todo army
     //  - let player choose between camps, VP or Bases => other res ratio,
     //  . bases for progress!
-    const [armyLvl, setArmyLvl] = useState(0);
-    const [armyProd, setArmyProd] = useState(0);
-    const [armyCosts, setArmyCosts] = useState(0);
+    // const [armyLvl, setArmyLvl] = useState(0);
+    // const [armyProd, setArmyProd] = useState(0);
+    // const [armyCosts, setArmyCosts] = useState(0);
 
-    const [prodT, setProdT] = useState(0);
-    const [prodK, setProdK] = useState(0);
-    const [prodP, setProdP] = useState(0);
-    const [prodC, setProdC] = useState(0);
-
-    const [t, setT] = useState(0);
-    const [k, setK] = useState(0);
-    const [p, setP] = useState(0);
-    const [c, setC] = useState(0);
+    const [loot, setLoot] = useState({ t: 0, k: 0, p: 0, c: 0 });
+    const [prod, setProd] = useState({ t: 0, k: 0, p: 0, c: 0 });
 
     function tick() {
         console.log('tick');
         setTickCounter(tickCounter + 1);
         // update total resources
-        setT(t + prodT);
-        setK(k + prodK);
-        setP(p + prodP);
-        setC(c + prodC);
+        setLoot({
+            t: loot.t + prod.t,
+            k: loot.k + prod.k,
+            p: loot.p + prod.p,
+            c: loot.c + prod.c,
+        });
         if (tickCounter === 10) {
             // todo update data to server
-            console.log('update data to server');
-            setTickCounter(0);
+            // console.log('update data to server');
         }
     }
-    useInterval(tick, 500);
+    useInterval(tick, 1000);
 
     // after building levels up
     function updateProd() {
         console.log('updateProd');
         window.requestIdleCallback(() => {
-            const newProduction = calcProduction(props.buildings);
+            const newProd = calcProduction(props.buildings);
             // todo diff to old production
-            setProdT(newProduction.tib + armyProd);
-            setProdK(newProduction.kris + armyProd);
-            setProdP(newProduction.power + armyProd);
-            setProdC(newProduction.credits + armyProd);
+            setProd({ t: newProd.tib, k: newProd.kris, p: newProd.power, c: newProd.credits });
         });
     }
 
-    useEffect(() => {
-        // console.log(buildings);
-        if (buildings !== props.buildings) {
-            console.warn('DIFFERENT BUILDINGS');
-            buildings.forEach((b, i) => {
-                // building changed
-                if (b !== props.buildings[i] && upgradeMode) {
-                    console.error('new building');
-                    console.log(b);
-                    const cost = calcBuildingCost(props.buildings[i])
-                    console.log(cost)
-                    setT(t - cost.tib)
-                    setP(p - cost.power)
-
-                    // todo calc buildings costs and subs from counter
-
-                }
-            });
-             updateProd();
-            // update for comparison with next props
-            setBuildings(props.buildings);
-        }
-    }, [props.buildings]);
-
     function reset() {
-        console.log('reset')
+        console.log('reset');
         // reset prod
-        setProdT(0);
-        setT(0)
-        setProdK(0);
-        setK(0)
-        setProdP(0);
-        setP(0)
-        setProdC(0);
-        setC(0)
+        setLoot({ t: 0, k: 0, p: 0, c: 0 });
+        setProd({ t: 0, k: 0, p: 0, c: 0 });
 
         // reset army
-        setArmyLvl(0);
-        setArmyProd(0);
+        // setArmyLvl(0);
+        // setArmyProd(0);
 
         // reset base
+        props.reset();
+        setTickCounter(0);
     }
 
-    function upgradeArmy() {
-        // reduce cris+power by amryCosts
-
-        // update Army prod via faktor?
-        setArmyProd(armyProd + 100);
-
-        // update
-
-        // update army lvl
-        setArmyLvl(armyLvl + 1);
-    }
-
-    // componentDidUpdate(prevProps) {
-    //     if (prevProps.buildings !== this.props.buildings)
-    //         window.requestIdleCallback(() =>
-    //             this.setState(({ production }) => {
-    //                 const newProduction = calcProduction(this.props.buildings);
-    //                 const diff = {
-    //                     tib: shortenNumber(newProduction.tib - production.tib, 2),
-    //                     kris: shortenNumber(newProduction.kris - production.kris, 2),
-    //                     power: shortenNumber(newProduction.power - production.power, 2),
-    //                     credits: shortenNumber(newProduction.credits - production.credits, 2),
-    //                 };
-    //                 return {
-    //                     diff,
-    //                     production: newProduction,
-    //                 };
-    //             })
-    //         );
+    // function upgradeArmy() {
+    //     // reduce cris+power by amryCosts
+    //
+    //     // update Army prod via faktor?
+    //     setArmyProd(armyProd + 100);
+    //
+    //     // update
+    //
+    //     // update army lvl
+    //     setArmyLvl(armyLvl + 1);
     // }
+
 
     return (
         <Info>
             <Row>
                 <Img src={icon_tib} alt={icon_tib} />
-                {shortenNumber(t, 2)}
-                <Diff>{prodT}</Diff>
+                {shortenNumber(loot.t, 2)}
+                <Diff>{prod.t}</Diff>
             </Row>
             <Row>
                 <Img src={icon_cris} alt={icon_tib} />
-                {shortenNumber(k, 2)}
-                <Diff positiv>{prodK}</Diff>
+                {shortenNumber(loot.k, 2)}
+                <Diff positiv>{prod.k}</Diff>
             </Row>
             <Row>
                 <Img src={icon_power} alt={icon_tib} />
-                {shortenNumber(p, 2)}
-                <Diff positiv>{prodP}</Diff>
+                {shortenNumber(loot.p, 2)}
+                <Diff positiv>{prod.p}</Diff>
             </Row>
             <Row>
                 <Img src={icon_credits} alt={icon_tib} />
-                {shortenNumber(c, 2)}
-                <Diff positiv>{prodC}</Diff>
+                {shortenNumber(loot.c, 2)}
+                <Diff positiv>{prod.c}</Diff>
             </Row>
             <Row>
                 <Button onClick={() => reset()}>reset</Button>
                 <Button onClick={() => updateProd()}>prod</Button>
-                <Button  active={upgradeMode} onClick={() => toogleUpgradeMode()}>update</Button>
+                <Button active={upgradeMode} onClick={() => toogleUpgradeMode()}>
+                    update
+                </Button>
             </Row>
-            <Row>
-                <div>Army Icon</div>
-                {armyLvl}
-                {shortenNumber(armyProd, 2)}
-                <Button onClick={() => upgradeArmy()}>+1 {armyCosts}</Button>
-            </Row>
+            {/*<Row>*/}
+            {/*    <div>Army Icon</div>*/}
+            {/*    {armyLvl}*/}
+            {/*    {shortenNumber(armyProd, 2)}*/}
+            {/*    <Button onClick={() => upgradeArmy()}>+1 {armyCosts}</Button>*/}
+            {/*</Row>*/}
 
-            <DemoLayouts reset={reset}/>
+            <DemoLayouts reset={reset} />
         </Info>
     );
 }
-function mapStateToProps(state) {
-    return {
-        buildings: state.base.buildings,
-    };
-}
 
-export default connect(mapStateToProps)(DemoMenu);
+export default connect(
+    state => ({ buildings: state.demo.buildings }),
+    { reset }
+)(DemoMenu);

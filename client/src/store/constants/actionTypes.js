@@ -28,3 +28,7 @@ export const PLAYER_CHANGE_LOADING = 'PLAYER_CHANGE_LOADING';
 export const PLAYER_UPDATE_ALLIANCE_ID = 'PLAYER_UPDATE_ALLIANCE_ID';
 
 // menu
+
+// demo
+export const DEMO_REPLACE = 'DEMO_REPLACE';
+export const DEMO_RESET = 'DEMO_RESET'

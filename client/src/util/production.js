@@ -3,6 +3,75 @@
  */
 import { copyObj } from './service';
 
+const costs_tib = [
+    1,
+    2,
+    3,
+    4,
+    20,
+    110,
+    360,
+    1100,
+    3200,
+    8800,
+    22400,
+    48000,
+    63360,
+    83635,
+    110398,
+    145726,
+    192358,
+    253913,
+    335165,
+    442418,
+    583992,
+    770869,
+    1017547,
+    1343162,
+    1772974,
+    2340326,
+    3089230,
+    4077783,
+    5382674,
+    7105130,
+    9378771,
+    12379978,
+    16341571,
+    21570873,
+    28473552,
+    37585089,
+    49612318,
+    65488260,
+    86444503,
+    114106743,
+    150620901,
+    198819590,
+    262441859,
+    346423253,
+    457278694,
+    603607877,
+    796762397,
+    1051726364,
+    1388278801,
+    1832528017,
+    2418936983,
+    3192996817,
+    4214755798,
+    5563477654,
+    7343790503,
+    9693803464,
+    12795820573,
+    16890483156,
+    22295437766,
+    29429977851,
+    38847570764,
+    51278793408,
+    67688007299,
+    89348169635,
+    117939583918,
+    117939583918,
+];
+
 const roundTwoPoints = (p1, p2, day) => {
     const prod = {
         tib: 0,
@@ -27,75 +96,11 @@ const roundTwoPoints = (p1, p2, day) => {
     return prod;
 };
 
+
+/*
+    Costs of each building
+ */
 export const calcBuildingCost = building => {
-    const costs_tiberium = [
-        1,
-        2,
-        3,
-        4,
-        20,
-        110,
-        360,
-        1100,
-        3200,
-        8800,
-        22400,
-        48000,
-        63360,
-        83635,
-        110398,
-        145726,
-        192358,
-        253913,
-        335165,
-        442418,
-        583992,
-        770869,
-        1017547,
-        1343162,
-        1772974,
-        2340326,
-        3089230,
-        4077783,
-        5382674,
-        7105130,
-        9378771,
-        12379978,
-        16341571,
-        21570873,
-        28473552,
-        37585089,
-        49612318,
-        65488260,
-        86444503,
-        114106743,
-        150620901,
-        198819590,
-        262441859,
-        346423253,
-        457278694,
-        603607877,
-        796762397,
-        1051726364,
-        1388278801,
-        1832528017,
-        2418936983,
-        3192996817,
-        4214755798,
-        5563477654,
-        7343790503,
-        9693803464,
-        12795820573,
-        16890483156,
-        22295437766,
-        29429977851,
-        38847570764,
-        51278793408,
-        67688007299,
-        89348169635,
-        117939583918,
-        117939583918,
-    ];
     let costs = {
         tib: 0,
         power: 0,
@@ -106,17 +111,17 @@ export const calcBuildingCost = building => {
         switch (building.type) {
             case 'n': // kris harvester
             case 'h': // tib harvester
-                costs.tib += costs_tiberium[building.lvl];
-                costs.power += Math.round((costs_tiberium[building.lvl] / 4) * 3); //power coosts for a harvester
+                costs.tib += costs_tib[building.lvl];
+                costs.power += Math.round((costs_tib[building.lvl] / 4) * 3); //power costs for a harvester
                 break;
             case 's': // silo
-            case 'a': // akku
-                costs.tib += costs_tiberium[building.lvl];
-                costs.power += Math.round(costs_tiberium[building.lvl] / 4);
+            case 'a': // accu
+                costs.tib += costs_tib[building.lvl];
+                costs.power += Math.round(costs_tib[building.lvl] / 4);
                 break;
-            case 'r': // rafenerieeee
-                costs.tib += costs_tiberium[building.lvl] * 2; // dubble costs
-                costs.power += Math.round(costs_tiberium[building.lvl] / 2); //power costs for a raf
+            case 'r': // rafenerie
+                costs.tib += costs_tib[building.lvl] * 2; // dubble costs
+                costs.power += Math.round(costs_tib[building.lvl] / 2); //power costs for a raf
                 break;
             default:
                 break;
