@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(
     process.env.SENDGRID_API_KEY ||
-        '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'
+        ''
 );
 const msg = {
     to: 'julian.libor@gmail.com',
@@ -32,9 +32,11 @@ export async function sendToken(token, mail) {
     msg.to = mail;
     const body =
         'Hello,\n\n' +
-        'Please verify your account by clicking the link: \nhttps://www.cnc-eco.herokuapp.com/api/v1/local/verify?token=' +
+        'Please verify your account by clicking the link: \n' +
+        'https://www.cnc-eco.herokuapp.com' +
+        '/api/v1/local/verify?token=' +
         token.token +
-        '.\n';
+        '\n';
     msg.text = body;
     msg.html = body;
     console.log(msg);
@@ -52,9 +54,11 @@ export async function sendPassword(token, mail) {
     msg.to = mail;
     const body =
         'Hello,\n\n' +
-        'Please update your password by clicking the link: \nhttps://www.cnc-eco.de/reset/' +
+        'Please update your password by clicking the link: \n' +
+        'https://www.cnc-eco.de' +
+        '/reset/' +
         token.token +
-        '.\n';
+        '\n';
     msg.text = body;
     msg.html = body;
     console.log(msg);
