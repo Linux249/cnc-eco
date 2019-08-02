@@ -117,7 +117,7 @@ module.exports = function(app, passport) {
     });
 
 
-    app.post('/local/resetPassword', async (req, res, next) => {
+    app.post('/local/requestEmail', async (req, res, next) => {
         console.log('resetPassword');
         const { email } = req.body
         if (!email) return next(new Error('Email missing'));
@@ -135,7 +135,31 @@ module.exports = function(app, passport) {
                 if (err) return next(new Error('Token could not be saved.'));
                 // Send the email
                 await sendPassword(token, user.local.email);
-                return res.json({success: 'E-Mail with password rest link send'})
+                return res.json({success: 'E-Mail with link send', text: 'Please check your spam folder'})
+            });
+        } catch (e) {
+            next(e)
+        }
+        // check if token already exists or create new onw
+    });
+
+    app.post('/local/resetPassword', async (req, res, next) => {
+        console.log('resetPassword');
+        const { token, password } = req.body
+        if (!token) return next(new Error('token missing'));
+        if (!password) return next(new Error('enter a new password first'));
+
+        // get user for this Email
+        try {
+            const tok = await Token.findOne({token})
+            if(!tok) return next(new Error('cannot find token - please request new email'))
+            const user = await User.findOne({'_id': tok._userId})
+            if(!user) return next(new Error('cannot find user'))
+
+            user.local.password = user.generateHash(password)
+            user.save(async function(err) {
+                if (err) return next(new Error('password could not be saved.'));
+                return res.json({success: 'password reset'})
             });
         } catch (e) {
             next(e)

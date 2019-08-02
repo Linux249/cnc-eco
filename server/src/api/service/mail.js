@@ -32,7 +32,7 @@ export async function sendToken(token, mail) {
     msg.to = mail;
     const body =
         'Hello,\n\n' +
-        'Please verify your account by clicking the link: \nhttps://cnc-eco.herokuapp.com/api/v1/local/verify?token=' +
+        'Please verify your account by clicking the link: \nhttps://www.cnc-eco.herokuapp.com/api/v1/local/verify?token=' +
         token.token +
         '.\n';
     msg.text = body;
@@ -52,7 +52,7 @@ export async function sendPassword(token, mail) {
     msg.to = mail;
     const body =
         'Hello,\n\n' +
-        'Please update your password by clicking the link: \nhttps://cnc-eco.de/reset?token=' +
+        'Please update your password by clicking the link: \nhttps://www.cnc-eco.de/reset/' +
         token.token +
         '.\n';
     msg.text = body;

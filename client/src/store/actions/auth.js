@@ -26,10 +26,7 @@ export const requestLogin = () => {
             return dispatch(loginError(e.message));
         });
 
-        console.log(resp);
         const data = await resp.json();
-        console.log(data);
-
         if (!resp.ok) {
             console.warn('LOGIN FAILURE');
             return dispatch(loginError(data.err));
@@ -59,10 +56,7 @@ export const requestRegister = () => {
             return dispatch(loginError(e.message));
         });
 
-        console.log(resp);
         const data = await resp.json();
-        console.log(data);
-
         if (!resp.ok) {
             console.warn('LOGIN FAILURE');
             return dispatch(loginError(data.err));
@@ -94,29 +88,28 @@ export const requestResendToken = () => {
             return dispatch(loginError(e.message));
         });
 
-        console.log(resp);
         const data = await resp.json().catch(e => {
             console.warn('requestResendToken FAILURE');
             console.error(e);
             return dispatch(loginError(e.message));
         });
-        console.log(data);
 
         if (!resp.ok) {
             console.warn('requestResendToken FAILURE');
             return dispatch(loginError(data.error.message));
         }
+
         return dispatch(loginError(data.success));
     };
 };
 
-export const requestResendPassword = () => {
+export const requestEmail = () => {
     return async (dispatch, getState) => {
         dispatch({ type: START_ASYNC_AUTH });
         const { email } = getState().auth;
         const body = JSON.stringify({ email });
 
-        const resp = await fetch(api_url + '/local/resetPassword', {
+        const resp = await fetch(api_url + '/local/requestEmail', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
@@ -128,16 +121,48 @@ export const requestResendPassword = () => {
             return dispatch(loginError(e.message));
         });
 
-        console.log(resp);
         const data = await resp.json().catch(e => {
             console.warn('requestResendToken FAILURE');
+            console.error(e);
+            return dispatch(loginError(e.message));
+        });
+
+        if (!resp.ok) {
+            console.warn('requestResendToken FAILURE');
+            return dispatch(loginError(data.error.message));
+        }
+        return dispatch(loginError(data.success));
+    };
+};
+
+export const resetPassword = token => {
+    return async (dispatch, getState) => {
+        dispatch({ type: START_ASYNC_AUTH });
+        const { password } = getState().auth;
+        const body = JSON.stringify({ password, token });
+
+        const resp = await fetch(api_url + '/local/resetPassword', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            },
+            body,
+        }).catch(e => {
+            console.warn('resetPassword 1 FAILURE');
+            console.error(e);
+            return dispatch(loginError(e.message));
+        });
+
+        console.log(resp);
+        const data = await resp.json().catch(e => {
+            console.warn('resetPassword 2 FAILURE');
             console.error(e);
             return dispatch(loginError(e.message));
         });
         console.log(data);
 
         if (!resp.ok) {
-            console.warn('requestResendToken FAILURE');
+            console.warn('resetPassword 3 FAILURE');
             return dispatch(loginError(data.error.message));
         }
         return dispatch(loginError(data.success));

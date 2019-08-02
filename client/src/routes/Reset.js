@@ -6,7 +6,8 @@ import Input from '../style/Input';
 import {
     changeAuthEmail,
     changeAuthPassword,
-    requestResendPassword,
+    requestEmail,
+    resetPassword,
 } from '../store/actions/auth';
 import InputGroup from '../style/InputGroup';
 import Label from '../style/Label';
@@ -16,7 +17,7 @@ import Submit from '../style/Submit';
 import Center from '../style/Center';
 import Alert from '../style/Alert';
 
-function Login(props) {
+function Reset(props) {
     const {
         email,
         password,
@@ -24,16 +25,20 @@ function Login(props) {
         isAuthenticated,
         changeEmail,
         changePassword,
-        reset,
+        requestEmail,
+        resetPassword,
         playerName,
-        token,
+        match,
+        location,
     } = props;
 
     function handleSubmit(e) {
         e.preventDefault();
         // todo remove comment below
-        // reset();
+        !token ? requestEmail() : resetPassword(token);
     }
+    const { token } = match.params
+    console.log(match, location)
 
     return !isAuthenticated ? (
         <Center>
@@ -64,7 +69,7 @@ function Login(props) {
                         />
                     </InputGroup> }
                     <InputGroup>
-                        <Submit type="submit" value="Send email" />
+                        <Submit type="submit" value={token ? 'Update password' : 'Send email'} />
                     </InputGroup>
                     <div>New to CnC-Exo?</div>
                     <Link to="/register">Sign Up</Link>
@@ -95,10 +100,11 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
     changeEmail: changeAuthEmail,
     changePassword: changeAuthPassword,
-    reset: requestResendPassword,
+    requestEmail,
+    resetPassword,
 };
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Login);
+)(Reset);

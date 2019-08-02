@@ -46,7 +46,7 @@ class App extends Component {
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
                     <Route path="/resend" component={Resend} />
-                    <Route path="/reset" component={Reset} />
+                    <Route path="/reset/:token?" component={Reset} />
                     <ProtectedRoute path="/bases" auth={auth} name={name} component={Bases} />
                     <ProtectedRoute
                         path="/layouts/:world"
