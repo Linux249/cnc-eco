@@ -150,9 +150,7 @@ function DemoMenu(props) {
                 {shortenNumber(prod.c, 2)}
             </Row>
             <Row>
-                <Button>
-                    +lvl
-                </Button>
+                <Button>+lvl</Button>
                 <Button active={upgrade === 1} onClick={() => setUpgrade(1)}>
                     +1
                 </Button>

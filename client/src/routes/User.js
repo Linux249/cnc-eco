@@ -206,7 +206,9 @@ class User extends Component {
                 <div />
                 <Row wrap>
                     <Container>
-                        <Label htmlFor="name">{playerAdded ? 'Change' : 'Add a '} player name</Label>
+                        <Label htmlFor="name">
+                            {playerAdded ? 'Change' : 'Add a '} player name
+                        </Label>
                         <Input
                             name="name"
                             value={name}
@@ -262,11 +264,15 @@ class User extends Component {
                     )}
                 </Row>
                 <BodySide>
-                    {!playerAdded && <>
-                        <Info>Add your ingame name to your account first</Info>
-                        <Info>You have to install the <Link to='/scripts'> script </Link></Info>
-                        <Info>Update your data from one world ingame </Info>
-                    </>}
+                    {!playerAdded && (
+                        <>
+                            <Info>Add your ingame name to your account first</Info>
+                            <Info>
+                                You have to install the <Link to="/scripts"> script </Link>
+                            </Info>
+                            <Info>Update your data from one world ingame </Info>
+                        </>
+                    )}
                 </BodySide>
             </Body>
         );

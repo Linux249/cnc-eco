@@ -29,45 +29,44 @@ function Reset(props) {
         resetPassword,
         playerName,
         match,
-        location,
     } = props;
 
     function handleSubmit(e) {
         e.preventDefault();
-        // todo remove comment below
         !token ? requestEmail() : resetPassword(token);
     }
-    const { token } = match.params
-    console.log(match, location)
+    const { token } = match.params;
 
     return !isAuthenticated ? (
         <Center>
             <Container>
                 <Form onSubmit={handleSubmit}>
                     <h1>Reset password</h1>
-                    <Alert>In Progress - don't use</Alert>
                     {error && <Alert>{error}</Alert>}
-                    {!token ? <InputGroup>
-                        <Label htmlFor="email">Email</Label>
-                        <Input
-                            name="email"
-                            value={email}
-                            onChange={e => changeEmail(e.target.value)}
-                            type="email"
-                            placeholder="Email"
-                        />
-                    </InputGroup>
-                    : <InputGroup>
-                        <Label htmlFor="password">Password</Label>
-                        <Input
-                            name="password"
-                            value={password}
-                            onChange={e => changePassword(e.target.value)}
-                            type="password"
-                            placeholder="Password"
-                            minLength="4"
-                        />
-                    </InputGroup> }
+                    {!token ? (
+                        <InputGroup>
+                            <Label htmlFor="email">Email</Label>
+                            <Input
+                                name="email"
+                                value={email}
+                                onChange={e => changeEmail(e.target.value)}
+                                type="email"
+                                placeholder="Email"
+                            />
+                        </InputGroup>
+                    ) : (
+                        <InputGroup>
+                            <Label htmlFor="password">Password</Label>
+                            <Input
+                                name="password"
+                                value={password}
+                                onChange={e => changePassword(e.target.value)}
+                                type="password"
+                                placeholder="Password"
+                                minLength="7"
+                            />
+                        </InputGroup>
+                    )}
                     <InputGroup>
                         <Submit type="submit" value={token ? 'Update password' : 'Send email'} />
                     </InputGroup>

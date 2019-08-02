@@ -6,7 +6,7 @@ import keys from '../util/keys';
 import Number from '../style/LvLNumber';
 import { useDrag, useDrop } from 'react-dnd';
 import imgs from '../img/imgs';
-import empty from '../img/empty.png'
+import empty from '../img/empty.png';
 
 function Slot(props) {
     const { unit, faction, area } = props;

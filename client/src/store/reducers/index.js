@@ -62,5 +62,5 @@ export default combineReducers({
     base,
     player,
     auth,
-    demo
+    demo,
 });

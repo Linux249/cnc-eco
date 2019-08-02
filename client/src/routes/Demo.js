@@ -38,7 +38,6 @@ function SlotC(props) {
     const costs = calcBuildingCost(unit);
     const { type, lvl } = unit;
 
-
     const handleKeyDown = event => {
         event.preventDefault();
         const { key } = event; // get pressed key
@@ -128,7 +127,7 @@ const mapStateToPropsS = (state, props) => {
         fundTib,
         fundPower,
         upgrade: state.demo.upgrade,
-        hover: true
+        hover: true,
     };
 };
 

@@ -33,7 +33,7 @@ function UrlLoader() {
                 <Input
                     small
                     type="url"
-                    onChange={({target: {e}}) => setUrl(e)}
+                    onChange={({ target: { e } }) => setUrl(e)}
                     value={url}
                     placeholder="Paste the link here"
                 />

@@ -49,12 +49,8 @@ function BuildingMenu(props) {
             <div>
                 <Area>
                     <Row>
-                        <Button onClick={() => changeFraction('N')}>
-                            NOD
-                        </Button>
-                        <Button onClick={() => changeFraction('G')}>
-                            GDI
-                        </Button>
+                        <Button onClick={() => changeFraction('N')}>NOD</Button>
+                        <Button onClick={() => changeFraction('G')}>GDI</Button>
                         <Input
                             small
                             onChange={({ target }) => handleChangeLvl(target.value)}

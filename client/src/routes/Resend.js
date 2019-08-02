@@ -3,10 +3,7 @@ import connect from 'react-redux/es/connect/connect';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import Input from '../style/Input';
-import {
-    changeAuthEmail,
-    requestResendToken,
-} from '../store/actions/auth';
+import { changeAuthEmail, requestResendToken } from '../store/actions/auth';
 import InputGroup from '../style/InputGroup';
 import Label from '../style/Label';
 import Container from '../style/Container';
@@ -16,14 +13,7 @@ import Center from '../style/Center';
 import Alert from '../style/Alert';
 
 function Login(props) {
-    const {
-        email,
-        error,
-        isAuthenticated,
-        changeEmail,
-        resend,
-        playerName,
-    } = props;
+    const { email, error, isAuthenticated, changeEmail, resend, playerName } = props;
 
     function handleSubmit(e) {
         e.preventDefault();
