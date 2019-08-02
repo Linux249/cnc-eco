@@ -6,7 +6,6 @@ import BuildingMenu from '../containers/BuildingMenu';
 import ProductionInfo from '../containers/DemoProductionInfo';
 import Grid from '../style/Grid';
 import Area from '../style/Area';
-// import Slot from '../containers/Slot';
 import keys from '../util/keys';
 import imgs from '../img/imgs';
 import { useDrag, useDrop } from 'react-dnd';
@@ -35,26 +34,10 @@ const KrisCosts = styled(TibCosts)`
 `;
 
 function SlotC(props) {
-    const { faction, slot, unit, upgrade, fundTib, fundPower } = props;
+    const { faction, slot, unit, upgrade, fundTib, fundPower, hover } = props;
     const costs = calcBuildingCost(unit);
-    // const [, actions] = useDemoState();
-    // const unit = actions.demo.getUnit(slot);
     const { type, lvl } = unit;
-    // console.log({costs})
-    //costs.power = shortenNumber(costs.power)
-    //costs.tib =  shortenNumber(costs.tib)
-    // console.log({costs})
-    const contextClick = e => {
-        e.preventDefault();
-        // return new empty building
-        props.replace({
-            slot: props.slot,
-            costs: {
-                t: 1,
-                p: 0,
-            },
-        });
-    };
+
 
     const handleKeyDown = event => {
         event.preventDefault();
@@ -104,7 +87,7 @@ function SlotC(props) {
 
     drop(drag(ref));
 
-    function updateLvl() {
+    function upgradeLvl() {
         if (upgrade && unit.lvl) {
             if (!fundTib || !fundPower) return console.log('building costs to high');
             unit.lvl += 1;
@@ -121,15 +104,14 @@ function SlotC(props) {
             slot={slot}
             onKeyDown={handleKeyDown}
             tabIndex="0"
-            onContextMenu={contextClick}
-            onClick={updateLvl}
+            onClick={upgradeLvl}
         >
             {lvl && <Number>{lvl}</Number>}
-            {upgrade && costs.tib !== 0 && (
-                <TibCosts found={fundTib}>{shortenNumber(costs.t)}</TibCosts>
+            {hover && costs.tib !== 0 && (
+                <TibCosts found={fundTib}>{shortenNumber(upgrade * costs.t)}</TibCosts>
             )}
-            {upgrade && costs.power !== 0 && (
-                <KrisCosts found={fundPower}>{shortenNumber(costs.p)}</KrisCosts>
+            {hover && costs.power !== 0 && (
+                <KrisCosts found={fundPower}>{shortenNumber(upgrade * costs.p)}</KrisCosts>
             )}
             <img src={type ? img : empty} alt={type} />
         </SlotStyle>
@@ -137,11 +119,16 @@ function SlotC(props) {
 }
 
 const mapStateToPropsS = (state, props) => {
+    let fundTib =
+        state.demo.loot.t - state.demo.upgrade * state.demo.buildings[props.slot].costs.t >= 0;
+    let fundPower =
+        state.demo.loot.p - state.demo.upgrade * state.demo.buildings[props.slot].costs.p >= 0;
     return {
         unit: state.demo.buildings[props.slot],
-        fundTib: state.demo.loot.t - state.demo.buildings[props.slot].costs.t >= 0,
-        fundPower: state.demo.loot.p - state.demo.buildings[props.slot].costs.p >= 0,
+        fundTib,
+        fundPower,
         upgrade: state.demo.upgrade,
+        hover: true
     };
 };
 

@@ -1,9 +1,8 @@
-import urlToBase from '../../util/parseurl';
 import {
     DEMO_REPLACE,
     DEMO_RESET_STATE,
     DEMO_SET_LOOT,
-    DEMO_TOGGLE_UPGRADE,
+    DEMO_SET_UPGRADE,
 } from '../constants/actionTypes';
 import { calcBuildingCost, calcProduction } from '../../util/production';
 
@@ -35,32 +34,40 @@ const initState = {
         p: 10,
         c: 0,
     },
-    upgrade: false,
+    upgrade: 1,
 };
 
 export function demo(state = initState, action) {
     switch (action.type) {
         case DEMO_REPLACE:
-            const { costs } = state.buildings[action.building.slot];
+            const { building } = action;
+            const { slot } = action.building;
+            let { t, p } = state.buildings[slot].costs;
             // update buildings
+
+            // calc the missing costs for the other buildings
+            for (let i = 1; i < state.upgrade; i++) {
+                building.lvl += 1;
+                building.cost = calcBuildingCost(building);
+                t += building.cost.t;
+                p += building.cost.p;
+            }
             const buildings = [
-                ...state.buildings.map(b =>
-                    b.slot === action.building.slot ? action.building : b
-                ),
+                ...state.buildings.map(b => (b.slot === slot ? action.building : b)),
             ];
             // calc new production
             const newP = calcProduction(buildings);
             const prod = { t: newP.tib, k: newP.kris, p: newP.power, c: newP.credits };
             // remove building costs from
-            console.log({ costs, building: action.building });
+            console.log({ t, p, building: action.building });
             return {
                 ...state,
                 buildings,
                 prod,
                 loot: {
                     ...state.loot,
-                    t: state.loot.t - costs.t,
-                    p: state.loot.p - costs.p,
+                    t: state.loot.t - t,
+                    p: state.loot.p - p,
                 },
             };
         case DEMO_RESET_STATE:
@@ -70,10 +77,10 @@ export function demo(state = initState, action) {
                 ...state,
                 loot: action.loot,
             };
-        case DEMO_TOGGLE_UPGRADE:
+        case DEMO_SET_UPGRADE:
             return {
                 ...state,
-                upgrade: !state.upgrade,
+                upgrade: action.upgrade,
             };
         default:
             return state;

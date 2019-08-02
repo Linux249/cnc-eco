@@ -7,7 +7,7 @@ import icon_power from '../img/icon/icon_power.png';
 import icon_credits from '../img/icon/icon_credits.png';
 import { shortenNumber } from '../util/service';
 import Button from '../style/Button';
-import { reset, setLoot, toogleUpgrade } from '../store/actions/demo';
+import { reset, setLoot, setUpgrade } from '../store/actions/demo';
 import Area from '../style/Area';
 
 function useInterval(callback, delay, lock) {
@@ -66,13 +66,15 @@ function DemoMenu(props) {
     const { loot, upgrade, prod } = props;
 
     const [tickCounter, setTickCounter] = useState(0);
+    const [upgradeMode, setUpgradeMode] = useState(false);
 
     const [lock, setLock] = useState(true);
-    function toogleUpgradeMode() {
+    function setUpgrade(i) {
         // todo
         //  - show mouse as update Button or green background color behind buildings
         //  - show costs over buildings
-        props.toogleUpgrade();
+        !upgradeMode && setUpgradeMode(true);
+        upgrade !== i && props.setUpgrade(i);
     }
 
     // todo army
@@ -148,13 +150,26 @@ function DemoMenu(props) {
                 {shortenNumber(prod.c, 2)}
             </Row>
             <Row>
-                <Button active={upgrade} onClick={() => toogleUpgradeMode()}>
-                    update
+                <Button>
+                    +lvl
+                </Button>
+                <Button active={upgrade === 1} onClick={() => setUpgrade(1)}>
+                    +1
+                </Button>
+                <Button active={upgrade === 5} onClick={() => setUpgrade(5)}>
+                    +5
+                </Button>
+                <Button active={upgrade === 10} onClick={() => setUpgrade(10)}>
+                    +10
                 </Button>
             </Row>
             <Row>
-                <Button onClick={start}>start</Button>
-                <Button onClick={stop}>stop</Button>
+                <Button active={!lock} onClick={start}>
+                    start
+                </Button>
+                <Button active={lock} onClick={stop}>
+                    stop
+                </Button>
                 <Button onClick={reset}>reset</Button>
             </Row>
             <Row>
@@ -173,5 +188,5 @@ export default connect(
         upgrade: state.demo.upgrade,
         prod: state.demo.prod,
     }),
-    { reset, setLoot, toogleUpgrade }
+    { reset, setLoot, setUpgrade }
 )(DemoMenu);

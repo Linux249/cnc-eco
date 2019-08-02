@@ -3,7 +3,7 @@ import {
     DEMO_RESET_STATE,
     DEMO_SET_LOOT,
     // DEMO_SET_PROD,
-    DEMO_TOGGLE_UPGRADE,
+    DEMO_SET_UPGRADE,
 } from '../constants/actionTypes';
 import { calcBuildingCost } from '../../util/production';
 
@@ -28,4 +28,4 @@ export const setLoot = loot => ({
 // })
 
 
-export const toogleUpgrade = () => ({type: DEMO_TOGGLE_UPGRADE})
+export const setUpgrade = (upgrade) => ({type: DEMO_SET_UPGRADE, upgrade})

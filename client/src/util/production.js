@@ -139,8 +139,8 @@ const calcBuildingCostAll = (buildings, lvl = 1) => {
     buildings.forEach(building => {
         if (building.lvl) {
             const cost = calcBuildingCost(building);
-            costs.tib += cost.tib;
-            cost.power += cost.power;
+            costs.tib += cost.t;
+            cost.power += cost.p;
             // if (building.lvl > 65) building.lvl = 65        // check for max lvl (65)
         }
     });
@@ -963,25 +963,25 @@ export const calcBaseUpCost = buildings => {
         117939583918,
     ];
     let costs = {
-        tib: 0,
-        power: 0,
+        t: 0,
+        p: 0,
     };
     buildings.forEach(building => {
         if (building.type && building.lvl <= 65) {
             switch (building.type) {
                 case 'n': // kris harvester
                 case 'h': // tib harvester
-                    costs.tib += costs_tiberium[building.lvl];
-                    costs.power += Math.round((costs_tiberium[building.lvl] / 4) * 3); //power coosts for a harvester
+                    costs.t += costs_tiberium[building.lvl];
+                    costs.p += Math.round((costs_tiberium[building.lvl] / 4) * 3); //power coosts for a harvester
                     break;
                 case 's': // silo
                 case 'a': // akku
-                    costs.tib += costs_tiberium[building.lvl];
-                    costs.power += Math.round(costs_tiberium[building.lvl] / 4);
+                    costs.t += costs_tiberium[building.lvl];
+                    costs.p += Math.round(costs_tiberium[building.lvl] / 4);
                     break;
                 case 'r': // rafenerieeee
-                    costs.tib += costs_tiberium[building.lvl] * 2; // dubble costs
-                    costs.power += Math.round(costs_tiberium[building.lvl] / 2); //power costs for a raf
+                    costs.t += costs_tiberium[building.lvl] * 2; // dubble costs
+                    costs.p += Math.round(costs_tiberium[building.lvl] / 2); //power costs for a raf
                     break;
                 default:
                     break;
@@ -1009,8 +1009,8 @@ export const futureProduction = (buildings, days = 121) => {
             if (buildings[i].lvl) {
                 const costs = calcBuildingCost(buildings[i]);
                 const prod = calcProduction(buildings);
-                let tibTime = costs.tib / prod.tib / 24; //- tibTimeLeft   // shoud be possible to become negativ
-                let powerTime = costs.power / prod.power / 24; //- powerTimeLeft
+                let tibTime = costs.t / prod.tib / 24; //- tibTimeLeft   // shoud be possible to become negativ
+                let powerTime = costs.p / prod.power / 24; //- powerTimeLeft
                 //if (tibTime <= 0) tibTimeLeft = -1*tibTime      // if negativ it means their ist still
 
                 if (tibTimeLeft > 0) {
@@ -1083,8 +1083,8 @@ export const calcTimeForAllBuildings = buildings => {
     const production = calcProduction(buildings);
     const costs = calcBuildingCostAll(buildings);
     const time = {
-        tib: costs.tib / production.tib,
-        power: costs.tib / production.power,
+        tib: costs.t / production.tib,
+        power: costs.p / production.power,
     };
     console.log({ production, costs, time });
     return time;
