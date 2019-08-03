@@ -70,12 +70,10 @@ function Reset(props) {
                     <InputGroup>
                         <Submit type="submit" value={token ? 'Update password' : 'Send email'} />
                     </InputGroup>
-                    <div>New to CnC-Exo?</div>
-                    <Link to="/register">Sign Up</Link>
+                    No account? <Link to="/register">Create one</Link>
                     <br />
                     <br />
-                    <div>Email verification expired?</div>
-                    <Link to="/resend">Resend token</Link>
+                    Email verification expired? <Link to="/resend">Resend token</Link>
                 </Form>
             </Container>
         </Center>

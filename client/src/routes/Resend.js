@@ -39,10 +39,7 @@ function Login(props) {
                     <InputGroup>
                         <Submit type="submit" value="Resend" />
                     </InputGroup>
-                    <div>New to CnC-Exo?</div>
-                    <Link to="/register">Sign Up</Link>
-                    <br />
-                    <br />
+                    No account? <Link to="/register">Create one</Link>
                 </Form>
             </Container>
         </Center>

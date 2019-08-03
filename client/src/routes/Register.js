@@ -11,6 +11,7 @@ import Submit from '../style/Submit';
 import Center from '../style/Center';
 import Container from '../style/Container';
 import Alert from '../style/Alert';
+import Row from '../style/Row';
 
 function Register(props) {
     const {
@@ -59,8 +60,7 @@ function Register(props) {
                     <InputGroup>
                         <Submit type="submit" value="Sign Up" />
                     </InputGroup>
-                    Already have an account? <br />
-                    <Link to="/login">Login</Link>
+                    Already have an account? <Link to="/login">Sign in</Link>
                 </Form>
             </Container>
         </Center>
