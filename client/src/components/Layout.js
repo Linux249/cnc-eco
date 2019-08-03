@@ -17,6 +17,8 @@ const Square = styled.div`
 `;
 
 const Container = styled.div`
+    cursor: pointer;
+    
     width: 162px;
     display: flex;
     flex-wrap: wrap;
@@ -76,7 +78,7 @@ const Layout = ({ layout }) => {
 
     return (
         <Area small>
-            <Container>{slots}</Container>
+            <Container >{slots}</Container>
             {/*<div>{`${layout.x}:${layout.y} /!*  t:${layout.tib}   c:${layout.cris}*!/`}</div>*/}
             <Row center>
                 <Coords>{`${layout.x}:${layout.y}`}</Coords>

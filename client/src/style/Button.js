@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { shadow, backgroundColor, border, borderRadius, baseColorWhite } from './constants';
 
 export const Button = styled.div`
+    cursor: pointer;
     // position: relative;
     display: flex;
     justify-content: center;

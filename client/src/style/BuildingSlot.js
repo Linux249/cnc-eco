@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { focusColor, hoverColor } from './constants';
 export default styled.div`
+    cursor: pointer;
     // height: 70px;
     display: flex;
     justify-content: center;
