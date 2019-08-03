@@ -31,14 +31,14 @@ router.post('/user/requestedPlayer', async (req, res, next) => {
     const { name } = req.body;
     // Test if the player doesn't used from other account
     const userWhoOwnsPlayer = await User.findOne({ player: name });
-    if (!userWhoOwnsPlayer) {
+    if (userWhoOwnsPlayer) {
         return next(new Error('Cannot add Player: Player belongs already to somebody else'));
     }
 
     user.requestedPlayerName = name;
     user.token = generateToken();
     await user.save().catch(e => next(e));
-    return res.json({ successe: 'Please click ingame at "get token" in cnc-eco menu' });
+    return res.json({ success: 'click ingame at "get token" in cnc-eco menu' });
 });
 
 router.post('/user/addPlayer', async (req, res, next) => {
@@ -68,11 +68,12 @@ router.post('/user/addPlayer', async (req, res, next) => {
         await Promise.all(
             worlds.map(async w => {
                 const player = await db.collection(`players_${w.worldId}`).findOne({ name });
-                player && user.worlds.push({
-                    worldId: w.worldId,
-                    worldName: player.serverName,
-                    player_id: player._id,
-                });
+                player &&
+                    user.worlds.push({
+                        worldId: w.worldId,
+                        worldName: player.serverName,
+                        player_id: player._id,
+                    });
             })
         );
 
@@ -83,8 +84,6 @@ router.post('/user/addPlayer', async (req, res, next) => {
     } catch (e) {
         next(e);
     }
-
-
 
     // add player to user and time
 });

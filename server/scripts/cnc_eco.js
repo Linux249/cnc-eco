@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          C&C:TA CnC-Eco
-// @version       1.0.7
+// @version       1.1.1
 // @namespace     http://cnc-eco.herokuapp.com
 // @homepage      http://cnc-eco.herokuapp.com
 // @description   Sammelt Informationen ueber Basenausbau der Allianzmitglieder (basierend auf Skripte / Routinen von neobsen, JimBeamJD, KRS_L, F.D, und Dooki)
@@ -1061,10 +1061,7 @@
                             if ('layout' == f) {
                                 var g = ClientLib.Data.MainData.GetInstance();
                                 var n = g.get_Player().get_Name();
-                                d =
-                                    // 'https://www.member-stats.de?link=layout&worldid=' +
-                                    // g.get_Server().get_WorldId();
-                                    'https://www.cnc-eco.de/layouts'
+                                d = 'https://www.cnc-eco.de/layouts/'  +  g.get_Server().get_WorldId();
                             }
                             var g = qx.core.Init.getApplication(),
                                 q = new webfrontend.gui.CustomWindow(g.tr('tnf:external link')).set(

@@ -16,11 +16,11 @@ import Alert from '../style/Alert';
 import BodySide from '../style/BodySide';
 import Info from '../style/Info';
 import { Link } from 'react-router-dom';
-import qs from 'query-string'
+import qs from 'query-string';
 class User extends Component {
     constructor(props) {
         super();
-        const query = qs.parse(props.location.search)
+        const query = qs.parse(props.location.search);
         this.state = {
             world: '',
             name: props.name,
@@ -28,6 +28,7 @@ class User extends Component {
             error: query.error || null,
             worlds: [],
             loading: 0,
+            success: '',
         };
     }
 
@@ -40,30 +41,6 @@ class User extends Component {
     changeName = name => this.setState({ name, error: null });
 
     changeToken = token => this.setState({ token, error: null });
-
-    addPlayer = async () => {
-        console.log('add player')
-        const { name, token } = this.props;
-        this.startLoading();
-
-        const res = await fetch(api_url + '/user/requestedPlayer', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-                Authorization: 'Bearer  ' + token,
-            },
-            body: JSON.stringify({name}),
-        }).catch(e => {
-            console.warn('catched error');
-            console.error(e);
-        });
-        const player = await res.json();
-        this.endLoading();
-        if (!res.ok || player.error) {
-            return this.setState({ error: player.error.message });
-        }
-        if (player.error) return this.setState({ error: player.message });
-    };
 
     addWorld = async () => {
         const { world, worlds } = this.state;
@@ -179,6 +156,31 @@ class User extends Component {
         this.endLoading();
     };
 
+    addPlayer = async () => {
+        console.log('add player');
+        const { name, token } = this.props;
+        this.startLoading();
+
+        const res = await fetch(api_url + '/user/requestedPlayer', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                Authorization: 'Bearer  ' + token,
+            },
+            body: JSON.stringify({ name }),
+        }).catch(e => {
+            console.warn('catched error');
+            console.error(e);
+        });
+        const player = await res.json();
+        this.endLoading();
+        if (!res.ok || player.error) {
+            return this.setState({ error: player.error.message });
+        }
+        if (player.error) return this.setState({ error: player.message });
+        if (player.success) this.setState({ success: player.success });
+    };
+
     sendToken = async () => {
         console.log('sendToken');
         const tokenServer = this.state.token;
@@ -206,6 +208,8 @@ class User extends Component {
         if (!res.ok || data.error) {
             return this.setState({ error: data.error.message });
         }
+        this.setState({ success: 'player added' });
+        this.props.updatePlayer(data);
         this.loadWorlds();
     };
 
@@ -220,7 +224,7 @@ class User extends Component {
     }
 
     render() {
-        const { world, error, name, worlds, loading, token } = this.state;
+        const { world, error, name, worlds, loading, token, success } = this.state;
         const { savedWorlds } = this.props;
         const playerAdded = !!this.props.name;
         return (
@@ -236,7 +240,7 @@ class User extends Component {
                             value={name}
                             onChange={e => this.changeName(e.target.value)}
                         />
-                        <Button onClick={this.addPlayer} >add player</Button>
+                        <Button onClick={this.addPlayer}>add player</Button>
                         <InfoText>you can only all 7 days change your username</InfoText>
                         <Input
                             name="token"
@@ -244,6 +248,7 @@ class User extends Component {
                             onChange={e => this.changeToken(e.target.value)}
                         />
                         <Button onClick={this.sendToken}>send token</Button>
+                        {success && <Info>{success}</Info> }
                     </Container>
                     <Container>
                         <Title>Add a World</Title>
@@ -294,11 +299,11 @@ class User extends Component {
                 <BodySide>
                     {!playerAdded && (
                         <>
-                            <Info>Add your ingame name to your account first</Info>
                             <Info>
-                                You have to install the <Link to="/scripts"> script </Link>
+                                You have to install the <Link to="/scripts"> script first</Link>
                             </Info>
-                            <Info>Update your data from one world ingame </Info>
+                            <Info>Add your ingame name to your account first</Info>
+                            <Info>Click ingame add 'get tocken' in the menu</Info>
                         </>
                     )}
                 </BodySide>
