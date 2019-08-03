@@ -20,12 +20,16 @@ async function getToken(req, res, next) {
     const player = req.query.get_token
     console.log('getToken: ', player)
     if(!player) return next(new Error('Player missing'))
-    const user = await User.findOne({ player: name });
-    const token = generateToken()
-    user.token = token
-    await user.save()
+    try {
+        const user = await User.findOne({ requestedPlayerName: player });
+        console.log({user})
+        if(!user) return res.send('add your player to your account at cnc-eco.de first')
+        return res.send(user.token)
+    } catch (e) {
+        return next(e)
+    }
 
-    return res.text(token)
+
 }
 
 async function update(req, res, next) {

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import User from '../model/User';
 import Token from '../model/Token';
+import generateToken from '../utils/generateToken';
 
 const router = Router();
 
@@ -24,9 +25,20 @@ router.delete('/user/:id', async (req, res) => {
     }
 });
 
+router.post('/user/requestedPlayer', async (req, res, next) => {
+    const { user } = req;
+    const { name } = req.body;
+    user.requestedPlayerName = name;
+    user.token = generateToken()
+    await user.save().catch(e => next(e))
+    return res.json({successe: 'Please click ingame at "get token" in cnc-eco menu'})
+
+
+})
+
 router.post('/user/addPlayer', async (req, res, next) => {
     // name is player name given from user
-    const { name, worldId } = req.body;
+    const { name, worldId, token } = req.body;
     // TODO worldName comes also from where user choose world later
     console.log({ name, worldId });
 
@@ -36,6 +48,9 @@ router.post('/user/addPlayer', async (req, res, next) => {
         console.log(user);
         return next(new Error('Cannot add Player: Users id invalid'));
     }
+
+    // player should enter the token get ingame
+    if(user.token !== token) return next(new Error('Wrong or missing token'));
 
     // Test id user is allowed to add a player again
     if (user.playerAdded) {
@@ -78,6 +93,7 @@ router.post('/user/addPlayer', async (req, res, next) => {
             // TODO test if the world is not allready inside
 
             user.player = name;
+            user.token = ''
             user.playerAdded = new Date();
 
             user.worlds.push({
@@ -90,14 +106,6 @@ router.post('/user/addPlayer', async (req, res, next) => {
                 if (err) return next(err);
                 return res.json(doc);
             });
-        } else {
-            return next(
-                new Error(
-                    `Cannot add Player: Player was not updated in the last 3 minutes (${Math.round(
-                        minutes * -1
-                    )}min's) - please update data ingame`
-                )
-            );
         }
     } else {
         return next(

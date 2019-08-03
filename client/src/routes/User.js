@@ -23,6 +23,7 @@ class User extends Component {
         this.state = {
             world: '',
             name: props.name,
+            token: '',
             error: null,
             worlds: [],
             loading: 0,
@@ -37,40 +38,30 @@ class User extends Component {
 
     changeName = name => this.setState({ name, error: null });
 
+    changeToken = token => this.setState({ token, error: null });
+
     addPlayer = async () => {
-        const { world, name } = this.state;
-        const { token } = this.props;
-        if (!name) return this.setState({ error: 'please enter a ingame name' });
-        if (!world) return this.setState({ error: 'please select a world' });
+        console.log('add player')
+        const { name, token } = this.props;
         this.startLoading();
 
-        const body = {
-            name,
-            worldId: world,
-        };
-
-        const res = await fetch(api_url + '/user/addPlayer', {
+        const res = await fetch(api_url + '/user/requestedPlayer', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
                 Authorization: 'Bearer  ' + token,
             },
-            body: JSON.stringify(body),
+            body: JSON.stringify({name}),
         }).catch(e => {
             console.warn('catched error');
             console.error(e);
-            this.setState({ error: e.message });
         });
         const player = await res.json();
         this.endLoading();
         if (!res.ok || player.error) {
             return this.setState({ error: player.error.message });
         }
-
         if (player.error) return this.setState({ error: player.message });
-        this.props.updatePlayer(player);
-        // update world lists
-        this.loadWorlds();
     };
 
     addWorld = async () => {
@@ -187,6 +178,36 @@ class User extends Component {
         this.endLoading();
     };
 
+    sendToken = async () => {
+        console.log('sendToken');
+        const tokenServer = this.state.token;
+        const { name, token } = this.props;
+        this.startLoading();
+
+        const body = {
+            name,
+            token: tokenServer,
+        };
+
+        const res = await fetch(api_url + '/user/addWorld', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                Authorization: 'Bearer  ' + token,
+            },
+            body: JSON.stringify(body),
+        }).catch(e => {
+            console.warn('catched error');
+            console.error(e);
+        });
+        const data = await res.json();
+        this.endLoading();
+        if (!res.ok || data.error) {
+            return this.setState({ error: data.error.message });
+        }
+        this.loadWorlds();
+    };
+
     componentDidUpdate(prevProps) {
         if (this.props.name !== prevProps.name) {
             this.setState({ name: this.props.name });
@@ -198,7 +219,7 @@ class User extends Component {
     }
 
     render() {
-        const { world, error, name, worlds, loading } = this.state;
+        const { world, error, name, worlds, loading, token } = this.state;
         const { savedWorlds } = this.props;
         const playerAdded = !!this.props.name;
         return (
@@ -213,9 +234,15 @@ class User extends Component {
                             name="name"
                             value={name}
                             onChange={e => this.changeName(e.target.value)}
-                            disabled={playerAdded}
                         />
+                        <Button onClick={this.addPlayer} >add player</Button>
                         <InfoText>you can only all 7 days change your username</InfoText>
+                        <Input
+                            name="token"
+                            value={token}
+                            onChange={e => this.changeToken(e.target.value)}
+                        />
+                        <Button onClick={this.sendToken}>send token</Button>
                     </Container>
                     <Container>
                         <Title>Add a World</Title>

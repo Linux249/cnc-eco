@@ -47,6 +47,7 @@ const userSchema = Schema({
         default: 'player'
     },
     playerToken: String, // save to token requests from ingame
+    requestedPlayerName: String,
 });
 
 // generating a hash

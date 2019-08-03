@@ -377,7 +377,7 @@
                                 }),
                                 p.send());
                             'get_token' == c &&
-                                (p.setData('get_token'),
+                                (p.setData('get_token', d),
                                 p.setParameter('get_token', d),
                                 p.addListener('completed', function(b) {
                                     '' === b.getContent()
