@@ -160,6 +160,9 @@
                             c.AddMainMenu('open cnc-eco.de', function() {
                                 CncEcomain.getInstance().openurl();
                             });
+                            c.AddMainMenu('get token', function() {
+                                CncEcomain.getInstance().getToken();
+                            });
                             c.AddMainMenu(
                                 'update data',
                                 function() {
@@ -206,6 +209,9 @@
                         },
                         openurl: function() {
                             CncEcomain.getInstance().remoteRequest('new_check');
+                        },
+                        getToken() {
+                            CncEcomain.getInstance().remoteRequest('get_token');
                         },
                         askOtherButton: function() {
                             CncEcomain.getInstance().remoteRequest('button_check');
@@ -367,6 +373,17 @@
                                         ? (h('new Account:: ' + b.getContent()),
                                           CncEcomain.getInstance().winOpen('', d))
                                         : (h('NOT new :: ' + b.getContent()),
+                                          CncEcomain.getInstance().winOpen('', ''));
+                                }),
+                                p.send());
+                            'get_token' == c &&
+                                (p.setData('get_token'),
+                                p.setParameter('get_token', d),
+                                p.addListener('completed', function(b) {
+                                    '' === b.getContent()
+                                        ? (h('get content:: ' + b.getContent()),
+                                          CncEcomain.getInstance().winOpen('', d))
+                                        : (h('NOT content :: ' + b.getContent()),
                                           CncEcomain.getInstance().winOpen('', ''));
                                 }),
                                 p.send());

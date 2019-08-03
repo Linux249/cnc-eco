@@ -45,7 +45,8 @@ const userSchema = Schema({
     role: {type: String,
         enum: ['player', 'admin '],
         default: 'player'
-    }
+    },
+    playerToken: String, // save to token requests from ingame
 });
 
 // generating a hash
