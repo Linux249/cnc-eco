@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { backgroundColorHeader, border } from './constants';
+import { baseColorDark, border } from './constants';
 
 export default styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    background-color: ${backgroundColorHeader};
+    background-color: ${baseColorDark};
 
     padding: 3px 20px;
 

@@ -5,6 +5,6 @@ export default styled.div`
 
     font-size: 0.8rem;
     //color: #4d3e13;
-    //font-weight: 600;
+    font-weight: 500;
     //letter-spacing: 1px;
 `;

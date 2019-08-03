@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { changeBase, changeWorld } from '../store/actions/player';
 import Area from '../style/Area';
-import { backgroundColorButtonHeader } from '../style/constants';
+import { baseColor } from '../style/constants';
 
 const ButtonHeader = styled(Button)`
-    background-color: ${({ active }) => (active ? backgroundColorButtonHeader : 'inherit')};
+    background-color: ${({ active }) => (active ? baseColor : 'inherit')};
     color: white;
     &:hover {
-        background-color: ${backgroundColorButtonHeader};
+        background-color: ${baseColor};
     }
 `;
 

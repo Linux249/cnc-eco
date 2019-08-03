@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AreaRaw from '../style/Area';
 import styled from 'styled-components';
-import { backgroundColorButtonHeader } from '../style/constants';
+import { baseColor } from '../style/constants';
 
 const Area = styled(AreaRaw)`
     padding: 6px;
@@ -25,12 +25,12 @@ const Container = styled.div`
 `;
 
 const Time = styled.div`
-    color: ${backgroundColorButtonHeader};
+    color: ${baseColor};
     font-weight: 600;
 `;
 
 const Coords = styled.div`
-    color: ${backgroundColorButtonHeader};
+    color: ${baseColor};
     font-weight: 600;
 `;
 

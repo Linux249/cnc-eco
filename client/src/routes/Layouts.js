@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Body from '../style/Body';
-import Title from '../style/AppName';
+import Text from '../style/Text';
 import Button from '../style/Button';
 import Layout from '../components/Layout';
 import { api_url } from '../config';
@@ -73,7 +73,7 @@ function Layouts(props) {
             </div>
             <Column>
                 <Container>
-                    <Title>Sort layouts</Title>
+                    <Text>Sort layouts</Text>
                     <Row>
                         <Button first active={sort === 'tib'} onClick={() => changeSort('tib')}>
                             Tib
@@ -87,7 +87,7 @@ function Layouts(props) {
                     </Row>
                 </Container>
                 <Container>
-                    <Title>{'Loaded: ' + layouts.length}</Title>
+                    <Text>{'Loaded: ' + layouts.length}</Text>
                     <Row>
                         <Button first onClick={getLayouts}>
                             Update
@@ -95,7 +95,7 @@ function Layouts(props) {
                     </Row>
                 </Container>
                 <Container>
-                    <Title>Save Layout</Title>
+                    <Text>Save Layout</Text>
                     <Row>
                         <Button first>Coming soon...</Button>
                     </Row>

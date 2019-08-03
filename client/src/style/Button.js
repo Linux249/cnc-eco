@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { shadow, backgroundColor, border, borderRadius } from './constants';
+import { shadow, backgroundColor, border, borderRadius, baseColorWhite } from './constants';
 
 export const Button = styled.div`
     // position: relative;
@@ -17,7 +17,7 @@ export const Button = styled.div`
     margin: ${({ small }) => (small ? '0' : '0.25rem')};
 
     font-size: 0.8rem;
-    font-weight: 700;
+    font-weight: 600;
     color: #4d3e13;
 
     &:first-child {
@@ -26,7 +26,9 @@ export const Button = styled.div`
 
     &:hover {
         //height: 2rem;
-        box-shadow: 0 4px 8px 0 rgba(30, 136, 229, 0.2), 0 6px 20px 0 rgba(30, 136, 229, 0.19);
+        background-color: ${baseColorWhite};
+        transition: background 0.1s linear;
+        //box-shadow: 0 4px 8px 0 rgba(30, 136, 229, 0.2), 0 6px 20px 0 rgba(30, 136, 229, 0.19);
     }
     transition: hover 0.1s;
 `;
