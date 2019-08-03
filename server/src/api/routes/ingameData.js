@@ -24,7 +24,7 @@ async function getToken(req, res, next) {
         const user = await User.findOne({ requestedPlayerName: player });
         console.log({user})
         if(!user) return res.send('add your player to your account at cnc-eco.de first')
-        return res.send(user.token)
+        else return res.send(user.token)
     } catch (e) {
         return next(e)
     }

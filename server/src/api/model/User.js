@@ -46,7 +46,7 @@ const userSchema = Schema({
         enum: ['player', 'admin '],
         default: 'player'
     },
-    playerToken: String, // save to token requests from ingame
+    token: String, // save to token requests from ingame
     requestedPlayerName: String,
 });
 
