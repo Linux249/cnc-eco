@@ -14,7 +14,12 @@ import {
 // number where the building is set is inside building.slot
 export function replaceSlot(unit, area = 'buildings') {
     return (dispatch, getStore) => {
-        if (unit.type === 't' || unit.type === 'c') unit.lvl = undefined;
+        if (
+            unit.type === 't' ||
+            unit.type === 'c' ||
+            (area === 'defense' && 'hjkl'.includes(unit.type))
+        )
+            unit.lvl = undefined;
         else if (!unit.lvl) unit.lvl = getStore().base.baseLvl;
         dispatch({
             type: REPLACE_SLOT,
