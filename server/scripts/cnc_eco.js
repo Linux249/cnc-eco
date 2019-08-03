@@ -1047,8 +1047,9 @@
                                 var g = ClientLib.Data.MainData.GetInstance();
                                 var n = g.get_Player().get_Name();
                                 d =
-                                    'https://www.member-stats.de?link=layout&worldid=' +
-                                    g.get_Server().get_WorldId();
+                                    // 'https://www.member-stats.de?link=layout&worldid=' +
+                                    // g.get_Server().get_WorldId();
+                                    'https://www.cnc-eco.de/layouts'
                             }
                             var g = qx.core.Init.getApplication(),
                                 q = new webfrontend.gui.CustomWindow(g.tr('tnf:external link')).set(
@@ -3258,7 +3259,7 @@
                                     }
                                     for (
                                         var h =
-                                                'http://cncopt.com/?map=2|' +
+                                                'https://www.cnc-eco.de/b/map=2|' +
                                                 k +
                                                 '|' +
                                                 k +
@@ -3299,7 +3300,7 @@
                                     p +=
                                         '</table><a href="' +
                                         h +
-                                        '" target="_blank" style="color:#FFFFFF;">CNCOpt';
+                                        '" target="_blank" style="color:#FFFFFF;">CnCEco';
                                     this.resourceLayout = new qx.ui.basic.Label().set({
                                         backgroundColor: '#303030',
                                         value: p,

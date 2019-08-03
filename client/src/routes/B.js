@@ -5,6 +5,7 @@ import urlToBase from '../util/parseurl';
 import { store } from '..';
 import { replaceAllBase } from '../store/actions/base';
 import { api_url } from '../config';
+import Body from '../style/Body';
 
 export const B = props => {
     const [err, setError] = useState(null);
@@ -52,12 +53,16 @@ export const B = props => {
         load();
     }, []);
 
-    return loaded ? (
+    return loaded && false ? (
         <Redirect to="/" />
     ) : (
-        <div>
-            loading
-            <Alert>{err}</Alert>
-        </div>
+        <Body>
+            <div />
+            <div>
+                <Alert>loading</Alert>
+                <Alert>{err}</Alert>
+            </div>
+            <div />
+        </Body>
     );
 };
