@@ -23,8 +23,8 @@ async function getToken(req, res, next) {
     try {
         const user = await User.findOne({ requestedPlayerName: player });
         console.log({user})
-        if(!user) return res.send('add your player to your account at cnc-eco.de first')
-        else return res.send(user.token)
+        if(!user) return res.send('error=add player to account first') // empty message implifies this.
+        else return res.send('token=' + user.token)
     } catch (e) {
         return next(e)
     }

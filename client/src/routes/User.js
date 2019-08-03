@@ -16,15 +16,16 @@ import Alert from '../style/Alert';
 import BodySide from '../style/BodySide';
 import Info from '../style/Info';
 import { Link } from 'react-router-dom';
-
+import qs from 'query-string'
 class User extends Component {
     constructor(props) {
         super();
+        const query = qs.parse(props.location.search)
         this.state = {
             world: '',
             name: props.name,
-            token: '',
-            error: null,
+            token: query.token || '',
+            error: query.error || null,
             worlds: [],
             loading: 0,
         };
@@ -189,7 +190,7 @@ class User extends Component {
             token: tokenServer,
         };
 
-        const res = await fetch(api_url + '/user/addWorld', {
+        const res = await fetch(api_url + '/user/addPlayer', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',

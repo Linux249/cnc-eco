@@ -2,6 +2,7 @@ import { Router } from 'express';
 import User from '../model/User';
 import Token from '../model/Token';
 import generateToken from '../utils/generateToken';
+import World from '../model/World';
 
 const router = Router();
 
@@ -28,90 +29,62 @@ router.delete('/user/:id', async (req, res) => {
 router.post('/user/requestedPlayer', async (req, res, next) => {
     const { user } = req;
     const { name } = req.body;
+    // Test if the player doesn't used from other account
+    const userWhoOwnsPlayer = await User.findOne({ player: name });
+    if (!userWhoOwnsPlayer) {
+        return next(new Error('Cannot add Player: Player belongs already to somebody else'));
+    }
+
     user.requestedPlayerName = name;
-    user.token = generateToken()
-    await user.save().catch(e => next(e))
-    return res.json({successe: 'Please click ingame at "get token" in cnc-eco menu'})
-
-
-})
+    user.token = generateToken();
+    await user.save().catch(e => next(e));
+    return res.json({ successe: 'Please click ingame at "get token" in cnc-eco menu' });
+});
 
 router.post('/user/addPlayer', async (req, res, next) => {
     // name is player name given from user
-    const { name, worldId, token } = req.body;
+    const { user, db } = req;
+    const { token } = req.body;
     // TODO worldName comes also from where user choose world later
-    console.log({ name, worldId });
 
     // PROTECT HACK: Find User first check if user _id from client is same like from auth
-    const user = req.user;
+    const name = user.requestedPlayerName;
+    console.log({ name, token, user });
     if (!user) {
         console.log(user);
         return next(new Error('Cannot add Player: Users id invalid'));
     }
 
     // player should enter the token get ingame
-    if(user.token !== token) return next(new Error('Wrong or missing token'));
+    if (user.token !== token) return next(new Error('Wrong or missing token'));
 
-    // Test id user is allowed to add a player again
-    if (user.playerAdded) {
-        const time = user.playerAdded - new Date();
-        console.log(time);
-        if (time < 7 && false) return next(new Error('Cannot add Player: Users id invalid'));
-    }
+    user.player = name;
+    user.token = '';
+    user.requestedPlayerName = '';
+    user.playerAdded = new Date();
 
-    // Test if the player doesn't used from other account
-    const userWhoOwnsPlayer = await User.findOne({ player: name });
-    if (userWhoOwnsPlayer) {
-        return next(new Error('Cannot add Player: Player owns somebody else already'));
-    }
-
-    // Test if player exists on the world
-    const collection = req.db.collection(`players_${worldId}`);
-    if (!collection) {
-        // should not happen because user cannot add any world
-        return next(new Error("Cannot add Player: World doesn't exist in db"));
-    }
-
-    // find player
-    const player = await collection.findOne({ name });
-    if (!player) {
-        console.log('no player found');
-        console.log(player);
-        return next(
-            new Error('Cannot add Player: Player name not found - please update data ingame')
+    try {
+        const worlds = await World.find();
+        await Promise.all(
+            worlds.map(async w => {
+                const player = await db.collection(`players_${w.worldId}`).findOne({ name });
+                player && user.worlds.push({
+                    worldId: w.worldId,
+                    worldName: player.serverName,
+                    player_id: player._id,
+                });
+            })
         );
+
+        user.save((err, doc) => {
+            if (err) return next(err);
+            return res.json(doc);
+        });
+    } catch (e) {
+        next(e);
     }
 
-    // console.log(player)
 
-    // Test if player is updated in last 2 min
-    if (player._updated) {
-        const minutes = (player._updated - new Date()) / 1000 / 60;
-        console.log({ minutes });
-        if (minutes > -3) {
-            // add player to user
-            // TODO test if the world is not allready inside
-
-            user.player = name;
-            user.token = ''
-            user.playerAdded = new Date();
-
-            user.worlds.push({
-                worldId,
-                worldName: player.serverName,
-                player_id: player._id,
-            });
-            // const r = await collection.update({_id: player._id}, player)
-            user.save((err, doc) => {
-                if (err) return next(err);
-                return res.json(doc);
-            });
-        }
-    } else {
-        return next(
-            new Error('Cannot add Player: Player has never updated - please update data ingame')
-        );
-    }
 
     // add player to user and time
 });

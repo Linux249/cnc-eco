@@ -380,11 +380,9 @@
                                 (p.setData('get_token', d),
                                 p.setParameter('get_token', d),
                                 p.addListener('completed', function(b) {
-                                    '' === b.getContent()
-                                        ? (h('get content:: ' + b.getContent()),
-                                          CncEcomain.getInstance().winOpen('', d))
-                                        : (h('NOT content :: ' + b.getContent()),
-                                          CncEcomain.getInstance().winOpen('', ''));
+                                    const content = b.getContent()
+                                    h(content)
+                                    content ? CncEcomain.getInstance().winOpen('', content) : h('token missing - add your account ingame first')
                                 }),
                                 p.send());
                             'war' == c &&
@@ -1059,7 +1057,7 @@
                             var b = CncEcoScanner.Layout.window.getInstance(),
                                 d = 'https://www.member-stats.de';
                             '' !== f &&
-                                (d = 'https://www.member-stats.de/?link=new_account&account=' + f);
+                                (d = 'https://www.cnc-eco.de/user?' + f);
                             if ('layout' == f) {
                                 var g = ClientLib.Data.MainData.GetInstance();
                                 var n = g.get_Player().get_Name();
