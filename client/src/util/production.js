@@ -123,6 +123,9 @@ export const calcBuildingCost = building => {
                 costs.t = tib * 2; // dubble costs
                 costs.p = Math.round(tib / 2); //power costs for a raf
                 break;
+            case 'p':   // power plant: tib is 2,6times the tib
+                costs.t = Math.round(tib * 2.6)
+                costs.p = Math.round(tib / 4)
             default:
                 break;
         }
