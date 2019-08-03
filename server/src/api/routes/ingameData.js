@@ -6,7 +6,14 @@ import Alliance from '../model/Alliance';
 
 // GET /api/v1/layout
 // get a single labtop with world + coords as params
-export default async (req, res, next) => {
+export default async (req, ...rest) => {
+    const query = req.query
+    console.log('EACH INGAME REQUEST WITH DIFFRENT PARAMS')
+    console.log({query})
+    if(query.update && query.update === 1) update(req, ...rest)
+}
+
+async function update(req, res, next) {
     try {
         const { body, db } = req;
         const {
@@ -19,6 +26,7 @@ export default async (req, res, next) => {
             basecount,
             fraction,
         } = body;
+
 
         if (!currentplayerName) return next(new Error('Request is currently not supported'));
         console.log(
