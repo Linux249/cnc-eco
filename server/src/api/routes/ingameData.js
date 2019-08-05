@@ -12,7 +12,7 @@ export default async (req, ...rest) => {
     const query = req.query
     console.log('EACH INGAME REQUEST WITH DIFFRENT PARAMS')
     console.log({query})
-    if(query.update && query.update === 1) update(req, ...rest)
+    if(query.update && +query.update === 1) update(req, ...rest)
     if(query.get_token) getToken(req, ...rest)
 }
 
