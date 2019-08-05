@@ -28,7 +28,7 @@ const Grid = styled.div`
     //height: available;
     max-height: 100vh;
     display: grid;
-    grid-template-columns: repeat(25, 1fr);
+    grid-template-columns: repeat(26, 1fr);
     grid-template-rows: repeat(50, 1fr);
 `;
 
@@ -231,6 +231,12 @@ class Alliance extends Component {
                         >
                             Def HQ&#8709;
                         </Cell>
+                        <Cell
+                            active={s === 'updated'}
+                            onClick={() => this.sort('updated')}
+                        >
+                            time
+                        </Cell>
 
                         {members.map(member => {
                             return member.data ? (
@@ -269,6 +275,8 @@ class Alliance extends Component {
                                     <Cell>{member.avargSubLvl}</Cell>
                                     <Cell>{member.avargDfLvl}</Cell>
                                     <Cell>{member.avargDfHQLvl}</Cell>
+
+                                    <Cell>{Math.round(Math.floor((new Date() - new Date(member._updated))/1000/60/60)*10/24)/10}</Cell>
                                 </Fragment>
                             ) : (
                                 <Fragment key={member.name}>
@@ -301,6 +309,8 @@ class Alliance extends Component {
                                     <Cell>{}</Cell>
                                     <Cell>{}</Cell>
                                     <Cell>{}</Cell>
+                                    <Cell>{}</Cell>
+
                                     <Cell>{}</Cell>
                                 </Fragment>
                             );
