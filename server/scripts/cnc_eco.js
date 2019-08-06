@@ -839,9 +839,9 @@
                             b.open();
                         },
                         UpdateWindow: function() {
-                            var c = new qx.ui.window.Window('MemberStats Update!');
+                            var c = new qx.ui.window.Window('CnCEco Update!');
                             c.set({
-                                caption: 'MemberStats Update!',
+                                caption: 'CnCEco Update!',
                                 icon: 'webfrontend/ui/common/icon_moral_alert_red.png',
                                 layout: new qx.ui.layout.HBox(4),
                                 width: 450,
@@ -863,7 +863,7 @@
                             var f = new qx.ui.container.Composite(
                                     new qx.ui.layout.VBox(2).set({ alignX: 'left' })
                                 ),
-                                b = new qx.ui.basic.Label('MemberStatsScript "4.7.5" is to old');
+                                b = new qx.ui.basic.Label('CnCEco script "4.7.5" is to old');
                             f.add(b);
                             b = new qx.ui.basic.Label(
                                 'Please disable/deinstall the old script and get new version'

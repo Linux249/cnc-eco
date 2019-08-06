@@ -39,7 +39,7 @@ const AllianceS = styled.div`
     
     padding: 5px;
     
-    font-weight: 700;
+    font-weight: 600;
     
     /*
     Custom scrollbar style
@@ -74,6 +74,9 @@ const Cell = styled.div`
     border: ${border};
     border-radius: ${borderRadius};
     border-color: ${baseLight};
+    margin: 1px;
+    
+    
 
     ${p => (p.active ? 'background-color: ' + baseLight : '')};
 `;
@@ -239,6 +242,7 @@ class Alliance extends Component {
                         </Cell>
 
                         {members.map(member => {
+                            member = members[0]
                             return member.data ? (
                                 <Fragment key={member.name}>
                                     <Cell>{member.name}</Cell>
