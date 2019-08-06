@@ -13,7 +13,7 @@ export const createReport = async db => {
         // all collections
         const collections = await db.listCollections().toArray();
         // get layouts collection
-        const layoutsColl = collections.filter(coll => coll.name.includes('layouts'));
+        const layoutsColl = collections.filter(coll => coll.name.includes('layouts_'));
         // const reportsColl = collections.filter(coll => coll.name.includes('reports_'));
         // get all player collections
         const playerColl = collections.filter(coll => coll.name.includes('players_'));

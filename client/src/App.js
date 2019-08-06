@@ -21,6 +21,7 @@ import { LOCAL_STORE } from './config';
 import Reset from './routes/Reset';
 import Resend from './routes/Resend';
 import Demo from './routes/Demo';
+import Admin from './routes/Admin';
 
 class App extends Component {
     componentWillMount() {
@@ -43,6 +44,7 @@ class App extends Component {
                     <Route path="/b/:url" component={B} />
                     <Route path="/scripts" component={Scripts} />
                     <Route path="/demo" component={Demo} />
+                    <Route path="/admin" component={Admin} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
                     <Route path="/resend" component={Resend} />
