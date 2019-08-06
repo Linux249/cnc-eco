@@ -5,6 +5,7 @@ sgMail.setApiKey(
     process.env.SENDGRID_API_KEY ||
         ''
 );
+
 const msg = {
     to: 'julian.libor@gmail.com',
     from: 'info@cnc-eco.de',
@@ -13,7 +14,7 @@ const msg = {
     html: '<strong>and easy to do anywhere, even with Node.js</strong>',
 };
 
-var transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
     // host: "ha01s001.org-dns.com",
     host: 'smtp.cnc-eco.de',
     port: 587,
@@ -41,7 +42,8 @@ export async function sendToken(token, mail) {
     msg.html = body;
     console.log(msg);
     try {
-        const info = await transporter.sendMail(msg);
+        // const info = await transporter.sendMail(msg);
+        const info = await sgMail.send(msg);
         console.log('Message sent: ', info.messageId);
         console.log(info);
     } catch (e) {
@@ -63,7 +65,8 @@ export async function sendPassword(token, mail) {
     msg.html = body;
     console.log(msg);
     try {
-        const info = await transporter.sendMail(msg);
+        // const info = await transporter.sendMail(msg);
+        const info = await sgMail.send(msg);
         console.log('Message sent: ', info.messageId);
         console.log(info);
     } catch (e) {
