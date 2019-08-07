@@ -30,7 +30,9 @@ router.post('/user/requestedPlayer', async (req, res, next) => {
     const { user } = req;
     const { name } = req.body;
     // Test if the player doesn't used from other account
+    if (!name) return next(new Error('playername missing'))
     const userWhoOwnsPlayer = await User.findOne({ player: name });
+    console.log({name, user, userWhoOwnsPlayer})
     if (userWhoOwnsPlayer) {
         return next(new Error('Cannot add Player: Player belongs already to somebody else'));
     }

@@ -34,7 +34,7 @@ export async function sendToken(token, mail) {
     const body =
         'Hello,\n\n' +
         'Please verify your account by clicking the link: \n' +
-        'https://www.cnc-eco.com' +
+        'https://www.cnc-eco.de' +
         '/api/v1/local/verify?token=' +
         token.token +
         '\n';

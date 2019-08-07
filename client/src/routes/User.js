@@ -17,6 +17,7 @@ import BodySide from '../style/BodySide';
 import Info from '../style/Info';
 import { Link } from 'react-router-dom';
 import qs from 'query-string';
+
 class User extends Component {
     constructor(props) {
         super();
@@ -158,7 +159,8 @@ class User extends Component {
 
     addPlayer = async () => {
         console.log('add player');
-        const { name, token } = this.props;
+        const { token } = this.props;
+        const { name } = this.state;
         this.startLoading();
 
         const res = await fetch(api_url + '/user/requestedPlayer', {
@@ -248,7 +250,7 @@ class User extends Component {
                             onChange={e => this.changeToken(e.target.value)}
                         />
                         <Button onClick={this.sendToken}>send token</Button>
-                        {success && <Info>{success}</Info> }
+                        {success && <Info>{success}</Info>}
                     </Container>
                     <Container>
                         <Title>Add a World</Title>

@@ -94,3 +94,5 @@ app.set('port', PORT);
 app.listen(PORT, () => {
     console.log(`Server gestartet - Port: ${PORT}`);
 });
+
+export default app
