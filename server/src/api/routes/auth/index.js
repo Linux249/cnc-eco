@@ -118,7 +118,7 @@ module.exports = function(app, passport) {
             if (err) return next(err); // todo log error persistent
             // Send the email
             await sendVerification(token, user.local.email);
-            return res.json({ success: 'New E-Mail send' });
+            return res.json({ success: 'New mail send' });
         });
     });
 
