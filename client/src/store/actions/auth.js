@@ -32,6 +32,7 @@ export const requestLogin = () => {
             return dispatch(loginError(data.err));
         }
 
+        // store whole data locally
         localStorage.setItem(LOCAL_STORE, JSON.stringify(data));
         dispatch(receiveLogin(data));
         dispatch(updatePlayer(data.user));
@@ -200,7 +201,6 @@ export const changeAuthPassword = password => ({
 });
 
 export const logout = () => {
-    console.log('LOGOUT');
     localStorage.removeItem(LOCAL_STORE);
     return {
         type: AUTH_LOGOUT,

@@ -25,6 +25,34 @@ function User(props) {
     const [error, setError] = useState(query.error);
     const [success, setSuccess] = useState('');
 
+    useEffect(() => {
+        console.warn('USE EFFECT');
+        async function addPlayer() {
+            console.log('add player');
+            setLoading(true);
+
+            const res = await fetch(api_url + '/user/addPlayerName', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                    Authorization: 'Bearer  ' + authToken,
+                },
+                body: JSON.stringify({ token }),
+            }).catch(e => {
+                console.warn('catched error');
+                console.error(e);
+            });
+            const user = await res.json();
+            console.log({ user });
+            setLoading(false);
+            if (!res.ok || user.error) {
+                return setError(user.error.message);
+            }
+            if (user) setSuccess('player successfully added');
+        }
+        token && addPlayer();
+    }, []);
+
     const deleteUser = async () => {
         setLoading(true);
 
@@ -49,36 +77,6 @@ function User(props) {
         props.logout();
     };
 
-
-    useEffect(async () => {
-        async function addPlayer() {
-            console.log('add player');
-            setLoading(true);
-
-            const res = await fetch(api_url + '/user/addPlayerName', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json; charset=utf-8',
-                    Authorization: 'Bearer  ' + authToken,
-                },
-                body: JSON.stringify({ token }),
-            }).catch(e => {
-                console.warn('catched error');
-                console.error(e);
-            });
-            const user = await res.json();
-            console.log({ user });
-            setLoading(false);
-            if (!res.ok || user.error) {
-                return setError(user.error.message);
-            }
-            if (user) setSuccess('player successfully added');
-        }
-        if (token) {
-            await addPlayer();
-        }
-    }, []);
-
     const { savedWorlds } = props;
     const playerAdded = !!name;
 
@@ -91,8 +89,10 @@ function User(props) {
                     {name || (
                         <>
                             <InfoText>
-                                <Link to="/scripts"><b>cnc-eco script</b></Link>&#160; must be installed
-                                first
+                                <Link to="/scripts">
+                                    <b>cnc-eco script</b>
+                                </Link>
+                                &#160; must be installed first
                             </InfoText>
                             <InfoText>
                                 Click ingame 'get token' in the menu to add your data to your

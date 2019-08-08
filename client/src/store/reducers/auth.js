@@ -9,8 +9,8 @@ import {
 } from '../constants/actionTypes';
 
 const initState = {
-    email: process.env.NODE_ENV === 'development' ? 'julian.libor@gmail.com' : '',
-    password: process.env.NODE_ENV === 'development' ? 'test123' : '',
+    email: '',
+    password: '',
     isFetching: false,
     isAuthenticated: false, // TODO check here for localStorage?
     token: null,
@@ -62,13 +62,7 @@ export function auth(state = initState, action) {
                 error: action.message,
             };
         case AUTH_LOGOUT:
-            return {
-                ...state,
-                isAuthenticated: false,
-                token: null,
-                user_id: null,
-                isVerified: false,
-            };
+            return initState;
         default:
             return state;
     }

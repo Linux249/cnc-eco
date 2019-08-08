@@ -7,6 +7,7 @@ export default props => {
     const data = JSON.parse(localStorage.getItem(LOCAL_STORE));
     if (!auth && data) auth = data.token && data.user.isVerified;
     if (!name && data) name = !!data.user.player;
+    console.log({name, auth, data})
     return (
         <Route
             {...rest}
