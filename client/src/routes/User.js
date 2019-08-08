@@ -48,7 +48,10 @@ function User(props) {
             if (!res.ok || user.error) {
                 return setError(user.error.message);
             }
-            if (user) setSuccess('player successfully added');
+            if (user) {
+                props.updatePlayer(user)
+                setSuccess('player successfully added');
+            }
         }
         token && addPlayer();
     }, []);
