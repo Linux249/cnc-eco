@@ -78,7 +78,7 @@ module.exports = function(app, passport) {
                     )
                 );
             // If we found a token, find a matching user
-            const user = User.findOne({ _id: tok._userId });
+            const user = await User.findOne({ _id: tok._userId });
             if (!user) return next(new Error('Unable to find a user for this token.'));
             if (user.isVerified) return next(new Error('User has already been verified.'));
             console.log(user)

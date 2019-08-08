@@ -96,13 +96,13 @@ export default passport => {
                                 if (user.isVerified)
                                     return done(new Error('That email is already taken.'), false);
                                 else {
-                                    console.log(await User.remove(user));
-                                    console.log(
-                                        await Token.remove({
-                                            _userId: user.id,
-                                            type: 'mail',
-                                        })
-                                    );
+                                    console.log('delete user and token');
+                                    const removedUser = await User.remove(user);
+                                    const removedToken = await Token.remove({
+                                        _userId: user.id,
+                                        type: 'mail',
+                                    });
+                                    console.log(user, removedUser, removedToken);
                                 }
                             }
                             // create the user
