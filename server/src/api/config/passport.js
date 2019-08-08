@@ -100,7 +100,7 @@ export default passport => {
                                     console.log(
                                         await Token.remove({
                                             _userId: user.id,
-                                            type: 'email',
+                                            type: 'mail',
                                         })
                                     );
                                 }
@@ -117,8 +117,7 @@ export default passport => {
 
                                 const token = new Token({
                                     _userId: savedUser._id,
-                                    token: generateToken(),
-                                    type: 'email',
+                                    type: 'mail',
                                 });
 
                                 console.log(savedUser);
