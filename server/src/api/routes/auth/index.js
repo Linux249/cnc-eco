@@ -132,6 +132,7 @@ module.exports = function(app, passport) {
         try {
             const user = await User.findOne({ 'local.email': email });
             if (!user) return next(new Error('No user found - incorrect email'));
+            if (!user.isVerified) return next(new Error('User not verified - verify your email first'));
             const token = new Token({
                 _userId: user._id,
                 type: 'reset',
