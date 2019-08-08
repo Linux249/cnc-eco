@@ -2,6 +2,7 @@ import World from '../model/World';
 import Alliance from '../model/Alliance';
 import User from '../model/User';
 import generateToken from '../utils/generateToken';
+import Token from '../model/Token';
 
 // body.worldId is unique id of all worlds
 // body.allianceId is id of alliance on this world
@@ -9,27 +10,27 @@ import generateToken from '../utils/generateToken';
 // GET /api/v1/layout
 // get a single labtop with world + coords as params
 export default async (req, ...rest) => {
-    const query = req.query
-    console.log('EACH INGAME REQUEST WITH DIFFRENT PARAMS')
-    console.log({query})
-    if(query.update && +query.update === 1) update(req, ...rest)
-    if(query.get_token) getToken(req, ...rest)
-}
+    const query = req.query;
+    console.log('EACH INGAME REQUEST WITH DIFFRENT PARAMS');
+    console.log({ query });
+    if (query.update && +query.update === 1) update(req, ...rest);
+    if (query.get_token) getToken(req, ...rest);
+};
 
 async function getToken(req, res, next) {
-    const player = req.query.get_token
-    console.log('getToken: ', player)
-    if(!player) return next(new Error('Player missing'))
+    const player = req.query.get_token;
+    console.log('getToken: ', player);
+    if (!player) return res.send('error=player missing');
     try {
-        const user = await User.findOne({ requestedPlayerName: player });
-        console.log({user})
-        if(!user) return res.send('error=add player to account first') // empty message implifies this.
-        else return res.send('token=' + user.token)
+        let token =
+            (await Token.findOne({ type: 'name', name: player })) ||
+            await new Token({ type: 'name', name: player }).save();
+        // await token.save();
+        console.log(token)
+        return res.send('token=' + token.token);
     } catch (e) {
-        return next(e)
+        return next(e);
     }
-
-
 }
 
 async function update(req, res, next) {
@@ -45,7 +46,6 @@ async function update(req, res, next) {
             basecount,
             fraction,
         } = body;
-
 
         if (!currentplayerName) return next(new Error('Request is currently not supported'));
         console.log(
@@ -240,7 +240,7 @@ async function update(req, res, next) {
         // res.send(err);
         next(err);
     }
-};
+}
 
 // 2017-10-16T10:04:43.127252+00:00 app[web.1]: { _data_: 'UPDATE',
 // 2017-10-16T10:04:43.127268+00:00 app[web.1]:   version: '4.7.5',

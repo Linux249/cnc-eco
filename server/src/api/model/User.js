@@ -40,14 +40,10 @@ const userSchema = Schema({
     ],
     isVerified: { type: Boolean, default: false },
     password: String,
-    passwordResetToken: String,
-    passwordResetExpires: Date,
     role: {type: String,
         enum: ['player', 'admin '],
         default: 'player'
     },
-    token: String, // save to token requests from ingame
-    requestedPlayerName: String,
 });
 
 // generating a hash

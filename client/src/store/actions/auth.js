@@ -76,7 +76,7 @@ export const requestResendToken = () => {
         const { email } = getState().auth;
         const body = JSON.stringify({ email });
 
-        const resp = await fetch(api_url + '/local/resendToken', {
+        const resp = await fetch(api_url + '/local/resendMailToken', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
@@ -109,7 +109,7 @@ export const requestEmail = () => {
         const { email } = getState().auth;
         const body = JSON.stringify({ email });
 
-        const resp = await fetch(api_url + '/local/requestEmail', {
+        const resp = await fetch(api_url + '/local/requestPasswordReset', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',

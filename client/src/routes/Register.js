@@ -11,7 +11,6 @@ import Submit from '../style/Submit';
 import Center from '../style/Center';
 import Container from '../style/Container';
 import Alert from '../style/Alert';
-import Row from '../style/Row';
 
 function Register(props) {
     const {

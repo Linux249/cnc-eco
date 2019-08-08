@@ -1,14 +1,14 @@
 import generateToken from '../../utils/generateToken';
 import Token from '../../model/Token';
 import User from '../../model/User';
-import { sendPassword, sendToken } from '../../service/mail';
+import { sendResetPassword, sendVerification } from '../../service/mail';
 const jwt = require('jsonwebtoken');
 
 module.exports = function(app, passport) {
     // LOGOUT ==============================
     app.get('/logout', (req, res) => {
         req.logout();
-        res.redirect('/#/');
+        res.redirect('/');
     });
 
     // =============================================================================
@@ -38,6 +38,7 @@ module.exports = function(app, passport) {
         })(req, res);
     });
 
+    // SIGN UP =============================================
     app.post('/local/signup', (req, res, next) => {
         passport.authenticate('local-signup', { session: false }, (err, user, info) => {
             if (err || !user) {
@@ -49,122 +50,129 @@ module.exports = function(app, passport) {
                 });
             }
             req.login(user, { session: false }, err => {
-                if (err) {
-                    res.send(err);
-                }
+                if (err) return next(err);
                 // console.log(user)
                 // generate a signed son web token with the contents of user object and return it in the response
                 const secret = process.env.JWT_SECRET || 'dummy1234556';
-                console.log({ err, user });
+                console.log({ user });
                 const token = jwt.sign(user.toJSON(), secret);
                 return res.json({ user, token });
             });
         })(req, res);
     });
 
+    // VERIFY MAIL ============================================
     app.get('/local/verify', async (req, res, next) => {
         console.log('VERIFY');
         const { token } = req.query;
         if (!token) return next(new Error('Token missing'));
 
-        // Find a matching token
-        Token.findOne({ token }, function(err, doc) {
-            if (!doc)
-                return next(new Error('Unable to find a valid token. Your token my have expired.'));
-            console.log(doc);
+        try {
+            // Find a matching token
+            const tok = await Token.findOne({ token, type: 'mail' });
+            console.log(tok);
+            if (!tok)
+                return next(
+                    new Error(
+                        'Unable to find a valid token.\nYour token my have expired or used already.'
+                    )
+                );
             // If we found a token, find a matching user
-            console.log(doc._userId);
-            User.findOne({ _id: doc._userId }, function(err, user) {
-                if (!user) return next(new Error('Unable to find a user for this token.'));
-                if (user.isVerified) return next(new Error('User has already been verified.'));
-
-                // Verify and save the user
-                user.isVerified = true;
-                user.save(function(err) {
-                    if (err) {
-                        return next(new Error('Error updating user'));
-                    }
-                    res.status(200).redirect('http://www.cnc-eco.de/login');
-                });
-            });
-        });
-    });
-
-    app.post('/local/resendToken', async (req, res, next) => {
-        console.log('resendToken');
-        const { email } = req.body
-        if (!email) return next(new Error('Email missing'));
-
-        User.findOne({ 'local.email': email }, function (err, user) {
-            console.log(email, user)
-            if (!user) return next(new Error('Unable to find a user with that email.' ));
+            const user = User.findOne({ _id: tok._userId });
+            if (!user) return next(new Error('Unable to find a user for this token.'));
             if (user.isVerified) return next(new Error('User has already been verified.'));
 
-            // Create a verification token, save it, and send email
-            const token = new Token({
+            // Verify and save the user
+            user.isVerified = true;
+            await user.save();
+            res.status(200).redirect('http://www.cnc-eco.de/login');
+        } catch (e) {
+            return next(e);
+        }
+    });
+
+    // GET NEW VERIFY MAIL TOKEN =========================
+    app.post('/local/resendMailToken', async (req, res, next) => {
+        console.log('resendMailToken');
+        const { email } = req.body;
+        if (!email) return next(new Error('Email missing'));
+
+        const user = await User.findOne({ 'local.email': email }).catch(e => next(e)); // todo log error persistent
+        console.log(email, user);
+        if (!user) return next(new Error('Unable to find a user with that email.'));
+        if (user.isVerified) return next(new Error('User has already been verified.'));
+
+        // Create a verification token, save it, and send email
+        const token =
+            (await Token.findOne({
                 _userId: user._id,
-                token: generateToken(),
+                type: 'mail',
+            })) ||
+            new Token({
+                _userId: user._id,
+                type: 'mail',
             });
 
-            // console.log(newUser)
-            token.save(async function(err) {
-                if (err) return next(new Error('Token could not be saved.'));
-                // Send the email
-                await sendToken(token, user.local.email);
-                return res.json({success: 'New E-Mail send'})
-            });
+        // console.log(newUser)
+        await token.save(async function(err) {
+            if (err) return next(err); // todo log error persistent
+            // Send the email
+            await sendVerification(token, user.local.email);
+            return res.json({ success: 'New E-Mail send' });
         });
     });
 
-
-    app.post('/local/requestEmail', async (req, res, next) => {
-        console.log('resetPassword');
-        const { email } = req.body
+    // REQUEST RESET PASSWORD MAIL ==========================
+    app.post('/local/requestPasswordReset', async (req, res, next) => {
+        console.log('request password reset mail');
+        const { email } = req.body;
         if (!email) return next(new Error('Email missing'));
 
         // get user for this Email
         try {
-            const user = await User.findOne({'local.email': email})
+            const user = await User.findOne({ 'local.email': email });
             if (!user) return next(new Error('No user found - incorrect email'));
-            const token = await Token.findOne({_userId: user._id}) || new Token({
+            const token = new Token({
                 _userId: user._id,
-                token: generateToken(),
+                type: 'reset',
             });
-            console.log(token)
-            token.save(async function(err) {
-                if (err) return next(new Error('Token could not be saved.'));
-                // Send the email
-                await sendPassword(token, user.local.email);
-                return res.json({success: 'E-Mail with link send', text: 'Please check your spam folder'})
+            console.log(token);
+            await token.save();
+            // Send the email
+            await sendResetPassword(token, user.local.email);
+            return res.json({
+                success: 'E-Mail with link send',
+                text: 'Please check your spam folder',
             });
         } catch (e) {
-            next(e)
+            next(e);
         }
         // check if token already exists or create new onw
     });
 
+    // RESET PASSWORD ==========================
     app.post('/local/resetPassword', async (req, res, next) => {
         console.log('resetPassword');
-        const { token, password } = req.body
+        const { token, password } = req.body;
         if (!token) return next(new Error('token missing'));
         if (!password) return next(new Error('enter a new password first'));
 
         // get user for this Email
         try {
-            const tok = await Token.findOne({token})
-            if(!tok) return next(new Error('cannot find token - please request new email'))
-            const user = await User.findOne({'_id': tok._userId})
-            if(!user) return next(new Error('cannot find user'))
+            const tok = await Token.findOne({ token, type: 'reset' });
+            if (!tok) return next(new Error('cannot find token - please request new email'));
+            const user = await User.findOne({ _id: tok._userId });
+            if (!user) return next(new Error('cannot find user'));
 
-            user.local.password = user.generateHash(password)
+            user.local.password = user.generateHash(password);
             user.save(async function(err) {
                 if (err) return next(new Error('password could not be saved.'));
-                return res.json({success: 'password reset'})
+                await Token.remove({ token, type: 'reset' });
+                return res.json({ success: 'password reset' });
             });
         } catch (e) {
-            next(e)
+            return next(e);
         }
-        // check if token already exists or create new onw
     });
     // SIGNUP =================================
     // show the signup form
@@ -212,9 +220,10 @@ module.exports = function(app, passport) {
     // google ---------------------------------
 
     // send to google to do the authentication
-    app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+    // app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
     // the callback after google has authenticated the user
+    /*
     app.get(
         '/auth/google/callback',
         passport.authenticate('google', {
@@ -227,6 +236,7 @@ module.exports = function(app, passport) {
             res.redirect(`/#/profile?token=${token}`);
         }
     );
+    */
 
     // =============================================================================
     // AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT) =============
@@ -274,9 +284,10 @@ module.exports = function(app, passport) {
     // google ---------------------------------
 
     // send to google to do the authentication
-    app.get('/connect/google', passport.authorize('google', { scope: ['profile', 'email'] }));
+    // app.get('/connect/google', passport.authorize('google', { scope: ['profile', 'email'] }));
 
     // the callback after google has authorized the user
+    /*
     app.get(
         '/connect/google/callback',
         passport.authorize('google', {
@@ -284,6 +295,7 @@ module.exports = function(app, passport) {
             failureRedirect: '/',
         })
     );
+     */
 
     // =============================================================================
     // UNLINK ACCOUNTS =============================================================

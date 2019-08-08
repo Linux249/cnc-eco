@@ -28,8 +28,8 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-export async function sendToken(token, mail) {
-    console.log('sendToken');
+export async function sendVerification(token, mail) {
+    console.log('sendVerification');
     msg.to = mail;
     const body =
         'Hello,\n\n' +
@@ -51,7 +51,7 @@ export async function sendToken(token, mail) {
     }
 }
 
-export async function sendPassword(token, mail) {
+export async function sendResetPassword(token, mail) {
     console.log('sendToken');
     msg.to = mail;
     const body =

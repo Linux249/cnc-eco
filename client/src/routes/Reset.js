@@ -80,7 +80,7 @@ function Reset(props) {
     ) : playerName ? (
         <Redirect to="/" />
     ) : (
-        <Redirect to="/user2" />
+        <Redirect to="/user" />
     );
 }
 

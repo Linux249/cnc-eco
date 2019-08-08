@@ -3,7 +3,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { googleAuth } from './config';
 import User from '../model/User';
-import { sendToken } from '../service/mail';
+import { sendVerification } from '../service/mail';
 import Token from '../model/Token';
 import generateToken from '../utils/generateToken';
 
@@ -86,19 +86,23 @@ export default passport => {
                     // if the user is not already logged in:
                     if (!req.user) {
                         User.findOne({ 'local.email': email }, async (err, user) => {
-                            // console.log("no user???")
-                            // console.log({err, user, email, password})
-                            // console.log(password)
-                            // if there are any errors, return the error
                             if (err) return done(err);
-
-                            // check to see if theres already a user with that email
+                            /**
+                             * if the user already exists inform user
+                             * if the accounts is not verified already delete it and proceed
+                             * as if there wasn't any user already
+                             */
                             if (user) {
                                 if (user.isVerified)
                                     return done(new Error('That email is already taken.'), false);
                                 else {
                                     console.log(await User.remove(user));
-                                    console.log(await Token.remove({ _userId: user.id }));
+                                    console.log(
+                                        await Token.remove({
+                                            _userId: user.id,
+                                            type: 'email',
+                                        })
+                                    );
                                 }
                             }
                             // create the user
@@ -110,20 +114,20 @@ export default passport => {
                             newUser.save((err, savedUser) => {
                                 if (err) return done(err);
                                 savedUser.local.password = undefined;
-                                // const token = new Token({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
+
                                 const token = new Token({
                                     _userId: savedUser._id,
                                     token: generateToken(),
+                                    type: 'email',
                                 });
 
-                                // console.log(newUser)
                                 console.log(savedUser);
                                 console.log(token);
                                 token.save(async function(err) {
                                     if (err)
                                         return done(new Error('Token could not be saved.'), false);
-                                    // Send the email
-                                    await sendToken(token, savedUser.local.email);
+                                    // Send the email to user
+                                    await sendVerification(token, savedUser.local.email);
                                 });
 
                                 return done(null, savedUser);
@@ -163,6 +167,7 @@ export default passport => {
         )
     );
 
+    /*
     passport.use(
         new GoogleStrategy(
             {
@@ -217,7 +222,8 @@ export default passport => {
                 }
             }
         )
-    );
+    )
+    */
 
     passport.use(
         new JWTStrategy(
