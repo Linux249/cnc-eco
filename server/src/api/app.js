@@ -4,7 +4,6 @@ import MongoClient from 'mongodb';
 import schedule from 'node-schedule';
 import cors from 'cors';
 import logging from 'morgan';
-import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import apiRouter from './routes';
 import configurePassport from './config/passport';
@@ -74,9 +73,9 @@ app.use((req, res, next) => {
 // zeigt verschiedene logs in der Console an
 // app.use(logger("dev"))
 // nutzt den body parser
-app.use(bodyParser.urlencoded());
-app.use(bodyParser.json());
-app.use(bodyParser.text());
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+app.use(express.text());
 
 app.use(cors());
 
