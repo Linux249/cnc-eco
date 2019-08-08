@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          C&C:TA CnC-Eco
-// @version       1.1.1
+// @version       1.1.2
 // @namespace     http://cnc-eco.herokuapp.com
 // @homepage      http://cnc-eco.herokuapp.com
 // @description   Sammelt Informationen ueber Basenausbau der Allianzmitglieder (basierend auf Skripte / Routinen von neobsen, JimBeamJD, KRS_L, F.D, und Dooki)
@@ -328,6 +328,7 @@
                             var d = b.get_Player().get_Name(),
                                 g = b.get_Alliance(),
                                 n = b.get_Player().get_Id(),
+                                s = b.get_Player().get_IsSubstituteLogin(),
                                 q = b.get_Server(),
                                 k = ClientLib.Net.CommunicationManager.GetInstance().get_InstanceId(),
                                 u = g.get_OwnedPOIs(),
@@ -376,7 +377,8 @@
                                           CncEcomain.getInstance().winOpen('', ''));
                                 }),
                                 p.send());
-                            'get_token' == c &&
+                            'get_token' == c && s ?  CncEcomain.getInstance().winOpen('', 'error=You cannot add account from substitutions')
+                                :
                                 (p.setData('get_token', d),
                                 p.setParameter('get_token', d),
                                 p.addListener('completed', function(b) {
