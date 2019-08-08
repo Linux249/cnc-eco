@@ -60,7 +60,7 @@ function User(props) {
             method: 'Delete',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
-                Authorization: 'Bearer  ' + token,
+                Authorization: 'Bearer  ' + authToken,
             },
         }).catch(e => {
             console.warn('catched error');
