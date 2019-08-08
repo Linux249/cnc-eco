@@ -82,11 +82,11 @@ export default passport => {
                 // console.log("inside local signup cb")
 
                 // asynchronous
-                process.nextTick(() => {
+                process.nextTick(async () => {
                     // if the user is not already logged in:
                     if (!req.user) {
-                        User.findOne({ 'local.email': email }, async (err, user) => {
-                            if (err) return done(err);
+                        try {
+                            const user = await User.findOne({ 'local.email': email });
                             /**
                              * if the user already exists inform user
                              * if the accounts is not verified already delete it and proceed
@@ -111,27 +111,23 @@ export default passport => {
                             newUser.local.email = email;
                             newUser.local.password = newUser.generateHash(password);
 
-                            newUser.save((err, savedUser) => {
-                                if (err) return done(err);
-                                savedUser.local.password = undefined;
+                            const savedUser = await newUser.save();
+                            savedUser.local.password = undefined; // dont send password hash back to client!!!
 
-                                const token = new Token({
-                                    _userId: savedUser._id,
-                                    type: 'mail',
-                                });
-
-                                console.log(savedUser);
-                                console.log(token);
-                                token.save(async function(err) {
-                                    if (err)
-                                        return done(new Error('Token could not be saved.'), false);
-                                    // Send the email to user
-                                    await sendVerification(token, savedUser.local.email);
-                                });
-
-                                return done(null, savedUser);
+                            const token = new Token({
+                                _userId: savedUser._id,
+                                type: 'mail',
                             });
-                        });
+
+                            await token.save();
+
+                            // Send the email to user
+                            await sendVerification(token, savedUser.local.email);
+
+                            return done(null, savedUser);
+                        } catch (e) {
+                            return done(e, false);
+                        }
                         // if the user is logged in but has no local account...
                     } else if (!req.user.local.email) {
                         // ...presumably they're trying to connect a local account
