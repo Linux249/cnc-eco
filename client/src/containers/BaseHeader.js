@@ -30,7 +30,8 @@ class BaseHeader extends Component {
                 <Title>
                     <NavLink to="/">CNC-ECO</NavLink>
                 </Title>
-                <Row wrap>
+                <Row wrap="true">
+
                     {isAuthenticated && name && (
                         <>
                             <WorldsMenu />

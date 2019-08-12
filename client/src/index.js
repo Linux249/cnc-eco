@@ -19,7 +19,7 @@ if (process.env.NODE_ENV !== 'production') {
     //whyDidYouUpdate(React)
 }
 
-export const store = configureStore(initial_state);
+export const store = configureStore();
 
 ReactDOM.render(
     <DndProvider backend={HTML5Backend}>

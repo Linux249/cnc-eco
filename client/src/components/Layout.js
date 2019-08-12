@@ -19,7 +19,7 @@ const Square = styled.div`
 
 const Container = styled.div`
     cursor: pointer;
-    
+
     width: 162px;
     display: flex;
     flex-wrap: wrap;
@@ -83,7 +83,7 @@ const Layout = ({ layout }) => {
     function copyToClipBoard() {
         console.log('copyToClipBoard');
         navigator.clipboard.writeText(`[coords]${layout.x}:${layout.y}[/coords]`);
-        console.log({tib: layout.tib, cris: layout.cris})
+        console.log({ tib: layout.tib, cris: layout.cris });
     }
 
     return (

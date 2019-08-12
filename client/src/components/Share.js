@@ -59,6 +59,7 @@ const Share = () => {
                     small
                     placeholder="Here comes your shortlink"
                     value={loading ? 'loading ...' : url}
+                    readOnly
                 />
                 <Button onClick={handleClick}>
                     <ShareIcon></ShareIcon>
