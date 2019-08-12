@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import AreaRaw from '../style/Area';
 import styled from 'styled-components';
 import { baseColor } from '../style/constants';
+import { Tooltip } from 'react-tippy';
 
 const Area = styled(AreaRaw)`
     padding: 6px;
@@ -32,6 +33,7 @@ const Time = styled.div`
 `;
 
 const Coords = styled.div`
+    cursor: pointer;
     color: ${baseColor};
     font-weight: 600;
 `;
@@ -59,6 +61,8 @@ const Kris = () => (
 );
 
 const Layout = ({ layout }) => {
+    const [input, setInput] = useState(false);
+
     const slots = layout.layout.split('').map(slot => {
         if (slot === 't')
             return (
@@ -76,12 +80,20 @@ const Layout = ({ layout }) => {
     });
     const time = Math.round((new Date() - new Date(layout.time)) / 3600 / 24 / 1000);
 
+    function copyToClipBoard() {
+        console.log('copyToClipBoard');
+        navigator.clipboard.writeText(`[coords]${layout.x}:${layout.y}[/coords]`);
+        console.log({tib: layout.tib, cris: layout.cris})
+    }
+
     return (
         <Area small>
-            <Container >{slots}</Container>
+            <Container>{slots}</Container>
             {/*<div>{`${layout.x}:${layout.y} /!*  t:${layout.tib}   c:${layout.cris}*!/`}</div>*/}
             <Row center>
-                <Coords>{`${layout.x}:${layout.y}`}</Coords>
+                <Tooltip title="copy to clipboard" position="bottom" trigger="mouseenter">
+                    <Coords onClick={copyToClipBoard}>{`${layout.x}:${layout.y}`}</Coords>
+                </Tooltip>
                 <Time>{time}</Time>
             </Row>
         </Area>

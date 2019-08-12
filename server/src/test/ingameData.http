@@ -69,10 +69,21 @@ _data_=UPDATE&version=4.7.5&worldId=373&serverName=World+Championship+2017&allia
 
 ###
 
-
+// register from ingame
 POST http://{{host}}/api/v1/ingameData?get_token=linux249
 Content-Type: application/x-www-form-urlencoded
 
 _data_=get_token=linux249
+
+###
+
+
+// update Layouts
+POST http://{{host}}/api/v1/layouts?pl=linux249&w=373&a=126
+Content-Type: application/json
+
+{"311:42":{"x":311,"y":42,"level":13,"id":5724732,"distance":3,"selectedBaseID":381184,"alliance":801,"world":403,"player":"linux249","failCount":0,"layout":".....c........c........c.c........c..tt..t....t.....t....t...t....................jj..hh.hl............ll....ll......h......l.h..k.........jjj.k","name":"Outpost"}}
+
+
 
 ###

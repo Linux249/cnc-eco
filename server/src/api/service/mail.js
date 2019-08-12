@@ -63,6 +63,7 @@ export async function sendResetPassword(token, mail) {
         '\n';
     msg.text = body;
     msg.html = body;
+    msg.subject = 'Reset password';
     console.log(msg);
     try {
         // const info = await transporter.sendMail(msg);
