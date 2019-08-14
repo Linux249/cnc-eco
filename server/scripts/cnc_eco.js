@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          C&C:TA CnC-Eco
-// @version       1.1.2
+// @version       1.1.3
 // @namespace     http://cnc-eco.herokuapp.com
 // @homepage      http://cnc-eco.herokuapp.com
 // @description   Sammelt Informationen ueber Basenausbau der Allianzmitglieder (basierend auf Skripte / Routinen von neobsen, JimBeamJD, KRS_L, F.D, und Dooki)
@@ -8,7 +8,6 @@
 // @include       http*://*.alliances.commandandconquer.com/*/index.aspx*
 // @icon          https://cnc-eco.herokuapp.com/favicon.ico
 // @copyright     2018, J.L.
-// @grant         GM_log
 // @grant         GM_setValue
 // @grant         GM_getValue
 // @grant         GM_registerMenuCommand
@@ -230,8 +229,8 @@
                             CncEcomain.getInstance().getPoiInfo();
                         },
                         isPoiMinister: function() {
-                            h('check if poiminister');
-                            CncEcomain.getInstance().remoteRequest('poiminister');
+                            // h('check if poiminister i');
+                            // CncEcomain.getInstance().remoteRequest('poiminister');
                         },
                         substitutionXhr: function(c, f, b) {
                             var d = ClientLib.Data.MainData.GetInstance()
@@ -324,6 +323,7 @@
                             );
                         },
                         remoteRequest: function(c, f) {
+                            h('remoteRequest: ' + c)
                             var b = ClientLib.Data.MainData.GetInstance();
                             var d = b.get_Player().get_Name(),
                                 g = b.get_Alliance(),
@@ -377,9 +377,9 @@
                                           CncEcomain.getInstance().winOpen('', ''));
                                 }),
                                 p.send());
-                            'get_token' == c && s ?  CncEcomain.getInstance().winOpen('', 'error=You cannot add account from substitutions')
+                            'get_token' == c && (s ?  CncEcomain.getInstance().winOpen('', 'error=You cannot add account from substitutions')
                                 :
-                                (p.setData('get_token', d),
+                                p.setData('get_token', d),
                                 p.setParameter('get_token', d),
                                 p.addListener('completed', function(b) {
                                     const content = b.getContent()
@@ -703,7 +703,6 @@
                                 c.setFormField('y' + g, b.PosY);
                                 V(b.Id, g, c);
                             }
-                            console.log('de funk werd aufgruafa');
                             c.send();
                         },
                         stateofwarwin: function(c, f) {
@@ -4556,8 +4555,7 @@
                 'undefined' !== typeof console
                     ? console.log(h)
                     : window.opera
-                    ? opera.postError(h)
-                    : GM_log(h);
+                    && opera.postError(h)
             }
             var B = 0,
                 T = 0,
