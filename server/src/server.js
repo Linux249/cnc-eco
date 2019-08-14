@@ -7,10 +7,10 @@ const api = require('./api/app');
 
 const PORT = process.env.PORT || 8000; //: 4444;
 
-app.use((req, res, next) => {
-    console.log('EVERY API/V1 CALL: ' + req.url);
-    return next();
-});
+// app.use((req, res, next) => {
+//     console.log('EVERY API/V1 CALL: ' + req.url);
+//     return next();
+// });
 
 // DB
 // const mongo_uri = process.env.MONGODB_URI

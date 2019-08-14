@@ -1,7 +1,5 @@
 import World from '../model/World';
 import Alliance from '../model/Alliance';
-import User from '../model/User';
-import generateToken from '../utils/generateToken';
 import Token from '../model/Token';
 
 // body.worldId is unique id of all worlds
@@ -14,13 +12,13 @@ export default async (req, ...rest) => {
     console.log('EACH INGAME REQUEST WITH DIFFRENT PARAMS');
     console.log({ query });
     if (query.update && +query.update === 1) update(req, ...rest);
-    if (query.get_token) getToken(req, ...rest);
+    else if (query.get_token) getToken(req, ...rest);
 };
 
 async function getToken(req, res, next) {
     const player = req.query.get_token;
     console.log('getToken: ', player);
-    if (!player) return res.send('error=player missing');
+    if (!player) return res.send('error=player missing'); // that should normally never happen
     try {
         let token =
             (await Token.findOne({ type: 'name', name: player })) ||
