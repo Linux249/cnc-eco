@@ -54,8 +54,8 @@ function Slot(props) {
         }
     };
 
-    console.log(area, faction, type)
-    if(area === 'army' && faction === "F") faction = 'N'
+    // no forgotten army
+    if (area === 'army' && faction === 'F') faction = 'N';
     const img = imgs[area][faction][type];
     const ref = useRef(null);
     const [, drag] = useDrag({

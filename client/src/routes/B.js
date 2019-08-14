@@ -15,6 +15,7 @@ export const B = props => {
     async function load() {
         try {
             const base = urlToBase(url);
+            console.log(url, base);
             store.dispatch(replaceAllBase(base));
             try {
                 const elements = url.split('|');
