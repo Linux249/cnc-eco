@@ -15,7 +15,6 @@ export const B = props => {
     async function load() {
         try {
             const base = urlToBase(url);
-            // console.log(base);
             store.dispatch(replaceAllBase(base));
             try {
                 const elements = url.split('|');
@@ -53,7 +52,7 @@ export const B = props => {
         load();
     }, []);
 
-    return loaded && false ? (
+    return loaded ? (
         <Redirect to="/" />
     ) : (
         <Body>

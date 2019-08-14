@@ -9,7 +9,7 @@ import imgs from '../img/imgs';
 import empty from '../img/empty.png';
 
 function Slot(props) {
-    const { unit, faction, area } = props;
+    let { unit, faction, area } = props;
     const { type, slot, lvl } = unit;
 
     const contextClick = e => {
@@ -54,6 +54,8 @@ function Slot(props) {
         }
     };
 
+    console.log(area, faction, type)
+    if(area === 'army' && faction === "F") faction = 'N'
     const img = imgs[area][faction][type];
     const ref = useRef(null);
     const [, drag] = useDrag({
