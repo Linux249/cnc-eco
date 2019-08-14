@@ -8,7 +8,7 @@
     "debug": "babel-node ./src/server.js %NODE_DEBUG_OPTION%",
     "dev": "nodemon ./src/server.js --exec babel-node",
     "test": "mocha --require babel-register src/test/*.js",
-    "build:scripts": "babel ./scripts --experimental --source-maps-inline -d ./scripts/dist"
+    "build:scripts": "babel userscripts --experimental --source-maps-inline -d userscripts/dist"
   },
   "author": "",
   "license": "ISC",
