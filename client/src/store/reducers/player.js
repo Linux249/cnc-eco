@@ -37,6 +37,7 @@ export function player(state = initState, action) {
                 ...state,
                 w: action.w,
                 worldName: action.worldName,
+                selectedBase: 0,
             };
         case PLAYER_UPDATE:
             return {
