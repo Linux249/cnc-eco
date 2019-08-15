@@ -10,7 +10,7 @@ import generateToken from '../utils/generateToken';
 const tokenSchema = new mongoose.Schema({
     _userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     type: {type: String, enum: ['name', 'mail', 'reset']},
-    token: { type: String, required: true, default: generateToken(), unique: true },
+    token: { type: String, required: true, default: generateToken, unique: true },
     name: String,
     createdAt: { type: Date, required: true, default: Date.now, expires: 43200 },
 });
