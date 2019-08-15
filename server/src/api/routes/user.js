@@ -50,13 +50,14 @@ router.post('/user/addPlayerName', async (req, res, next) => {
 
     // get name from token object that belongs to token from request
     const savedToken = await Token.findOne({ type: 'name', token });
-    if (!savedToken) return next(new Error('cannot find token - request new token from ingame menu'));
+    if (!savedToken)
+        return next(new Error('cannot find token - request new token from ingame menu'));
     const { name } = savedToken;
     console.log({ name, token, user });
 
     // do not allow to add a player to account who already belongs to other account
-    const existingUser = await User.findOne({player: name})
-    if(existingUser) return next(new Error('player already belongs to other user'))
+    const existingUser = await User.findOne({ player: name });
+    if (existingUser) return next(new Error('player already belongs to other user'));
 
     user.player = name;
     user.playerAdded = new Date();
@@ -154,6 +155,35 @@ router.post('/user/addPlayerName', async (req, res, next) => {
 //
 //     // add player to user and time
 // });
+
+router.get('/user/updateWorlds', async (req, res, next) => {
+    const { user, db } = req;
+    const name = user.player;
+    user.worlds = []; // reset worlds
+
+    // add all worlds with player data
+    try {
+        const worlds = await World.find();
+        await Promise.all(
+            worlds.map(async w => {
+                const player = await db.collection(`players_${w.worldId}`).findOne({ name });
+                player &&
+                    user.worlds.push({
+                        worldId: w.worldId,
+                        worldName: player.serverName,
+                        player_id: player._id,
+                    });
+            })
+        );
+
+        user.save((err, doc) => {
+            if (err) return next(err);
+            return res.json(doc);
+        });
+    } catch (e) {
+        return next(e);
+    }
+});
 //
 // router.post('/user/removeWorld', async (req, res, next) => {
 //     // name is player name given from user

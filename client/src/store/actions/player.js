@@ -71,7 +71,7 @@ export const updatePlayer = user => {
         });
         // check if the world id changed - usefully for initial loading kick
         const { w } = getState().player;
-        if (!w) dispatch(changeWorld(user.worlds[0]));
+        if (!w && user.worlds[0]) dispatch(changeWorld(user.worlds[0]));
     };
 };
 

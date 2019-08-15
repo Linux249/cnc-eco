@@ -1,7 +1,7 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { api_url } from '../config';
-import { updatePlayer } from '../store/actions/player';
+import { changeWorld, updatePlayer } from '../store/actions/player';
 import { logout } from '../store/actions/auth';
 import Button from '../style/Button';
 import LoadingPoints from '../style/LoadingPoints';
@@ -16,9 +16,15 @@ import BodySide from '../style/BodySide';
 import Info from '../style/Info';
 import { Link } from 'react-router-dom';
 import qs from 'query-string';
+import styled from 'styled-components';
+
+const Fat = styled.div`
+    font-weight: 600;
+    font-size: 2.5rem;
+`;
 
 function User(props) {
-    const { _id, authToken, name } = props;
+    const { _id, authToken, name, worlds, worldId } = props;
     const query = qs.parse(props.location.search);
     const [loading, setLoading] = useState(false);
     const [token] = useState(query.token);
@@ -49,7 +55,7 @@ function User(props) {
                 return setError(user.error.message);
             }
             if (user) {
-                props.updatePlayer(user)
+                props.updatePlayer(user);
                 setSuccess('player successfully added');
             }
         }
@@ -80,16 +86,43 @@ function User(props) {
         props.logout();
     };
 
-    const { savedWorlds } = props;
+    const updateWorlds = async () => {
+        console.log('add updateWorlds');
+        setLoading(true);
+
+        const res = await fetch(api_url + '/user/updateWorlds', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                Authorization: 'Bearer  ' + authToken,
+            },
+        }).catch(e => {
+            console.warn('catched error');
+            console.error(e);
+        });
+        const user = await res.json();
+        console.log({ user });
+        setLoading(false);
+        if (!res.ok || user.error) {
+            return setError(user.error.message);
+        }
+        if (user) {
+            props.updatePlayer(user);
+            setSuccess('worlds updated');
+        }
+    };
+
     const playerAdded = !!name;
 
     return (
         <Body>
             <div />
             <Row wrap>
+                {error && <Alert>{error}</Alert>}
+                {success && <Info>{success}</Info>}
                 <Container>
                     <Label htmlFor="name">Player name:</Label>
-                    {name || (
+                    {<Fat>{name}</Fat> || (
                         <>
                             <InfoText>
                                 <Link to="/scripts">
@@ -103,7 +136,23 @@ function User(props) {
                             </InfoText>
                         </>
                     )}
-                    {success && <Info>{success}</Info>}
+                </Container>
+
+                <Container>
+                    <Title>Worlds</Title>
+                    <LoadingPoints loading={loading} />
+                    {worlds.length !== 0 &&
+                        worlds.map(w => (
+                            <Button
+                                key={w.worldId}
+                                onClick={() => props.changeWorld(w)}
+                                active={worldId === w.worldId}
+                            >
+                                {w.worldName}
+                            </Button>
+                        ))}
+
+                    <Button onClick={updateWorlds}>Update worlds</Button>
                 </Container>
 
                 <Container>
@@ -114,11 +163,6 @@ function User(props) {
                     <Title>Delete Account</Title>
                     <Alert onClick={deleteUser}>DELETE</Alert>
                 </Container>
-                {error && (
-                    <>
-                        <Alert>{error}</Alert>
-                    </>
-                )}
             </Row>
             <BodySide>{!playerAdded && <></>}</BodySide>
         </Body>
@@ -129,12 +173,14 @@ const mapStateToProps = state => ({
     _id: state.auth.user_id,
     name: state.player.name,
     authToken: state.auth.token,
-    savedWorlds: state.player.worlds,
+    worlds: state.player.worlds,
+    worldId: state.player.w,
 });
 
 const mapDispatchToProps = {
     logout,
     updatePlayer,
+    changeWorld,
 };
 
 export default connect(
