@@ -66,7 +66,7 @@ export const requestRegister = () => {
         localStorage.setItem(LOCAL_STORE, JSON.stringify(data));
         console.log(resp);
         dispatch(receiveLogin(data));
-        dispatch(updatePlayer(data.user));
+        // dispatch(updatePlayer(data.user));
     };
 };
 

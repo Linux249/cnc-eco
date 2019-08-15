@@ -17,19 +17,3 @@ router.get('/player', async (req, res, next) => {
 });
 
 export default router;
-
-const player = {
-    name: String,
-    worlds: [
-        {
-            name: { type: String, default: 'missing!!' }, // name of the world
-            w: Number, // id of the world
-            bases: [
-                {
-                    name: { type: String, default: 'missing!!' },
-                    layout: String, // only 72 as length!
-                },
-            ],
-        },
-    ],
-};

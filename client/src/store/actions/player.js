@@ -63,9 +63,6 @@ export const updateAllianceId = allianceId => {
 
 export const updatePlayer = user => {
     // update data in store
-    const data = JSON.parse(localStorage.getItem(LOCAL_STORE));
-    data.user = user;
-    localStorage.setItem(LOCAL_STORE, JSON.stringify(data));
     return (dispatch, getState) => {
         dispatch({
             type: PLAYER_UPDATE,
@@ -74,8 +71,7 @@ export const updatePlayer = user => {
         });
         // check if the world id changed - usefully for initial loading kick
         const { w } = getState().player;
-        const world = data.world || user.worlds[0];
-        if (world && w !== world.worldId) dispatch(changeWorld(world));
+        if (!w) dispatch(changeWorld(user.worlds[0]));
     };
 };
 
