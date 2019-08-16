@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import BuildingMenu from '../containers/BuildingMenu';
 import UrlLoader from '../components/UrlLoader';
 import Share from '../components/Share';

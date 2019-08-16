@@ -9,7 +9,7 @@ import imgs from '../img/imgs';
 import empty from '../img/empty.png';
 
 function Slot(props) {
-    let { unit, faction, area } = props;
+    let { unit, faction, area, shift } = props;
     const { type, slot, lvl } = unit;
 
     const contextClick = e => {
@@ -19,7 +19,7 @@ function Slot(props) {
 
     const handleKeyDown = event => {
         const { unit } = props;
-        event.preventDefault();
+        // event.preventDefault();
         const { key } = event; // get pressed key
         // console.log(event, key, unit);
 
@@ -91,6 +91,7 @@ function Slot(props) {
             onContextMenu={contextClick}
         >
             {lvl && <Number>{lvl}</Number>}
+            {/*{shift ? "2" : null}*/}
             <img src={type ? img : empty} alt={type} />
         </SlotStyle>
     );
@@ -100,6 +101,7 @@ function mapStateToProps(state, props) {
     return {
         unit: state.base[props.area][props.slot],
         faction: state.base.faction,
+        shift: state.menu.shift
     };
 }
 const mapDispatchToProps = {

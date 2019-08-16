@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import AreaRaw from '../style/Area';
 import styled from 'styled-components';
@@ -61,8 +61,6 @@ const Kris = () => (
 );
 
 const Layout = ({ layout }) => {
-    const [input, setInput] = useState(false);
-
     const slots = layout.layout.split('').map(slot => {
         if (slot === 't')
             return (
