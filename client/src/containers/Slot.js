@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { replaceSlot, switchSlot } from '../store/actions/base';
 import SlotStyle from '../style/BuildingSlot';
@@ -7,10 +7,13 @@ import Number from '../style/LvLNumber';
 import { useDrag, useDrop } from 'react-dnd';
 import imgs from '../img/imgs';
 import empty from '../img/empty.png';
+import SlotOverlay from './SlotOverlay';
 
 function Slot(props) {
     let { unit, faction, area, shift } = props;
     const { type, slot, lvl } = unit;
+
+    const [focus, setFocus] = useState(false)
 
     const contextClick = e => {
         e.preventDefault();
@@ -89,9 +92,11 @@ function Slot(props) {
             onKeyDown={handleKeyDown}
             tabIndex="0"
             onContextMenu={contextClick}
+            onFocus={() => setFocus(true)}
+            onBlur={() => setFocus(false)}
         >
             {lvl && <Number>{lvl}</Number>}
-            {/*{shift ? "2" : null}*/}
+            {(focus || shift) && area === 'buildings' && lvl && <SlotOverlay building={unit} slot={slot} />}
             <img src={type ? img : empty} alt={type} />
         </SlotStyle>
     );
@@ -101,7 +106,7 @@ function mapStateToProps(state, props) {
     return {
         unit: state.base[props.area][props.slot],
         faction: state.base.faction,
-        shift: state.menu.shift
+        shift: state.menu.shift,
     };
 }
 const mapDispatchToProps = {

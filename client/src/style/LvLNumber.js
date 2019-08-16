@@ -9,6 +9,8 @@ export default styled.div`
 
     letter-spacing: 0;
     max-height: 30%;
+    font-weight: 800;
+    color: #464646;
     /*font-size: 18px;*/
 
     /*color: #000000;*/

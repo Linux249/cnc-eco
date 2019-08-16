@@ -72,6 +72,13 @@ const costs_tib = [
     117939583918,
 ];
 
+/**
+ * returns the middle between to production over time
+ * @param p1 first point {time, prod}
+ * @param p2 second point
+ * @param day
+ * @returns {{kris: number, credits: number, power: number, tib: number}}
+ */
 const roundTwoPoints = (p1, p2, day) => {
     const prod = {
         tib: 0,
@@ -96,8 +103,11 @@ const roundTwoPoints = (p1, p2, day) => {
     return prod;
 };
 
-/*
-    Costs of each building
+/**
+ * returns cost to upgrade a building
+ *
+ * @param building
+ * @returns {{p: number, t: number}}
  */
 export const calcBuildingCost = building => {
     let costs = {
