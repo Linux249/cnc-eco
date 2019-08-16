@@ -19,6 +19,9 @@ const Link = Button.withComponent(
             background: ${baseColor} !important;
             transition: background 0.1s linear;
         }
+        &.active {
+            background-color: ${baseColor} !important;
+        }
     `
 );
 
@@ -31,7 +34,6 @@ class BaseHeader extends Component {
                     <NavLink to="/">CNC-ECO</NavLink>
                 </Title>
                 <Row wrap="true">
-
                     {isAuthenticated && name && (
                         <>
                             <WorldsMenu />
