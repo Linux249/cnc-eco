@@ -11,9 +11,8 @@ export const Button = styled.div`
     background-color: ${({ active }) => (active ? backgroundColor : 'inherit')};
     border: ${border};
     border-radius: ${borderRadius};
-    background-color: ${({ active }) => (active ? backgroundColor : 'inherit')};
 
-    box-shadow: ${({ active }) => (active ? `3px 3px ${baseColorDark};` : '')}; //margin: 2px;
+    box-shadow: ${({ active }) => (active ? `1px 1px 2px 1px  ${baseColorDark};` : '')}; //margin: 2px;
     padding: ${({ small }) => (small ? '0.2rem' : '0.4rem')} 0.75rem;
     margin: ${({ small }) => (small ? '2px  ' : '0.25rem')};
 
@@ -31,6 +30,6 @@ export const Button = styled.div`
         transition: background 0.1s linear;
         //box-shadow: 0 4px 8px 0 rgba(30, 136, 229, 0.2), 0 6px 20px 0 rgba(30, 136, 229, 0.19);
     }
-    transition: hover 0.1s;
+    transition: hover 0.1s, box-shadow 0.2s;
 `;
 export default Button;
