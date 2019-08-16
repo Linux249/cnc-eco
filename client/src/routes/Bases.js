@@ -1,10 +1,9 @@
 import React from 'react';
 import Base from '../components/Base.js';
-import ChartMenu from '../components/ChartMenu';
+import BasesMenuRight from '../components/BasesMenuRight';
 import BuildingMenu from '../containers/BuildingMenu';
 import BasesMenu from '../containers/BasesMenu';
-import Share from '../components/Share';
-import BestBuildingsToUpgrade from '../components/BestBuildingsToUpgrade';
+// import BestBuildingsToUpgrade from '../components/BestBuildingsToUpgrade';
 import Body from '../style/Body';
 import Column from '../style/Column';
 import Defense from '../components/Defense';
@@ -16,7 +15,7 @@ export default () => (
         <Body>
             <BuildingMenu area="buildings" />
             <Base />
-            <ChartMenu />
+            <BasesMenuRight />
             <BuildingMenu area="defense" />
             <Defense />
             <div />
@@ -24,8 +23,7 @@ export default () => (
             <Army />
             <div />
             <div />
-            <BestBuildingsToUpgrade />
+            {/*<BestBuildingsToUpgrade />*/}
         </Body>
-        <Share />
     </Column>
 );

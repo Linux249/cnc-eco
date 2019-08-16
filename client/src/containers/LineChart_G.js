@@ -192,7 +192,7 @@ class LineChart_G extends Component {
                 </Row>
                 <Row wrap>
                     <Button active small>
-                        Tage
+                        Days
                     </Button>
                     {days.map(n => (
                         <Button

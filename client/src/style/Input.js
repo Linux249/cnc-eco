@@ -5,7 +5,7 @@ export default styled.input`
 
     margin: ${p => (p.small ? '0.25rem' : '0')};
 
-    padding: 10px;
+    padding: ${p => (p.small ? '6px' : '10px')};
 
     box-sizing: border-box;
     color: #55595c;
