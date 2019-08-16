@@ -1,5 +1,5 @@
-export const focusColor = '#b6b6b6';
-export const hoverColor = '#dadada';
+// export const focusColor = '#b6b6b6';
+// export const hoverColor = '#F7F3FB';
 export const backgroundColor = '#fff';
 export const baseColorDark = '#3d1466';
 export const baseColor = '#8128d4';

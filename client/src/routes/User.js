@@ -151,7 +151,7 @@ function User(props) {
                                 {w.worldName}
                             </Button>
                         ))}
-
+                        <br />
                     <Button onClick={updateWorlds}>Update worlds</Button>
                 </Container>
 

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { focusColor, hoverColor } from './constants';
+import { baseLight } from './constants';
 export default styled.div`
     cursor: pointer;
     // height: 70px;
@@ -22,9 +22,12 @@ export default styled.div`
     }
 
     &:hover {
-        background-color: ${hoverColor};
+        background-color: ${baseLight};
     }
+    
     &:focus {
-        background-color: ${focusColor};
+        background-color: ${baseLight};
+        outline: none !important;
     }
+    
 `;

@@ -80,10 +80,10 @@ const Layout = ({ layout }) => {
     });
     const time = Math.round((new Date() - new Date(layout.time)) / 3600 / 24 / 1000);
 
-    function copyToClipBoard() {
+    async function copyToClipBoard() {
         console.log('copyToClipBoard');
-        navigator.clipboard.writeText(`[coords]${layout.x}:${layout.y}[/coords]`);
         console.log({ tib: layout.tib, cris: layout.cris });
+        await navigator.clipboard.writeText(`[coords]${layout.x}:${layout.y}[/coords]`);
     }
 
     return (

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { baseColorWhite } from './constants';
 
 export default styled.input`
     width: 100%;
@@ -13,4 +14,9 @@ export default styled.input`
 
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 0.25rem;
+    
+    &:focus {
+        background-color: ${baseColorWhite};
+        outline: none !important;
+    }    
 `;
