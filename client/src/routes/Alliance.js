@@ -254,7 +254,7 @@ class Alliance extends Component {
                                     <Cell>{member.basecount}</Cell>
                                     <Cell>{member.pvekills}</Cell>
                                     <Cell>{member.pvpkills}</Cell>
-                                    <Cell>{member.hascode}</Cell>
+                                    <Cell>{member.hascode ? '+' : '-'}</Cell>
                                     <Cell>{shortenNumber(member.creditsCount)}</Cell>
 
                                     <Cell>{member.actcp + '/' + member.maxcp}</Cell>

@@ -23,14 +23,14 @@ router.get('/layout', (req, res, next) => {
 // get all layouts from a world
 // TODO add a way to filter for "saw from player and/or alliance"
 router.get('/layouts', async (req, res, next) => {
-    let { w, skip, limit } = req.query;
+    let { w, skip, limit, sort } = req.query;
     limit = limit ? +limit : 50;
     skip = skip ? +skip : 50;
     try {
         const collection = req.db.collection(`layouts_${w}`);
         const layouts = await collection
             .find()
-            .sort({ tib: -1 })
+            .sort({ [sort]: -1 })
             .limit(limit)
             .skip(skip * limit)
             .toArray();

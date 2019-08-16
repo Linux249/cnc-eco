@@ -25,6 +25,7 @@ const LayoutS = styled.div`
 function Layouts(props) {
     const [layouts, setLayouts] = useState([]);
     const [sort, setSort] = useState('tib');
+    const [limit, setLimit] = useState(200);
 
     useEffect(() => {
         getLayouts();
@@ -34,7 +35,7 @@ function Layouts(props) {
         props.changeLoading(true);
         const { pl, w, allianceId, token } = props;
         // todo limit 50 first and than load other
-        const url = `${api_url}/layouts?pl=${pl}&w=${w}&a=${allianceId}&limit=200&skip=0`;
+        const url = `${api_url}/layouts?pl=${pl}&w=${w}&a=${allianceId}&limit=${limit}&skip=0&sort=${sort}`;
         fetch(url, {
             headers: {
                 Authorization: 'Bearer  ' + token,
@@ -89,9 +90,12 @@ function Layouts(props) {
                 <Container>
                     <Text>{'Loaded: ' + layouts.length}</Text>
                     <Row>
-                        <Button first onClick={getLayouts}>
-                            Update
+                        <Button first active={limit === 100}  onClick={() => setLimit(100)}>
+                            100
                         </Button>
+                        <Button active={limit === 200} onClick={() => setLimit(200)}>200</Button>
+                        <Button active={limit === 500} onClick={() => setLimit(500)}>500</Button>
+                        <Button onClick={getLayouts}>Update</Button>
                     </Row>
                 </Container>
                 <Container>
