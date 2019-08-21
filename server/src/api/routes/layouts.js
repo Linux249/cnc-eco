@@ -3,7 +3,7 @@ import { layoutStats } from '../utils/layout';
 export default async (req, res, next) => {
     res.setHeader(
         'Access-Control-Allow-Origin',
-        'https://prodgame08.alliances.commandandconquer.com'
+        '*'
     );
     res.send();
     let { db, body, headers, query } = req;
