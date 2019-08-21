@@ -44,10 +44,10 @@ const Blue = styled.div`
 `;
 
 function SlotOverlay({ buildings, slot, building }) {
-    buildings[slot].lvl += 1;
+    buildings[slot].lvl += buildings[slot].lvl < 65 ? 1 : 0;
     const cost = calcBuildingCost(building);
     const prod1 = calcBuildingProduction(buildings, slot);
-    buildings[slot].lvl -= 1;
+    buildings[slot].lvl -= buildings[slot].lvl < 65 ? 1 : 0;
     const prod2 = calcBuildingProduction(buildings, slot);
     // console.log(prod1, prod2);
     return (

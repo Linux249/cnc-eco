@@ -242,7 +242,7 @@ class Alliance extends Component {
                         </Cell>
 
                         {members.map(member => {
-                            member = members[0]
+                            // member = members[0]
                             return member.data ? (
                                 <Fragment key={member.name}>
                                     <Cell>{member.name}</Cell>
