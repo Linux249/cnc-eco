@@ -83,6 +83,8 @@ function Slot(props) {
     });
 
     drop(drag(ref));
+    console.log(type)
+    console.log(img)
 
     return (
         <SlotStyle
@@ -97,7 +99,7 @@ function Slot(props) {
         >
             {lvl && <Number>{lvl}</Number>}
             {(focus || shift) && area === 'buildings' && lvl && <SlotOverlay building={unit} slot={slot} />}
-            <img src={type ? img : empty} alt={type} />
+            {img && <img src={type ? img : empty} alt={type} />}
         </SlotStyle>
     );
 }

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import BuildingMenu from '../containers/BuildingMenu';
-import UrlLoader from '../components/UrlLoader';
+// import UrlLoader from '../components/UrlLoader';
 import Share from '../components/Share';
 import Base from '../components/Base';
 import Column from '../style/Column';
@@ -16,7 +16,7 @@ export default () => (
             <Base />
             <div>
                 <Share />
-                <UrlLoader />
+                {/*<UrlLoader />*/}
                 <ResetArea />
             </div>
             <BuildingMenu area="defense" />
