@@ -11,6 +11,7 @@ import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 import Row from '../style/Row';
 import Container from '../style/Container';
+import Info from '../style/Info';
 
 // TODO time since last seen a layout shod be placed to the backend
 // TODO IDEA autmaticly remove layouts after X days (cronjobs)
@@ -24,6 +25,7 @@ const LayoutS = styled.div`
 `;
 function Layouts(props) {
     const [layouts, setLayouts] = useState([]);
+    const [message, setMessage] = useState('');
     const [sort, setSort] = useState('tib');
     const [limit, setLimit] = useState(200);
 
@@ -33,6 +35,7 @@ function Layouts(props) {
 
     function getLayouts() {
         props.changeLoading(true);
+        setMessage('');
         const { pl, w, allianceId, token } = props;
         // todo limit 50 first and than load other
         const url = `${api_url}/layouts?pl=${pl}&w=${w}&a=${allianceId}&limit=${limit}&skip=0&sort=${sort}`;
@@ -46,8 +49,10 @@ function Layouts(props) {
                 console.log(layouts);
                 // maybe this is bedder for ux
                 setLayouts(layouts);
+                setMessage('loaded ' + layouts.length + ' layouts');
                 props.changeLoading(false);
-            });
+            })
+            .catch(e => setMessage(e.message));
     }
 
     function changeSort(t) {
@@ -90,13 +95,18 @@ function Layouts(props) {
                 <Container>
                     <Text>{'Loaded: ' + layouts.length}</Text>
                     <Row>
-                        <Button first active={limit === 100}  onClick={() => setLimit(100)}>
+                        <Button first active={limit === 100} onClick={() => setLimit(100)}>
                             100
                         </Button>
-                        <Button active={limit === 200} onClick={() => setLimit(200)}>200</Button>
-                        <Button active={limit === 500} onClick={() => setLimit(500)}>500</Button>
+                        <Button active={limit === 200} onClick={() => setLimit(200)}>
+                            200
+                        </Button>
+                        <Button active={limit === 500} onClick={() => setLimit(500)}>
+                            500
+                        </Button>
                         <Button onClick={getLayouts}>Update</Button>
                     </Row>
+                {message.length && <Info fix>{message}</Info>}
                 </Container>
                 <Container>
                     <Text>Save Layout</Text>

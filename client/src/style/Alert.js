@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { alarm } from './constants';
+import { alarm, sizes } from './constants';
 
 export default styled.div`
-    width: 100%;
+    width: ${({fix}) => fix ? '338px' : '100%'};
     display: flex;
     justify-content: center;
 
@@ -17,5 +17,12 @@ export default styled.div`
     color: #fff;
     font-weight: 700;
     //font-size: 0.8rem;
-    text-transform: uppercase
+    text-transform: uppercase;
+    
+
+    @media ${sizes.mobile} {
+        width: 100%;
+    }
+    
+    //transition: all 1s;
 `;

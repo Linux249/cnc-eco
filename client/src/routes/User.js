@@ -92,6 +92,7 @@ function User(props) {
         console.log('add updateWorlds');
         if (!name) return setError('add player name first');
         setLoading(true);
+        setSuccess('')
 
         const res = await fetch(api_url + '/user/updateWorlds', {
             method: 'GET',
@@ -122,7 +123,6 @@ function User(props) {
             <div />
             <Row wrap>
                 {error && <Alert>{error}</Alert>}
-                {success && <Info>{success}</Info>}
                 <Container>
                     <Label htmlFor="name">Player name:</Label>
                     {name ? (
@@ -157,6 +157,7 @@ function User(props) {
                             </Button>
                         ))}
                     <br />
+                    {success && <Info>{success}</Info>}
                     <Button onClick={updateWorlds}>Update worlds</Button>
                 </Container>
 
