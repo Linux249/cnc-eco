@@ -11,6 +11,7 @@ import ResetArea from '../containers/ResetArea';
 
 export default () => (
     <Column center>
+        <div>This side is still in Development. Be aware that all data may be deleted while in beta/before release. </div>
         <Body>
             <BuildingMenu area="buildings" />
             <Base />

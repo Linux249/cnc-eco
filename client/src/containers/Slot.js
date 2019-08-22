@@ -83,8 +83,6 @@ function Slot(props) {
     });
 
     drop(drag(ref));
-    console.log(type)
-    console.log(img)
 
     return (
         <SlotStyle

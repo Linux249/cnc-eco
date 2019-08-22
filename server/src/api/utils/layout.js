@@ -3,12 +3,12 @@ const neighbours = [-10, -9, -8, -1, 1, 8, 9, 10];
 export const layoutStats = layout => {
     let tib = 0,
         cris = 0;
-    // each char is a building
-    const silos = layout.split('').map((slot, i, base) => {
+    // each char is a building - silos
+    layout.split('').map((slot, i, base) => {
         if (slot !== '.') return;
         // check tip neighbours
-        let tib_n = 0,
-            cris_n = 0;
+        let tib_n = 0;
+        let cris_n = 0;
 
         neighbours.forEach(n => {
             const j = i + n; // j: neighbour
@@ -36,6 +36,29 @@ export const layoutStats = layout => {
         }
 
         // check kris neighbours
+    });
+
+    const accus = layout.split('').map((slot, i, base) => {
+        if (slot !== '.') return;
+        // check tip neighbours
+        function getAccu(s) {
+            let c = 0
+            neighbours.forEach(n => {
+                const j = s + n; // j: neighbour
+                if (j >= 0 && j <= 71) {
+                    if (base[j] === '.')  c += 1
+                }
+            });
+            return c
+        }
+
+        let pp_n = getAccu(i);
+        if(pp_n === 9) {
+            console.log(pp_n)
+        }
+        if(pp_n === 8) {
+            console.log(pp_n)
+        }
     });
     return { tib: Math.round(tib * 100) / 100, cris: Math.round(cris * 100) / 100 };
 };
