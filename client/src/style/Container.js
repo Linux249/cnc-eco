@@ -4,7 +4,7 @@ import { sizes } from './constants';
 
 const Container = styled(Area)`
     display: block;
-    width: 332px;
+    width: 338px;
 
     @media ${sizes.mobile} {
         width: 100%;

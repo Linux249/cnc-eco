@@ -6,8 +6,8 @@ export default styled.div`
     display: flex;
     justify-content: center;
 
-    padding: 10px;
-    margin-bottom: 15px;
+    padding: 8px;
+    margin: 6px;
 
     box-sizing: border-box;
     background-color: ${alarm};
@@ -16,5 +16,6 @@ export default styled.div`
     border-radius: 0.25rem;
     color: #fff;
     font-weight: 700;
-    font-size: 0.8rem;
+    //font-size: 0.8rem;
+    text-transform: uppercase
 `;

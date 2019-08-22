@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { baseLight } from './constants';
+
 export default styled.div`
     cursor: pointer;
     // height: 70px;
@@ -16,18 +17,18 @@ export default styled.div`
     font-size: 0.75rem;
 
     & > img {
-        //position: absolute;
-        height: 90%;
-        width: 90%;
+        position: absolute;
+        //bottom: 0;
+        //height: 90%;
+        width: 105%;
     }
 
     &:hover {
         background-color: ${baseLight};
     }
-    
+
     &:focus {
         background-color: ${baseLight};
         outline: none !important;
     }
-    
 `;

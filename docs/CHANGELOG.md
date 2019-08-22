@@ -1,9 +1,12 @@
 
 
-Version 2.0.1
+Version 2.1.0
 - add Friends/Beta/Release Info (6b17e077)
-- reset base/defense now don't delete resource fields
-- ask the user twice before deleting account
+- reset base/defense now don't delete resource fields 
+- ask the user twice before deleting account (5b977fc4)
+- the grid for buildings, defense and army don't resize anymore on change content and has a bedder looking
+bedder layout 
+- some style changes
 
 Version 2.0.0 (49a3774f)
 - everything before

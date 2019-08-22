@@ -19,6 +19,7 @@ const Cost = styled.div`
     height: 100%;
     right: 0;
     top: 0;
+    z-index: 10;
 
     font-weight: 600;
     color: white;

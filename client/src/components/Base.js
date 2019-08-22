@@ -44,7 +44,7 @@ export default () => {
     return (
         <Area>
             <ProductionInfo />
-            <Grid rows={4}>{slots}</Grid>
+            <Grid rows={8}>{slots}</Grid>
         </Area>
     );
 };
