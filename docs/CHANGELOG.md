@@ -1,6 +1,6 @@
 
 
-Version 2.1.0
+Version 2.1.0: Fix Layout(26bdd8d5) 
 - add Friends/Beta/Release Info (6b17e077)
 - reset base/defense now don't delete resource fields 
 - ask the user twice before deleting account (5b977fc4)
