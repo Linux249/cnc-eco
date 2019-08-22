@@ -26,6 +26,7 @@ const Fat = styled.div`
 function User(props) {
     const { _id, authToken, name, worlds, worldId } = props;
     const query = qs.parse(props.location.search);
+    const [deleteSecure, setDeleteSecure] = useState(false);
     const [loading, setLoading] = useState(false);
     const [token] = useState(query.token);
     const [error, setError] = useState(query.error);
@@ -63,6 +64,7 @@ function User(props) {
     }, []);
 
     const deleteUser = async () => {
+        if (!deleteSecure) return setDeleteSecure(true);
         setLoading(true);
 
         const res = await fetch(api_url + '/user/' + _id, {
@@ -88,7 +90,7 @@ function User(props) {
 
     const updateWorlds = async () => {
         console.log('add updateWorlds');
-        if(!name)  return setError('add player name first')
+        if (!name) return setError('add player name first');
         setLoading(true);
 
         const res = await fetch(api_url + '/user/updateWorlds', {
@@ -123,7 +125,9 @@ function User(props) {
                 {success && <Info>{success}</Info>}
                 <Container>
                     <Label htmlFor="name">Player name:</Label>
-                    {name ? <Fat>{name}</Fat> : (
+                    {name ? (
+                        <Fat>{name}</Fat>
+                    ) : (
                         <>
                             <InfoText>
                                 <Link to="/scripts">
@@ -152,7 +156,7 @@ function User(props) {
                                 {w.worldName}
                             </Button>
                         ))}
-                        <br />
+                    <br />
                     <Button onClick={updateWorlds}>Update worlds</Button>
                 </Container>
 
@@ -161,8 +165,15 @@ function User(props) {
                     <Button onClick={props.logout}>logout</Button>
                 </Container>
                 <Container>
-                    <Title>Delete Account</Title>
-                    <Alert onClick={deleteUser}>DELETE</Alert>
+                    <Title>{!deleteSecure ? 'Delete Account' : 'Are you sure?'}</Title>
+                    {!deleteSecure ? (
+                        <Button red onClick={deleteUser}>DELETE</Button>
+                    ) : (
+                        <Row>
+                            <Button onClick={() => setDeleteSecure(false)}>No</Button>
+                            <Button red onClick={deleteUser}>Yes</Button>
+                        </Row>
+                    )}
                 </Container>
             </Row>
             <BodySide>{!playerAdded && <></>}</BodySide>

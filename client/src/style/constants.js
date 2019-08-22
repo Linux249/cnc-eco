@@ -7,6 +7,8 @@ export const baseColorWhite = '#F7F3FB';
 export const baseLight = '#c2bacc';
 export const borderColor = '#CCC';
 export const shadowColor = 'rgba(150, 150, 150, 0.1)';
+export const alarm = '#d64242'
+export const alarmWhite = '#d66d6d'
 
 export const shadow = `0 2px 10px ${shadowColor}`;
 export const border = `1px solid ${borderColor}`;

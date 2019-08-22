@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { backgroundColor, border, borderRadius, baseColorWhite, baseColorDark } from './constants';
+import { backgroundColor, border, borderRadius, baseColorWhite, baseColorDark, alarm, alarmWhite } from './constants';
 
 export const Button = styled.div`
     cursor: pointer;
@@ -8,7 +8,7 @@ export const Button = styled.div`
     justify-content: center;
     align-items: center;
 
-    background-color: ${({ active }) => (active ? backgroundColor : 'inherit')};
+    background-color: ${({ active, red }) => (active ? backgroundColor : red ? alarm: 'inherit')};
     border: ${border};
     border-radius: ${borderRadius};
 
@@ -18,7 +18,7 @@ export const Button = styled.div`
 
     font-size: 0.8rem;
     font-weight: 600;
-    color: #4d3e13;
+    color: ${({ red }) => (red ? 'white': '#4d3e13')};
 
     &:first-child {
         ${p => (p.first ? ' margin-left: 0;' : '')}
@@ -26,7 +26,7 @@ export const Button = styled.div`
 
     &:hover {
         //height: 2rem;
-        background-color: ${baseColorWhite};
+        background-color: ${({ red }) => (red ? alarmWhite : baseColorWhite)};
         transition: background 0.1s linear;
         //box-shadow: 0 4px 8px 0 rgba(30, 136, 229, 0.2), 0 6px 20px 0 rgba(30, 136, 229, 0.19);
     }
