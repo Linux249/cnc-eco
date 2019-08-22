@@ -1,6 +1,6 @@
 {
   "name": "cnc-eco-client",
-  "version": "0.1.2",
+  "version": "2.0.0",
   "devDependencies": {
     "prettier": "^1.18.2",
     "redux-logger": "^3.0.6",
