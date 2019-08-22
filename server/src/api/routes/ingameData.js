@@ -13,7 +13,7 @@ export default async (req, ...rest) => {
     console.log({ query });
     if (query.update && +query.update === 1) update(req, ...rest);
     else if (query.get_token) getToken(req, ...rest);
-    else rest.res.send();
+    else rest[0].send();
 };
 
 async function getToken(req, res, next) {
