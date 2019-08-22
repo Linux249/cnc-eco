@@ -1,7 +1,9 @@
 
 Version 2.1.1
-- userscript now has proper info window for adding player
+- userscript now has proper info window for adding player (03281d72)
 - user script link to open side is fixed
+- fix userscript open CnCEco button (f770b415)
+- add message to inform new user what to do
 
 Version 2.1.0: Fix Layout(26bdd8d5) 
 - add Friends/Beta/Release Info (6b17e077)

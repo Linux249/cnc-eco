@@ -1,6 +1,5 @@
 import React from 'react';
 import BuildingMenu from '../containers/BuildingMenu';
-// import UrlLoader from '../components/UrlLoader';
 import Share from '../components/Share';
 import Base from '../components/Base';
 import Column from '../style/Column';
@@ -8,6 +7,7 @@ import Body from '../style/Body';
 import Army from '../components/Army';
 import Defense from '../components/Defense';
 import ResetArea from '../containers/ResetArea';
+import Message from '../components/Message';
 
 export default () => (
     <Column center>
@@ -19,6 +19,7 @@ export default () => (
                 <Share />
                 {/*<UrlLoader />*/}
                 <ResetArea />
+                <Message />
             </div>
             <BuildingMenu area="defense" />
             <Defense />
