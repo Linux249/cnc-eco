@@ -54,7 +54,7 @@ app.use((req, res, next) => {
     const origin = req.get('origin');
     const host = req.get('host');
     //  set all headers to allowed
-    if (origin || host) res.setHeader('Access-Control-Allow-Origin', origin || host);
+    res.setHeader('Access-Control-Allow-Origin', origin || host || '*');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH,DELETE');
