@@ -1,5 +1,4 @@
 import React from 'react';
-import Area from '../style/Area';
 import Grid from '../style/Grid';
 import Slot from '../containers/Slot';
 
@@ -10,8 +9,4 @@ const slots = [0, 1, 2, 3, 4, 5, 6, 7].map(function(y) {
     });
 });
 
-export default () => (
-    <Area>
-        <Grid rows={8}>{slots}</Grid>
-    </Area>
-);
+export default () => <Grid rows={8}>{slots}</Grid>;

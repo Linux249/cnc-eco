@@ -11,6 +11,7 @@ import icon_cris from '../img/icon/icon_crystal.png';
 import icon_power from '../img/icon/icon_power.png';
 import icon_credits from '../img/icon/icon_credits.png';
 import styled, { keyframes } from 'styled-components';
+import Area from '../style/Area';
 
 const rotate = keyframes`
  from {top: -10px; left: 0; visibility: visible;}
@@ -32,13 +33,11 @@ const Diff = styled.div`
 
 const Img = styled.img`
     height: 24px;
-    //position: absolute;
-    // display: inline-block;
-    // animation: ${rotate} 2s ease-in-out;
-    // padding: 0 1rem;
-    // font-size: 0.8rem;
-    //
-    // color: ${p => (p.positiv ? 'green' : '#e06161')};
+`;
+
+const Line = styled.div`
+    display: flex;
+    align-items: center;
 `;
 
 class ProductionInfo extends Component {
@@ -73,28 +72,28 @@ class ProductionInfo extends Component {
         const { tib, kris, power, credits } = this.state.production;
 
         return (
-            <Info>
-                <div>
+            <Area>
+                <Line>
                     <Img src={icon_tib} alt={icon_tib} />
                     {shortenNumber(tib, 2)}
                     <Diff positiv={diff.tib.charAt(0) !== '-'}>{diff.tib}</Diff>
-                </div>
-                <div>
+                </Line>
+                <Line>
                     <Img src={icon_cris} alt={icon_tib} />
                     {shortenNumber(kris, 2)}
                     <Diff positiv={diff.kris.charAt(0) !== '-'}>{diff.kris}</Diff>
-                </div>
-                <div>
+                </Line>
+                <Line>
                     <Img src={icon_power} alt={icon_tib} />
                     {shortenNumber(power, 2)}
                     <Diff positiv={diff.power.charAt(0) !== '-'}>{diff.power}</Diff>
-                </div>
-                <div>
+                </Line>
+                <Line>
                     <Img src={icon_credits} alt={icon_tib} />
                     {shortenNumber(credits, 2)}
                     <Diff positiv={diff.credits.charAt(0) !== '-'}>{diff.credits}</Diff>
-                </div>
-            </Info>
+                </Line>
+            </Area>
         );
     }
 }

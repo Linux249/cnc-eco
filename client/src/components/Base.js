@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Slot from '../containers/Slot';
-import Area from '../style/Area';
 import Grid from '../style/Grid';
 import ProductionInfo from '../containers/ProductionInfo';
 import { store } from '../index';
@@ -42,9 +41,8 @@ export default () => {
     }, []); // Empty array ensures that effect is only run on mount and unmount
 
     return (
-        <Area>
-            <ProductionInfo />
-            <Grid fac="" rows={8}>{slots}</Grid>
-        </Area>
+        <Grid fac="" rows={8}>
+            {slots}
+        </Grid>
     );
 };

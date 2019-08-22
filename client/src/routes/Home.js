@@ -8,6 +8,7 @@ import Army from '../components/Army';
 import Defense from '../components/Defense';
 import ResetArea from '../containers/ResetArea';
 import Message from '../components/Message';
+import ProductionInfo from '../containers/ProductionInfo';
 
 export default () => (
     <Column center>
@@ -17,6 +18,7 @@ export default () => (
             <Base />
             <div>
                 <Share />
+                <ProductionInfo />
                 {/*<UrlLoader />*/}
                 <ResetArea />
                 <Message />
