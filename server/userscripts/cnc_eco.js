@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          C&C:TA CnC-Eco
-// @version       1.1.3
+// @version       1.1.4
 // @namespace     http://cnc-eco.herokuapp.com
 // @homepage      http://cnc-eco.herokuapp.com
 // @description   Sammelt Informationen ueber Basenausbau der Allianzmitglieder (basierend auf Skripte / Routinen von neobsen, JimBeamJD, KRS_L, F.D, und Dooki)
@@ -156,10 +156,10 @@
                         doMenu: function() {
                             var c = CncEcomain.getInstance(),
                             f //= c.AddSubMainMenu('MainOptions');
-                            c.AddMainMenu('open cnc-eco.de', function() {
+                            c.AddMainMenu('open CnCEco', function() {
                                 CncEcomain.getInstance().openurl();
                             });
-                            c.AddMainMenu('get token', function() {
+                            c.AddMainMenu('add player', function() {
                                 CncEcomain.getInstance().getToken();
                             });
                             c.AddMainMenu(
@@ -383,8 +383,10 @@
                                 p.setParameter('get_token', d),
                                 p.addListener('completed', function(b) {
                                     const content = b.getContent()
+                                    h('content from get_token')
                                     h(content)
-                                    content ? CncEcomain.getInstance().winOpen('', content) : h('token missing - add your account ingame first')
+                                    // content ? CncEcomain.getInstance().winOpen('', content) : h('token missing - add your account ingame first')
+                                    content ? CncEcomain.getInstance().AuthWindow(content) : h('token missing - add your account ingame first')
                                 }),
                                 p.send());
                             'war' == c &&
@@ -888,6 +890,60 @@
                                     qx.core.Init.getApplication().showExternal(
                                         'https://www.member-stats.de/?link=new_version',
                                         '.member-stats'
+                                    );
+                                },
+                                this
+                            );
+                            c.add(f);
+                            c.add(b);
+                            c.center();
+                            c.open();
+                        },
+                        AuthWindow: function(content) {
+                            var c = new qx.ui.window.Window('CnCEco add player!');
+                            c.set({
+                                caption: 'CnCEco add player!',
+                                icon: 'webfrontend/ui/common/icon_moral_alert_red.png',
+                                layout: new qx.ui.layout.HBox(4),
+                                width: 450,
+                                height: 170,
+                                contentPaddingTop: 0,
+                                contentPaddingBottom: 6,
+                                contentPaddingRight: 6,
+                                contentPaddingLeft: 6,
+                                showMaximize: !1,
+                                showMinimize: !1,
+                                allowMaximize: !1,
+                                allowMinimize: !1,
+                                resizable: !0,
+                                visibility: 'excluded',
+                                textColor: '#bfbfbf',
+                            });
+                            c.setPadding(10);
+                            c.setLayout(new qx.ui.layout.VBox(10));
+                            var f = new qx.ui.container.Composite(
+                                    new qx.ui.layout.VBox(2).set({ alignX: 'left' })
+                                ),
+                                b = new qx.ui.basic.Label('You can now add your player to CnCEco');
+                            f.add(b);
+                            b = new qx.ui.basic.Label('');
+                            f.add(b);
+                            b = new qx.ui.basic.Label(
+                                'Click button below to add your player to your CnCEco account'
+                            );
+                            f.add(b);
+                            var b = new qx.ui.container.Composite(
+                                    new qx.ui.layout.VBox(2).set({ alignX: 'right' })
+                                ),
+                                d = new qx.ui.form.Button('add player');
+                            b.add(d);
+                            d.addListener(
+                                'execute',
+                                function() {
+                                    c.close();
+                                    // CncEcomain.getInstance().winOpen('', content)
+                                    qx.core.Init.getApplication().showExternal(
+                                        'https://www.cnc-eco.de/user?' + content
                                     );
                                 },
                                 this
