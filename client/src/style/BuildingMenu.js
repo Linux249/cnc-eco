@@ -7,6 +7,6 @@ export default styled.div`
 
     font-size: 0.75rem;
 
-    max-width: 250px;
+    max-width: 338px;
     max-height: 450px;
 `;

@@ -4,10 +4,12 @@ export default styled.div`
     cursor: pointer;
 
     display: inline-block;
-    width: 25%;
+    width: 60px;
     height: 15%;
     align-content: center;
     text-align: center;
+    
+    padding: 2px;
 
     & > img {
         /*height: auto;*/

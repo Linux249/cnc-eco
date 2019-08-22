@@ -5,6 +5,7 @@ export const baseColorDark = '#3d1466';
 export const baseColor = '#8128d4';
 export const baseColorWhite = '#F7F3FB';
 export const baseLight = '#c2bacc';
+export const focus = 'rgba(255,255,255,0.2)';
 export const borderColor = '#CCC';
 export const shadowColor = 'rgba(150, 150, 150, 0.1)';
 export const alarm = '#d64242'

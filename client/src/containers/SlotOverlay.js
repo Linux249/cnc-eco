@@ -7,6 +7,7 @@ import tib from '../img/icon/tib_small.png';
 import cris from '../img/icon/cris_small.png';
 import power from '../img/icon/power_small.png';
 import credits from '../img/icon/credits_small.png';
+import { focus, shadowColor } from '../style/constants';
 
 const Cost = styled.div`
     display: flex;
@@ -23,7 +24,7 @@ const Cost = styled.div`
 
     font-weight: 600;
     color: white;
-    background-color: rgba(98, 98, 98, 0.66);
+     background-color: ${shadowColor};
 `;
 
 const Icon = styled.img`
