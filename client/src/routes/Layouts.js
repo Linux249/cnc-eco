@@ -87,6 +87,9 @@ function Layouts(props) {
                         <Button active={sort === 'cris'} onClick={() => changeSort('cris')}>
                             Kris
                         </Button>
+                        <Button active={sort === 'power'} onClick={() => changeSort('power')}>
+                            Power
+                        </Button>
                         <Button active={sort === 'time'} onClick={() => changeSort('time')}>
                             Time
                         </Button>
