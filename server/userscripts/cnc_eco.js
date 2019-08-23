@@ -155,9 +155,12 @@
                         },
                         doMenu: function() {
                             var c = CncEcomain.getInstance(),
-                            f //= c.AddSubMainMenu('MainOptions');
+                                f; //= c.AddSubMainMenu('MainOptions');
                             c.AddMainMenu('open CnCEco', function() {
                                 CncEcomain.getInstance().openurl();
+                            });
+                            c.AddMainMenu('send reports', function() {
+                                CncEcoReports.getInstance().onAllReportsLoaded();
                             });
                             c.AddMainMenu('add player', function() {
                                 CncEcomain.getInstance().getToken();
@@ -172,7 +175,8 @@
                             !0 ===
                                 ClientLib.Data.MainData.GetInstance()
                                     .get_Alliance()
-                                    .get_IsAdmin() && false && // todo remove false
+                                    .get_IsAdmin() &&
+                            false && // todo remove false
                                 ((f = c.AddSubMainMenu('State of War')),
                                 c.AddSubMenu(
                                     f,
@@ -323,7 +327,7 @@
                             );
                         },
                         remoteRequest: function(c, f) {
-                            h('remoteRequest: ' + c)
+                            h('remoteRequest: ' + c);
                             var b = ClientLib.Data.MainData.GetInstance();
                             var d = b.get_Player().get_Name(),
                                 g = b.get_Alliance(),
@@ -377,16 +381,22 @@
                                           CncEcomain.getInstance().winOpen('', ''));
                                 }),
                                 p.send());
-                            'get_token' == c && (s ?  CncEcomain.getInstance().winOpen('', 'error=You cannot add account from substitutions')
-                                :
-                                p.setData('get_token', d),
+                            'get_token' == c &&
+                                (s
+                                    ? CncEcomain.getInstance().winOpen(
+                                          '',
+                                          'error=You cannot add account from substitutions'
+                                      )
+                                    : p.setData('get_token', d),
                                 p.setParameter('get_token', d),
                                 p.addListener('completed', function(b) {
-                                    const content = b.getContent()
-                                    h('content from get_token')
-                                    h(content)
+                                    const content = b.getContent();
+                                    h('content from get_token');
+                                    h(content);
                                     // content ? CncEcomain.getInstance().winOpen('', content) : h('token missing - add your account ingame first')
-                                    content ? CncEcomain.getInstance().AuthWindow(content) : h('token missing - add your account ingame first')
+                                    content
+                                        ? CncEcomain.getInstance().AuthWindow(content)
+                                        : h('token missing - add your account ingame first');
                                 }),
                                 p.send());
                             'war' == c &&
@@ -1113,12 +1123,13 @@
                         winOpen: function(c, f) {
                             var b = CncEcoScanner.Layout.window.getInstance(),
                                 d = 'https://www.member-stats.de';
-                            '' !== f &&
-                                (d = 'https://www.cnc-eco.de/user?' + f);
+                            '' !== f && (d = 'https://www.cnc-eco.de/user?' + f);
                             if ('layout' == f) {
                                 var g = ClientLib.Data.MainData.GetInstance();
                                 var n = g.get_Player().get_Name();
-                                d = 'https://www.cnc-eco.de/layouts/'  +  g.get_Server().get_WorldId();
+                                d =
+                                    'https://www.cnc-eco.de/layouts/' +
+                                    g.get_Server().get_WorldId();
                             }
                             var g = qx.core.Init.getApplication(),
                                 q = new webfrontend.gui.CustomWindow(g.tr('tnf:external link')).set(
@@ -3120,6 +3131,96 @@
                         },
                     },
                 });
+                qx.Class.define('CncEcoReports', {
+                    type: 'singleton',
+                    extend: qx.core.Object,
+                    members: {
+                        reports: null,
+                        reportsLoaded: [],
+                        onReportDelivered: function(report) {
+                            console.log('one report was deliverd: ', report);
+                            this.reportsLoaded.push(report);
+                            return report
+                        },
+                        onReportsDelivered: function(reports) {
+                            console.log('all report was deliverd: ', reports);
+                            this.reportsLoaded = reports
+                        },
+                        amAnfang: function(c, f) {
+                            const reports = ClientLib.Data.MainData.GetInstance().get_Reports();
+                            this.reports = reports;
+                            console.log('am anfang reports', reports)
+
+                            phe.cnc.Util.attachNetEvent(
+                                reports,
+                                'ReportDelivered',
+                                ClientLib.Data.Reports.ReportDelivered,
+                                this,
+                                this.onReportDelivered
+                            );
+                            phe.cnc.Util.attachNetEvent(
+                                reports,
+                                'ReportsDelivered',
+                                ClientLib.Data.Reports.ReportsDelivered,
+                                this,
+                                this.onReportsDelivered
+                            );
+                        },
+
+                        onAllReportsLoaded: function() {
+
+                            console.log('all loaded reports');
+                            console.log(this.reportsLoaded);
+                            if (this.reportsLoaded.length) {
+                                // this.reportsLoaded.forEach(report => {
+                                //     this.reports.RequestReportData(report);
+                                // });
+                                var server = ClientLib.Data.MainData.GetInstance().get_Server();
+                                var player = ClientLib.Data.MainData.GetInstance().get_Player();
+                                console.log({player, server})
+                                this.reportsLoaded.forEach(report => {
+
+                                    switch (report.get_Type()) {
+                                        case ClientLib.Data.Reports.EReportType.Combat: // 1, pvp
+                                            console.warn('1 pvp Combat')
+                                            // console.log(report)
+                                            break;
+                                        case ClientLib.Data.Reports.EReportType.NPCRaid: // 2, pve
+                                            console.log('2 pve NPCRaid: ' )
+                                            console.log(report)
+                                            switch (parseInt(report.get_DefenderBaseName(), 10)) {
+                                                case ClientLib.Data.Reports.ENPCCampType.Base: // 4
+                                                case ClientLib.Data.Reports.ENPCCampType.Fortress: // 6
+
+                                                    break;
+                                                default:
+
+                                            }
+                                            break;
+                                        case ClientLib.Data.Reports.EReportType.NPCPlayerCombat: // 5
+                                            console.log('5 NPCPlayerCombat: ')
+                                            // console.log(report)
+                                            // No repair time or command point cost for Forgotten attacks
+                                            break;
+                                        default:
+                                            throw 'Unexpected report type (' + report.get_Type() + ')';
+                                    }
+                                })
+                            } else {
+
+                            }
+                        },
+
+                        initialize: function() {
+                            this.amAnfang();
+                            try {
+                                h('CncEcoReports loaded');
+                            } catch (c) {
+                                h(c);
+                            }
+                        },
+                    },
+                });
                 qx.Class.define('CncEcoxhr', {
                     type: 'singleton',
                     extend: qx.core.Object,
@@ -4596,6 +4697,7 @@
                                     window.CncEcomain.getInstance().initialize(),
                                     window.CncEcoScanner.getInstance().initialize(),
                                     window.CncEcostorage.getInstance().initialize(),
+                                    window.CncEcoReports.getInstance().initialize(),
                                     window.CncEcoxhr.getInstance().initialize(),
                                     CncEcoHIDE.window.Window.getInstance().initialize(),
                                     window.CncEco.xhr.start())
@@ -4610,8 +4712,7 @@
                 h = '[CncEco] ' + h;
                 'undefined' !== typeof console
                     ? console.log(h)
-                    : window.opera
-                    && opera.postError(h)
+                    : window.opera && opera.postError(h);
             }
             var B = 0,
                 T = 0,

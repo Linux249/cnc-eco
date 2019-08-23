@@ -734,7 +734,7 @@
                                 playerId: player.get_Id(),
                                 accountId: player.get_AccountId(),
                             })
-                        }).then(r => r.json()).catch(e => console.warn(e))
+                        }).then(r => r.json()).then(da).catch(e => console.warn(e))
 
                         /*table.getChildControl('statusbar').setValue(
                                 attackerBaseIds.length + ' attacker' + (attackerBaseIds.length === 1 ? '' : 's') + ', ' +

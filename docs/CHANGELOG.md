@@ -1,4 +1,9 @@
 // todo only commit on release
+
+Version 2.1.2 
+- add production again to ui (4b85e131)
+- add calculation of power potential to layout stats (2ef25ccd)
+
 Version 2.1.1
 - userscript now has proper info window for adding player (03281d72)
 - user script link to open side is fixed
