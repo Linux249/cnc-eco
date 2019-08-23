@@ -13,7 +13,7 @@ export const Button = styled.div`
     border-radius: ${borderRadius};
 
     box-shadow: ${({ active }) => (active ? `2px 2px 0px 1px  ${baseColorDark};` : '')}; //margin: 2px;
-    padding: ${({ small }) => (small ? '0.2rem' : '0.4rem')} 0.75rem;
+    padding: ${({ small }) => (small ? '0.2rem' : '0.3rem')} 0.75rem;
     margin: ${({ small }) => (small ? '2px  ' : '0.25rem')};
 
     font-size: 0.8rem;
