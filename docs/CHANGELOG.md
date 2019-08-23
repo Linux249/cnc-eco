@@ -1,10 +1,15 @@
 // todo only commit on release
 
-Version 2.1.2 
+Version 2.1.3 sort layouts for power 
+- add power to sort layouts for the best power layout (e286e572)
+- reset all layouts in db 
+- improve responsive layout (7ba73b69)(988d98b0)
+
+Version 2.1.2 (19aa5f4b)
 - add production again to ui (4b85e131)
 - add calculation of power potential to layout stats (2ef25ccd)
 
-Version 2.1.1
+Version 2.1.1 (20661139)
 - userscript now has proper info window for adding player (03281d72)
 - user script link to open side is fixed
 - fix userscript open CnCEco button (f770b415)
