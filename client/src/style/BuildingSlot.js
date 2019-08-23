@@ -20,7 +20,7 @@ export default styled.div`
         position: absolute;
         //bottom: 0;
         //height: 90%;
-        width: 105%;
+        width: 95%;
     }
 
     &:hover {

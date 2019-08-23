@@ -17,6 +17,7 @@ export default styled('div')`
     box-shadow: ${shadow};
     
     margin: 5px;
+    padding: 10px;
 
     // equal squares from https://medium.com/cloudaper/how-to-create-a-flexible-square-grid-with-css-grid-layout-ea48baf038f3
     &:before {
