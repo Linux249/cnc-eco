@@ -147,7 +147,7 @@ const slots = (faction, upgrade) =>
 function Demo({ faction }) {
     return (
         <Column center>
-            <Body>
+            <Body large>
                 <BuildingMenu area="buildings" />
                 <Area>
                     <ProductionInfo />

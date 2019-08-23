@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import Body from '../style/Body';
+import BodyRaw from '../style/Body';
 import Text from '../style/Text';
 import Button from '../style/Button';
 import Layout from '../components/Layout';
@@ -23,6 +23,12 @@ const LayoutS = styled.div`
     //align-items: center;
     //padding: 2px;
 `;
+
+const Body = styled(BodyRaw)`
+    grid-column-end: 2;
+    grid-template-columns: minmax(100px, 90%) 1fr;
+`;
+
 function Layouts(props) {
     const [layouts, setLayouts] = useState([]);
     const [message, setMessage] = useState('');
@@ -69,14 +75,11 @@ function Layouts(props) {
         <Redirect to={'/layouts/' + props.w} />
     ) : (
         <Body>
-            <div />
-            <div>
-                <LayoutS>
-                    {layouts.map((layout, i) => (
-                        <Layout key={i} layout={layout} />
-                    ))}
-                </LayoutS>
-            </div>
+            <LayoutS>
+                {layouts.map((layout, i) => (
+                    <Layout key={i} layout={layout} />
+                ))}
+            </LayoutS>
             <Column>
                 <Container>
                     <Text>Sort layouts</Text>

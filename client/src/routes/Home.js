@@ -13,7 +13,7 @@ import ProductionInfo from '../containers/ProductionInfo';
 export default () => (
     <Column center>
         <div>This side is still in Development. Be aware that all data may be deleted while in beta/before release. </div>
-        <Body>
+        <Body large>
             <BuildingMenu area="buildings" />
             <Base />
             <div>

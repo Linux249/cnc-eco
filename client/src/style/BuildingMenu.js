@@ -13,7 +13,7 @@ export default styled.div`
     max-width: 338px;
     max-height: 450px;
     
-    @media ${sizes.mobile} {
+    @media ${sizes.tablet} {
         max-width: 100%;
     }
 `;

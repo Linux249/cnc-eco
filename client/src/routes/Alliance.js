@@ -75,8 +75,6 @@ const Cell = styled.div`
     border-radius: ${borderRadius};
     border-color: ${baseLight};
     margin: 1px;
-    
-    
 
     ${p => (p.active ? 'background-color: ' + baseLight : '')};
 `;
@@ -86,6 +84,7 @@ const Icon = styled.img`
     height: 1.4rem;
     margin: 0.2rem;
 `;
+
 const Body = styled(BodyRaw)`
     grid-column-end: 2;
     grid-template-columns: minmax(100px, 90%) 1fr;
@@ -234,10 +233,7 @@ class Alliance extends Component {
                         >
                             Def HQ&#8709;
                         </Cell>
-                        <Cell
-                            active={s === 'updated'}
-                            onClick={() => this.sort('updated')}
-                        >
+                        <Cell active={s === 'updated'} onClick={() => this.sort('updated')}>
                             time
                         </Cell>
 
@@ -280,7 +276,18 @@ class Alliance extends Component {
                                     <Cell>{member.avargDfLvl}</Cell>
                                     <Cell>{member.avargDfHQLvl}</Cell>
 
-                                    <Cell>{Math.round(Math.floor((new Date() - new Date(member._updated))/1000/60/60)*10/24)/10}</Cell>
+                                    <Cell>
+                                        {Math.round(
+                                            (Math.floor(
+                                                (new Date() - new Date(member._updated)) /
+                                                    1000 /
+                                                    60 /
+                                                    60
+                                            ) *
+                                                10) /
+                                                24
+                                        ) / 10}
+                                    </Cell>
                                 </Fragment>
                             ) : (
                                 <Fragment key={member.name}>

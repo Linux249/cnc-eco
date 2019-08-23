@@ -12,7 +12,7 @@ import Army from '../components/Army';
 export default () => (
     <Column center>
         <BasesMenu />
-        <Body>
+        <Body large>
             <BuildingMenu area="buildings" />
             <Base />
             <BasesMenuRight />
