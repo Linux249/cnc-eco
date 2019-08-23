@@ -1,10 +1,11 @@
 import { layoutStats } from '../utils/layout';
 // POST /api/v1/layouts
 export default async (req, res, next) => {
-    res.setHeader(
-        'Access-Control-Allow-Origin',
-        '*'
-    );
+    // res.setHeader(
+    //     'Access-Control-Allow-Origin',
+    //     '*'
+    // );
+    // todo layouts update send empty body, check what happens if they send something back
     res.send();
     let { db, body, headers, query } = req;
     const { w } = query;
@@ -13,7 +14,7 @@ export default async (req, res, next) => {
     const layouts = await Object.keys(body).map(key => {
         const [x, y] = key.split(':');
         const layoutString = body[key].layout.slice(0, 72);
-        const { tib, cris } = layoutStats(layoutString);
+        const { tib, cris, power, powerLayout } = layoutStats(layoutString);
         return {
             x,
             y,
@@ -25,6 +26,8 @@ export default async (req, res, next) => {
             time: new Date(),
             tib,
             cris,
+            power,
+            powerLayout,
         };
     });
     const collection = db.collection(`layouts_${w}`);
@@ -43,5 +46,4 @@ export default async (req, res, next) => {
             }
         );
     });
-    // npm console.log(layouts)
 };

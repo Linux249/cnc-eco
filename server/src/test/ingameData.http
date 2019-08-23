@@ -82,7 +82,7 @@ _data_=get_token=linux249
 POST http://{{host}}/api/v1/layouts?pl=linux249&w=373&a=126
 Content-Type: application/json
 
-{"311:42":{"x":311,"y":42,"level":13,"id":5724732,"distance":3,"selectedBaseID":381184,"alliance":801,"world":403,"player":"linux249","failCount":0,"layout":".....c........c........c.c........c..tt..t....t.....t....t...t....................jj..hh.hl............ll....ll......h......l.h..k.........jjj.k","name":"Outpost"}}
+{"311:42":{"x":311,"y":42,"level":13,"id":5724732,"distance":3,"selectedBaseID":381184,"alliance":801,"world":403,"player":"linux249","failCount":0,"layout":"..............c........c.c......c.c......t....t.....t..t.t...t....................jj..hh.hl............ll....ll......h......l.h..k.........jjj.k","name":"Outpost"}}
 
 
 
