@@ -20,11 +20,10 @@ router.use('/reports', reports);
 router.post('/layouts', layouts);
 router.use('/', urlRouter);
 
-// TODO that should be higher protected (Admin role)
-router.use('/', db);
 // AUTH Only for members area
 router.use('/', passport.authenticate('jwt', { session: false }));
 
+router.use('/db', db);
 router.use('/worlds', worlds);
 router.use('/', layoutsRouter);
 router.use('/', playerRouter);

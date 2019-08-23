@@ -4,8 +4,11 @@ import { createReport } from '../service/report';
 
 const router = Router();
 
-// POST /api/v1/Archiv
-router.get('/db', async (req, res, next) => {
+/**
+ * GET /api/v1/db
+ * returns an array with all collections
+ * */
+router.get('/', async (req, res, next) => {
     try {
         const collections = await req.db.listCollections().toArray();
         res.json(collections);
@@ -14,7 +17,7 @@ router.get('/db', async (req, res, next) => {
     }
 });
 
-router.get('/db/reports', async (req, res, next) => {
+router.get('/reports', async (req, res, next) => {
     try {
         const reports = await req.db
             .collection('reports')
@@ -26,7 +29,7 @@ router.get('/db/reports', async (req, res, next) => {
     }
 });
 
-router.get('/db/createReport', async (req, res, next) => {
+router.get('/createReport', async (req, res, next) => {
     try {
         const report = await createReport(req.db);
         res.json(report);
@@ -35,24 +38,29 @@ router.get('/db/createReport', async (req, res, next) => {
     }
 });
 
-// TODO Add this to scheduling
-// POST /api/v1/layouts
+/**
+ * GET /api/v1/db/deleteOldLayouts/:days
+ * delete all layouts older than x days
+ */
 router.get('/deleteOldLayouts/:days', async (req, res, next) => {
     const days = Number(req.params.days);
     const date = new Date();
     date.setDate(date.getDate() - days);
-    req.db.listCollections().toArray((err, allCollections) => {
-        allCollections.map(async coll => {
-            if (coll.name.includes('layouts')) {
-                console.log(coll.name);
-                const curser = await req.db.collection(coll.name).remove({ time: { $lt: date } });
-                console.log(
-                    `DELETE LAYOUTS on ${coll.name} #${curser.result.n} - status: ${
-                        curser.result.ok
-                        }`
-                );
-            }
-        });
+    req.db.listCollections().toArray(async (err, allCollections) => {
+        await Promise.all(
+            allCollections.map(async coll => {
+                if (coll.name.includes('layouts')) {
+                    console.log(coll.name);
+                    const curser = await req.db
+                        .collection(coll.name)
+                        .remove({ time: { $lt: date } });
+                    console.log(
+                        `DELETE LAYOUTS on ${coll.name} #${curser.result.n} - status: ${curser.result.ok}`
+                    );
+                }
+            })
+        );
+        console.log('finish delete layouts')
         res.json('wann');
     });
 });
@@ -73,9 +81,7 @@ router.get('/repairLayouts', async (req, res, next) => {
                     layouts.map(layout => {
                         const { tib, cris } = layoutStats(layout.layout);
                         console.log(
-                            `Layout: ${layout.x}:${layout.y} bevor: ${layout.tib}:${
-                                layout.cris
-                                } after: ${tib}:${cris}`
+                            `Layout: ${layout.x}:${layout.y} bevor: ${layout.tib}:${layout.cris} after: ${tib}:${cris}`
                         );
                         layout.tib = tib;
                         layout.cris = cris;
