@@ -1,13 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Container from '../style/Container';
+import ContainerRaw from '../style/Container';
 import styled from 'styled-components';
 
 const Text = styled.div`
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: #292929;
     font-style: italic;
 `;
+
+const Container = styled(ContainerRaw)`
+        background: bisque;
+`
 
 export default () => (
     <Container>

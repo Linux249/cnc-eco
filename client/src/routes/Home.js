@@ -17,10 +17,10 @@ export default () => (
             <BuildingMenu area="buildings" />
             <Base />
             <div>
-                <Share />
                 <ProductionInfo />
-                {/*<UrlLoader />*/}
+                <Share />
                 <ResetArea />
+                {/*<UrlLoader />*/}
                 <Message />
             </div>
             <BuildingMenu area="defense" />

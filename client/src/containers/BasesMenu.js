@@ -10,7 +10,7 @@ function BasesMenu({ bases, selectedBase, selectBase }) {
     }, []);
 
     return (
-        <Row>
+        <Row wrap>
             {bases.map((base, i) => (
                 <Button key={i} onClick={() => selectBase(i)} active={selectedBase === i}>
                     {base.name}

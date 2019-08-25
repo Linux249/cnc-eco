@@ -111,7 +111,7 @@ const roundTwoPoints = (p1, p2, day) => {
  */
 export const calcBuildingCost = building => {
     let costs = {
-        t: 1,
+        t: 0,
         p: 0,
     };
     // if (building.lvl > 65) building.lvl = 65
@@ -133,9 +133,9 @@ export const calcBuildingCost = building => {
                 costs.t = tib * 2; // dubble costs
                 costs.p = Math.round(tib / 2); //power costs for a raf
                 break;
-            case 'p':   // power plant: tib is 2,6times the tib
-                costs.t = Math.round(tib * 2.6)
-                costs.p = Math.round(tib / 4)
+            case 'p': // power plant: tib is 2,6times the tib
+                costs.t = Math.round(tib * 2.6);
+                costs.p = Math.round(tib / 4);
             default:
                 break;
         }
@@ -158,6 +158,27 @@ const calcBuildingCostAll = (buildings, lvl = 1) => {
         }
     });
 
+    return costs;
+};
+
+export const calcBaseCosts = buildings => {
+    const costs = {
+        tib: 0,
+        power: 0,
+    };
+
+    buildings.forEach(b => {
+        if (b.type && b.lvl) {
+            const building = { ...b };
+            for (let lvl = 1; lvl <= b.lvl; lvl += 1) {
+                building.lvl = lvl;
+                const cost = calcBuildingCost(building);
+                if (lvl >= 22) console.log(building, cost);
+                costs.tib += cost.t;
+                costs.power += cost.p;
+            }
+        }
+    });
     return costs;
 };
 
