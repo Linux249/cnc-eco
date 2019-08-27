@@ -1,5 +1,13 @@
 import styled from 'styled-components';
-import { backgroundColor, border, borderRadius, baseColorWhite, baseColorDark, alarm, alarmWhite } from './constants';
+import {
+    backgroundColor,
+    border,
+    borderRadius,
+    baseColorWhite,
+    baseColorDark,
+    alarm,
+    alarmWhite,
+} from './constants';
 
 export const Button = styled.div`
     cursor: pointer;
@@ -8,17 +16,18 @@ export const Button = styled.div`
     justify-content: center;
     align-items: center;
 
-    background-color: ${({ active, red }) => (active ? backgroundColor : red ? alarm: 'inherit')};
+    background-color: ${({ active, red }) => (active ? backgroundColor : red ? alarm : 'inherit')};
     border: ${border};
     border-radius: ${borderRadius};
 
-    box-shadow: ${({ active }) => (active ? `2px 2px 0px 1px  ${baseColorDark};` : '')}; //margin: 2px;
+    box-shadow: ${({ active }) =>
+        active ? `2px 2px 0px 1px  ${baseColorDark};` : ''}; //margin: 2px;
     padding: ${({ small }) => (small ? '0.2rem' : '0.3rem')} 0.75rem;
     margin: ${({ small }) => (small ? '2px  ' : '0.25rem')};
 
     font-size: 0.8rem;
     font-weight: 600;
-    color: ${({ red }) => (red ? 'white': '#4d3e13')};
+    color: ${({ red }) => (red ? 'white' : '#4d3e13')};
 
     &:first-child {
         ${p => (p.first ? ' margin-left: 0;' : '')}

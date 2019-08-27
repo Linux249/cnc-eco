@@ -92,7 +92,7 @@ function User(props) {
         console.log('add updateWorlds');
         if (!name) return setError('add player name first');
         setLoading(true);
-        setSuccess('')
+        setSuccess('');
 
         const res = await fetch(api_url + '/user/updateWorlds', {
             method: 'GET',
@@ -168,11 +168,15 @@ function User(props) {
                 <Container>
                     <Title>{!deleteSecure ? 'Delete Account' : 'Are you sure?'}</Title>
                     {!deleteSecure ? (
-                        <Button red onClick={deleteUser}>DELETE</Button>
+                        <Button red onClick={deleteUser}>
+                            DELETE
+                        </Button>
                     ) : (
                         <Row>
                             <Button onClick={() => setDeleteSecure(false)}>No</Button>
-                            <Button red onClick={deleteUser}>Yes</Button>
+                            <Button red onClick={deleteUser}>
+                                Yes
+                            </Button>
                         </Row>
                     )}
                 </Container>

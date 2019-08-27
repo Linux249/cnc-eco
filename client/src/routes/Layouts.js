@@ -1,27 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import BodyRaw from '../style/Body';
-import Text from '../style/Text';
-import Button from '../style/Button';
-import Layout from '../components/Layout';
-import { api_url } from '../config';
-import { changeLoading } from '../store/actions/player';
-import { Column } from '../style/Column';
-import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
+import Layout from '../components/Layout';
+import { changeLoading } from '../store/actions/player';
+import BodyRaw from '../style/Body';
+import Button from '../style/Button';
+import { Column } from '../style/Column';
 import Row from '../style/Row';
 import Container from '../style/Container';
 import Info from '../style/Info';
+import Title from '../style/Title';
+import { api_url } from '../config';
 
-// TODO time since last seen a layout shod be placed to the backend
-// TODO IDEA autmaticly remove layouts after X days (cronjobs)
 const LayoutS = styled.div`
     display: flex;
     flex-wrap: wrap;
     max-width: 1200px;
     justify-content: center;
-    //align-items: center;
-    //padding: 2px;
 `;
 
 const Body = styled(BodyRaw)`
@@ -30,9 +26,13 @@ const Body = styled(BodyRaw)`
 `;
 
 function Layouts(props) {
+    /** list of layouts loaded from API*/
     const [layouts, setLayouts] = useState([]);
+    /** How many are loaded? response to user/from API*/
     const [message, setMessage] = useState('');
+    /** sort: tib, kris, cris, time - set carefully while be used on DB query*/
     const [sort, setSort] = useState('tib');
+    /** like limit, skip*/
     const [limit, setLimit] = useState(200);
 
     useEffect(() => {
@@ -82,9 +82,9 @@ function Layouts(props) {
             </LayoutS>
             <Column>
                 <Container>
-                    <Text>Sort layouts</Text>
+                    <Title>Sort layouts</Title>
                     <Row>
-                        <Button first active={sort === 'tib'} onClick={() => changeSort('tib')}>
+                        <Button active={sort === 'tib'} onClick={() => changeSort('tib')}>
                             Tib
                         </Button>
                         <Button active={sort === 'cris'} onClick={() => changeSort('cris')}>
@@ -99,9 +99,9 @@ function Layouts(props) {
                     </Row>
                 </Container>
                 <Container>
-                    <Text>{'Loaded: ' + layouts.length}</Text>
+                    <Title>{'Loaded: ' + layouts.length}</Title>
                     <Row>
-                        <Button first active={limit === 100} onClick={() => setLimit(100)}>
+                        <Button active={limit === 100} onClick={() => setLimit(100)}>
                             100
                         </Button>
                         <Button active={limit === 200} onClick={() => setLimit(200)}>
@@ -112,12 +112,12 @@ function Layouts(props) {
                         </Button>
                         <Button onClick={getLayouts}>Update</Button>
                     </Row>
-                {message.length && <Info fix>{message}</Info>}
+                    {message.length && <Info>{message}</Info>}
                 </Container>
                 <Container>
-                    <Text>Save Layout</Text>
+                    <Title>Save Layout</Title>
                     <Row>
-                        <Button first>Coming soon...</Button>
+                        <Button>Coming soon...</Button>
                     </Row>
                 </Container>
             </Column>

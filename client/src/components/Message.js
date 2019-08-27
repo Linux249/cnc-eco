@@ -10,8 +10,8 @@ const Text = styled.div`
 `;
 
 const Container = styled(ContainerRaw)`
-        background: bisque;
-`
+    background: bisque;
+`;
 
 export default () => (
     <Container>

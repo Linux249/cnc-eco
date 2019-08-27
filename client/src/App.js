@@ -22,7 +22,7 @@ import Reset from './routes/Reset';
 import Resend from './routes/Resend';
 import Demo from './routes/Demo';
 import Admin from './routes/Admin';
-import 'react-tippy/dist/tippy.css'
+import 'react-tippy/dist/tippy.css';
 
 class App extends Component {
     componentWillMount() {

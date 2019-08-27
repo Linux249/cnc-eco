@@ -13,7 +13,7 @@ function Slot(props) {
     let { unit, faction, area, shift } = props;
     const { type, slot, lvl } = unit;
 
-    const [focus, setFocus] = useState(false)
+    const [focus, setFocus] = useState(false);
 
     const contextClick = e => {
         e.preventDefault();
@@ -96,7 +96,9 @@ function Slot(props) {
             onBlur={() => setFocus(false)}
         >
             {lvl && <Number>{lvl}</Number>}
-            {(focus || shift) && area === 'buildings' && lvl && <SlotOverlay building={unit} slot={slot} />}
+            {(focus || shift) && area === 'buildings' && lvl && (
+                <SlotOverlay building={unit} slot={slot} />
+            )}
             {img && <img src={type ? img : empty} alt={type} />}
         </SlotStyle>
     );

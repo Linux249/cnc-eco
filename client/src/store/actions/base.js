@@ -33,19 +33,21 @@ export function replaceArea(area) {
     return (dispatch, getStore) => {
         const { base } = getStore();
         console.log({ base, area });
-        base[area] = [...base[area].map((b, i) => {
-            const slot = { slot: i}
-            if(area === 'buildings') {
-                if(b.type === 't' || b.type === 'c') slot.type = b.type
-                if(b.type === 'h') slot.type = 't'
-                if(b.type === 'n') slot.type = 'c'
-            }
-            if(area === 'defense') {
-                if('hjkl'.includes(b.type)) slot.type = b.type
-            }
-            return slot
-        })];
-        console.log(base)
+        base[area] = [
+            ...base[area].map((b, i) => {
+                const slot = { slot: i };
+                if (area === 'buildings') {
+                    if (b.type === 't' || b.type === 'c') slot.type = b.type;
+                    if (b.type === 'h') slot.type = 't';
+                    if (b.type === 'n') slot.type = 'c';
+                }
+                if (area === 'defense') {
+                    if ('hjkl'.includes(b.type)) slot.type = b.type;
+                }
+                return slot;
+            }),
+        ];
+        console.log(base);
         dispatch({
             type: REPLACE_ALL_BASE,
             base,

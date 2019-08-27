@@ -6,13 +6,12 @@ export default styled.div`
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    
 
     font-size: 0.75rem;
 
     max-width: 338px;
     max-height: 450px;
-    
+
     @media ${sizes.tablet} {
         max-width: 100%;
     }

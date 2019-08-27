@@ -7,7 +7,7 @@ export default styled.div`
     grid-column-end: 3;
     grid-template-columns: 1fr minmax(626px, 728px) 1fr;
 
-    @media ${(props) => props.large ? sizes.tablet : sizes.mobile} {
+    @media ${props => (props.large ? sizes.tablet : sizes.mobile)} {
         display: flex;
         flex-direction: column;
     }

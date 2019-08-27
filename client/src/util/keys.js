@@ -193,7 +193,6 @@ export default {
     },
 };
 
-
 const keymap = {
     /* GDI Buildings */
     GDI_Accumulator: 'a',
@@ -213,7 +212,6 @@ const keymap = {
     GDI_Support_Ion: 'i',
 
     /* Forgotten Buildings */
-
 
     /* Nod Buildings */
     NOD_Refinery: 'r',
@@ -358,7 +356,6 @@ const offense_unit_map = {
     NOD_Venom: 'v',
     NOD_Vertigo: 't',
 };
-
 
 // export const nod_buildings = {
 //     r: 'NOD_Refinery',

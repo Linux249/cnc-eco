@@ -8,7 +8,7 @@ export default styled.div`
     height: 15%;
     align-content: center;
     text-align: center;
-    
+
     padding: 2px;
 
     & > img {

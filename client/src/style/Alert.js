@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { alarm, sizes } from './constants';
 
 export default styled.div`
-    width: ${({fix}) => fix ? '338px' : '100%'};
+    width: ${({ fix }) => (fix ? '338px' : '100%')};
     display: flex;
     justify-content: center;
 
@@ -19,10 +19,10 @@ export default styled.div`
     //font-size: 0.8rem;
     text-transform: uppercase;
     
-
-    @media ${sizes.mobile} {
-        width: 100%;
-    }
+    //
+    // @media ${sizes.mobile} {
+    //     width: 100%;
+    // }
     
     //transition: all 1s;
 `;

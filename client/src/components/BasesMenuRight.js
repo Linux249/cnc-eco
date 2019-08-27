@@ -12,19 +12,19 @@ export default () => {
 
     return (
         <div>
-            <Area >
-            <Button first onClick={() => toggleShowChart(!showChart)}>Chart</Button>
-            {showChart && <LineChart />}
-            {!showChart && <InfoText>
-                shows future production as if all buildings would be upgraded one after one
-            </InfoText>}
+            <Area>
+                <Button onClick={() => toggleShowChart(!showChart)}>Chart</Button>
+                {showChart && <LineChart />}
+                {!showChart && (
+                    <InfoText>
+                        shows future production as if all buildings would be upgraded one after one
+                    </InfoText>
+                )}
             </Area>
-            <Area >
-            <Button first onClick={() => toggleShowUpgrade(!showUpgrade)}>Upgrade</Button>
-            {showUpgrade && <UpgradeBase />}
-            {!showUpgrade && <InfoText>
-                upgrade all buildings of one type
-            </InfoText>}
+            <Area>
+                <Button onClick={() => toggleShowUpgrade(!showUpgrade)}>Upgrade</Button>
+                {showUpgrade && <UpgradeBase />}
+                {!showUpgrade && <InfoText>upgrade all buildings of one type</InfoText>}
             </Area>
             <Share />
         </div>

@@ -34,7 +34,7 @@ const Diff = styled.div`
     flex: 1;
 
     color: ${p => (p.positiv ? 'green' : '#e06161')};
-    
+
     &:last-child {
         margin-right: 5px;
     }

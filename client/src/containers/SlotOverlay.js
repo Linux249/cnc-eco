@@ -24,7 +24,7 @@ const Cost = styled.div`
 
     font-weight: 600;
     color: white;
-     background-color: ${shadowColor};
+    background-color: ${shadowColor};
 `;
 
 const Icon = styled.img`

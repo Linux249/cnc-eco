@@ -12,8 +12,8 @@ export function menu(state = initState, action) {
         case MENU_SET_SHIFT_PRESSED:
             return {
                 ...state,
-                shift: action.shift
-            }
+                shift: action.shift,
+            };
         default:
             return state;
     }

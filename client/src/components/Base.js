@@ -4,6 +4,7 @@ import Grid from '../style/Grid';
 import ProductionInfo from '../containers/ProductionInfo';
 import { store } from '../index';
 import { setShiftPressed } from '../store/actions/menu';
+import Area from '../style/Area';
 
 const slots = [0, 1, 2, 3, 4, 5, 6, 7].map(function(y) {
     return [0, 1, 2, 3, 4, 5, 6, 7, 8].map(function(x) {
@@ -41,8 +42,8 @@ export default () => {
     }, []); // Empty array ensures that effect is only run on mount and unmount
 
     return (
-        <Grid fac="" rows={8}>
-            {slots}
-        </Grid>
+        <Area>
+            <Grid rows={8}>{slots}</Grid>
+        </Area>
     );
 };

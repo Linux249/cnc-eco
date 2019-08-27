@@ -256,15 +256,15 @@ class User extends Component {
                         <Title>Add a World</Title>
                         <LoadingPoints loading={loading} />
                         {worlds.length !== 0 &&
-                        worlds.map(w => (
-                            <Button
-                                key={w.worldId}
-                                onClick={() => this.changeWorld(w.worldId)}
-                                active={world === w.worldId}
-                            >
-                                {w.worldName}
-                            </Button>
-                        ))}
+                            worlds.map(w => (
+                                <Button
+                                    key={w.worldId}
+                                    onClick={() => this.changeWorld(w.worldId)}
+                                    active={world === w.worldId}
+                                >
+                                    {w.worldName}
+                                </Button>
+                            ))}
                         <Button onClick={this.loadWorlds}>load</Button>
 
                         <Button onClick={!this.props.name ? this.addPlayer : this.addWorld}>
