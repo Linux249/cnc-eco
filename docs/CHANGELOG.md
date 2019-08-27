@@ -1,10 +1,6 @@
 // todo only commit on release
 
-Version 2.1.4
-- add to production the total costs and the efficiencies of tib/power  
-- some style improvements in the buildings, army und defense area 
-
-Version 2.1.3 sort layouts for power (da867551)
+Version 2.1.3 sort layouts for power 
 - add power to sort layouts for the best power layout (e286e572)
 - reset all layouts in db 
 - improve responsive layout (7ba73b69)(988d98b0)
