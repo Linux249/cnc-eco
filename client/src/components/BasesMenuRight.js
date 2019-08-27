@@ -5,13 +5,21 @@ import Area from '../style/Area';
 import Button from '../style/Button';
 import { InfoText } from '../style/InfoText';
 import Share from './Share';
+import ProductionInfo from '../containers/ProductionInfo';
+import Column from '../style/Column';
 
 export default () => {
     const [showChart, toggleShowChart] = useState(false);
     const [showUpgrade, toggleShowUpgrade] = useState(true);
 
     return (
-        <div>
+        <Column>
+            <ProductionInfo />
+            <Area>
+                <Button onClick={() => toggleShowUpgrade(!showUpgrade)}>Upgrade</Button>
+                {showUpgrade && <UpgradeBase />}
+                {!showUpgrade && <InfoText>upgrade all buildings of one type</InfoText>}
+            </Area>
             <Area>
                 <Button onClick={() => toggleShowChart(!showChart)}>Chart</Button>
                 {showChart && <LineChart />}
@@ -21,12 +29,7 @@ export default () => {
                     </InfoText>
                 )}
             </Area>
-            <Area>
-                <Button onClick={() => toggleShowUpgrade(!showUpgrade)}>Upgrade</Button>
-                {showUpgrade && <UpgradeBase />}
-                {!showUpgrade && <InfoText>upgrade all buildings of one type</InfoText>}
-            </Area>
             <Share />
-        </div>
+        </Column>
     );
 };
