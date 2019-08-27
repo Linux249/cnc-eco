@@ -7,7 +7,7 @@ const Container = styled(Area)`
     width: 338px;
 
     @media ${sizes.mobile} {
-        width: 100%;
+        width: unset;
     }
 `;
 

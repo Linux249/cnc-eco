@@ -17,10 +17,22 @@ import Info from '../style/Info';
 import { Link } from 'react-router-dom';
 import qs from 'query-string';
 import styled from 'styled-components';
+import { sizes } from '../style/constants';
 
-const Fat = styled.div`
+const PlayerName = styled.div`
     font-weight: 600;
     font-size: 2.5rem;
+`;
+
+const Middle = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+
+    flex-direction: column;
+
+    @media ${sizes.mobile} {
+        flex-direction: column;
+    }
 `;
 
 function User(props) {
@@ -121,12 +133,12 @@ function User(props) {
     return (
         <Body>
             <div />
-            <Row wrap>
+            <Middle>
                 {error && <Alert>{error}</Alert>}
                 <Container>
                     <Label htmlFor="name">Player name:</Label>
                     {name ? (
-                        <Fat>{name}</Fat>
+                        <PlayerName>{name}</PlayerName>
                     ) : (
                         <>
                             <InfoText>
@@ -180,7 +192,7 @@ function User(props) {
                         </Row>
                     )}
                 </Container>
-            </Row>
+            </Middle>
             <BodySide>{!playerAdded && <></>}</BodySide>
         </Body>
     );
