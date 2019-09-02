@@ -1,8 +1,12 @@
 // todo only commit on release
-Version 2.1.5
+
+Version 2.2.0
+- add /feedback for getting user feedback with a list of all sended feedback (89f49478)
+- fix copy to clipboard for layouts (b2beda7b)
+
+Version 2.1.5 (5d5be203)
 - fix overlay bug with world menu and lvl of buildings (408e5e9c)
 - small style fixes (6058d56b)
-- fix copy to clipboard for layouts
 - cost now reduce correctly (08344ae9)
 - add production info header (3b9f6ae9)
 
