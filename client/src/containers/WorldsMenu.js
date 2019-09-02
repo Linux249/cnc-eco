@@ -24,7 +24,7 @@ const DropDownArea = styled(Area)`
     position: absolute;
     top: 2rem;
     right: 0;
-    z-index: 10;
+    z-index: 20;
     //background-color: red;
     transition: height 0.25s linear 0.1s;
 `;
