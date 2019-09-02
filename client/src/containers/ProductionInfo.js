@@ -77,7 +77,7 @@ function ProductionInfo({ buildings }) {
                 const newProduction = calcProduction(buildings);
                 const newCosts = calcBaseCosts(buildings);
                 setProduction(newProduction);
-                setCosts(costs);
+                setCosts(newCosts);
                 console.warn(diffCosts.tib + (newCosts.tib - costs.tib));
                 setDiffProd({
                     tib: diffProd.tib + (newProduction.tib - production.tib),
