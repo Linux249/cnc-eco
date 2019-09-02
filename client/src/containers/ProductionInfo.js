@@ -1,9 +1,8 @@
 /**
  * Created by Bombassd on 03.01.2017.
  */
-import React, { Component, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
-import Info from '../style/ProductionInfo';
 import { shortenNumber } from '../util/service';
 import { calcBaseCosts, calcProduction } from '../util/production';
 import icon_tib from '../img/icon/icon_tiberium.png';
@@ -16,8 +15,8 @@ import Button from '../style/Button';
 import Title from '../style/Title';
 
 const rotate = keyframes`
- from {top: -10px; left: 0; visibility: visible;}
-to {top: 30px; left: 0; visibility: hidden;}
+    from {top: -10px; left: 0; visibility: visible;}
+    to {top: 30px; left: 0; visibility: hidden;}
 /*0% {top: -10px; left: 0;}
 
   100% {top: 30px; left: 0;}*/
@@ -50,6 +49,10 @@ const Img = styled.img`
     height: 24px;
 `;
 
+const MiniIcon = styled.img`
+    height: 14px;
+`;
+
 const Icon = styled.div`
     display: flex;
     justify-content: center;
@@ -63,6 +66,13 @@ const Line = styled.div`
     flex-grow: 1;
 `;
 
+const HeaderElement = styled.div`
+    //flex: 1;
+    display: flex;
+    justify-content: center;
+
+`
+
 function ProductionInfo({ buildings }) {
     const firstRender = useRef(true);
     const [production, setProduction] = useState({ tib: 0, kris: 0, power: 0, credits: 0 });
@@ -73,7 +83,7 @@ function ProductionInfo({ buildings }) {
     useEffect(() => {
         if (!firstRender.current)
             window.requestIdleCallback(() => {
-                console.error('CALC NEW PRODUCTIOON');
+                console.error('CALC NEW PRODUCTION');
                 const newProduction = calcProduction(buildings);
                 const newCosts = calcBaseCosts(buildings);
                 setProduction(newProduction);
@@ -107,6 +117,14 @@ function ProductionInfo({ buildings }) {
     return (
         <Area>
             <Title>Production</Title>
+            <Line>
+                <Icon></Icon>
+                <HeaderElement>total</HeaderElement>
+                <HeaderElement>/h</HeaderElement>
+                <HeaderElement>costs</HeaderElement>
+                <HeaderElement>eff <MiniIcon src={icon_tib} alt={icon_tib}/></HeaderElement>
+                <HeaderElement>eff <MiniIcon src={icon_power} alt={icon_tib} /></HeaderElement>
+            </Line>
             <Line>
                 <Icon>
                     <Img src={icon_tib} alt={icon_tib} />
