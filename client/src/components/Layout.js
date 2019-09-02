@@ -81,7 +81,19 @@ const Layout = ({ layout }) => {
     async function copyToClipBoard() {
         console.log('copyToClipBoard');
         console.log({ tib: layout.tib, cris: layout.cris });
-        await navigator.clipboard.writeText(`[coords]${layout.x}:${layout.y}[/coords]`);
+        const text = `[coords]${layout.x}:${layout.y}[/coords]`;
+        try {
+            await navigator.clipboard.writeText(text);
+        } catch (e) {
+            console.error("async clipboard api doesn't work -> fallback");
+            console.error(e);
+            const input = document.createElement('input');
+            document.body.appendChild(input);
+            input.value = text;
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+        }
     }
 
     return (
