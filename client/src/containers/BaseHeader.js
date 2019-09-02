@@ -55,9 +55,14 @@ class BaseHeader extends Component {
                         Demo
                     </Link>*/}
                     {isAuthenticated ? (
-                        <Link to="/user" activeClassName="active">
-                            {name || 'Add a player name first'}
-                        </Link>
+                        <>
+                            <Link to="/feedback" activeClassName="active">
+                                Feedback
+                            </Link>
+                            <Link to="/user" activeClassName="active">
+                                {name || 'Add a player name first'}
+                            </Link>
+                        </>
                     ) : (
                         <Fragment>
                             <Link to="/login" activeClassName="active">

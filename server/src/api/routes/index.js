@@ -11,6 +11,7 @@ import worlds from './worlds';
 import reports from './reports/index';
 import performanceRouter from './performance/index';
 import layoutsRouter from './layouts/index';
+import feedbackRouter from './feedback/index';
 
 const router = Router();
 
@@ -29,9 +30,9 @@ router.use('/', layoutsRouter);
 router.use('/', playerRouter);
 router.use('/', allianceRouter);
 router.use('/', performanceRouter);
+router.use('/feedback', feedbackRouter);
 
 // Protected through login
 router.use('/', user);
-
 
 export default router;

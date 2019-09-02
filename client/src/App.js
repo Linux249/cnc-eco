@@ -23,6 +23,7 @@ import Resend from './routes/Resend';
 import Demo from './routes/Demo';
 import Admin from './routes/Admin';
 import 'react-tippy/dist/tippy.css';
+import Feedback from './routes/Feedback';
 
 class App extends Component {
     componentWillMount() {
@@ -50,6 +51,7 @@ class App extends Component {
                     <Route path="/register" component={Register} />
                     <Route path="/resend" component={Resend} />
                     <Route path="/reset/:token?" component={Reset} />
+                    <Route path="/feedback" component={Feedback} />
                     <ProtectedRoute path="/bases" auth={auth} name={name} component={Bases} />
                     <ProtectedRoute
                         path="/layouts/:world"
