@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import qs from 'query-string';
 import { connect } from 'react-redux';
 import { api_url } from '../config';
 import { changeWorld, updatePlayer } from '../store/actions/player';
@@ -15,7 +16,6 @@ import Alert from '../style/Alert';
 import BodySide from '../style/BodySide';
 import Info from '../style/Info';
 import { Link } from 'react-router-dom';
-import qs from 'query-string';
 import styled from 'styled-components';
 import { sizes } from '../style/constants';
 
@@ -27,8 +27,6 @@ const PlayerName = styled.div`
 const Middle = styled.div`
     display: flex;
     flex-wrap: wrap;
-
-    flex-direction: column;
 
     @media ${sizes.mobile} {
         flex-direction: column;

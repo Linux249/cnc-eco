@@ -3,13 +3,19 @@ import styled from 'styled-components';
 import { InfoText } from '../style/InfoText';
 import Body from '../style/Body';
 import Area from '../style/Area';
-import Link from '../style/Link';
 import Title from '../style/Title';
 
 const Description = styled.div`
     font-weight: 300;
     font-size: 1rem;
+    margin: 5px;
 `;
+
+const Link = styled.div`
+    margin: 0.5rem;
+    font-weight: 600;
+`;
+
 
 export default () => (
     <Body>

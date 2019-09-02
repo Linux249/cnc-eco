@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 const LoadingBar = styled.div`
     position: relative;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
     width: 100%;
     height: 0.3rem;
     background-color: #ffffff;
