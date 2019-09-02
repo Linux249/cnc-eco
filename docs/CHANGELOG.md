@@ -1,6 +1,12 @@
 // todo only commit on release
+Version 2.1.5
+- fix overlay bug with world menu and lvl of buildings (408e5e9c)
+- small style fixes (6058d56b)
+- fix copy to clipboard for layouts
+- cost now reduce correctly (08344ae9)
+- add production info header (3b9f6ae9)
 
-Version 2.1.4
+Version 2.1.4 (e29b9cdd)
 - add to production the total costs and the efficiencies of tib/power  (f9904914)
 - some style improvements in the buildings, army und defense area (2a5db790) (c6647284)
 - add ProductionInfo to Bases (552f89d5)
