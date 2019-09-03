@@ -21,7 +21,7 @@ export default async (req, res, next) => {
             y: +y,
             level: body[key].level,
             alliance: +a,
-            world: w,
+            // world: +w,
             player: pl,
             layout: layoutString,
             time: new Date(),
@@ -32,7 +32,7 @@ export default async (req, res, next) => {
         };
     });
     const collection = db.collection(`layouts_${w}`);
-    console.log(`UPDATE LAYOUTS: ${pl} update ${layouts.length}# on ${w}`);
+    console.log(`UPDATE LAYOUTS: ${layouts.length}# from ${pl} on ${w}`);
 
     await layouts.forEach(layout => {
         const filter = { x: +layout.x, y: +layout.y, alliance: +a };

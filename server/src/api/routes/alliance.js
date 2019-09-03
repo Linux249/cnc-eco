@@ -5,7 +5,7 @@ const router = Router();
 
 // GET // api/v1/alliance?world=22&alliance=123
 router.get('/alliance', async (req, res, next) => {
-    console.log('Test logs in /alliance');
+    // console.log('Test logs in /alliance');
     const { world, alliance: allianceId } = req.query;
 
     if (!world) return next(new Error('world id is missing'));
@@ -13,7 +13,7 @@ router.get('/alliance', async (req, res, next) => {
 
     const aId = Number(`${allianceId}${world}`);
 
-    console.log({ world, allianceId, aId });
+    // console.log({ world, allianceId, aId });
 
     let alliance;
     try {
@@ -41,19 +41,10 @@ router.get('/alliance', async (req, res, next) => {
             return player;
         })
     );
-    /*
-    const test1 = await collection.find({playerId: String(member.playerId)})
-    const test2 = await collection.find({playerId: Number(member.playerId)})
-    const test3 = await collection.find({playerId: member.playerId})
-    const test4 = await collection.findOne({playerId: String(member.playerId)})
-    const test5 = await collection.findOne({playerId: Number(member.playerId)})
-    const test6 = await collection.findOne({playerId: member.playerId})
-    console.log({test1, test2, test3})
-    console.log({test6, test4, test5}) */
 
     // TODO auth require
 
-    console.log(alliance);
+    // console.log(alliance);
     res.json(alliance);
 });
 
