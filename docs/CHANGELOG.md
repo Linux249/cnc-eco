@@ -1,5 +1,8 @@
 // todo only commit on release
 
+Version 2.3.0
+- user can now only see the layouts seen by alliance or by himself if he has no ally (be8cef46)
+
 Version 2.2.0
 - add /feedback for getting user feedback with a list of all sended feedback (89f49478)
 - fix copy to clipboard for layouts (b2beda7b)
