@@ -126,14 +126,14 @@ export const layoutStats = layout => {
         },
         [0, '']
     );
-    console.log('Finale best: ', power, powerLayout);
-    logLayout(powerLayout);
+    // console.log('Finale best: ', power, powerLayout);
+    // logLayout(powerLayout);
     const r = {
         tib: Math.round(tib * 100) / 100,
         cris: Math.round(cris * 100) / 100,
         power,
         powerLayout,
     };
-    console.log(r);
+    // console.log(r);
     return r;
 };

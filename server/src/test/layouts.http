@@ -1,0 +1,49 @@
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection).
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+
+
+// update one layout
+POST http://{{host}}/api/v1/layouts?pl=linux249&w=373&a=126
+Content-Type: application/json
+
+{"311:42":{"x":311,"y":42,"level":13,"id":5724732,"distance":3,"selectedBaseID":381184,"alliance":801,"world":403,"player":"linux249","failCount":0,"layout":"..............c........c.c......c.c......t....t.....t..t.t...t....................jj..hh.hl............ll....ll......h......l.h..k.........jjj.k","name":"Outpost"}}
+
+###
+
+// update same layout with diffrent alliance
+POST http://{{host}}/api/v1/layouts?pl=linux249&w=373&a=0
+Content-Type: application/json
+
+{"311:42":{"x":311,"y":42,"level":13,"id":5724732,"distance":3,"selectedBaseID":381184,"alliance":801,"world":403,"player":"linux249","failCount":0,"layout":"..............c........c.c......c.c......t....t.....t..t.t...t....................jj..hh.hl............ll....ll......h......l.h..k.........jjj.k","name":"Outpost"}}
+
+###
+
+// update same layout with diffrent alliance and diffrent player
+POST http://{{host}}/api/v1/layouts?pl=linux250&w=373&a=0
+Content-Type: application/json
+
+{"311:42":{"x":311,"y":42,"level":13,"id":5724732,"distance":3,"selectedBaseID":381184,"alliance":801,"world":403,"player":"linux249","failCount":0,"layout":"..............c........c.c......c.c......t....t.....t..t.t...t....................jj..hh.hl............ll....ll......h......l.h..k.........jjj.k","name":"Outpost"}}
+
+###
+
+// get layout with alliance
+GET http://{{host}}/api/v1/layouts?pl=linux249&w=373&a=126
+Authorization: Bearer
+
+###
+
+// get layout without alliance
+GET http://{{host}}/api/v1/layouts?pl=linux250&w=373&a=0
+Authorization: Bearer
+
+###
+
+// delete all layouts
+GET http://{{host}}/api/v1/layouts?pl=linux250&w=373&a=0
+Authorization: Bearer
+
+###

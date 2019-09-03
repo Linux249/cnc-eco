@@ -15,7 +15,7 @@ Content-Type: application/json
 
 // delete layoyuts behind some day's
 GET http://{{host}}/api/v1/db/deleteOldLayouts/-1
-Content-Type: application/json
+Authorization: Bearer
 
 ###
 

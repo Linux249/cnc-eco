@@ -8,18 +8,12 @@ import {
 } from '../constants/actionTypes';
 
 const initState = {
-    a: null,
+    a: 0, // todo why are here two places 4 ally id?
     w: null, // Toggle for showing help everywhere or not
     worldName: '', // Toggle for showing help everywhere or not
     name: '',
-    allianceId: null,
-    worlds: [
-        /*{ worldName: 'dumm' },
-        { worldName: 'dumm with' },
-        { worldName: 'dumm with some' },
-        { worldName: 'dumm with some löonger' },
-        { worldName: 'dumm with some löonger name' },*/
-    ],
+    allianceId: 0,
+    worlds: [],
     bases: [],
     selectedBase: 0,
     loading: false,
