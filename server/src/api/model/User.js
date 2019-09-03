@@ -41,7 +41,7 @@ const userSchema = Schema({
     isVerified: { type: Boolean, default: false },
     password: String,
     role: {type: String,
-        enum: ['player', 'admin '],
+        enum: ['player', 'admin'],
         default: 'player'
     },
 });
