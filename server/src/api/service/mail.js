@@ -7,11 +7,15 @@ sgMail.setApiKey(
 );
 
 const msg = {
-    to: 'julian.libor@gmail.com',
+    to: '',
     from: 'info@cnc-eco.de',
-    subject: 'Please verify your email for cnc-eco.de',
-    text: 'and easy to do anywhere, even with Node.js',
-    html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+    // subject: 'Please verify your email for www.cnc-eco.de',
+    // text: 'and easy to do anywhere, even with Node.js',
+    // html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+    dynamic_template_data: {
+        token: ''
+    },
+    template_id: 'd-421069ce61c94c9ca911b99ec0794ec5'
 };
 
 const transporter = nodemailer.createTransport({
@@ -31,21 +35,22 @@ const transporter = nodemailer.createTransport({
 export async function sendVerification(token, mail) {
     console.log('sendVerification');
     msg.to = mail;
-    const body =
-        'Hello,\n\n' +
-        'Please verify your account by clicking the link: \n' +
-        'https://www.cnc-eco.de' +
-        '/api/v1/local/verify?token=' +
-        token.token +
-        '\n';
-    msg.text = body;
-    msg.html = body;
+    // const body =
+    //     'Hello,\n\n' +
+    //     'Please verify your account by clicking the link: \n' +
+    //     'https://www.cnc-eco.de' +
+    //     '/api/v1/local/verify?token=' +
+    //     token.token +
+    //     '\n';
+    // msg.text = body;
+    // msg.html = body;
+    msg.dynamic_template_data.token = token.token
     console.log(msg);
     try {
         // const info = await transporter.sendMail(msg);
         const info = await sgMail.send(msg);
-        console.log('Message sent: ', info.messageId);
-        console.log(info);
+        console.log('Verify message sent: ', info.messageId);
+        // console.log(info);
     } catch (e) {
         console.error(e);
     }
