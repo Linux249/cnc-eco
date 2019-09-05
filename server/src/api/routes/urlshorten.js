@@ -30,7 +30,7 @@ router.post('/baseToUrl', async (req, res) => {
     try {
         const item = await UrlShorten.findOne({ url: url });
         if (item) {
-            console.log('find old one');
+            console.log('url is already saved');
             res.status(200).json(item);
         } else {
             const item = new UrlShorten({
@@ -41,7 +41,7 @@ router.post('/baseToUrl', async (req, res) => {
                 name,
             });
             await item.save();
-            console.log('saved new one');
+            console.log('saved new url');
             console.log(item);
             res.status(200).json(item);
         }

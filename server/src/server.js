@@ -81,8 +81,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/*', function (req, res) {
     const file = path.join(p, 'index.html')
-    console.log(req.url)
-    console.log(file)
+    console.log('File loaded -route: ', req.url, '/',file)
     res.sendFile(file);
 });
 
