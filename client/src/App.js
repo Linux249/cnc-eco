@@ -24,6 +24,8 @@ import Demo from './routes/Demo';
 import Admin from './routes/Admin';
 import 'react-tippy/dist/tippy.css';
 import Feedback from './routes/Feedback';
+import Column from './style/Column';
+import Info from './style/Info';
 
 class App extends Component {
     componentWillMount() {
@@ -41,6 +43,12 @@ class App extends Component {
                 <AppS>
                     <BaseHeader />
                     <LoadingLine />
+                    <Column center>
+                        <Info>
+                            This side is still in Development. Be aware that all data may be deleted
+                            while in beta/before release.{' '}
+                        </Info>
+                    </Column>
                     <Route path="/" exact component={Home} />
                     <Route path="/s/:url" component={S} />
                     <Route path="/b/:url" component={B} />
