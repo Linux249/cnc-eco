@@ -80,7 +80,7 @@ function Feedback(props) {
                     <Area>
                         <Title>{feedback.title}</Title>
                         <Text>{feedback.text}</Text>
-                        <InfoText>{feedback.from.player}</InfoText>
+                        <InfoText>{feedback.from ? feedback.from.player : 'Player deleted'}</InfoText>
                     </Area>
                 ))}
             </Middle>
