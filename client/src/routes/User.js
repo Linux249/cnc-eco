@@ -71,7 +71,7 @@ function User(props) {
             }
         }
         token && addPlayer();
-    }, [worldId]);
+    }, []);
 
     const deleteUser = async () => {
         if (!deleteSecure) return setDeleteSecure(true);

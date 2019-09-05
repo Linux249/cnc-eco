@@ -37,14 +37,18 @@ function Layouts(props) {
 
     useEffect(() => {
         getLayouts();
+    }, [props.world]);
+
+    useEffect(() => {
+        if(props.w !== props.world) setMessage('World change - please click update')
     }, [props.w]);
 
     function getLayouts() {
         props.changeLoading(true);
         setMessage('');
-        const { pl, w, allianceId, token } = props;
+        const { pl, world, allianceId, token } = props;
         // todo limit 50 first and than load other
-        const url = `${api_url}/layouts?pl=${pl}&w=${w}&a=${allianceId}&limit=${limit}&skip=0&sort=${sort}`;
+        const url = `${api_url}/layouts?pl=${pl}&w=${world}&a=${allianceId}&limit=${limit}&skip=0&sort=${sort}`;
         fetch(url, {
             headers: {
                 Authorization: 'Bearer  ' + token,
@@ -71,9 +75,10 @@ function Layouts(props) {
         ]);
     }
 
-    return props.world !== props.w ? (
-        <Redirect to={'/layouts/' + props.w} />
-    ) : (
+    // if user tipped in some bullshit redirect to world from store
+    if (isNaN(props.world)) return <Redirect to={'/layouts/' + props.w} />;
+
+    return (
         <Body>
             <LayoutS>
                 {layouts.map((layout, i) => (
@@ -123,6 +128,7 @@ function Layouts(props) {
             </Column>
         </Body>
     );
+    // );
 }
 
 function mapStateToProps(state, ownProps) {

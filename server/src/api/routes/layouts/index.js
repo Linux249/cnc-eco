@@ -38,7 +38,7 @@ router.get('/layouts', async (req, res, next) => {
         // if player has no alli save for each player who saw the layout
 
         if (+a === 0) filter.player = player;
-        console.log(filter);
+        console.log(w, filter);
         const layouts = await collection
             .find(filter)
             .sort({ [sort]: -1 })
