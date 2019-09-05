@@ -1,7 +1,12 @@
 // todo only commit on release
 
-Version 2.3.0
-- user can now only see the layouts seen by alliance or by himself if he has no ally (be8cef46)
+Version: 2.3.1
+- fix loading right layouts when user comes form ingame (92f23310)
+- add a template for verify emails (d8df4c5b)
+- fix name in Feedback when player is deleted (9ac67871)
+
+Version 2.3.0 (beacfeeb)
+- user can now only see the layouts seen by alliance or by himself if he has no ally (faea6994)
 
 Version 2.2.0
 - add /feedback for getting user feedback with a list of all sended feedback (89f49478)
