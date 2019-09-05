@@ -63,7 +63,7 @@ module.exports = function(app, passport) {
 
     // VERIFY MAIL ============================================
     app.get('/local/verify', async (req, res, next) => {
-        console.log('User verify his email with token ', token);
+        console.log('User verify his email with token ');
         const { token } = req.query;
         if (!token) return next(new Error('Token missing'));
 

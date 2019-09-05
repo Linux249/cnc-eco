@@ -32,7 +32,7 @@ export default async (req, res, next) => {
         };
     });
     const collection = db.collection(`layouts_${w}`);
-    console.log(`UPDATE LAYOUTS: ${layouts.length}# from ${pl} on ${w}`);
+    console.log(`UPDATE LAYOUTS: ${layouts.length}# from ${pl}(${a}) on ${w}`);
 
     await layouts.forEach(layout => {
         const filter = { x: +layout.x, y: +layout.y, alliance: +a };
