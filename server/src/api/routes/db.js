@@ -129,7 +129,7 @@ router.get('/updateAllUsersWorlds', async (req, res, next) => {
                 user.worlds = []; // reset worlds
                 await Promise.all(
                     worlds.map(async w => {
-                        const player = await db
+                        const player = await req.db
                             .collection(`players_${w.worldId}`)
                             .findOne({ name });
                         player &&
