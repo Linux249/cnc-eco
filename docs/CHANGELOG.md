@@ -1,6 +1,6 @@
 // todo only commit on release
 
-Version: 2.3.2
+Version: 2.3.2 (af0e36c6)
 - show side-in-beta info everywhere and improve style (45b08461)
 - add buildings counter (fbe5c49c)
 
