@@ -1,5 +1,9 @@
 // todo only commit on release
 
+Version: 2.3.2
+- show side-in-beta info everywhere and improve style (45b08461)
+- add buildings counter (fbe5c49c)
+
 Version: 2.3.1
 - fix loading right layouts when user comes form ingame (92f23310)
 - add a template for verify emails (d8df4c5b)
