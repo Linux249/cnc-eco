@@ -80,7 +80,7 @@ const Layout = ({ layout }) => {
 
     async function copyToClipBoard() {
         console.log('copyToClipBoard');
-        console.log({ tib: layout.tib, cris: layout.cris });
+        console.log(layout);
         const text = `[coords]${layout.x}:${layout.y}[/coords]`;
         try {
             await navigator.clipboard.writeText(text);

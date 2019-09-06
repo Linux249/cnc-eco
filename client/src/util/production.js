@@ -173,7 +173,7 @@ export const calcBaseCosts = buildings => {
             for (let lvl = 1; lvl <= b.lvl; lvl += 1) {
                 building.lvl = lvl;
                 const cost = calcBuildingCost(building);
-                if (lvl >= 22) console.log(building, cost);
+                // if (lvl >= 22) console.log(building, cost);
                 costs.tib += cost.t;
                 costs.power += cost.p;
             }
