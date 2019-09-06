@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { changeLoading } from '../store/actions/player';
+import { changeLoading  as actionChangeLoading } from '../store/actions/player';
 import { api_url } from '../config';
 import { shortenNumber } from '../util/service';
 import tib from '../img/icon/tib_small.png';
@@ -90,29 +90,18 @@ const Body = styled(BodyRaw)`
     grid-template-columns: minmax(100px, 90%) 1fr;
 `;
 
-class Alliance extends Component {
-    constructor(props) {
-        super();
-        this.state = {
-            members: [],
-            s: 'rank',
-            name: '',
-            count: 0,
-            lastUpdate: null,
-        };
-    }
-    componentDidMount() {
-        //get layouts from api
-        console.log('wewewewewe');
-        console.log(this.props.auth);
-        const { w, allianceId, token } = this.props;
-        console.log(w, allianceId, token);
-        if (this.props.auth && this.props.allianceId) this.getAlliance();
-    }
+function Alliance({ allianceId, changeLoading, w, token } ) {
+    /** array for the members data after fetch*/
+    const [members, setMembers] = useState([]);
+    /** sort type, s cause the name sort is already the function name */
+    const [s, setS] = useState('rank');
+    /** alliance name, set after loading ally data*/
+    const [allianceName, setAllianceName] = useState('');
+    /** count members after loading data*/
+    const [count, setCount] = useState(0);
 
-    getAlliance = async () => {
-        this.props.changeLoading(true);
-        const { w, allianceId, token } = this.props;
+    async function getAlliance() {
+        changeLoading(true);
         const url = `${api_url}/alliance?world=${w}&alliance=${allianceId}`;
         const alliance = await fetch(url, {
             headers: {
@@ -120,238 +109,222 @@ class Alliance extends Component {
             },
         }).then(res => res.json());
         console.log({ alliance });
-        this.setState({
-            name: alliance.name,
-            count: alliance.count,
-            lastUpdated: alliance.date,
-            members: alliance.members.sort((a, b) => +b.rank || 0 - +a.rank || 0),
-        });
-        this.props.changeLoading(false);
-    };
+        setAllianceName(alliance.name);
+        setCount(alliance.count);
+        setMembers(alliance.members.sort((a, b) => +b.rank || 0 - +a.rank || 0));
+        changeLoading(false);
+    }
 
-    sort = s => {
+    useEffect(() => {
+        if (allianceId) getAlliance();
+    }, [allianceId]);
+
+    function sort(s) {
         console.log('SORT');
         console.log(s);
-        const { members } = this.state;
-        members.sort((a, b) => +b[s] || 0 - +a[s] || 0);
-        this.setState({
-            members: [...members],
-            s,
-        });
-    };
-
-    render() {
-        const { members, name, count, s } = this.state;
-        return (
-            <Body>
-                <AllianceS>
-                    <Grid>
-                        <Cell active={s === 'name'} onClick={() => this.sort('name')}>
-                            Name
-                        </Cell>
-                        <Cell active={s === 'rank'} onClick={() => this.sort('rank')}>
-                            Rank
-                        </Cell>
-                        <Cell>Roll</Cell>
-                        <Cell active={s === 'points'} onClick={() => this.sort('points')}>
-                            Score
-                        </Cell>
-                        <Cell active={s === 'rPoints'} onClick={() => this.sort('rPoints')}>
-                            <Icon src={researchPoints} alt="Research" />
-                        </Cell>
-                        <Cell active={s === 'basecount'} onClick={() => this.sort('basecount')}>
-                            Bases
-                        </Cell>
-                        <Cell active={s === 'pvekills'} onClick={() => this.sort('pvekills')}>
-                            PVE
-                        </Cell>
-                        <Cell active={s === 'pvpkills'} onClick={() => this.sort('pvpkills')}>
-                            PVP
-                        </Cell>
-                        <Cell>Code</Cell>
-                        <Cell
-                            active={s === 'creditsCount'}
-                            onClick={() => this.sort('creditsCount')}
-                        >
-                            <Icon src={credits} alt="Credits" />
-                        </Cell>
-                        <Cell active={s === 'actcp'} onClick={() => this.sort('actcp')}>
-                            <Icon src={commandoPoints} alt="CP" />
-                        </Cell>
-                        <Cell active={s === 'funds'} onClick={() => this.sort('funds')}>
-                            <Icon src={funds} alt="Funds" />
-                        </Cell>
-                        <Cell active={s === 'schirme'} onClick={() => this.sort('schirme')}>
-                            <Icon src={supplyPoints} alt="Supply" />
-                        </Cell>
-                        <Cell active={s === 'timeToMcv'} onClick={() => this.sort('timeToMcv')}>
-                            Time
-                        </Cell>
-
-                        <Cell>
-                            <div>Off</div>
-                        </Cell>
-                        <Cell>
-                            <div>Def</div>
-                        </Cell>
-                        <Cell>
-                            <Icon src={offenseRepair} alt="Repair" />
-                        </Cell>
-
-                        <Cell active={s === 'totalTib'} onClick={() => this.sort('totalTib')}>
-                            <Icon src={tib} alt="Tib" />
-                            /h
-                        </Cell>
-                        <Cell active={s === 'totalPower'} onClick={() => this.sort('totalPower')}>
-                            <Icon src={cris} alt="Cris" />
-                            /h
-                        </Cell>
-                        <Cell active={s === 'totalCris'} onClick={() => this.sort('totalCris')}>
-                            <Icon src={power} alt="Power" />
-                            /h
-                        </Cell>
-                        <Cell
-                            active={s === 'totalCredits'}
-                            onClick={() => this.sort('totalCredits')}
-                        >
-                            <Icon src={credits} alt="Credits" />
-                            /h
-                        </Cell>
-
-                        <Cell active={s === 'avargDef'} onClick={() => this.sort('avargDef')}>
-                            Def&#8709;
-                        </Cell>
-                        <Cell active={s === 'avargSubLvl'} onClick={() => this.sort('avargSubLvl')}>
-                            Sub&#8709;
-                        </Cell>
-                        <Cell active={s === 'avargDfLvl'} onClick={() => this.sort('avargDfLvl')}>
-                            Def Fa&#8709;
-                        </Cell>
-                        <Cell
-                            active={s === 'avargDfHQLvl'}
-                            onClick={() => this.sort('avargDfHQLvl')}
-                        >
-                            Def HQ&#8709;
-                        </Cell>
-                        <Cell active={s === 'updated'} onClick={() => this.sort('updated')}>
-                            time
-                        </Cell>
-
-                        {members.map(member => {
-                            // member = members[0]
-                            return member.data ? (
-                                <Fragment key={member.name}>
-                                    <Cell>{member.name}</Cell>
-                                    <Cell>{member.rank}</Cell>
-                                    <Cell>{member.role}</Cell>
-                                    <Cell>{shortenNumber(member.points)}</Cell>
-                                    <Cell>{shortenNumber(member.rPoints)}</Cell>
-
-                                    <Cell>{member.basecount}</Cell>
-                                    <Cell>{member.pvekills}</Cell>
-                                    <Cell>{member.pvpkills}</Cell>
-                                    <Cell>{member.hascode ? '+' : '-'}</Cell>
-                                    <Cell>{shortenNumber(member.creditsCount)}</Cell>
-
-                                    <Cell>{member.actcp + '/' + member.maxcp}</Cell>
-                                    <Cell>{member.funds}</Cell>
-                                    <Cell>{member.schirme}</Cell>
-                                    <Cell>{Math.round(member.timeToMcv / (3600 * 24))}</Cell>
-
-                                    <Cell>{member.offbase.off}</Cell>
-                                    <Cell>{member.offbase.def}</Cell>
-                                    <Cell>
-                                        {msToTime(member.offbase.rep) +
-                                            '/' +
-                                            msToTime(member.offbase.maxRep)}
-                                    </Cell>
-
-                                    <Cell>{shortenNumber(member.totalTib)}</Cell>
-                                    <Cell>{shortenNumber(member.totalPower)}</Cell>
-                                    <Cell>{shortenNumber(member.totalCris)}</Cell>
-                                    <Cell>{shortenNumber(member.totalCredits)}</Cell>
-
-                                    <Cell>{member.avargDef}</Cell>
-                                    <Cell>{member.avargSubLvl}</Cell>
-                                    <Cell>{member.avargDfLvl}</Cell>
-                                    <Cell>{member.avargDfHQLvl}</Cell>
-
-                                    <Cell>
-                                        {Math.round(
-                                            (Math.floor(
-                                                (new Date() - new Date(member._updated)) /
-                                                    1000 /
-                                                    60 /
-                                                    60
-                                            ) *
-                                                10) /
-                                                24
-                                        ) / 10}
-                                    </Cell>
-                                </Fragment>
-                            ) : (
-                                <Fragment key={member.name}>
-                                    <Cell>{member.name}</Cell>
-                                    <Cell>{}</Cell>
-                                    <Cell>{member.role}</Cell>
-                                    <Cell>{}</Cell>
-                                    <Cell>{}</Cell>
-
-                                    <Cell>{}</Cell>
-                                    <Cell>{}</Cell>
-                                    <Cell>{}</Cell>
-                                    <Cell>{}</Cell>
-                                    <Cell>{}</Cell>
-
-                                    <Cell>{}</Cell>
-                                    <Cell>{}</Cell>
-                                    <Cell>{}</Cell>
-                                    <Cell>{}</Cell>
-
-                                    <Cell>{}</Cell>
-                                    <Cell>{}</Cell>
-                                    <Cell>{}</Cell>
-
-                                    <Cell>{}</Cell>
-                                    <Cell>{}</Cell>
-                                    <Cell>{}</Cell>
-                                    <Cell>{}</Cell>
-
-                                    <Cell>{}</Cell>
-                                    <Cell>{}</Cell>
-                                    <Cell>{}</Cell>
-                                    <Cell>{}</Cell>
-
-                                    <Cell>{}</Cell>
-                                </Fragment>
-                            );
-                        })}
-                    </Grid>
-                </AllianceS>
-                <Column>
-                    <Container center>
-                        <Title>{name + ' (' + count + ')'}</Title>
-                        <Row>
-                            <Button onClick={this.getAlliance}>update</Button>
-                        </Row>
-                    </Container>
-                </Column>
-            </Body>
-        );
+        setS(s);
+        setMembers([...members.sort((a, b) => +b[s] || 0 - +a[s] || 0)]);
     }
+
+    return (
+        <Body>
+            <AllianceS>
+                <Grid>
+                    <Cell active={s === 'name'} onClick={() => sort('name')}>
+                        Name
+                    </Cell>
+                    <Cell active={s === 'rank'} onClick={() => sort('rank')}>
+                        Rank
+                    </Cell>
+                    <Cell>Roll</Cell>
+                    <Cell active={s === 'points'} onClick={() => sort('points')}>
+                        Score
+                    </Cell>
+                    <Cell active={s === 'rPoints'} onClick={() => sort('rPoints')}>
+                        <Icon src={researchPoints} alt="Research" />
+                    </Cell>
+                    <Cell active={s === 'basecount'} onClick={() => sort('basecount')}>
+                        Bases
+                    </Cell>
+                    <Cell active={s === 'pvekills'} onClick={() => sort('pvekills')}>
+                        PVE
+                    </Cell>
+                    <Cell active={s === 'pvpkills'} onClick={() => sort('pvpkills')}>
+                        PVP
+                    </Cell>
+                    <Cell>Code</Cell>
+                    <Cell active={s === 'creditsCount'} onClick={() => sort('creditsCount')}>
+                        <Icon src={credits} alt="Credits" />
+                    </Cell>
+                    <Cell active={s === 'actcp'} onClick={() => sort('actcp')}>
+                        <Icon src={commandoPoints} alt="CP" />
+                    </Cell>
+                    <Cell active={s === 'funds'} onClick={() => sort('funds')}>
+                        <Icon src={funds} alt="Funds" />
+                    </Cell>
+                    <Cell active={s === 'schirme'} onClick={() => sort('schirme')}>
+                        <Icon src={supplyPoints} alt="Supply" />
+                    </Cell>
+                    <Cell active={s === 'timeToMcv'} onClick={() => sort('timeToMcv')}>
+                        Time
+                    </Cell>
+
+                    <Cell>
+                        <div>Off</div>
+                    </Cell>
+                    <Cell>
+                        <div>Def</div>
+                    </Cell>
+                    <Cell>
+                        <Icon src={offenseRepair} alt="Repair" />
+                    </Cell>
+
+                    <Cell active={s === 'totalTib'} onClick={() => sort('totalTib')}>
+                        <Icon src={tib} alt="Tib" />
+                        /h
+                    </Cell>
+                    <Cell active={s === 'totalPower'} onClick={() => sort('totalPower')}>
+                        <Icon src={cris} alt="Cris" />
+                        /h
+                    </Cell>
+                    <Cell active={s === 'totalCris'} onClick={() => sort('totalCris')}>
+                        <Icon src={power} alt="Power" />
+                        /h
+                    </Cell>
+                    <Cell active={s === 'totalCredits'} onClick={() => sort('totalCredits')}>
+                        <Icon src={credits} alt="Credits" />
+                        /h
+                    </Cell>
+
+                    <Cell active={s === 'avargDef'} onClick={() => sort('avargDef')}>
+                        Def&#8709;
+                    </Cell>
+                    <Cell active={s === 'avargSubLvl'} onClick={() => sort('avargSubLvl')}>
+                        Sub&#8709;
+                    </Cell>
+                    <Cell active={s === 'avargDfLvl'} onClick={() => sort('avargDfLvl')}>
+                        Def Fa&#8709;
+                    </Cell>
+                    <Cell active={s === 'avargDfHQLvl'} onClick={() => sort('avargDfHQLvl')}>
+                        Def HQ&#8709;
+                    </Cell>
+                    <Cell active={s === 'updated'} onClick={() => sort('updated')}>
+                        time
+                    </Cell>
+
+                    {members.map(member => {
+                        // member = members[0]
+                        return member.data ? (
+                            <Fragment key={member.name}>
+                                <Cell>{member.name}</Cell>
+                                <Cell>{member.rank}</Cell>
+                                <Cell>{member.role}</Cell>
+                                <Cell>{shortenNumber(member.points)}</Cell>
+                                <Cell>{shortenNumber(member.rPoints)}</Cell>
+
+                                <Cell>{member.basecount}</Cell>
+                                <Cell>{member.pvekills}</Cell>
+                                <Cell>{member.pvpkills}</Cell>
+                                <Cell>{member.hascode ? '+' : '-'}</Cell>
+                                <Cell>{shortenNumber(member.creditsCount)}</Cell>
+
+                                <Cell>{member.actcp + '/' + member.maxcp}</Cell>
+                                <Cell>{member.funds}</Cell>
+                                <Cell>{member.schirme}</Cell>
+                                <Cell>{Math.round(member.timeToMcv / (3600 * 24))}</Cell>
+
+                                <Cell>{member.offbase.off}</Cell>
+                                <Cell>{member.offbase.def}</Cell>
+                                <Cell>
+                                    {msToTime(member.offbase.rep) +
+                                        '/' +
+                                        msToTime(member.offbase.maxRep)}
+                                </Cell>
+
+                                <Cell>{shortenNumber(member.totalTib)}</Cell>
+                                <Cell>{shortenNumber(member.totalPower)}</Cell>
+                                <Cell>{shortenNumber(member.totalCris)}</Cell>
+                                <Cell>{shortenNumber(member.totalCredits)}</Cell>
+
+                                <Cell>{member.avargDef}</Cell>
+                                <Cell>{member.avargSubLvl}</Cell>
+                                <Cell>{member.avargDfLvl}</Cell>
+                                <Cell>{member.avargDfHQLvl}</Cell>
+
+                                <Cell>
+                                    {Math.round(
+                                        (Math.floor(
+                                            (new Date() - new Date(member._updated)) /
+                                                1000 /
+                                                60 /
+                                                60
+                                        ) *
+                                            10) /
+                                            24
+                                    ) / 10}
+                                </Cell>
+                            </Fragment>
+                        ) : (
+                            <Fragment key={member.name}>
+                                <Cell>{member.name}</Cell>
+                                <Cell>{}</Cell>
+                                <Cell>{member.role}</Cell>
+                                <Cell>{}</Cell>
+                                <Cell>{}</Cell>
+
+                                <Cell>{}</Cell>
+                                <Cell>{}</Cell>
+                                <Cell>{}</Cell>
+                                <Cell>{}</Cell>
+                                <Cell>{}</Cell>
+
+                                <Cell>{}</Cell>
+                                <Cell>{}</Cell>
+                                <Cell>{}</Cell>
+                                <Cell>{}</Cell>
+
+                                <Cell>{}</Cell>
+                                <Cell>{}</Cell>
+                                <Cell>{}</Cell>
+
+                                <Cell>{}</Cell>
+                                <Cell>{}</Cell>
+                                <Cell>{}</Cell>
+                                <Cell>{}</Cell>
+
+                                <Cell>{}</Cell>
+                                <Cell>{}</Cell>
+                                <Cell>{}</Cell>
+                                <Cell>{}</Cell>
+
+                                <Cell>{}</Cell>
+                            </Fragment>
+                        );
+                    })}
+                </Grid>
+            </AllianceS>
+            <Column>
+                <Container center>
+                    <Title>{allianceName + ' (' + count + ')'}</Title>
+                    <Row>
+                        <Button onClick={getAlliance}>update</Button>
+                    </Row>
+                </Container>
+            </Column>
+        </Body>
+    );
 }
 
 function mapStateToProps(state) {
     return {
         w: state.player.w,
         allianceId: state.player.allianceId,
-        worlds: state.player.worlds,
-        auth: state.auth.isAuthenticated,
+        // worlds: state.player.worlds,
         token: state.auth.token,
     };
 }
 
-const mapDispatchToProps = { changeLoading };
+const mapDispatchToProps = { changeLoading: actionChangeLoading };
 
 export default connect(
     mapStateToProps,
