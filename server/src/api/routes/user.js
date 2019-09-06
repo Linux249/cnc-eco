@@ -172,6 +172,7 @@ router.get('/user/updateWorlds', async (req, res, next) => {
                         worldId: w.worldId,
                         worldName: player.serverName,
                         player_id: player._id,
+                        allianceId: player.allianceId,
                     });
             })
         );

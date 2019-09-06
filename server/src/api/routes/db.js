@@ -1,6 +1,8 @@
 import { layoutStats } from '../utils/layout';
 import { Router } from 'express';
 import { createReport } from '../service/report';
+import User from '../model/User';
+import World from '../model/World';
 
 const router = Router();
 
@@ -60,7 +62,7 @@ router.get('/deleteOldLayouts/:days', async (req, res, next) => {
                 }
             })
         );
-        console.log('finish delete layouts')
+        console.log('finish delete layouts');
         res.json('wann');
     });
 });
@@ -112,6 +114,43 @@ router.get('/layoutsFrom/:world', (req, res) => {
 
         res.json(players);
     });
+});
+
+/**
+ * update the worlds from every user
+ */
+router.get('/updateAllUsersWorlds', async (req, res, next) => {
+    try {
+        const users = await User.find();
+        const worlds = await World.find();
+        await Promise.all(
+            users.map(async user => {
+                const name = user.player;
+                user.worlds = []; // reset worlds
+                await Promise.all(
+                    worlds.map(async w => {
+                        const player = await db
+                            .collection(`players_${w.worldId}`)
+                            .findOne({ name });
+                        player &&
+                            user.worlds.push({
+                                worldId: w.worldId,
+                                worldName: player.serverName,
+                                player_id: player._id,
+                                allianceId: player.allianceId,
+                            });
+                    })
+                );
+
+                user.save((err, doc) => {
+                    if (err) return next(err);
+                    return res.json(doc);
+                });
+            })
+        );
+    } catch (e) {
+        return next(e);
+    }
 });
 
 export default router;

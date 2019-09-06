@@ -19,3 +19,10 @@ Authorization: Bearer
 
 ###
 
+
+// update all users worlds
+GET http://{{host}}/api/v1/db/updateAllUsersWorlds
+Authorization: Bearer
+
+###
+
