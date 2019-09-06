@@ -141,16 +141,13 @@ router.get('/updateAllUsersWorlds', async (req, res, next) => {
                             });
                     })
                 );
-
-                user.save((err, doc) => {
-                    if (err) return next(err);
-                    return res.json(doc);
-                });
+                await user.save();
             })
         );
     } catch (e) {
         return next(e);
     }
+    res.json({success: 'all user updated'})
 });
 
 export default router;
