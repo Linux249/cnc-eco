@@ -33,9 +33,10 @@ const userSchema = Schema({
     playerAdded: { type: Date },
     worlds: [
         {
-            worldId: {type: String, required: true},
+            worldId: {type: Number, required: true},
             player_id: Schema.ObjectId,
             worldName: {type: String, required: true},
+            allianceId: {type: Number, required: true},
         },
     ],
     isVerified: { type: Boolean, default: false },
