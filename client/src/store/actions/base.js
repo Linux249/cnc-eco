@@ -1,8 +1,8 @@
 import {
-    BUILDING_TYP_DOWN,
-    BUILDING_TYP_UP,
+    BUILDING_TYP_LVL_DOWN,
+    BUILDING_TYP_LVL_UP,
     CHANGE_FRACTION,
-    BASE_CHANGE_BASELVL,
+    BASE_CHANGE_DEFAULT_LVL,
     REPLACE_ALL_BASE,
     REPLACE_BASE_FROM_URL,
     REPLACE_SLOT,
@@ -85,23 +85,23 @@ export function changeFraction(faction) {
     };
 }
 
-export function buildingsUp(building) {
+export function buildingsUp(buildingType) {
     return {
-        type: BUILDING_TYP_UP,
-        building,
+        type: BUILDING_TYP_LVL_UP,
+        buildingType,
     };
 }
 
-export function buildingsDown(building) {
+export function buildingsDown(buildingType) {
     return {
-        type: BUILDING_TYP_DOWN,
-        building,
+        type: BUILDING_TYP_LVL_DOWN,
+        buildingType,
     };
 }
 
 export const changeBaseLvl = lvl => {
     return {
-        type: BASE_CHANGE_BASELVL,
+        type: BASE_CHANGE_DEFAULT_LVL,
         lvl,
     };
 };

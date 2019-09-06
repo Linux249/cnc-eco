@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import Slot from '../containers/Slot';
 import Grid from '../style/Grid';
-import ProductionInfo from '../containers/ProductionInfo';
 import { store } from '../index';
 import { setShiftPressed } from '../store/actions/menu';
 import Area from '../style/Area';
+import CountStructure from '../containers/CountStructure';
 
 const slots = [0, 1, 2, 3, 4, 5, 6, 7].map(function(y) {
     return [0, 1, 2, 3, 4, 5, 6, 7, 8].map(function(x) {
@@ -43,6 +43,7 @@ export default () => {
 
     return (
         <Area>
+            <CountStructure area='buildings' />
             <Grid rows={8}>{slots}</Grid>
         </Area>
     );

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { shadow, backgroundColor, border, borderRadius } from './constants';
 
 export const Area = styled.div`
+    position: relative;
     //display: flex;
     //flex-flow: column;
     //flex-wrap: wrap;
