@@ -1,6 +1,7 @@
 import Report from '../model/Report';
 
 export const createReport = async db => {
+    console.log('Start creating db report')
     const removeLayoutDate = new Date();
     removeLayoutDate.setDate(removeLayoutDate.getDate() - 14); // date 14 days before now
 
