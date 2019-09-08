@@ -9,6 +9,10 @@ const FooterStyle = styled(Area)`
     justify-content: space-around;
     width: calc(100% - 16px);
     margin: 0;
+    
+    font-weight: 800;
+    font-size: 10px;
+    color: #000000d4;
 `;
 
 export function Footer({ token }) {

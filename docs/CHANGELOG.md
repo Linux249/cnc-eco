@@ -1,4 +1,7 @@
 // todo only commit on release
+Version 2.3.4
+- add Footer with server stats
+- try some server fixes for app break down on 15:00 UTC (877baf51, bc0d1dc4)
 
 Version 2.3.3
 - fix loading ally data on component mount directly (3c8973e8)
