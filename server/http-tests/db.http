@@ -33,3 +33,9 @@ Authorization: Bearer
 
 ###
 
+// get the footer stats
+GET http://{{host}}/api/v1/db/getFooterStats
+Authorization: Bearer
+
+###
+

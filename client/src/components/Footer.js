@@ -34,20 +34,18 @@ export function Footer({ token }) {
             }).then(res => res.json());
             setUsers(data.users)
             setWorlds(data.worlds)
-            let countSize = 0
+            setSize(data.size)
             let countLayouts = 0
             let countPlayers = 0
             for(let i = 0; i < data.report.layouts.length; i += 1) {
-                countSize += data.report.layouts[i].size
                 countLayouts += data.report.layouts[i].count
             }
             for(let i = 0; i < data.report.players.length; i += 1) {
-                countSize += data.report.players[i].size
                 countPlayers += data.report.players[i].count
             }
             setLayouts(countLayouts)
             setPlayers(countPlayers)
-            setSize(countSize)
+
         }
         token && getStats();
     }, [token]); // Empty array ensures that effect is only run on mount and unmount
@@ -58,7 +56,7 @@ export function Footer({ token }) {
             <div>Registered: {users}</div>
             <div>Player: {players}</div>
             <div>Layouts: {layouts}</div>
-            <div>Size: {size}</div>
+            <div>Size: {size}MB</div>
         </FooterStyle>
     );
 }

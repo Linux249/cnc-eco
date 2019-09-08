@@ -160,7 +160,8 @@ router.get('/getFooterStats', async (req, res, next) => {
         const report = await req.db
             .collection('reports')
             .findOne({}, {}, { sort: { createdAt: -1 } });
-        res.json({ worlds, users, report });
+        const stats = await req.db.stats({scale: 1024})
+        res.json({ worlds, users, report, size: stats.fileSize || stats.storageSize });
     } catch (e) {
         return next(e);
     }
