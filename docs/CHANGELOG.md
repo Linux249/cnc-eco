@@ -1,5 +1,9 @@
 // todo only commit on release
 
+Version 2.3.3
+- fix loading ally data on component mount directly (3c8973e8)
+- add redirect to https everything (43e15585)
+
 Version: 2.3.2 (af0e36c6)
 - show side-in-beta info everywhere and improve style (45b08461)
 - add buildings counter (fbe5c49c)
