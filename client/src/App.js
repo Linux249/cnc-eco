@@ -26,6 +26,7 @@ import 'react-tippy/dist/tippy.css';
 import Feedback from './routes/Feedback';
 import Column from './style/Column';
 import Info from './style/Info';
+import Footer from './components/Footer';
 
 class App extends Component {
     componentWillMount() {
@@ -69,6 +70,7 @@ class App extends Component {
                     />
                     <ProtectedRoute path="/alliance" auth={auth} name={name} component={Alliance} />
                     <ProtectedRoute path="/user" auth={auth} name={name} component={User} />
+                    <Footer />
                 </AppS>
             </Router>
         );

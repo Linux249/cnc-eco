@@ -1,7 +1,7 @@
 import Report from '../model/Report';
 
 export const createReport = async db => {
-    console.log('Start creating db report')
+    console.log('Start creating db report');
     const removeLayoutDate = new Date();
     removeLayoutDate.setDate(removeLayoutDate.getDate() - 14); // date 14 days before now
 
@@ -95,7 +95,7 @@ export const createReport = async db => {
                     console.log('delete collection: ' + name);
                 }
 
-                report.layouts.push({
+                report.players.push({
                     worldId: name.split('_')[1],
                     del: result.n, // how many deleted player
                     count: stats.count, // how many player after
@@ -105,8 +105,8 @@ export const createReport = async db => {
         );
         console.log(report);
         // save and return report
-        const result = await report.save()
-        console.log(result)
+        const result = await report.save();
+        console.log(result);
         //await db.collection('reports').save(report);
         return report;
     } catch (e) {

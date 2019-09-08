@@ -147,7 +147,23 @@ router.get('/updateAllUsersWorlds', async (req, res, next) => {
     } catch (e) {
         return next(e);
     }
-    res.json({success: 'all user updated'})
+    res.json({ success: 'all user updated' });
+});
+
+/**
+ * get several server informations
+ */
+router.get('/getFooterStats', async (req, res, next) => {
+    try {
+        const users = await User.count();
+        const worlds = await World.count();
+        const report = await req.db
+            .collection('reports')
+            .findOne({}, {}, { sort: { createdAt: -1 } });
+        res.json({ worlds, users, report });
+    } catch (e) {
+        return next(e);
+    }
 });
 
 export default router;
