@@ -7,4 +7,9 @@ export default styled.div`
     //color: #4d3e13;
     font-weight: 500;
     //letter-spacing: 1px;
+    height: 100%;
+    
+    display: grid;
+    grid-template-rows: min-content 4.8px min-content 1fr min-content; 
+    grid-template-columns: 1fr;
 `;

@@ -50,6 +50,10 @@ class App extends Component {
                             while in beta/before release.{' '}
                         </Info>
                     </Column>
+                    <div>
+
+
+
                     <Route path="/" exact component={Home} />
                     <Route path="/s/:url" component={S} />
                     <Route path="/b/:url" component={B} />
@@ -70,6 +74,7 @@ class App extends Component {
                     />
                     <ProtectedRoute path="/alliance" auth={auth} name={name} component={Alliance} />
                     <ProtectedRoute path="/user" auth={auth} name={name} component={User} />
+                    </div>
                     <Footer />
                 </AppS>
             </Router>

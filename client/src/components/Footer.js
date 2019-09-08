@@ -53,7 +53,7 @@ export function Footer({ token }) {
     }, [token]); // Empty array ensures that effect is only run on mount and unmount
 
     return (
-        <FooterStyle>
+        <FooterStyle as="footer">
             <div>Worlds: {worlds}</div>
             <div>Registered: {users}</div>
             <div>Player: {players}</div>
