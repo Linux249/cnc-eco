@@ -6,6 +6,7 @@ import { layoutStats } from '../utils/layout';
  * - the client protecting to get layouts from other worlds
  */
 export default async (req, res, next) => {
+    console.log(req.body)
     try {
         res.send(); // todo layouts update send empty body, check what happens if they send something back
 
