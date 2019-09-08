@@ -1,8 +1,8 @@
 {
   "name": "cnc-eco",
-  "version": "1.0.0",
-  "private": true,
-  "description": "see '/client'/'/server' for readme's",
+  "version": "2.3.3",
+  "private": false,
+  "description": "a full stack web app for C&C TA",
   "scripts": {
     "start": "cd server && npm start",
     "install": " cd client && npm i && cd ../server && npm i",
