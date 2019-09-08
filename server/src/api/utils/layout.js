@@ -118,6 +118,8 @@ export const layoutStats = layout => {
             // dont't check a slot where already is something
             if (slot !== '.') return a; // t,c are only other options here
             if (i < 10 || i > 61 || !(i % 9) || !((i + 1) % 9)) return a;
+            // 15 accus are enough
+            if (i >= 15) return a;
 
             // start recursive for each free slot
             const [newC, newL] = findAccus(i, layout);
