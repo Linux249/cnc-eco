@@ -1,4 +1,7 @@
 // todo only commit on release
+Version 2.3.5
+- add /admin route 
+
 Version 2.3.4
 - add Footer with server stats
 - try some server fixes for app break down on 15:00 UTC (877baf51, bc0d1dc4)
