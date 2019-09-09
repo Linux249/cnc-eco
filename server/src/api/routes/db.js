@@ -67,6 +67,20 @@ router.get('/deleteOldLayouts/:days', async (req, res, next) => {
     });
 });
 
+/**
+ * GET /api/v1/db/deleteOldLayouts/:days
+ * delete all layouts older than x days
+ */
+router.get('/deleteOldReports/:days', async (req, res, next) => {
+    const days = Number(req.params.days);
+    const date = new Date();
+    date.setDate(date.getDate() - days);
+    const data = await req.db.collection('reports').remove({ date: { $lt: date } });
+
+    console.log(data);
+    res.json(data);
+});
+
 router.get('/repairLayouts', async (req, res, next) => {
     const { db } = req;
     await db.listCollections().toArray((err, collInfos) => {
@@ -160,7 +174,7 @@ router.get('/getFooterStats', async (req, res, next) => {
         const report = await req.db
             .collection('reports')
             .findOne({}, {}, { sort: { createdAt: -1 } });
-        const stats = await req.db.stats({scale: 1024})
+        const stats = await req.db.stats({ scale: 1048576 }); // MB
         res.json({ worlds, users, report, size: stats.fileSize || stats.storageSize });
     } catch (e) {
         return next(e);
