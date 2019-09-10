@@ -96,7 +96,7 @@ router.get('/deleteOldPlayers/:days', async (req, res, next) => {
                     console.log(coll.name);
                     const curser = await req.db
                         .collection(coll.name)
-                        .remove({ time: { $lt: date } });
+                        .remove({ _updated: { $lt: date } });
                     console.log(
                         `DELETE PLAYERS on ${coll.name} #${curser.result.n} - status: ${curser.result.ok}`
                     );
