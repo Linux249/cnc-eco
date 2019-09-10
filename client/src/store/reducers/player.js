@@ -3,7 +3,7 @@ import {
     PLAYER_CHANGE_SELECTED_BASE,
     PLAYER_CHANGE_WORLD,
     PLAYER_UPDATE,
-    PLAYER_UPDATE_ALLIANCE_ID,
+    // PLAYER_UPDATE_ALLIANCE_ID,
     PLAYER_UPDATE_BASES,
 } from '../constants/actionTypes';
 
@@ -13,6 +13,7 @@ const initState = {
     worldName: '', // Toggle for showing help everywhere or not
     name: '',
     allianceId: 0,
+    playerId: 0,
     worlds: [],
     bases: [],
     selectedBase: 0,
@@ -31,6 +32,8 @@ export function player(state = initState, action) {
                 ...state,
                 w: action.w,
                 worldName: action.worldName,
+                allianceId: action.allianceId,
+                playerId: action.playerId,
                 selectedBase: 0,
             };
         case PLAYER_UPDATE:
@@ -44,11 +47,11 @@ export function player(state = initState, action) {
                 ...state,
                 bases: action.bases,
             };
-        case PLAYER_UPDATE_ALLIANCE_ID:
-            return {
-                ...state,
-                allianceId: action.allianceId,
-            };
+        // case PLAYER_UPDATE_ALLIANCE_ID:
+        //     return {
+        //         ...state,
+        //         allianceId: action.allianceId,
+        //     };
         case PLAYER_CHANGE_SELECTED_BASE:
             return {
                 ...state,

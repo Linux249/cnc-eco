@@ -3,35 +3,48 @@ import {
     PLAYER_CHANGE_WORLD,
     PLAYER_UPDATE_BASES,
     PLAYER_UPDATE,
-    PLAYER_UPDATE_ALLIANCE_ID,
+    // PLAYER_UPDATE_ALLIANCE_ID,
     PLAYER_CHANGE_SELECTED_BASE,
 } from '../constants/actionTypes';
-import { api_url, LOCAL_STORE } from '../../config';
+import { LOCAL_STORE } from '../../config';
 import { replaceBaseFromUrl } from './base';
 
-export function changeWorld(world) {
-    return async (dispatch, getStore) => {
-        const data = JSON.parse(localStorage.getItem(LOCAL_STORE));
-        data.world = world;
-        localStorage.setItem(LOCAL_STORE, JSON.stringify(data));
-        await dispatch({
-            type: PLAYER_CHANGE_WORLD,
-            w: world.worldId,
-            worldName: world.worldName,
-        });
-        dispatch(changeLoading(true));
+// export function changeWorld(world) {
+//     return async (dispatch) => {
+//         const data = JSON.parse(localStorage.getItem(LOCAL_STORE));
+//         data.world = world;
+//         localStorage.setItem(LOCAL_STORE, JSON.stringify(data));
+//         await dispatch({
+//             type: PLAYER_CHANGE_WORLD,
+//             w: world.worldId,
+//             worldName: world.worldName,
+//         });
+//         dispatch(changeLoading(true));
+//
+//         // todo requqest player data
+//         const url = api_url + '/player?player=' + world.player_id + '&world=' + world.worldId;
+//         const player = await fetch(url, {
+//             headers: new Headers({
+//                 Authorization: 'Bearer  ' + getStore().auth.token,
+//             }),
+//         }).then(res => res.json());
+//         console.log({ player });
+//         player.bases && dispatch(updateBases(player.bases));
+//         player.allianceId && dispatch(updateAllianceId(player.allianceId));
+//         dispatch(changeLoading(false));
+//     };
+// }
 
-        // todo requqest player data
-        const url = api_url + '/player?player=' + world.player_id + '&world=' + world.worldId;
-        const player = await fetch(url, {
-            headers: new Headers({
-                Authorization: 'Bearer  ' + getStore().auth.token,
-            }),
-        }).then(res => res.json());
-        console.log({ player });
-        player.bases && dispatch(updateBases(player.bases));
-        player.allianceId && dispatch(updateAllianceId(player.allianceId));
-        dispatch(changeLoading(false));
+export function changeWorld(world) {
+    const data = JSON.parse(localStorage.getItem(LOCAL_STORE));
+    data.world = world;
+    localStorage.setItem(LOCAL_STORE, JSON.stringify(data));
+    return {
+        type: PLAYER_CHANGE_WORLD,
+        w: world.worldId,
+        worldName: world.worldName,
+        allianceId: world.allianceId,
+        playerId: world.player_id,
     };
 }
 
@@ -54,12 +67,12 @@ export const updateBases = bases => {
     // };
 };
 
-export const updateAllianceId = allianceId => {
-    return {
-        type: PLAYER_UPDATE_ALLIANCE_ID,
-        allianceId,
-    };
-};
+// export const updateAllianceId = allianceId => {
+//     return {
+//         type: PLAYER_UPDATE_ALLIANCE_ID,
+//         allianceId,
+//     };
+// };
 
 export const updatePlayer = user => {
     // update data in store
