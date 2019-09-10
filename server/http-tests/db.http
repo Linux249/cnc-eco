@@ -24,6 +24,11 @@ GET http://{{host}}/api/v1/db/deleteOldReports/2
 Authorization: Bearer
 
 ###
+// delete layoyuts behind some day's
+GET http://{{host}}/api/v1/db/deleteOldPlayers/20
+Authorization: Bearer
+
+###
 
 
 // update all users worlds

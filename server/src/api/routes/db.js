@@ -68,8 +68,8 @@ router.get('/deleteOldLayouts/:days', async (req, res, next) => {
 });
 
 /**
- * GET /api/v1/db/deleteOldLayouts/:days
- * delete all layouts older than x days
+ * GET /api/v1/db/deleteOldReports/:days
+ * delete all reports older than x days
  */
 router.get('/deleteOldReports/:days', async (req, res, next) => {
     const days = Number(req.params.days);
@@ -79,6 +79,33 @@ router.get('/deleteOldReports/:days', async (req, res, next) => {
 
     console.log(data);
     res.json(data);
+});
+
+/**
+ * GET /api/v1/db/deleteOldPlayers/:days
+ * delete all players older than x days
+ */
+router.get('/deleteOldPlayers/:days', async (req, res, next) => {
+    const days = Number(req.params.days);
+    const date = new Date();
+    date.setDate(date.getDate() - days);
+    req.db.listCollections().toArray(async (err, allCollections) => {
+        await Promise.all(
+            allCollections.map(async coll => {
+                if (coll.name.includes('players')) {
+                    console.log(coll.name);
+                    const curser = await req.db
+                        .collection(coll.name)
+                        .remove({ time: { $lt: date } });
+                    console.log(
+                        `DELETE PLAYERS on ${coll.name} #${curser.result.n} - status: ${curser.result.ok}`
+                    );
+                }
+            })
+        );
+        console.log('finish delete players');
+        res.json('wann');
+    });
 });
 
 router.get('/repairLayouts', async (req, res, next) => {
