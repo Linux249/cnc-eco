@@ -11,6 +11,7 @@ import Input from '../style/Input';
 import Info from '../style/Info';
 import Alert from '../style/Alert';
 import { InfoText } from '../style/InfoText';
+import Row from '../style/Row';
 
 const Middle = styled.div``;
 
@@ -51,7 +52,7 @@ function Feedback(props) {
     async function handleSend() {
         setloading(true);
         setError('');
-        setSuccess('')
+        setSuccess('');
         if (!title) return setError('Title missing');
         if (!text) return setError('Text missing');
 
@@ -80,7 +81,9 @@ function Feedback(props) {
                     <Area>
                         <Title>{feedback.title}</Title>
                         <Text>{feedback.text}</Text>
-                        <InfoText>{feedback.from ? feedback.from.player : 'Player deleted'}</InfoText>
+                        <InfoText>
+                            {feedback.from ? feedback.from.player : 'Player deleted'}
+                        </InfoText>
                     </Area>
                 ))}
             </Middle>
@@ -92,12 +95,14 @@ function Feedback(props) {
                             Do you have some suggestions, wishes or something else? Please, let me
                             know!
                         </InfoText>
-                        <Input
-                            small
-                            value={title}
-                            onChange={e => setTitle(e.target.value)}
-                            placeholder="Title"
-                        />
+                        <Row>
+                            <Input
+                                small
+                                value={title}
+                                onChange={e => setTitle(e.target.value)}
+                                placeholder="Title"
+                            />
+                        </Row>
                         <TextArea
                             as="textarea"
                             value={text}

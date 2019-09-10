@@ -64,13 +64,16 @@ const Share = () => {
                     <ShareIcon></ShareIcon>
                 </Button>
             </Row>
+            {loading && <div>loading...</div>}
             {url && (
-                <Input
-                    small
-                    placeholder="Here comes your shortlink"
-                    value={loading ? 'loading ...' : url}
-                    readOnly
-                />
+                <Row>
+                    <Input
+                        small
+                        placeholder="Here comes your shortlink"
+                        value={loading ? 'loading ...' : url}
+                        readOnly
+                    />
+                </Row>
             )}
             {error && <Alert> {error.message} </Alert>}
         </Container>
