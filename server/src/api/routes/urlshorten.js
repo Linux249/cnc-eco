@@ -4,7 +4,7 @@ import { Router } from 'express';
 
 const router = Router();
 const shortid = require('shortid');
-const shortUrl = 'www.cnc-eco.de/s';
+const shortUrl = 'cnc-eco.de/s';
 
 //GET API for redirecting to Original URL
 router.get('/urlToBase/:code', async (req, res, next) => {

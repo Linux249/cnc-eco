@@ -40,7 +40,6 @@ export const S = props => {
         <Redirect to="/" />
     ) : (
         <div>
-            loading
             <Alert>{err}</Alert>
         </div>
     );

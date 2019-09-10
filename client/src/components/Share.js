@@ -4,11 +4,16 @@ import Button from '../style/Button';
 import { store } from '../index';
 import { api_url } from '../config';
 import Input from '../style/Input';
-import Row from '../style/Row';
 import Alert from '../style/Alert';
 import { ReactComponent as ShareIcon } from '../icons/Share.svg';
 import Title from '../style/Title';
 import Container from '../style/Container';
+import styled from 'styled-components';
+
+const Row = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
 
 const Share = () => {
     const [url, setUrl] = useState('');
@@ -53,19 +58,21 @@ const Share = () => {
 
     return (
         <Container>
-            <Title>Share your bases</Title>
             <Row>
+                <Title>Share your bases</Title>
+                <Button onClick={handleClick}>
+                    <ShareIcon></ShareIcon>
+                </Button>
+            </Row>
+            {url && (
                 <Input
                     small
                     placeholder="Here comes your shortlink"
                     value={loading ? 'loading ...' : url}
                     readOnly
                 />
-                <Button onClick={handleClick}>
-                    <ShareIcon></ShareIcon>
-                </Button>
-                {error && <Alert> {error.message} </Alert>}
-            </Row>
+            )}
+            {error && <Alert> {error.message} </Alert>}
         </Container>
     );
 };
