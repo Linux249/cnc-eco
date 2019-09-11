@@ -1,4 +1,8 @@
 // todo only commit on release
+Version 2.3.8
+- after scanning layouts the user can now see the scanned layouts correctly (fix url bug) (149eec12)
+- add ingame player name and updating worlds dosn't need a relogin to permanently save changes anymore (c8cad1e4)
+- players worlds are now sorted by last update time (update worlds to change order) (1889a1fd)
 
 Version 2.3.7 (c8cad1e4)
 - after scanning layouts the user can now see the scanned layouts correctly (149eec12)
