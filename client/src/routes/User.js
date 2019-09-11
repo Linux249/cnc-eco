@@ -66,7 +66,7 @@ function User(props) {
                 return setError(user.error.message);
             }
             if (user) {
-                props.updatePlayer(user);
+                props.updatePlayer(user, true);
                 setSuccess('player successfully added');
             }
         }
@@ -121,7 +121,7 @@ function User(props) {
             return setError(user.error.message);
         }
         if (user) {
-            props.updatePlayer(user);
+            props.updatePlayer(user, true);
             setSuccess('worlds updated');
         }
     };

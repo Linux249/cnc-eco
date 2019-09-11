@@ -36,9 +36,6 @@ import { replaceBaseFromUrl } from './base';
 // }
 
 export function changeWorld(world) {
-    const data = JSON.parse(localStorage.getItem(LOCAL_STORE));
-    data.world = world;
-    localStorage.setItem(LOCAL_STORE, JSON.stringify(data));
     return {
         type: PLAYER_CHANGE_WORLD,
         w: world.worldId,
@@ -74,8 +71,17 @@ export const updateBases = bases => {
 //     };
 // };
 
-export const updatePlayer = user => {
+export const updatePlayer = (user, save = false) => {
+    // todo because this action is used after updateWorlds and addPlayerName it need a localStorage
+    //  update. But it is also used on initial loading where data come from localStorage => a save flag
+    //  is a quick solution until the actions are refactored for a bedder fit to current usage.
+    //  Ideas: user actions/reducer instead of auth; updatePlayerName, updateWorlds actions with save to localStorage
     // update data in store
+    if(save) {
+        const data = JSON.parse(localStorage.getItem(LOCAL_STORE));
+        data.user = user
+        localStorage.setItem(LOCAL_STORE, JSON.stringify(data));
+    }
     return (dispatch, getState) => {
         dispatch({
             type: PLAYER_UPDATE,

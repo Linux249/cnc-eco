@@ -1,6 +1,6 @@
 // todo only commit on release
 
-Version 2.3.7
+Version 2.3.7 (c8cad1e4)
 - after scanning layouts the user can now see the scanned layouts correctly (149eec12)
 
 Version 2.3.6 (8c75a25b)
