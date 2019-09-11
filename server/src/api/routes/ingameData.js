@@ -2,18 +2,20 @@ import World from '../model/World';
 import Alliance from '../model/Alliance';
 import Token from '../model/Token';
 
-// body.worldId is unique id of all worlds
-// body.allianceId is id of alliance on this world
-
-// GET /api/v1/layout
-// get a single labtop with world + coords as params
+/**
+ *
+ * @param req the express request
+ * @param rest normally resp, next
+ * @return no return, use next() or res.send()
+ */
 export default async (req, ...rest) => {
     const query = req.query;
-    console.log('EACH INGAME REQUEST WITH DIFFRENT PARAMS');
-    console.log({ query });
     if (query.update && +query.update === 1) update(req, ...rest);
     else if (query.get_token) getToken(req, ...rest);
-    else rest[0].send();
+    else {
+        console.warn('IngameData unhandled - query:', query)
+        rest[0].send()
+    };
 };
 
 async function getToken(req, res, next) {

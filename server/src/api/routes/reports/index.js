@@ -130,8 +130,11 @@ const router = Router();
     maxCp: 13,
     time: 1553351906203 } ]
  */
-// GET /api/v1/reports/update
-// get a single labtop with world + coords as params
+
+/**
+ * POST /api/v1/reports/update
+ * update reports from ingame
+ */
 router.post('/update', async (req, res, next) => {
     console.log('update reports from ingame');
     const { reports, world, accountId, playerId } = req.body;
@@ -144,44 +147,40 @@ router.post('/update', async (req, res, next) => {
     if (!reports.length) return res.json([]);
     if (!accountId) return res.code(404).json({ message: 'accountId missing' });
     if (!playerId) return res.code(404).json({ message: 'playerId missing' });
-    // const { w, x, y } = req.query;
-    // TODO auth require
+
+    const savedReportsIds = []     // all reports id which are saved
+    const oldReportsIds   = []  // all reports id who are already saved
+
     const ids = await Promise.all(
         reports.map(async report => {
             report.playerId = playerId;
             report.accountId = accountId;
             const old = await collection.findOne({ id: report.id });
             if (old) {
-                console.log('old: ' + report.id);
+                // console.log('old: ' + report.id);
+                savedReportsIds.push(report.id);
                 return report.id;
             } else {
-                console.log('save: ' + report.id);
+                report.time = new Date();
+                // console.log('save: ' + report.id);
                 return await collection
                     .save(report)
-                    .then(() => report.id)
+                    .then(() => oldReportsIds.push(report.id) && report.id)
                     .catch(e => next(e));
             }
         })
     );
-    console.log(ids);
+    console.log(`SAVE REPORTS: new ${savedReportsIds.length} old: ${oldReportsIds.length}` )
 
-    // const collection = req.db.collection(`layouts_${w}`);
-    // collection.findOne({ x, y }, (err, layout) => {
-    //     if (err) {
-    //         console.log(err);
-    //         next(err);
-    //     }
-    //     // console.log(`GET:\t${collection.namespace} - items: ${layout.length}`)
-    //     res.json(layout);
-    // });
     res.send(ids);
 
     // todo send saved id's back to put them "out of sight" in the client
 });
 
-// GET /api/v1/layouts
-// get all layouts from a world
-// TODO add a way to filter for "saw from player and/or alliance"
+/**
+ * GET /api/v1/reports/:type/:world/:playerId/:baseId
+ * ???
+ */
 router.get('/:type/:world/:playerId/:baseId', async (req, res, next) => {
     let { type, world, playerId, baseId } = req.params;
     console.log({ world, playerId, baseId });
