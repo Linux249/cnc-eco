@@ -62,23 +62,27 @@ router.post('/user/addPlayerName', async (req, res, next) => {
     user.player = name;
     user.playerAdded = new Date();
     user.worlds = []; // todo remove after testing
+    const worlds = [];
 
     // add all worlds with player data
     try {
-        const worlds = await World.find();
+        const allWorlds = await World.find();
         await Promise.all(
-            worlds.map(async w => {
+            allWorlds.map(async w => {
                 const player = await db.collection(`players_${w.worldId}`).findOne({ name });
                 player &&
-                    user.worlds.push({
+                    worlds.push({
                         worldId: w.worldId,
                         worldName: player.serverName,
                         player_id: player._id,
                         allianceId: player.allianceId,
+                        time: player._updated, // not in the mongoose schema, so it won't be saved
                     });
             })
         );
 
+        // update worlds sorted, newest first
+        user.worlds = worlds.sort((a, b) => (a.time < b.time ? 1 : -1));
         user.save((err, doc) => {
             if (err) return next(err);
             return res.json(doc);
@@ -161,23 +165,27 @@ router.get('/user/updateWorlds', async (req, res, next) => {
     const { user, db } = req;
     const name = user.player;
     user.worlds = []; // reset worlds
+    const worlds = []; // collected worlds
 
     // add all worlds with player data
     try {
-        const worlds = await World.find();
+        const allWorlds = await World.find();
         await Promise.all(
-            worlds.map(async w => {
+            allWorlds.map(async w => {
                 const player = await db.collection(`players_${w.worldId}`).findOne({ name });
-                player &&
-                    user.worlds.push({
+                if (player) {
+                    worlds.push({
                         worldId: w.worldId,
                         worldName: player.serverName,
                         player_id: player._id,
                         allianceId: player.allianceId,
+                        time: player._updated, // not in the mongoose schema, so it won't be saved
                     });
+                }
             })
         );
-
+        // update worlds sorted, newest first
+        user.worlds = worlds.sort((a, b) => (a.time < b.time ? 1 : -1));
         user.save((err, doc) => {
             if (err) return next(err);
             return res.json(doc);
