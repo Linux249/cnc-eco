@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Layout from '../components/Layout';
-import { changeLoading } from '../store/actions/player';
+import { changeLoading, changeWorld } from '../store/actions/player';
 import BodyRaw from '../style/Body';
 import Button from '../style/Button';
 import { Column } from '../style/Column';
@@ -12,6 +12,7 @@ import Container from '../style/Container';
 import Info from '../style/Info';
 import Title from '../style/Title';
 import { api_url } from '../config';
+import Alert from '../style/Alert';
 
 const LayoutS = styled.div`
     display: flex;
@@ -26,29 +27,46 @@ const Body = styled(BodyRaw)`
 `;
 
 function Layouts(props) {
+    const { worldInUrl, w } = props;
+
     /** list of layouts loaded from API*/
     const [layouts, setLayouts] = useState([]);
-    /** How many are loaded? response to user/from API*/
-    const [message, setMessage] = useState('');
     /** sort: tib, kris, cris, time - set carefully while be used on DB query*/
     const [sort, setSort] = useState('tib');
     /** like limit, skip*/
     const [limit, setLimit] = useState(200);
+    /** How many are loaded? response to user/from API*/
+    const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
 
+    /** update layouts on load ond if player change world*/
     useEffect(() => {
-        getLayouts();
-    }, [props.world]);
-
-    useEffect(() => {
-        if(props.w !== props.world) setMessage('World change - please click update')
-    }, [props.w]);
+        console.log('USE EFFECT', +w, +worldInUrl);
+        // only load if there is no world param in route
+        if (worldInUrl && +worldInUrl !== +w) {
+            const newWorld = props.worlds.find(world => +world.worldId === +worldInUrl);
+            console.log({ newWorld });
+            if (newWorld) {
+                props.changeWorld(newWorld);
+            } else {
+                // todo error
+                setError(
+                    `This world (id: ${worldInUrl}) is not connected to your account. Please go to your profile and update worlds`
+                );
+            }
+        } else {
+            getLayouts();
+        }
+    }, [w, worldInUrl]);
 
     function getLayouts() {
+        console.error('getLayouts');
         props.changeLoading(true);
         setMessage('');
-        const { pl, world, allianceId, token } = props;
+        setError('');
+        const { pl, w, allianceId, token } = props;
         // todo limit 50 first and than load other
-        const url = `${api_url}/layouts?pl=${pl}&w=${world}&a=${allianceId}&limit=${limit}&skip=0&sort=${sort}`;
+        const url = `${api_url}/layouts?pl=${pl}&w=${w}&a=${allianceId}&limit=${limit}&skip=0&sort=${sort}`;
         fetch(url, {
             headers: {
                 Authorization: 'Bearer  ' + token,
@@ -62,7 +80,7 @@ function Layouts(props) {
                 setMessage('loaded ' + layouts.length + ' layouts');
                 props.changeLoading(false);
             })
-            .catch(e => setMessage(e.message));
+            .catch(e => setError(e.message));
     }
 
     function changeSort(t) {
@@ -75,8 +93,7 @@ function Layouts(props) {
         ]);
     }
 
-    // if user tipped in some bullshit redirect to world from store
-    if (isNaN(props.world)) return <Redirect to={'/layouts/' + props.w} />;
+    if(worldInUrl) return <Redirect to="/layouts"/>
 
     return (
         <Body>
@@ -86,6 +103,7 @@ function Layouts(props) {
                 ))}
             </LayoutS>
             <Column>
+                {error && <Alert>{error}</Alert>}
                 <Container>
                     <Title>Sort layouts</Title>
                     <Row>
@@ -128,21 +146,20 @@ function Layouts(props) {
             </Column>
         </Body>
     );
-    // );
 }
 
 function mapStateToProps(state, ownProps) {
     return {
         pl: state.player.name,
         w: state.player.w,
-        world: ownProps.match.params.world,
+        worldInUrl: ownProps.match.params.world,
         allianceId: state.player.allianceId,
         worlds: state.player.worlds,
         token: state.auth.token,
     };
 }
 
-const mapDispatchToProps = { changeLoading };
+const mapDispatchToProps = { changeLoading, changeWorld };
 
 export default connect(
     mapStateToProps,

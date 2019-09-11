@@ -67,7 +67,7 @@ class App extends Component {
                     <Route path="/feedback" component={Feedback} />
                     <ProtectedRoute path="/bases" auth={auth} name={name} component={Bases} />
                     <ProtectedRoute
-                        path="/layouts/:world"
+                        path="/layouts/:world?"
                         auth={auth}
                         name={name}
                         component={Layouts}

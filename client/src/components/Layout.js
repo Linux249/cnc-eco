@@ -61,20 +61,20 @@ const Kris = () => (
 );
 
 const Layout = ({ layout }) => {
-    const slots = layout.layout.split('').map(slot => {
+    const slots = layout.layout.split('').map((slot, i) => {
         if (slot === 't')
             return (
-                <Square>
+                <Square key={i}>
                     <Tib />
                 </Square>
             );
         else if (slot === 'c')
             return (
-                <Square>
+                <Square key={i}>
                     <Kris />
                 </Square>
             );
-        else return <Square />;
+        else return <Square key={i}/>;
     });
     const time = Math.round((new Date() - new Date(layout.time)) / 3600 / 24 / 1000);
 
