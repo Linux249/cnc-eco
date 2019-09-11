@@ -1,17 +1,21 @@
 // todo only commit on release
-Version 2.3.5
-- add /admin route 
 
-Version 2.3.6
+Version 2.3.7
+- after scanning layouts the user can now see the scanned layouts correctly (149eec12)
+
+Version 2.3.6 (8c75a25b)
 - improve share area (032926a7)
 - some style fixes (e4abe740)
 - improve initial loading (3d4c9694) 
  
-Version 2.3.4
+Version 2.3.5 (58c591f8)
+- add /admin route
+ 
+Version 2.3.4 (78d5e5a5)
 - add Footer with server stats
 - try some server fixes for app break down on 15:00 UTC (877baf51, bc0d1dc4)
 
-Version 2.3.3
+Version 2.3.3 (ef76cb26)
 - fix loading ally data on component mount directly (3c8973e8)
 - add redirect to https everything (43e15585)
 
