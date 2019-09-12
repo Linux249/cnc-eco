@@ -12,11 +12,11 @@ export default styled.div`
     box-sizing: border-box;
     background-color: ${alarm};
 
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    //border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 0.25rem;
     color: #fff;
     font-weight: 700;
-    //font-size: 0.8rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     
     //

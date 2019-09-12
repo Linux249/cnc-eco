@@ -18,6 +18,7 @@ import Info from '../style/Info';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { sizes } from '../style/constants';
+import Column from '../style/Column';
 
 const PlayerName = styled.div`
     font-weight: 600;
@@ -133,63 +134,66 @@ function User(props) {
             <div />
             <Middle>
                 {error && <Alert>{error}</Alert>}
-                <Container>
-                    <Label htmlFor="name">Player name:</Label>
-                    {name ? (
-                        <PlayerName>{name}</PlayerName>
-                    ) : (
-                        <>
-                            <InfoText>
-                                <Link to="/scripts">
-                                    <b>cnc-eco script</b>
-                                </Link>
-                                &#160; must be installed first
-                            </InfoText>
-                            <InfoText>
-                                Click ingame 'get token' in the menu to add your data to your
-                                account
-                            </InfoText>
-                        </>
-                    )}
-                </Container>
 
-                <Container>
-                    <Title>Worlds</Title>
-                    <LoadingPoints loading={loading} />
-                    {worlds.length !== 0 &&
-                        worlds.map(w => (
-                            <Button
-                                key={w.worldId}
-                                onClick={() => props.changeWorld(w)}
-                                active={worldId === w.worldId}
-                            >
-                                {w.worldName}
-                            </Button>
-                        ))}
-                    <br />
-                    {success && <Info>{success}</Info>}
-                    <Button onClick={updateWorlds}>Update worlds</Button>
-                </Container>
+                <Column>
+                    <Container>
+                        <Label htmlFor="name">Player name: {name}</Label>
+                        {!name && (
+                            <>
+                                <InfoText>
+                                    <Link to="/scripts">
+                                        <b>cnc-eco script</b>
+                                    </Link>
+                                    &#160; must be installed first
+                                </InfoText>
+                                <InfoText>
+                                    Click ingame 'get token' in the menu to add your data to your
+                                    account
+                                </InfoText>
+                            </>
+                        )}
+                    </Container>
 
-                <Container>
-                    <Title>Logout</Title>
-                    <Button onClick={props.logout}>logout</Button>
-                </Container>
-                <Container>
-                    <Title>{!deleteSecure ? 'Delete Account' : 'Are you sure?'}</Title>
-                    {!deleteSecure ? (
-                        <Button red onClick={deleteUser}>
-                            DELETE
-                        </Button>
-                    ) : (
-                        <Row>
-                            <Button onClick={() => setDeleteSecure(false)}>No</Button>
+                    <Container>
+                        <Title>Logout</Title>
+                        <Button onClick={props.logout}>logout</Button>
+                    </Container>
+
+                    <Container>
+                        <Title>{!deleteSecure ? 'Delete Account' : 'Are you sure?'}</Title>
+                        {!deleteSecure ? (
                             <Button red onClick={deleteUser}>
-                                Yes
+                                DELETE
                             </Button>
-                        </Row>
-                    )}
-                </Container>
+                        ) : (
+                            <Row>
+                                <Button onClick={() => setDeleteSecure(false)}>No</Button>
+                                <Button red onClick={deleteUser}>
+                                    Yes
+                                </Button>
+                            </Row>
+                        )}
+                    </Container>
+                </Column>
+                <Column>
+                    <Container>
+                        <Title>Worlds</Title>
+                        <LoadingPoints loading={loading} />
+                        {worlds.length !== 0 &&
+                            worlds.map(w => (
+                                <Button
+                                    key={w.worldId}
+                                    onClick={() => props.changeWorld(w)}
+                                    active={worldId === w.worldId}
+                                >
+                                    {w.worldName}
+                                </Button>
+                            ))}
+                        <br />
+                        {success && <Info>{success}</Info>}
+                        <Button onClick={updateWorlds}>Update worlds</Button>
+                    </Container>
+                </Column>
             </Middle>
             <BodySide>{!playerAdded && <></>}</BodySide>
         </Body>
