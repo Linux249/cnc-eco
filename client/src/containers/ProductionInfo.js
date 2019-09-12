@@ -12,31 +12,30 @@ import icon_credits from '../img/icon/icon_credits.png';
 import styled, { keyframes } from 'styled-components';
 import Area from '../style/Area';
 import Button from '../style/Button';
-import Title from '../style/Title';
+
+const Grid = styled.div`
+    display: grid;
+
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: min-content repeat(5, 1fr);
+
+    padding-right: 1rem;
+`;
 
 const rotate = keyframes`
     from {top: -10px; left: 0; visibility: visible;}
     to {top: 30px; left: 0; visibility: hidden;}
-/*0% {top: -10px; left: 0;}
-
-  100% {top: 30px; left: 0;}*/
+    //0% {top: -10px; left: 0;}
+    //100% {top: 30px; left: 0;}
 `;
 
 const Diff = styled.div`
     display: flex;
     justify-content: flex-end;
-    //position: absolute;
     animation: ${rotate} 2s ease-in-out;
-    //padding: 0 1rem;
-    font-size: 0.8rem;
-
+    font-size: 0.7rem;
     flex: 1;
-
     color: ${p => (p.positiv ? 'green' : '#e06161')};
-
-    &:last-child {
-        margin-right: 5px;
-    }
 `;
 
 const Prod = styled.div`
@@ -46,7 +45,7 @@ const Prod = styled.div`
 `;
 
 const Img = styled.img`
-    height: 24px;
+    height: 20px;
 `;
 
 const MiniIcon = styled.img`
@@ -55,23 +54,16 @@ const MiniIcon = styled.img`
 
 const Icon = styled.div`
     display: flex;
-    justify-content: center;
-    width: 30px;
-`;
-
-const Line = styled.div`
-    display: flex;
+    justify-content: flex-end;
     align-items: center;
-    justify-content: space-between;
-    flex-grow: 1;
+    width: 80%;
+    padding-bottom: 0.2rem;
 `;
 
 const HeaderElement = styled.div`
-    //flex: 1;
     display: flex;
     justify-content: center;
-
-`
+`;
 
 function ProductionInfo({ buildings }) {
     const firstRender = useRef(true);
@@ -116,91 +108,95 @@ function ProductionInfo({ buildings }) {
 
     return (
         <Area>
-            <Title>Production</Title>
-            <Line>
-                <Icon></Icon>
-                <HeaderElement>total</HeaderElement>
-                <HeaderElement>/h</HeaderElement>
-                <HeaderElement>costs</HeaderElement>
-                <HeaderElement>eff <MiniIcon src={icon_tib} alt={icon_tib}/></HeaderElement>
-                <HeaderElement>eff <MiniIcon src={icon_power} alt={icon_tib} /></HeaderElement>
-            </Line>
-            <Line>
+            <Grid>
+                <div />
                 <Icon>
                     <Img src={icon_tib} alt={icon_tib} />
                 </Icon>
+                <Icon>
+                    <Img src={icon_cris} alt={icon_tib} />
+                </Icon>
+                <Icon>
+                    <Img src={icon_power} alt={icon_tib} />
+                </Icon>
+                <Icon>
+                    <Img src={icon_credits} alt={icon_tib} />
+                </Icon>
+
                 {/*production*/}
+                <HeaderElement>total</HeaderElement>
                 <Prod>{shortenNumber(tib, 2)}</Prod>
+                <Prod>{shortenNumber(kris, 2)}</Prod>
+                <Prod>{shortenNumber(power, 2)}</Prod>
+                <Prod>{shortenNumber(credits, 2)}</Prod>
+
                 {/*changes in production*/}
+                <HeaderElement>/h</HeaderElement>
                 <Diff positiv={diffProd.tib >= 0}>{shortenNumber(diffProd.tib)}</Diff>
+                <Diff positiv={diffProd.kris >= 0}>{shortenNumber(diffProd.kris)}</Diff>
+                <Diff positiv={diffProd.power >= 0}>{shortenNumber(diffProd.power)}</Diff>
+                <Diff positiv={diffProd.credits >= 0}>{shortenNumber(diffProd.credits)}</Diff>
+
                 {/*changes in base costs*/}
+                <HeaderElement>costs</HeaderElement>
                 <Diff positiv={diffCosts.tib === 0}>{shortenNumber(diffCosts.tib)}</Diff>
+                <Diff />
+                <Diff positiv>
+                    {diffProd.power &&
+                        diffCosts.tib &&
+                        shortenNumber(Math.round(diffCosts.tib / diffProd.power))}
+                </Diff>
+                <Diff />
+
                 {/*tib costs changes / production changes */}
+                <HeaderElement>
+                    eff <MiniIcon src={icon_tib} alt={icon_tib} />
+                </HeaderElement>
                 <Diff positiv>
                     {diffProd.tib &&
                         diffCosts.tib &&
                         shortenNumber(Math.round(diffCosts.tib / diffProd.tib))}
                 </Diff>
                 <Diff positiv>
-                    {diffProd.tib &&
-                        diffCosts.power &&
-                        shortenNumber(Math.round(diffCosts.power / diffProd.tib))}
-                </Diff>
-            </Line>
-            <Line>
-                <Icon>
-                    <Img src={icon_cris} alt={icon_tib} />
-                </Icon>
-                <Prod>{shortenNumber(kris, 2)}</Prod>
-                <Diff positiv={diffProd.kris >= 0}>{shortenNumber(diffProd.kris)}</Diff>
-                <Diff />
-                <Diff positiv>
                     {diffProd.kris &&
                         diffCosts.tib &&
                         shortenNumber(Math.round(diffCosts.tib / diffProd.kris))}
                 </Diff>
-                <Diff positiv>
-                    {diffProd.kris &&
-                        diffCosts.power &&
-                        shortenNumber(Math.round(diffCosts.power / diffProd.kris))}
-                </Diff>
-            </Line>
-            <Line>
-                <Icon>
-                    <Img src={icon_power} alt={icon_tib} />
-                </Icon>
-                <Prod>{shortenNumber(power, 2)}</Prod>
-                <Diff positiv={diffProd.power >= 0}>{shortenNumber(diffProd.power)}</Diff>
-                <Diff positiv={diffCosts.power === 0}>{shortenNumber(diffCosts.power)}</Diff>
                 <Diff positiv>
                     {diffProd.power &&
                         diffCosts.tib &&
                         shortenNumber(Math.round(diffCosts.tib / diffProd.power))}
                 </Diff>
                 <Diff positiv>
-                    {diffProd.power &&
-                        diffCosts.power &&
-                        shortenNumber(Math.round(diffCosts.power / diffProd.power))}
-                </Diff>
-            </Line>
-            <Line>
-                <Icon>
-                    <Img src={icon_credits} alt={icon_tib} />
-                </Icon>
-                <Prod>{shortenNumber(credits, 2)}</Prod>
-                <Diff positiv={diffProd.credits >= 0}>{shortenNumber(diffProd.credits)}</Diff>
-                <Diff />
-                <Diff positiv>
                     {diffProd.credits &&
                         diffCosts.tib &&
                         shortenNumber(Math.round(diffCosts.tib / diffProd.credits))}
+                </Diff>
+
+                <HeaderElement>
+                    eff <MiniIcon src={icon_power} alt={icon_tib} />
+                </HeaderElement>
+                <Diff positiv>
+                    {diffProd.tib &&
+                        diffCosts.power &&
+                        shortenNumber(Math.round(diffCosts.power / diffProd.tib))}
+                </Diff>
+                <Diff positiv>
+                    {diffProd.kris &&
+                        diffCosts.power &&
+                        shortenNumber(Math.round(diffCosts.power / diffProd.kris))}
+                </Diff>
+                <Diff positiv>
+                    {diffProd.power &&
+                        diffCosts.power &&
+                        shortenNumber(Math.round(diffCosts.power / diffProd.power))}
                 </Diff>
                 <Diff positiv>
                     {diffProd.credits &&
                         diffCosts.power &&
                         shortenNumber(Math.round(diffCosts.power / diffProd.credits))}
                 </Diff>
-            </Line>
+            </Grid>
             <Button onClick={reset}>reset</Button>
         </Area>
     );
