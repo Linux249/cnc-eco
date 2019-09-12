@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          C&C:TA CnC-Eco
-// @version       1.1.4
+// @version       1.2.0
 // @namespace     http://cnc-eco.herokuapp.com
 // @homepage      http://cnc-eco.herokuapp.com
 // @description   Sammelt Informationen ueber Basenausbau der Allianzmitglieder (basierend auf Skripte / Routinen von neobsen, JimBeamJD, KRS_L, F.D, und Dooki)
@@ -159,9 +159,9 @@
                             c.AddMainMenu('open CnCEco', function() {
                                 CncEcomain.getInstance().openurl();
                             });
-                            c.AddMainMenu('send reports', function() {
-                                CncEcoReports.getInstance().onAllReportsLoaded();
-                            });
+                            // c.AddMainMenu('send reports', function() {
+                            //     CncEcoReports.getInstance().onAllReportsLoaded();
+                            // });
                             c.AddMainMenu('add player', function() {
                                 CncEcomain.getInstance().getToken();
                             });
@@ -3134,30 +3134,45 @@
                 qx.Class.define('CncEcoReports', {
                     type: 'singleton',
                     extend: qx.core.Object,
+                    statics: {
+                        ResourceTypes: {},
+                    },
+                    defer: function(statics) {
+                        // var fileManager = ClientLib.File.FileManager.GetInstance();
+                        statics.ResourceTypes[
+                            ClientLib.Base.EResourceType.Tiberium
+                            ] = 1; // fileManager.GetPhysicalPath('ui/common/icn_res_tiberium.png');
+                        statics.ResourceTypes[
+                            ClientLib.Base.EResourceType.Crystal
+                            ] = 1; // fileManager.GetPhysicalPath('ui/common/icn_res_chrystal.png');
+                        statics.ResourceTypes[
+                            ClientLib.Base.EResourceType.Gold
+                            ] = 1; // fileManager.GetPhysicalPath('ui/common/icn_res_dollar.png');
+                        statics.ResourceTypes[
+                            ClientLib.Base.EResourceType.Power
+                            ] = 1; // fileManager.GetPhysicalPath('ui/common/icn_res_power.png');
+                        statics.ResourceTypes[
+                            ClientLib.Base.EResourceType.ResearchPoints
+                            ] = 1; // fileManager.GetPhysicalPath('ui/common/icn_res_research.png');
+                        // const savedReports = CncEcostorage.getInstance().get('reports') || {}
+                        // const date = new Date();
+                        // date.setDate(date.getDate() - 15);
+                        //
+                        // Object.keys(savedReports).forEach(id => {
+                        //     console.log(id, savedReports[id], data)
+                        // })
+                        //
+                        // CncEcostorage.getInstance().set('reports', savedReports)
+                    },
                     members: {
                         reports: null,
-                        reportsLoaded: [],
-                        onReportDelivered: function(report) {
-                            console.log('one report was deliverd: ', report);
-                            this.reportsLoaded.push(report);
-                            return report
-                        },
-                        onReportsDelivered: function(reports) {
-                            console.log('all report was deliverd: ', reports);
-                            this.reportsLoaded = reports
-                        },
-                        amAnfang: function(c, f) {
+                        newReports: [],
+                        init: function() {
+                            this.destroy()
                             const reports = ClientLib.Data.MainData.GetInstance().get_Reports();
                             this.reports = reports;
-                            console.log('am anfang reports', reports)
+                            console.log('init reports', reports)
 
-                            phe.cnc.Util.attachNetEvent(
-                                reports,
-                                'ReportDelivered',
-                                ClientLib.Data.Reports.ReportDelivered,
-                                this,
-                                this.onReportDelivered
-                            );
                             phe.cnc.Util.attachNetEvent(
                                 reports,
                                 'ReportsDelivered',
@@ -3166,53 +3181,254 @@
                                 this.onReportsDelivered
                             );
                         },
+                        destroy: function() {
+                            phe.cnc.Util.detachNetEvent(
+                                ClientLib.Data.MainData.GetInstance().get_Reports(),
+                                'ReportDelivered',
+                                ClientLib.Data.Reports.ReportDelivered,
+                                this,
+                                this.onReportDelivered
+                            );
+                        } ,
+                        onReportsDelivered: function(reports) {
+                            console.log('all reports delivered');
+                            const savedReports = CncEcostorage.getInstance().get('reports') || {}
+                            // console.log('savedReports - before', savedReports)
+                            this.newReports = []; // reset reports
+                            reports.forEach(report => {
+                                const id = report.get_Id()
+                                if(!savedReports[id]) {
+                                    savedReports[id] = report.get_Time()
+                                    this.newReports.push(report)
+                                }
+                            })
+                            CncEcostorage.getInstance().set('reports', savedReports)
+                            // console.log('savedReports', savedReports)
+                            console.log('newReports', this.newReports)
+                            this.newReports.length && this.onAllReportsLoaded()
+                        },
 
                         onAllReportsLoaded: function() {
-
-                            console.log('all loaded reports');
-                            console.log(this.reportsLoaded);
-                            if (this.reportsLoaded.length) {
-                                // this.reportsLoaded.forEach(report => {
+                            console.time('onAllReportsLoaded')
+                            // console.log('all loaded reports');
+                            // console.log(this.newReports);
+                            if (this.newReports.length > 0) {
+                                // this.newReports.forEach(report => {
                                 //     this.reports.RequestReportData(report);
                                 // });
+
+                                // var attackerBaseIds = [];
+                                // var defenderBaseIds = [];
+                                var repairTimeCosts = 0;
+                                var minCommandPointCosts = 0;
+                                var maxCommandPointCosts = 0;
+                                // var firstAttack = null;
+                                // var lastAttack = 0;
+
+                                var loot = {};
+                                var getTotalLootMethod, getRepairCostsMethod;
+
+                                var reports = [];
+
+                                // off
+                                const { CombatReport } = ClientLib.Data.Reports;
+                                if (
+                                    this.newReports[0].get_PlayerReportType() ===
+                                    ClientLib.Data.Reports.EPlayerReportType.CombatOffense
+                                ) {
+                                    getTotalLootMethod =
+                                        CombatReport.prototype.GetAttackerTotalResourceReceived;
+                                    getRepairCostsMethod = CombatReport.prototype.GetAttackerRepairCosts;
+                                }
+                                // def
+                                else {
+                                    getTotalLootMethod =
+                                        CombatReport.prototype.GetDefenderTotalResourceCosts;
+                                    getRepairCostsMethod = CombatReport.prototype.GetDefenderRepairCosts;
+                                }
+
+                                // init sever configs for cp costs
                                 var server = ClientLib.Data.MainData.GetInstance().get_Server();
                                 var player = ClientLib.Data.MainData.GetInstance().get_Player();
-                                console.log({player, server})
-                                this.reportsLoaded.forEach(report => {
+                                var combatCostMinimum = server.get_CombatCostMinimum();
+                                var combatCostMinimumPvP = server.get_UsesRebalancingI()
+                                    ? server.get_PvPCombatCostMinimum()
+                                    : combatCostMinimum;
+                                var combatCostPerFieldInside = server.get_CombatCostPerField();
+                                var combatCostPerFieldOutside = server.get_CombatCostPerFieldOutsideTerritory();
 
+                                // console.log({player, server})
+
+                                // loop through all reports
+                                for (var i = 0; i < this.newReports.length; i++) {
+                                    var report = this.newReports[i];
+                                    // console.log({ report });
+
+                                    var rapport = {};
+                                    rapport.id = report.get_Id();
+
+                                    if (!(report instanceof CombatReport)) {
+                                        continue;
+                                    }
+
+                                    rapport.attackerBaseId = report.get_AttackerBaseId();
+                                    rapport.defenderBaseId = report.get_DefenderBaseId();
+
+                                    // if (attackerBaseIds.indexOf(report.get_AttackerBaseId()) === -1) {
+                                    //     attackerBaseIds.push(report.get_AttackerBaseId());
+                                    // }
+                                    //
+                                    // if (defenderBaseIds.indexOf(report.get_DefenderBaseId()) === -1) {
+                                    //     defenderBaseIds.push(report.get_DefenderBaseId());
+                                    // }
+
+                                    // add repair time
+                                    repairTimeCosts += report.GetAttackerMaxRepairTime();
+                                    rapport.maxRep = report.GetAttackerMaxRepairTime();
+                                    rapport.infRep = report.GetAttackerInfantryRepairCosts();
+                                    rapport.vehRep = report.GetAttackerVehicleRepairCosts();
+                                    rapport.airRep = report.GetAttackerAirRepairCosts();
+
+                                    var distance = Math.sqrt(
+                                        Math.pow(
+                                            report.get_AttackerBaseXCoord() -
+                                            report.get_DefenderBaseXCoord(),
+                                            2
+                                        ) +
+                                        Math.pow(
+                                            report.get_AttackerBaseYCoord() -
+                                            report.get_DefenderBaseYCoord(),
+                                            2
+                                        )
+                                    );
+
+                                    rapport.distance = distance; // total distane between coords
+                                    let cost
                                     switch (report.get_Type()) {
                                         case ClientLib.Data.Reports.EReportType.Combat: // 1, pvp
-                                            console.warn('1 pvp Combat')
-                                            // console.log(report)
+                                            var isFriendlyTerritory =
+                                                report.get_AttackerAllianceName() ===
+                                                report.get_DefenderAllianceName();
+                                            cost = Math.floor(
+                                                combatCostMinimumPvP +
+                                                (isFriendlyTerritory
+                                                    ? combatCostPerFieldInside
+                                                    : combatCostPerFieldOutside) *
+                                                distance
+                                            );
+                                            // minCommandPointCosts += cost;
+                                            // maxCommandPointCosts += cost;
+                                            rapport.def = true;
+                                            rapport.minCp = cost;
+                                            rapport.maxCp = cost;
                                             break;
-                                        case ClientLib.Data.Reports.EReportType.NPCRaid: // 2, pve
-                                            console.log('2 pve NPCRaid: ' )
-                                            console.log(report)
+                                        case ClientLib.Data.Reports.EReportType.NPCRaid: // 2, pvp
                                             switch (parseInt(report.get_DefenderBaseName(), 10)) {
                                                 case ClientLib.Data.Reports.ENPCCampType.Base: // 4
                                                 case ClientLib.Data.Reports.ENPCCampType.Fortress: // 6
-
+                                                    cost = Math.floor(
+                                                        combatCostMinimum +
+                                                        combatCostPerFieldOutside * distance
+                                                    );
+                                                    // minCommandPointCosts += cost;
+                                                    // maxCommandPointCosts += cost;
+                                                    rapport.off = true;
+                                                    rapport.minCp = cost;
+                                                    rapport.maxCp = cost;
                                                     break;
                                                 default:
-
+                                                    const minCp = Math.floor(
+                                                        combatCostMinimum +
+                                                        combatCostPerFieldInside * distance
+                                                    );
+                                                    const maxCp = Math.floor(
+                                                        combatCostMinimum +
+                                                        combatCostPerFieldOutside * distance
+                                                    );
+                                                    // minCommandPointCosts += minCp;
+                                                    // maxCommandPointCosts += maxCp;
+                                                    rapport.off = true;
+                                                    rapport.minCp = minCp;
+                                                    rapport.maxCp = maxCp;
                                             }
                                             break;
                                         case ClientLib.Data.Reports.EReportType.NPCPlayerCombat: // 5
-                                            console.log('5 NPCPlayerCombat: ')
-                                            // console.log(report)
                                             // No repair time or command point cost for Forgotten attacks
                                             break;
                                         default:
                                             throw 'Unexpected report type (' + report.get_Type() + ')';
                                     }
-                                })
-                            } else {
 
+                                    rapport.time = report.get_Time();
+
+                                    /**
+                                     @discroption: calc the loot with out the rep res costs
+                                     */
+                                    for (var resourceType in CncEcoReports.ResourceTypes) {
+                                        var resourceCount =
+                                            getTotalLootMethod.call(report, resourceType) -
+                                            getRepairCostsMethod.call(report, resourceType);
+
+                                        if (resourceCount !== 0) {
+                                            if (!(resourceType in loot)) {
+                                                loot[resourceType] = 0;
+                                            }
+
+                                            loot[resourceType] += resourceCount;
+                                        }
+                                    }
+                                    rapport.loot = loot;
+
+                                    reports.push(rapport);
+                                }
+
+                                // console.log({
+                                //     server,
+                                //     player,
+                                //     combatCostMinimum,
+                                //     combatCostMinimumPvP,
+                                //     combatCostPerFieldInside,
+                                //     combatCostPerFieldOutside,
+                                //
+                                //     minCommandPointCosts,
+                                //     maxCommandPointCosts,
+                                //     // firstAttack,
+                                //     // lastAttack,
+                                //     getTotalLootMethod,
+                                //     getRepairCostsMethod,
+                                //
+                                //     // attackerBaseIds, // id off attacker bases, the player pvp attacker maybe
+                                //     // defenderBaseIds,    // id of defender bases, the bases who got attacked, maybe the player also in pvp
+                                //
+                                //     repairTimeCosts, // total time in s
+                                //     loot, //
+                                // });
+                                //
+                                // console.warn('All reports');
+
+                                fetch('https://cnc-eco.herokuapp.com/api/v1/reports/update', {
+                                // fetch('http://localhost:8000/api/v1/reports/update', {
+                                    method: 'POST',
+                                    headers: {
+                                        "content-type": "application/json",
+                                    },
+                                    body: JSON.stringify({
+                                        reports,
+                                        world: server.get_WorldId(),
+                                        player: player.get_Name(),
+                                        playerId: player.get_Id(),
+                                        accountId: player.get_AccountId(),
+                                    })
+                                }).then(async r => {
+                                    const data = await r.json()
+                                    console.log('all reports delivered', reports, data)
+                                }).catch(e => console.warn(e))
                             }
+                            console.timeEnd('onAllReportsLoaded')
                         },
 
                         initialize: function() {
-                            this.amAnfang();
+                            this.init();
                             try {
                                 h('CncEcoReports loaded');
                             } catch (c) {
