@@ -27,6 +27,7 @@ import Feedback from './routes/Feedback';
 import Column from './style/Column';
 import Info from './style/Info';
 import Footer from './components/Footer';
+import Reports from './routes/Reports';
 
 class App extends Component {
     componentWillMount() {
@@ -38,7 +39,7 @@ class App extends Component {
     }
 
     render() {
-        const { auth, name } = this.props;
+        const { auth, name, token } = this.props;
         return (
             <Router>
                 <AppS>
@@ -65,6 +66,7 @@ class App extends Component {
                     <Route path="/resend" component={Resend} />
                     <Route path="/reset/:token?" component={Reset} />
                     <Route path="/feedback" component={Feedback} />
+                    <Route path="/reports" component={Reports} />
                     <ProtectedRoute path="/bases" auth={auth} name={name} component={Bases} />
                     <ProtectedRoute
                         path="/layouts/:world?"

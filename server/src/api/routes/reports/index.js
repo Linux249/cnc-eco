@@ -182,12 +182,12 @@ router.post('/update', async (req, res, next) => {
  * /api/v1/reports/off/:world/:playerId/:baseId
  * ???
  */
-router.get('/:type/:world/:playerId/:baseId', async (req, res, next) => {
-    let { type, world, playerId, baseId } = req.params;
-    console.log({ type, world, playerId, baseId });
-    if ((type !== 'off' && type !== 'def' )|| !world || !playerId || !baseId) next(new Error('wrong url param'))
+router.get('/:type/:world/:playerId', async (req, res, next) => {
+    let { type, world, playerId } = req.params;
+    console.log({ type, world, playerId });
+    if ((type !== 'off' && type !== 'def' )|| !world || !playerId) next(new Error('wrong url param'))
     try {
-        const reports = await getReportsStats(world, playerId, baseId, type, req.db);
+        const reports = await getReportsStats(world, playerId, type, req.db);
         // console.log(reports);
         res.json(reports);
     } catch (err) {
@@ -198,7 +198,7 @@ router.get('/:type/:world/:playerId/:baseId', async (req, res, next) => {
 
 export default router;
 
-export async function getReportsStats(world, playerId, baseId, type, db) {
+export async function getReportsStats(world, playerId, type, db) {
     const collection = db.collection(`reports_${world}`);
     const reports = {};
     reports.reports = await collection.find({ playerId: +playerId, [type]: true}).toArray();
