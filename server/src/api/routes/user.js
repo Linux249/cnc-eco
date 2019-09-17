@@ -77,6 +77,7 @@ router.post('/user/addPlayerName', async (req, res, next) => {
                         player_id: player._id,
                         allianceId: player.allianceId,
                         time: player._updated, // not in the mongoose schema, so it won't be saved
+                        playerId: player.playerId,
                     });
             })
         );

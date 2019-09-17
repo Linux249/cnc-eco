@@ -41,7 +41,8 @@ export function changeWorld(world) {
         w: world.worldId,
         worldName: world.worldName,
         allianceId: world.allianceId,
-        playerId: world.player_id,
+        _id: world.player_id,
+        playerId: world.playerId,
     };
 }
 

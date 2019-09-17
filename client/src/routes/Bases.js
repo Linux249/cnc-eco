@@ -12,14 +12,14 @@ import { api_url } from '../config';
 import { changeLoading, updateBases } from '../store/actions/player';
 
 export const Bases =  (props) => {
-    const {worldId, token, playerId} = props
+    const {worldId, token, _id} = props
 
     useEffect(() => {
         async function loadPlayer() {
             props.changeLoading(true);
 
             // todo requqest player data
-            const url = api_url + '/player?player=' + playerId + '&world=' + worldId;
+            const url = api_url + '/player?player=' + _id + '&world=' + worldId;
             const player = await fetch(url, {
                 headers: new Headers({
                     Authorization: 'Bearer  ' + token,
@@ -30,8 +30,8 @@ export const Bases =  (props) => {
             // player.allianceId && props.updateAllianceId(player.allianceId);
             props.changeLoading(false);
         }
-        playerId && loadPlayer()
-    }, [playerId])
+        _id && loadPlayer()
+    }, [_id])
 
     return (
         <Column center>
@@ -54,7 +54,7 @@ export const Bases =  (props) => {
 }
 
 const mapStateToProps = state => ({
-    playerId: state.player.playerId,
+    _id: state.player._id,
     token: state.auth.token,
     worldId: state.player.w,
 });

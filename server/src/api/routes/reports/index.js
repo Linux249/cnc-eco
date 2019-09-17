@@ -179,11 +179,12 @@ router.post('/update', async (req, res, next) => {
 
 /**
  * GET /api/v1/reports/:type/:world/:playerId/:baseId
+ * /api/v1/reports/off/:world/:playerId/:baseId
  * ???
  */
 router.get('/:type/:world/:playerId/:baseId', async (req, res, next) => {
     let { type, world, playerId, baseId } = req.params;
-    console.log({ world, playerId, baseId });
+    console.log({ type, world, playerId, baseId });
     if ((type !== 'off' && type !== 'def' )|| !world || !playerId || !baseId) next(new Error('wrong url param'))
     try {
         const reports = await getReportsStats(world, playerId, baseId, type, req.db);

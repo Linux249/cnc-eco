@@ -13,6 +13,7 @@ const initState = {
     worldName: '', // Toggle for showing help everywhere or not
     name: '',
     allianceId: 0,
+    _id: 0,
     playerId: 0,
     worlds: [],
     bases: [],
@@ -33,6 +34,7 @@ export function player(state = initState, action) {
                 w: action.w,
                 worldName: action.worldName,
                 allianceId: action.allianceId,
+                _id: action._id,
                 playerId: action.playerId,
                 selectedBase: 0,
             };
