@@ -35,6 +35,7 @@ const userSchema = Schema({
         {
             worldId: {type: Number, required: true},
             player_id: Schema.ObjectId,
+            playerId: {type: Number, required: true},
             worldName: {type: String, required: true},
             allianceId: {type: Number, required: true},
         },

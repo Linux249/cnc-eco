@@ -75,9 +75,9 @@ router.post('/user/addPlayerName', async (req, res, next) => {
                         worldId: w.worldId,
                         worldName: player.serverName,
                         player_id: player._id,
+                        playerId: player.playerId,
                         allianceId: player.allianceId,
                         time: player._updated, // not in the mongoose schema, so it won't be saved
-                        playerId: player.playerId,
                     });
             })
         );
@@ -179,6 +179,7 @@ router.get('/user/updateWorlds', async (req, res, next) => {
                         worldId: w.worldId,
                         worldName: player.serverName,
                         player_id: player._id,
+                        playerId: player.playerId,
                         allianceId: player.allianceId,
                         time: player._updated, // not in the mongoose schema, so it won't be saved
                     });
