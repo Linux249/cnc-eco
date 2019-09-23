@@ -8,6 +8,9 @@ export const createReport = async db => {
     const removePlayerDate = new Date();
     removePlayerDate.setDate(removePlayerDate.getDate() - 120);
 
+    const removeReportsDate = new Date();
+    removeReportsDate.setDate(removePlayerDate.getDate() - 31);
+
     const report = new Report();
 
     try {
@@ -15,7 +18,8 @@ export const createReport = async db => {
         const collections = await db.listCollections().toArray();
         // get layouts collection
         const layoutsColl = collections.filter(coll => coll.name.includes('layouts_'));
-        // const reportsColl = collections.filter(coll => coll.name.includes('reports_'));
+        // get reports collection
+        const reportsColl = collections.filter(coll => coll.name.includes('reports_'));
         // get all player collections
         const playerColl = collections.filter(coll => coll.name.includes('players_'));
 
@@ -76,6 +80,10 @@ export const createReport = async db => {
         );
         console.log({ report, playerColl });*/
 
+
+        /**
+         * collect data for each player collection
+         */
         await Promise.all(
             playerColl.map(async ({ name }) => {
                 const collection = await db.collection(name);
@@ -96,6 +104,37 @@ export const createReport = async db => {
                 }
 
                 report.players.push({
+                    worldId: name.split('_')[1],
+                    del: result.n, // how many deleted player
+                    count: stats.count, // how many player after
+                    size: stats.size,
+                });
+            })
+        );
+
+        /**
+         * collect data for each reports collection
+         */
+        await Promise.all(
+            reportsColl.map(async ({ name }) => {
+                const collection = await db.collection(name);
+
+                // deleting old layouts
+                const { result } = await collection.remove({
+                    _updated: { $lt: removeReportsDate },
+                });
+                if (!result.ok) console.log('FEHLER BEIM LÖSCHEN VON REPORTS'); // TODO save Error persistently
+                // console.log(result);
+                const stats = await collection.stats({
+                    scale: 1024,
+                });
+
+                if (stats.count === 0) {
+                    await collection.drop();
+                    console.log('delete collection: ' + name);
+                }
+
+                report.reports.push({
                     worldId: name.split('_')[1],
                     del: result.n, // how many deleted player
                     count: stats.count, // how many player after
