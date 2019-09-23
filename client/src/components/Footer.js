@@ -20,6 +20,7 @@ export function Footer({ token }) {
     const [users, setUsers] = useState(0);
     const [layouts, setLayouts] = useState(0);
     const [players, setPlayers] = useState(0);
+    const [reports, setReports] = useState(0);
     const [size, setSize] = useState(0);
 
     // Add event listeners
@@ -37,14 +38,19 @@ export function Footer({ token }) {
             setSize(data.size)
             let countLayouts = 0
             let countPlayers = 0
+            let countReports = 0
             for(let i = 0; i < data.report.layouts.length; i += 1) {
                 countLayouts += data.report.layouts[i].count
             }
             for(let i = 0; i < data.report.players.length; i += 1) {
                 countPlayers += data.report.players[i].count
             }
+            for(let i = 0; i < data.report.reports.length; i += 1) {
+                countReports += data.report.reports[i].count
+            }
             setLayouts(countLayouts)
             setPlayers(countPlayers)
+            setReports(countReports)
 
         }
         token && getStats();
@@ -56,6 +62,7 @@ export function Footer({ token }) {
             <div>Registered: {users}</div>
             <div>Player: {players}</div>
             <div>Layouts: {layouts}</div>
+            <div>Reports: {reports}</div>
             <div>Size: {size}MB</div>
         </FooterStyle>
     );
