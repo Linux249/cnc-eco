@@ -46,6 +46,13 @@ function getAccu(s, layout) {
  * @return {[Number, String]} [count, layout] count of accus in layout and layout
  */
 function findAccus(i, lay, counter = 0) {
+
+    // 25 accus are enough
+    if (counter >= 25) {
+        console.error('Found more than ', counter, ' accus')
+        console.log(lay)
+        return [counter, lay];
+    }
     let pp_n = getAccu(i, lay);
     if (pp_n === 8 || pp_n === 7) {
         // generate the new layout
@@ -118,8 +125,6 @@ export const layoutStats = layout => {
             // dont't check a slot where already is something
             if (slot !== '.') return a; // t,c are only other options here
             if (i < 10 || i > 61 || !(i % 9) || !((i + 1) % 9)) return a;
-            // 15 accus are enough
-            if (i >= 15) return a;
 
             // start recursive for each free slot
             const [newC, newL] = findAccus(i, layout);
