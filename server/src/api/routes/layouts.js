@@ -6,13 +6,11 @@ import { layoutStats } from '../utils/layout';
  * - the client protecting to get layouts from other worlds
  */
 export default async (req, res, next) => {
-    console.log(req.body)
     try {
-        res.send(); // todo layouts update send empty body, check what happens if they send something back
-
         let { db, body, headers, query } = req;
         const { w, pl, a } = query;
         if (headers['content-type'].includes('text')) body = JSON.parse(body);
+        console.log(req.body)
 
         const layouts = Object.keys(body).map(key => {
             const [x, y] = key.split(':');
@@ -48,4 +46,5 @@ export default async (req, res, next) => {
         console.error(e)
         next(e)
     }
+    res.send(); // todo layouts update send empty body, check what happens if they send something back
 };
