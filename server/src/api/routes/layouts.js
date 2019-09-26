@@ -10,7 +10,7 @@ export default async (req, res, next) => {
         let { db, body, headers, query } = req;
         const { w, pl, a } = query;
         if (headers['content-type'].includes('text')) body = JSON.parse(body);
-        console.log(req.body)
+        console.log(body)
 
         const layouts = Object.keys(body).map(key => {
             const [x, y] = key.split(':');
