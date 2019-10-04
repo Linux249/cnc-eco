@@ -6,12 +6,12 @@ export const Area = styled.div`
     //display: flex;
     //flex-flow: column;
     //flex-wrap: wrap;
-    background-color: ${backgroundColor};
+    // background-color: ${backgroundColor};
     border: ${border};
     border-radius: ${borderRadius};
     box-shadow: ${shadow};
 
-    //height: 100%;
+    height: fit-content;
     //width: fit-content;
 
     padding: ${({ small }) => (small ? '2px' : '7px')};
