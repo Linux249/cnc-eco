@@ -6,10 +6,10 @@ export const createReport = async db => {
     removeLayoutDate.setDate(removeLayoutDate.getDate() - 14); // date 14 days before now
 
     const removePlayerDate = new Date();
-    removePlayerDate.setDate(removePlayerDate.getDate() - 120);
+    removePlayerDate.setDate(removePlayerDate.getDate() - 365);
 
     const removeReportsDate = new Date();
-    removeReportsDate.setDate(removePlayerDate.getDate() - 31);
+    removeReportsDate.setDate(removePlayerDate.getDate() - 30);
 
     const report = new Report();
 
@@ -121,7 +121,7 @@ export const createReport = async db => {
 
                 // deleting old layouts
                 const { result } = await collection.remove({
-                    _updated: { $lt: removeReportsDate },
+                    time: { $lt: removeReportsDate },
                 });
                 if (!result.ok) console.log('FEHLER BEIM LÖSCHEN VON REPORTS'); // TODO save Error persistently
                 // console.log(result);
