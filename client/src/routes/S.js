@@ -3,7 +3,7 @@ import { Redirect } from 'react-router';
 import { api_url } from '../config';
 import Alert from '../style/Alert';
 import urlToBase from '../util/parseurl';
-import { store } from '..';
+import { store } from '../pages/';
 import { replaceAllBase } from '../store/actions/base';
 
 export const S = props => {

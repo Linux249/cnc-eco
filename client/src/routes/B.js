@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import Alert from '../style/Alert';
 import urlToBase from '../util/parseurl';
-import { store } from '..';
+import { store } from '../pages';
 import { replaceAllBase } from '../store/actions/base';
 import { api_url } from '../config';
 import Body from '../style/Body';

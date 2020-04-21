@@ -17,3 +17,5 @@ npm-debug.log
 # irgendwas
 .idea
 
+# nextjs
+.next

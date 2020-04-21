@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import AreaRaw from '../style/Area';
 import styled from 'styled-components';
 import { baseColor } from '../style/constants';
-import { Tooltip } from 'react-tippy';
+//import { Tooltip } from 'react-tippy';
 
 const Area = styled(AreaRaw)`
     padding: 6px;
@@ -101,9 +101,9 @@ const Layout = ({ layout }) => {
             <Container>{slots}</Container>
             {/*<div>{`${layout.x}:${layout.y} /!*  t:${layout.tib}   c:${layout.cris}*!/`}</div>*/}
             <Row center>
-                <Tooltip title="copy to clipboard" position="bottom" trigger="mouseenter">
+                {/*<Tooltip title="copy to clipboard" position="bottom" trigger="mouseenter">*/}
                     <Coords onClick={copyToClipBoard}>{`${layout.x}:${layout.y}`}</Coords>
-                </Tooltip>
+                {/*</Tooltip>*/}
                 <Time>{time}</Time>
             </Row>
         </Area>

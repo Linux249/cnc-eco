@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Slot from '../containers/Slot';
 import Grid from '../style/Grid';
-import { store } from '../index';
+import { store } from '../pages/index';
 import { setShiftPressed } from '../store/actions/menu';
 import Area from '../style/Area';
 import CountStructure from '../containers/CountStructure';

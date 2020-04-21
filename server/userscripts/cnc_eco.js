@@ -3175,6 +3175,14 @@
 
                             phe.cnc.Util.attachNetEvent(
                                 reports,
+                                'ReportDelivered',
+                                ClientLib.Data.Reports.ReportDelivered,
+                                this,
+                                this.onReportDelivered
+                            );
+
+                            phe.cnc.Util.attachNetEvent(
+                                reports,
                                 'ReportsDelivered',
                                 ClientLib.Data.Reports.ReportsDelivered,
                                 this,
@@ -3207,11 +3215,15 @@
                             console.log('newReports', this.newReports)
                             this.newReports.length && this.onAllReportsLoaded()
                         },
-
+                        onReportDelivered: function(report) {
+                            this.createRapportLog(report)
+                            const rapport = this.createRapportLeo(report)
+                            console.log({rapport})
+                        },
                         onAllReportsLoaded: function() {
                             console.time('onAllReportsLoaded')
                             // console.log('all loaded reports');
-                            // console.log(this.newReports);
+                            console.log(this.newReports);
                             if (this.newReports.length > 0) {
                                 // this.newReports.forEach(report => {
                                 //     this.reports.RequestReportData(report);
@@ -3219,165 +3231,28 @@
 
                                 // var attackerBaseIds = [];
                                 // var defenderBaseIds = [];
-                                var repairTimeCosts = 0;
-                                var minCommandPointCosts = 0;
-                                var maxCommandPointCosts = 0;
+
                                 // var firstAttack = null;
                                 // var lastAttack = 0;
 
-                                var loot = {};
-                                var getTotalLootMethod, getRepairCostsMethod;
-
                                 var reports = [];
-
-                                // off
-                                const { CombatReport } = ClientLib.Data.Reports;
-                                if (
-                                    this.newReports[0].get_PlayerReportType() ===
-                                    ClientLib.Data.Reports.EPlayerReportType.CombatOffense
-                                ) {
-                                    getTotalLootMethod =
-                                        CombatReport.prototype.GetAttackerTotalResourceReceived;
-                                    getRepairCostsMethod = CombatReport.prototype.GetAttackerRepairCosts;
-                                }
-                                // def
-                                else {
-                                    getTotalLootMethod =
-                                        CombatReport.prototype.GetDefenderTotalResourceCosts;
-                                    getRepairCostsMethod = CombatReport.prototype.GetDefenderRepairCosts;
-                                }
-
-                                // init sever configs for cp costs
-                                var server = ClientLib.Data.MainData.GetInstance().get_Server();
-                                var player = ClientLib.Data.MainData.GetInstance().get_Player();
-                                var combatCostMinimum = server.get_CombatCostMinimum();
-                                var combatCostMinimumPvP = server.get_UsesRebalancingI()
-                                    ? server.get_PvPCombatCostMinimum()
-                                    : combatCostMinimum;
-                                var combatCostPerFieldInside = server.get_CombatCostPerField();
-                                var combatCostPerFieldOutside = server.get_CombatCostPerFieldOutsideTerritory();
 
                                 // console.log({player, server})
 
                                 // loop through all reports
                                 for (var i = 0; i < this.newReports.length; i++) {
                                     var report = this.newReports[i];
-                                    // console.log({ report });
 
-                                    var rapport = {};
-                                    rapport.id = report.get_Id();
+                                    const { CombatReport } = ClientLib.Data.Reports;
+
 
                                     if (!(report instanceof CombatReport)) {
+                                        console.warn('KEIN CombatReport')
+                                        console.log(report)
                                         continue;
                                     }
 
-                                    rapport.attackerBaseId = report.get_AttackerBaseId();
-                                    rapport.defenderBaseId = report.get_DefenderBaseId();
-
-                                    // if (attackerBaseIds.indexOf(report.get_AttackerBaseId()) === -1) {
-                                    //     attackerBaseIds.push(report.get_AttackerBaseId());
-                                    // }
-                                    //
-                                    // if (defenderBaseIds.indexOf(report.get_DefenderBaseId()) === -1) {
-                                    //     defenderBaseIds.push(report.get_DefenderBaseId());
-                                    // }
-
-                                    // add repair time
-                                    repairTimeCosts += report.GetAttackerMaxRepairTime();
-                                    rapport.maxRep = report.GetAttackerMaxRepairTime();
-                                    rapport.infRep = report.GetAttackerInfantryRepairCosts();
-                                    rapport.vehRep = report.GetAttackerVehicleRepairCosts();
-                                    rapport.airRep = report.GetAttackerAirRepairCosts();
-
-                                    var distance = Math.sqrt(
-                                        Math.pow(
-                                            report.get_AttackerBaseXCoord() -
-                                            report.get_DefenderBaseXCoord(),
-                                            2
-                                        ) +
-                                        Math.pow(
-                                            report.get_AttackerBaseYCoord() -
-                                            report.get_DefenderBaseYCoord(),
-                                            2
-                                        )
-                                    );
-
-                                    rapport.distance = distance; // total distane between coords
-                                    let cost
-                                    switch (report.get_Type()) {
-                                        case ClientLib.Data.Reports.EReportType.Combat: // 1, pvp
-                                            var isFriendlyTerritory =
-                                                report.get_AttackerAllianceName() ===
-                                                report.get_DefenderAllianceName();
-                                            cost = Math.floor(
-                                                combatCostMinimumPvP +
-                                                (isFriendlyTerritory
-                                                    ? combatCostPerFieldInside
-                                                    : combatCostPerFieldOutside) *
-                                                distance
-                                            );
-                                            // minCommandPointCosts += cost;
-                                            // maxCommandPointCosts += cost;
-                                            rapport.def = true;
-                                            rapport.minCp = cost;
-                                            rapport.maxCp = cost;
-                                            break;
-                                        case ClientLib.Data.Reports.EReportType.NPCRaid: // 2, pvp
-                                            switch (parseInt(report.get_DefenderBaseName(), 10)) {
-                                                case ClientLib.Data.Reports.ENPCCampType.Base: // 4
-                                                case ClientLib.Data.Reports.ENPCCampType.Fortress: // 6
-                                                    cost = Math.floor(
-                                                        combatCostMinimum +
-                                                        combatCostPerFieldOutside * distance
-                                                    );
-                                                    // minCommandPointCosts += cost;
-                                                    // maxCommandPointCosts += cost;
-                                                    rapport.off = true;
-                                                    rapport.minCp = cost;
-                                                    rapport.maxCp = cost;
-                                                    break;
-                                                default:
-                                                    const minCp = Math.floor(
-                                                        combatCostMinimum +
-                                                        combatCostPerFieldInside * distance
-                                                    );
-                                                    const maxCp = Math.floor(
-                                                        combatCostMinimum +
-                                                        combatCostPerFieldOutside * distance
-                                                    );
-                                                    // minCommandPointCosts += minCp;
-                                                    // maxCommandPointCosts += maxCp;
-                                                    rapport.off = true;
-                                                    rapport.minCp = minCp;
-                                                    rapport.maxCp = maxCp;
-                                            }
-                                            break;
-                                        case ClientLib.Data.Reports.EReportType.NPCPlayerCombat: // 5
-                                            // No repair time or command point cost for Forgotten attacks
-                                            break;
-                                        default:
-                                            throw 'Unexpected report type (' + report.get_Type() + ')';
-                                    }
-
-                                    rapport.time = report.get_Time();
-
-                                    /**
-                                     @discroption: calc the loot with out the rep res costs
-                                     */
-                                    for (var resourceType in CncEcoReports.ResourceTypes) {
-                                        var resourceCount =
-                                            getTotalLootMethod.call(report, resourceType) -
-                                            getRepairCostsMethod.call(report, resourceType);
-
-                                        if (resourceCount !== 0) {
-                                            if (!(resourceType in loot)) {
-                                                loot[resourceType] = 0;
-                                            }
-
-                                            loot[resourceType] += resourceCount;
-                                        }
-                                    }
-                                    rapport.loot = loot;
+                                    const rapport = this.createRapportLeo(report)
 
                                     reports.push(rapport);
                                 }
@@ -3425,6 +3300,210 @@
                                 }).catch(e => console.warn(e))
                             }
                             console.timeEnd('onAllReportsLoaded')
+                        },
+
+                        createRapportLeo(report) {
+                            console.warn('createRapportLeo')
+                            var repairTimeCosts = 0;
+                            var minCommandPointCosts = 0;
+                            var maxCommandPointCosts = 0;
+                            var loot = {};
+
+                            var getTotalLootMethod, getRepairCostsMethod;
+                            // off
+                            const { CombatReport } = ClientLib.Data.Reports;
+                            if (
+                                report.get_PlayerReportType() ===
+                                ClientLib.Data.Reports.EPlayerReportType.CombatOffense
+                            ) {
+                                getTotalLootMethod =
+                                    CombatReport.prototype.GetAttackerTotalResourceReceived;
+                                getRepairCostsMethod = CombatReport.prototype.GetAttackerRepairCosts;
+                            }
+                            // def
+                            else {
+                                getTotalLootMethod =
+                                    CombatReport.prototype.GetDefenderTotalResourceCosts;
+                                getRepairCostsMethod = CombatReport.prototype.GetDefenderRepairCosts;
+                            }
+
+                            // init sever configs for cp costs
+                            var server = ClientLib.Data.MainData.GetInstance().get_Server();
+                            var player = ClientLib.Data.MainData.GetInstance().get_Player();
+                            var combatCostMinimum = server.get_CombatCostMinimum();
+                            var combatCostMinimumPvP = server.get_UsesRebalancingI()
+                                ? server.get_PvPCombatCostMinimum()
+                                : combatCostMinimum;
+                            var combatCostPerFieldInside = server.get_CombatCostPerField();
+                            var combatCostPerFieldOutside = server.get_CombatCostPerFieldOutsideTerritory();
+
+                            console.log({ report });
+                            console.log(report.GetAttackerAirRepairCosts())
+                            console.log(report.GetAttackerAirRepairCostsBeforeRewards())
+                            console.log(report.GetAttackerInfantryRepairCostsBeforeRewards())
+                            console.log(report.GetAttackerInfantryRepairCosts())
+                            console.log(report.GetAttackerMaxRepairTime())
+                            console.log(report.GetAttackerMaxRepairTimeBeforeRewards())
+                            console.log(report.GetAttackerRepairCosts(ClientLib.Base.EResourceType))
+                            console.log(report.GetAttackerRepairCostsBeforeRewards(ClientLib.Base.EResourceType))
+                            console.log('GetAttackerResourcePlunder.Tiberium', report.GetAttackerResourcePlunder(ClientLib.Base.EResourceType.Tiberium))
+                            console.log('GetAttackerResourcePlunder.Crystal', report.GetAttackerResourcePlunder(ClientLib.Base.EResourceType.Crystal))
+                            console.log('GetAttackerResourcePlunder.Gold', report.GetAttackerResourcePlunder(ClientLib.Base.EResourceType.Gold))
+                            console.log(report.GetAttackerResourceReward(ClientLib.Base.EResourceType))
+                            console.log(report.GetAttackerResourceRewardBeforeChallengeReward(ClientLib.Base.EResourceType))
+                            console.log(report.GetAttackerTotalResourceReceived(ClientLib.Base.EResourceType))
+                            console.log(report.GetAttackerVehicleRepairCosts())
+                            console.log(report.GetAttackerVehicleRepairCostsBeforeRewards())
+                            console.log(report.GetDefenderMaxRepairTime())
+                            console.log(report.GetDefenderRepairCosts(ClientLib.Base.EResourceType))
+                            console.log(report.GetDefenderResourceLostToPlunder(ClientLib.Base.EResourceType))
+                            console.log(report.GetDefenderResourceReward(ClientLib.Base.EResourceType))
+                            console.log(report.GetDefenderTotalResourceCosts())
+
+                            var rapport = {};
+                            rapport.id = report.get_Id();
+
+
+                            rapport.attackerBaseId = report.get_AttackerBaseId();
+                            rapport.defenderBaseId = report.get_DefenderBaseId();
+
+                            // if (attackerBaseIds.indexOf(report.get_AttackerBaseId()) === -1) {
+                            //     attackerBaseIds.push(report.get_AttackerBaseId());
+                            // }
+                            //
+                            // if (defenderBaseIds.indexOf(report.get_DefenderBaseId()) === -1) {
+                            //     defenderBaseIds.push(report.get_DefenderBaseId());
+                            // }
+
+                            // add repair time
+                            repairTimeCosts += report.GetAttackerMaxRepairTime();
+                            rapport.maxRep = report.GetAttackerMaxRepairTime();
+                            rapport.infRep = report.GetAttackerInfantryRepairCosts();
+                            rapport.vehRep = report.GetAttackerVehicleRepairCosts();
+                            rapport.airRep = report.GetAttackerAirRepairCosts();
+
+                            var distance = Math.sqrt(
+                                Math.pow(
+                                    report.get_AttackerBaseXCoord() -
+                                    report.get_DefenderBaseXCoord(),
+                                    2
+                                ) +
+                                Math.pow(
+                                    report.get_AttackerBaseYCoord() -
+                                    report.get_DefenderBaseYCoord(),
+                                    2
+                                )
+                            );
+
+                            rapport.distance = distance; // total distane between coords
+                            let cost
+                            switch (report.get_Type()) {
+                                case ClientLib.Data.Reports.EReportType.Combat: // 1, pvp
+                                    var isFriendlyTerritory =
+                                        report.get_AttackerAllianceName() ===
+                                        report.get_DefenderAllianceName();
+                                    cost = Math.floor(
+                                        combatCostMinimumPvP +
+                                        (isFriendlyTerritory
+                                            ? combatCostPerFieldInside
+                                            : combatCostPerFieldOutside) *
+                                        distance
+                                    );
+                                    // minCommandPointCosts += cost;
+                                    // maxCommandPointCosts += cost;
+                                    rapport.def = true;
+                                    rapport.minCp = cost;
+                                    rapport.maxCp = cost;
+                                    break;
+                                case ClientLib.Data.Reports.EReportType.NPCRaid: // 2, pvp
+                                    switch (parseInt(report.get_DefenderBaseName(), 10)) {
+                                        case ClientLib.Data.Reports.ENPCCampType.Base: // 4
+                                        case ClientLib.Data.Reports.ENPCCampType.Fortress: // 6
+                                            cost = Math.floor(
+                                                combatCostMinimum +
+                                                combatCostPerFieldOutside * distance
+                                            );
+                                            // minCommandPointCosts += cost;
+                                            // maxCommandPointCosts += cost;
+                                            rapport.off = true;
+                                            rapport.minCp = cost;
+                                            rapport.maxCp = cost;
+                                            break;
+                                        default:
+                                            const minCp = Math.floor(
+                                                combatCostMinimum +
+                                                combatCostPerFieldInside * distance
+                                            );
+                                            const maxCp = Math.floor(
+                                                combatCostMinimum +
+                                                combatCostPerFieldOutside * distance
+                                            );
+                                            // minCommandPointCosts += minCp;
+                                            // maxCommandPointCosts += maxCp;
+                                            rapport.off = true;
+                                            rapport.minCp = minCp;
+                                            rapport.maxCp = maxCp;
+                                    }
+                                    break;
+                                case ClientLib.Data.Reports.EReportType.NPCPlayerCombat: // 5
+                                    // No repair time or command point cost for Forgotten attacks
+                                    break;
+                                default:
+                                    throw 'Unexpected report type (' + report.get_Type() + ')';
+                            }
+
+                            rapport.time = report.get_Time();
+
+                            /**
+                             @discroption: calc the loot with out the rep res costs
+                             */
+                            for (var resourceType in CncEcoReports.ResourceTypes) {
+                                var resourceCount =
+                                    getTotalLootMethod.call(report, resourceType) -
+                                    getRepairCostsMethod.call(report, resourceType);
+
+                                if (resourceCount !== 0) {
+                                    if (!(resourceType in loot)) {
+                                        loot[resourceType] = 0;
+                                    }
+
+                                    loot[resourceType] += resourceCount;
+                                }
+                            }
+                            rapport.loot = loot;
+                            return rapport
+                        },
+
+                        createRapportLog(report) {
+                            console.warn('createRapportLog');
+                            console.log(report)
+                            console.log({ report });
+                            const airRep = report.GetAttackerAirRepairCosts().d
+                            const airRepB = report.GetAttackerAirRepairCostsBeforeRewards().d
+                            console.log({airRep, airRepB})
+                            const infRepB = report.GetAttackerInfantryRepairCostsBeforeRewards().d
+                            const infRep = report.GetAttackerInfantryRepairCosts().d
+                            console.log({infRep, infRepB})
+                            const vehRep = report.GetAttackerVehicleRepairCosts().d
+                            const vehRepB = report.GetAttackerVehicleRepairCostsBeforeRewards().d
+                            console.log({vehRep, vehRepB})
+
+                            const maxRep = report.GetAttackerMaxRepairTime()
+                            const maxRepB = report.GetAttackerMaxRepairTimeBeforeRewards()
+                            console.log({maxRep, maxRepB})
+                            console.log(report.GetAttackerRepairCosts(ClientLib.Base.EResourceType))
+                            console.log(report.GetAttackerRepairCostsBeforeRewards(ClientLib.Base.EResourceType))
+                            console.log('GetAttackerResourcePlunder.Tiberium', report.GetAttackerResourcePlunder(ClientLib.Base.EResourceType.Tiberium))
+                            console.log('GetAttackerResourcePlunder.Crystal', report.GetAttackerResourcePlunder(ClientLib.Base.EResourceType.Crystal))
+                            console.log('GetAttackerResourcePlunder.Gold', report.GetAttackerResourcePlunder(ClientLib.Base.EResourceType.Gold))
+                            console.log(report.GetAttackerResourceReward(ClientLib.Base.EResourceType))
+                            console.log(report.GetAttackerResourceRewardBeforeChallengeReward(ClientLib.Base.EResourceType))
+                            console.log(report.GetAttackerTotalResourceReceived(ClientLib.Base.EResourceType))
+                            console.log(report.GetDefenderMaxRepairTime())
+                            console.log(report.GetDefenderRepairCosts(ClientLib.Base.EResourceType))
+                            console.log(report.GetDefenderResourceLostToPlunder(ClientLib.Base.EResourceType))
+                            console.log(report.GetDefenderResourceReward(ClientLib.Base.EResourceType))
+                            console.log(report.GetDefenderTotalResourceCosts())
                         },
 
                         initialize: function() {

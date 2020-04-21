@@ -2,6 +2,8 @@
   "name": "cnc-eco-client",
   "version": "2.0.0",
   "devDependencies": {
+    "babel-plugin-styled-components": "^1.10.7",
+    "file-loader": "^6.0.0",
     "prettier": "^1.19.1",
     "redux-logger": "^3.0.6",
     "why-did-you-update": "0.0.8"
@@ -9,6 +11,7 @@
   "dependencies": {
     "connected-react-router": "^6.8.0",
     "next": "^9.3.5",
+    "next-images": "^1.4.0",
     "prop-types": "^15.7.2",
     "query-string": "^6.12.1",
     "react": "^16.13.1",
