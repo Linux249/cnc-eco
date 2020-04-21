@@ -1,33 +1,34 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+//import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import ProtectedRoute from './components/ProtectedRoute';
 import BaseHeader from './containers/BaseHeader.js';
-import Bases from './routes/Bases';
-import Scripts from './routes/Scripts';
-import Layouts from './routes/Layouts';
-import Login from './routes/Login';
-import Register from './routes/Register';
-import Alliance from './routes/Alliance';
-import User from './routes/User';
-import Home from './routes/Home';
+// import ProtectedRoute from './components/ProtectedRoute';
+// import Bases from './routes/Bases';
+// import Scripts from './routes/Scripts';
+// import Layouts from './routes/Layouts';
+// import Login from './routes/Login';
+// import Register from './routes/Register';
+// import Alliance from './routes/Alliance';
+// import User from './routes/User';
+// import Home from './routes/Home';
+// import { S } from './routes/S';
+// import { B } from './routes/B';
 import AppS from './style/App';
 import LoadingLine from './style/LoadingLine';
-import { S } from './routes/S';
-import { B } from './routes/B';
 import { updatePlayer } from './store/actions/player';
 import { receiveLogin } from './store/actions/auth';
 import { LOCAL_STORE } from './config';
-import Reset from './routes/Reset';
-import Resend from './routes/Resend';
-import Demo from './routes/Demo';
-import Admin from './routes/Admin';
-import 'react-tippy/dist/tippy.css';
-import Feedback from './routes/Feedback';
+// import Reset from './routes/Reset';
+// import Resend from './routes/Resend';
+// import Demo from './routes/Demo';
+// import Admin from './routes/Admin';
+// import Feedback from './routes/Feedback';
+// import Reports from './routes/Reports';
 import Column from './style/Column';
 import Info from './style/Info';
 import Footer from './components/Footer';
-import Reports from './routes/Reports';
+
+const isServer = typeof window === 'undefined';
 
 class App extends Component {
     componentWillMount() {
@@ -41,7 +42,7 @@ class App extends Component {
     render() {
         const { auth, name, token } = this.props;
         return (
-            <Router>
+            <>
                 <AppS>
                     <BaseHeader />
                     <LoadingLine />
@@ -51,6 +52,7 @@ class App extends Component {
                             while in beta/before release.{' '}
                         </Info>
                     </Column>
+                {/*
                     <div>
 
 
@@ -76,10 +78,10 @@ class App extends Component {
                     />
                     <ProtectedRoute path="/alliance" auth={auth} name={name} component={Alliance} />
                     <ProtectedRoute path="/user" auth={auth} name={name} component={User} />
-                    </div>
+                    </div>*/}
                     <Footer />
                 </AppS>
-            </Router>
+            </>
         );
     }
 }

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link'
 import Header from '../style/BaseHeader';
 import Title from '../style/AppName';
 import Button from '../style/Button';
@@ -9,8 +9,8 @@ import { connect } from 'react-redux';
 import WorldsMenu from './WorldsMenu';
 import { baseColor } from '../style/constants';
 
-const Link = Button.withComponent(
-    styled(NavLink)`
+const NavLink = Button.withComponent(
+    styled(Link)`
         color: white !important;
         //background-color: inherit;
         border: none !important;
@@ -31,46 +31,46 @@ class BaseHeader extends Component {
         return (
             <Header>
                 <Title>
-                    <NavLink to="/">CNC-ECO</NavLink>
+                    <NavLink href="/">CNC-ECO</NavLink>
                 </Title>
                 <Row wrap="true">
                     {isAuthenticated && name && (
                         <>
                             <WorldsMenu />
-                            <Link to="/bases" activeClassName="active">
+                            <NavLink href="/bases">
                                 Basen
-                            </Link>
-                            <Link to={'/layouts'} activeClassName="active">
+                            </NavLink>
+                            <NavLink href={'/layouts'}>
                                 Layouts
-                            </Link>
-                            <Link to="/alliance" activeClassName="active">
+                            </NavLink>
+                            <NavLink href="/alliance">
                                 Alliance
-                            </Link>
+                            </NavLink>
                         </>
                     )}
-                    <Link to="/scripts" activeClassName="active">
+                    <NavLink href="/scripts">
                         Scripte
-                    </Link>
-                    {/*<Link to="/demo" activeClassName="active">
+                    </NavLink>
+                    {/*<NavLink href="/demo">
                         Demo
-                    </Link>*/}
+                    </NavLink>*/}
                     {isAuthenticated ? (
                         <>
-                            <Link to="/feedback" activeClassName="active">
+                            <NavLink href="/feedback">
                                 Feedback
-                            </Link>
-                            <Link to="/user" activeClassName="active">
+                            </NavLink>
+                            <NavLink href="/user">
                                 {name || 'Add a player name first'}
-                            </Link>
+                            </NavLink>
                         </>
                     ) : (
                         <Fragment>
-                            <Link to="/login" activeClassName="active">
+                            <NavLink href="/login">
                                 Login
-                            </Link>
-                            <Link to="/register" activeClassName="active">
+                            </NavLink>
+                            <NavLink href="/register">
                                 Sign up
-                            </Link>
+                            </NavLink>
                         </Fragment>
                     )}
                 </Row>

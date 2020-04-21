@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from '../App';
 import configureStore from '../store/configureStore';
 import { Provider } from 'react-redux';
@@ -18,9 +17,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 export const store = configureStore();
 
-ReactDOM.render(
-        <Provider store={store}>
-            <App />
-        </Provider>,
-    document.getElementById('app')
-);
+export default () => <Provider store={store}>
+    <App />
+</Provider>
