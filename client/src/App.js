@@ -28,11 +28,9 @@ import Column from './style/Column';
 import Info from './style/Info';
 import Footer from './components/Footer';
 
-const isServer = typeof window === 'undefined';
-
 class App extends Component {
-    componentWillMount() {
-        const data = JSON.parse(localStorage.getItem(LOCAL_STORE));
+    componentDidMount() {
+        const data = localStorage && JSON.parse(localStorage.getItem(LOCAL_STORE));
         if (data) {
             this.props.dispatch(receiveLogin(data));
             this.props.dispatch(updatePlayer(data.user));
