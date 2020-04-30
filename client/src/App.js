@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 //import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import BaseHeader from './containers/BaseHeader.js';
 // import ProtectedRoute from './components/ProtectedRoute';
 // import Bases from './routes/Bases';
 // import Scripts from './routes/Scripts';
@@ -13,8 +12,6 @@ import BaseHeader from './containers/BaseHeader.js';
 // import Home from './routes/Home';
 // import { S } from './routes/S';
 // import { B } from './routes/B';
-import AppS from './style/App';
-import LoadingLine from './style/LoadingLine';
 import { updatePlayer } from './store/actions/player';
 import { receiveLogin } from './store/actions/auth';
 import { LOCAL_STORE } from './config';
@@ -24,9 +21,8 @@ import { LOCAL_STORE } from './config';
 // import Admin from './routes/Admin';
 // import Feedback from './routes/Feedback';
 // import Reports from './routes/Reports';
-import Column from './style/Column';
-import Info from './style/Info';
-import Footer from './components/Footer';
+// import Column from './style/Column';
+// import Info from './style/Info';
 
 class App extends Component {
     componentDidMount() {
@@ -38,22 +34,11 @@ class App extends Component {
     }
 
     render() {
-        const { auth, name, token } = this.props;
+        // const { auth, name, token } = this.props;
         return (
             <>
-                <AppS>
-                    <BaseHeader />
-                    <LoadingLine />
-                    <Column center>
-                        <Info>
-                            This side is still in Development. Be aware that all data may be deleted
-                            while in beta/before release.{' '}
-                        </Info>
-                    </Column>
                 {/*
                     <div>
-
-
 
                     <Route path="/" exact component={Home} />
                     <Route path="/s/:url" component={S} />
@@ -77,8 +62,6 @@ class App extends Component {
                     <ProtectedRoute path="/alliance" auth={auth} name={name} component={Alliance} />
                     <ProtectedRoute path="/user" auth={auth} name={name} component={User} />
                     </div>*/}
-                    <Footer />
-                </AppS>
             </>
         );
     }
