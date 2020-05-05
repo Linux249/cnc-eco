@@ -1,16 +1,16 @@
-import React from 'react';
-import connect from 'react-redux/es/connect/connect';
-import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
-import Input from '../style/Input';
-import { changeAuthEmail, changeAuthPassword, requestLogin } from '../store/actions/auth';
-import InputGroup from '../style/InputGroup';
-import Label from '../style/Label';
-import Container from '../style/Container';
-import Form from '../style/Form';
-import Submit from '../style/Submit';
-import Center from '../style/Center';
-import Alert from '../style/Alert';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import Router from 'next/router';
+import Link from 'next/link';
+import Input from '../../style/Input';
+import { changeAuthEmail, changeAuthPassword, requestLogin } from '../../store/actions/auth';
+import InputGroup from '../../style/InputGroup';
+import Label from '../../style/Label';
+import Container from '../../style/Container';
+import Form from '../../style/Form';
+import Submit from '../../style/Submit';
+import Center from '../../style/Center';
+import Alert from '../../style/Alert';
 
 function Login(props) {
     const {
@@ -24,12 +24,21 @@ function Login(props) {
         playerName,
     } = props;
 
+    /**
+     * redirect authenticated user and check if they are verified already
+     */
+    useEffect(() => {
+        if (isAuthenticated) {
+            Router.push(playerName ? '/' : '/user');
+        }
+    }, []);
+
     function handleSubmit(e) {
         e.preventDefault();
         login();
     }
 
-    return !isAuthenticated ? (
+    return (
         <Center>
             <Container>
                 <Form onSubmit={handleSubmit}>
@@ -59,20 +68,25 @@ function Login(props) {
                     <InputGroup>
                         <Submit type="submit" value="Login" />
                     </InputGroup>
-                    No account? <Link to="/register">Create one</Link>
+                    No account?{' '}
+                    <Link href="/register">
+                        <a>Create one</a>
+                    </Link>
                     <br />
                     <br />
-                    Email verification expired? <Link to="/resend">Resend token</Link>
+                    Email verification expired?{' '}
+                    <Link href="/resend">
+                        <a>Resend token</a>
+                    </Link>
                     <br />
                     <br />
-                    Forget password <Link to="/reset">Reset password</Link>
+                    Forget password{' '}
+                    <Link href="/reset">
+                        <a>Reset password</a>
+                    </Link>
                 </Form>
             </Container>
         </Center>
-    ) : playerName ? (
-        <Redirect to="/" />
-    ) : (
-        <Redirect to="/user" />
     );
 }
 
@@ -92,7 +106,4 @@ const mapDispatchToProps = {
     login: requestLogin,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

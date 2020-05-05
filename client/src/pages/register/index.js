@@ -1,16 +1,16 @@
-import React from 'react';
-import connect from 'react-redux/es/connect/connect';
-import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
-import Input from '../style/Input';
-import { changeAuthEmail, changeAuthPassword, requestRegister } from '../store/actions/auth';
-import Form from '../style/Form';
-import Label from '../style/Label';
-import InputGroup from '../style/InputGroup';
-import Submit from '../style/Submit';
-import Center from '../style/Center';
-import Container from '../style/Container';
-import Alert from '../style/Alert';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import Router from 'next/router';
+import Link from 'next/link';
+import Input from '../../style/Input';
+import { changeAuthEmail, changeAuthPassword, requestRegister } from '../../store/actions/auth';
+import Form from '../../style/Form';
+import Label from '../../style/Label';
+import InputGroup from '../../style/InputGroup';
+import Submit from '../../style/Submit';
+import Center from '../../style/Center';
+import Container from '../../style/Container';
+import Alert from '../../style/Alert';
 
 function Register(props) {
     const {
@@ -29,7 +29,16 @@ function Register(props) {
         register();
     }
 
-    return !isAuthenticated ? (
+    /**
+     * redirect authenticated user and check if they are verified already
+     */
+    useEffect(() => {
+        if (isAuthenticated) {
+            Router.push(isVerified ? '/user' : '/login');
+        }
+    }, []);
+
+    return (
         <Center>
             <Container>
                 <Form onSubmit={handleSubmit}>
@@ -59,14 +68,13 @@ function Register(props) {
                     <InputGroup>
                         <Submit type="submit" value="Sign Up" />
                     </InputGroup>
-                    Already have an account? <Link to="/login">Sign in</Link>
+                    Already have an account?{' '}
+                    <Link href="/login">
+                        <a>Sign in</a>
+                    </Link>
                 </Form>
             </Container>
         </Center>
-    ) : isVerified ? (
-        <Redirect to="/user" />
-    ) : (
-        <Redirect to="/login" />
     );
 }
 
@@ -86,7 +94,4 @@ const mapDispatchToProps = {
     register: requestRegister,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
