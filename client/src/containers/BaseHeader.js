@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import Link from 'next/link'
+import Link from 'next/link';
 import Header from '../style/BaseHeader';
 import Title from '../style/AppName';
 import Button from '../style/Button';
@@ -9,21 +9,19 @@ import { connect } from 'react-redux';
 import WorldsMenu from './WorldsMenu';
 import { baseColor } from '../style/constants';
 
-const NavLink = Button.withComponent(
-    styled(Link)`
-        color: white !important;
-        //background-color: inherit;
-        border: none !important;
+const A = Button.withComponent(styled('a')`
+    color: white !important;
+    //background-color: inherit;
+    border: none !important;
 
-        &:hover {
-            background: ${baseColor} !important;
-            transition: background 0.1s linear;
-        }
-        &.active {
-            background-color: ${baseColor} !important;
-        }
-    `
-);
+    &:hover {
+        background: ${baseColor} !important;
+        transition: background 0.1s linear;
+    }
+    &.active {
+        background-color: ${baseColor} !important;
+    }
+`);
 
 class BaseHeader extends Component {
     render() {
@@ -31,46 +29,44 @@ class BaseHeader extends Component {
         return (
             <Header>
                 <Title>
-                    <NavLink href="/">CNC-ECO</NavLink>
+                    <Link href="/">
+                        <a>CNC-ECO</a>
+                    </Link>
                 </Title>
                 <Row wrap="true">
                     {isAuthenticated && name && (
                         <>
                             <WorldsMenu />
-                            <NavLink href="/bases">
-                                Basen
-                            </NavLink>
-                            <NavLink href={'/layouts'}>
-                                Layouts
-                            </NavLink>
-                            <NavLink href="/alliance">
-                                Alliance
-                            </NavLink>
+                            <Link href="/bases">
+                                <A>Basen</A>
+                            </Link>
+                            <Link href={'/layouts'}>
+                                <A>Layouts</A>
+                            </Link>
+                            <Link href="/alliance">
+                                <A>Alliance</A>
+                            </Link>
                         </>
                     )}
-                    <NavLink href="/scripts">
-                        Scripte
-                    </NavLink>
-                    {/*<NavLink href="/demo">
+                    <Link href="/scripts">
+                        <A>Scripte</A>
+                    </Link>
+                    {/*<Link href="/demo">
                         Demo
-                    </NavLink>*/}
+                    </Link>*/}
                     {isAuthenticated ? (
                         <>
-                            <NavLink href="/feedback">
-                                Feedback
-                            </NavLink>
-                            <NavLink href="/user">
-                                {name || 'Add a player name first'}
-                            </NavLink>
+                            <Link href="/feedback">Feedback</Link>
+                            <Link href="/user">{name || 'Add a player name first'}</Link>
                         </>
                     ) : (
                         <Fragment>
-                            <NavLink href="/login">
-                                Login
-                            </NavLink>
-                            <NavLink href="/register">
-                                Sign up
-                            </NavLink>
+                            <Link href="/login">
+                                <A>Login</A>
+                            </Link>
+                            <Link href="/register">
+                                <A>Sign up</A>
+                            </Link>
                         </Fragment>
                     )}
                 </Row>
