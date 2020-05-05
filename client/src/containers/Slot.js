@@ -59,7 +59,7 @@ function Slot(props) {
 
     // no forgotten army
     if (area === 'army' && faction === 'F') faction = 'N';
-    const img = imgs[area][faction][type];
+    const img = imgs[area][faction][type]?.default;
     const ref = useRef(null);
     const [, drag] = useDrag({
         item: { slot, type: area, lvl, bType: type },
@@ -116,7 +116,4 @@ const mapDispatchToProps = {
     replaceSlot,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Slot);
+export default connect(mapStateToProps, mapDispatchToProps)(Slot);

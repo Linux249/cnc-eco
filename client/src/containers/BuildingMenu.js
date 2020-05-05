@@ -21,7 +21,7 @@ const Right = styled.div`
 
 function MenuItem(props) {
     const { faction, type, area } = props;
-    const img = imgs[area][faction][type];
+    const img = imgs[area][faction][type]?.default;
 
     const [, drag] = useDrag({
         item: { type: area, bType: type, new: true },
