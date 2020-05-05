@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { InfoText } from '../style/InfoText';
-import Body from '../style/Body';
-import Area from '../style/Area';
-import Title from '../style/Title';
+import { InfoText } from '../../style/InfoText';
+import Body from '../../style/Body';
+import Area from '../../style/Area';
+import Title from '../../style/Title';
 
 const Description = styled.div`
     font-weight: 300;
