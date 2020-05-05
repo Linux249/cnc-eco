@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { parseToURL } from '../util/parseurl';
 import Button from '../style/Button';
-import { store } from '../pages/index';
+import { store } from '../pages/_app';
 import { api_url } from '../config';
 import Input from '../style/Input';
 import Alert from '../style/Alert';
-import { ReactComponent as ShareIcon } from '../icons/Share.svg';
+import ShareIcon from '../icons/Share.svg';
 import Title from '../style/Title';
 import Container from '../style/Container';
 import styled from 'styled-components';

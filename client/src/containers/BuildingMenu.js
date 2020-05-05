@@ -7,7 +7,7 @@ import Area from '../style/Area';
 import Button from '../style/Button';
 import styled from 'styled-components';
 import imgs from '../img/imgs';
-import { useDrag } from 'react-dnd';
+import { useDrag } from 'react-dnd-cjs';
 import MenuItemStyle from '../style/BuildingMenuItem';
 import Input from '../style/Input';
 

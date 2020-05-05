@@ -4,7 +4,7 @@ import { replaceSlot, switchSlot } from '../store/actions/base';
 import SlotStyle from '../style/BuildingSlot';
 import keys from '../util/keys';
 import Number from '../style/LvLNumber';
-import { useDrag, useDrop } from 'react-dnd';
+import { useDrag, useDrop } from 'react-dnd-cjs';
 import imgs from '../img/imgs';
 import empty from '../img/empty.png';
 import SlotOverlay from './SlotOverlay';

@@ -9,9 +9,12 @@ import Defense from '../components/Defense';
 import ResetArea from '../containers/ResetArea';
 import Message from '../components/Message';
 import ProductionInfo from '../containers/ProductionInfo';
+import Backend from 'react-dnd-html5-backend-cjs'
+import { DndProvider } from 'react-dnd-cjs'
 
 export default () => (
     <Column center>
+        <DndProvider backend={Backend}>
         <Body large>
             <BuildingMenu area="buildings" />
             <Base />
@@ -28,5 +31,6 @@ export default () => (
             <BuildingMenu area="army" />
             <Army />
         </Body>
+        </DndProvider>
     </Column>
 );

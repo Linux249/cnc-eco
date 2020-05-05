@@ -12,6 +12,7 @@ import LoadingLine from '../style/LoadingLine';
 import React from 'react';
 import Column from '../style/Column';
 import Info from '../style/Info';
+
 export const store = configureStore();
 
 const theme = {

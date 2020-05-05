@@ -8,7 +8,7 @@ import Grid from '../style/Grid';
 import Area from '../style/Area';
 import keys from '../util/keys';
 import imgs from '../img/imgs';
-import { useDrag, useDrop } from 'react-dnd';
+import { useDrag, useDrop } from 'react-dnd-cjs';
 import SlotStyle from '../style/BuildingSlot';
 import Number from '../style/LvLNumber';
 import empty from '../img/empty.png';
