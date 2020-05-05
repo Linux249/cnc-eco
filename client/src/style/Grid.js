@@ -9,11 +9,11 @@ export default styled('div')`
 
     position: relative;
 
-    border: ${border};
-    border-radius: ${borderRadius};
-    box-shadow: ${shadow};
+    // border: ${border};
+    // border-radius: ${borderRadius};
+    // box-shadow: ${shadow};
 
-    padding: 10px;
+    //padding: 10px;
 
     ::after {
         content: '';
