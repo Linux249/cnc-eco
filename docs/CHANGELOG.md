@@ -1,6 +1,9 @@
 // todo only commit on release
-Version 2.3.9
--bedder design of production info 
+Version X
+- bedder design of production info (font size)
+
+Version 3.0.0 
+- rebuild app with nextjs
 
 Version 2.3.8 (beb4840d)
 - after scanning layouts the user can now see the scanned layouts correctly (fix url bug) (149eec12)
