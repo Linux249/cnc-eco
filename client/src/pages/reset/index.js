@@ -1,21 +1,21 @@
-import React from 'react';
-import connect from 'react-redux/es/connect/connect';
-import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
-import Input from '../style/Input';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import Link from 'next/link';
+import Input from '../../style/Input';
 import {
     changeAuthEmail,
     changeAuthPassword,
     requestEmail,
     resetPassword,
-} from '../store/actions/auth';
-import InputGroup from '../style/InputGroup';
-import Label from '../style/Label';
-import Container from '../style/Container';
-import Form from '../style/Form';
-import Submit from '../style/Submit';
-import Center from '../style/Center';
-import Alert from '../style/Alert';
+} from '../../store/actions/auth';
+import InputGroup from '../../style/InputGroup';
+import Label from '../../style/Label';
+import Container from '../../style/Container';
+import Form from '../../style/Form';
+import Submit from '../../style/Submit';
+import Center from '../../style/Center';
+import Alert from '../../style/Alert';
+import Router, { useRouter } from 'next/router';
 
 function Reset(props) {
     const {
@@ -35,9 +35,19 @@ function Reset(props) {
         e.preventDefault();
         !token ? requestEmail() : resetPassword(token);
     }
-    const { token } = match.params;
+    const router = useRouter();
 
-    return !isAuthenticated ? (
+    const { token } = router.query
+    /**
+     * redirect authenticated user and check if they are verified already
+     */
+    useEffect(() => {
+        if (isAuthenticated) {
+            Router.push(playerName ? '/' : '/user');
+        }
+    }, []);
+
+    return (
         <Center>
             <Container>
                 <Form onSubmit={handleSubmit}>
@@ -70,17 +80,13 @@ function Reset(props) {
                     <InputGroup>
                         <Submit type="submit" value={token ? 'Update password' : 'Send email'} />
                     </InputGroup>
-                    No account? <Link to="/register">Create one</Link>
+                    No account? <Link href="/register"><a>Create one</a></Link>
                     <br />
                     <br />
-                    Email verification expired? <Link to="/resend">Resend token</Link>
+                    Email verification expired? <Link href="/resend"><a>Resend token</a></Link>
                 </Form>
             </Container>
         </Center>
-    ) : playerName ? (
-        <Redirect to="/" />
-    ) : (
-        <Redirect to="/user" />
     );
 }
 
@@ -101,7 +107,4 @@ const mapDispatchToProps = {
     resetPassword,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Reset);
+export default connect(mapStateToProps, mapDispatchToProps)(Reset);

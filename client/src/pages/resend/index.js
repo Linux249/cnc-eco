@@ -1,16 +1,16 @@
-import React from 'react';
-import connect from 'react-redux/es/connect/connect';
-import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
-import Input from '../style/Input';
-import { changeAuthEmail, requestResendToken } from '../store/actions/auth';
-import InputGroup from '../style/InputGroup';
-import Label from '../style/Label';
-import Container from '../style/Container';
-import Form from '../style/Form';
-import Submit from '../style/Submit';
-import Center from '../style/Center';
-import Alert from '../style/Alert';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import Router from 'next/router';
+import Link from 'next/link';
+import { changeAuthEmail, requestResendToken } from '../../store/actions/auth';
+import Input from '../../style/Input';
+import InputGroup from '../../style/InputGroup';
+import Label from '../../style/Label';
+import Container from '../../style/Container';
+import Form from '../../style/Form';
+import Submit from '../../style/Submit';
+import Center from '../../style/Center';
+import Alert from '../../style/Alert';
 
 function Login(props) {
     const { email, error, isAuthenticated, changeEmail, resend, playerName } = props;
@@ -20,7 +20,16 @@ function Login(props) {
         resend();
     }
 
-    return !isAuthenticated ? (
+    /**
+     * redirect authenticated user and check if they are verified already
+     */
+    useEffect(() => {
+        if (isAuthenticated) {
+            Router.push(playerName ? '/' : '/user');
+        }
+    }, []);
+
+    return (
         <Center>
             <Container>
                 <Form onSubmit={handleSubmit}>
@@ -39,14 +48,13 @@ function Login(props) {
                     <InputGroup>
                         <Submit type="submit" value="Resend" />
                     </InputGroup>
-                    No account? <Link to="/register">Create one</Link>
+                    No account?{' '}
+                    <Link href="/register">
+                        <a>Create one</a>
+                    </Link>
                 </Form>
             </Container>
         </Center>
-    ) : playerName ? (
-        <Redirect to="/" />
-    ) : (
-        <Redirect to="/user" />
     );
 }
 
@@ -64,7 +72,4 @@ const mapDispatchToProps = {
     resend: requestResendToken,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
