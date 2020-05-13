@@ -10,16 +10,16 @@ export default async (req, res, next) => {
         let { db, body, headers, query } = req;
         const { w, pl, a } = query;
         if (headers['content-type'].includes('text')) body = JSON.parse(body);
-        console.log(body)
+        console.log(body);
 
-        const layouts = Object.keys(body).map(key => {
-            const [x, y] = key.split(':');
-            const layoutString = body[key].layout.slice(0, 72);
+        const layouts = Object.values(body).filter(e => e.name !== 'Festung').map(base => {
+            const { x, y, level } = base;
+            const layoutString = base.layout.slice(0, 72);
             const { tib, cris, power, powerLayout } = layoutStats(layoutString);
             return {
                 x: +x,
                 y: +y,
-                level: body[key].level,
+                level: +level,
                 alliance: +a,
                 // world: +w,
                 player: pl,
@@ -43,8 +43,8 @@ export default async (req, res, next) => {
             });
         });
     } catch (e) {
-        console.error(e)
-        next(e)
+        console.error(e);
+        next(e);
     }
     res.send(); // todo layouts update send empty body, check what happens if they send something back
 };
