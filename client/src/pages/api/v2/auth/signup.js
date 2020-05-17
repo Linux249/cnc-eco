@@ -6,6 +6,8 @@ import ERRORS from '../../../../lib/api/errors';
 import { JWT_SECRET } from '../../../../config/index';
 
 async function register(req, res, next) {
+    if (req.method !== 'POST') return next(ERRORS.API.WRONG_METHOD);
+
     let { email, password } = req.body;
 
     // produce ui error message
@@ -17,8 +19,9 @@ async function register(req, res, next) {
     try {
         const user = await User.findOne({ email: email });
 
-        // if user exist but is not verify create a new account and do as if a new user
-        if (user && user.isVerified) return next(ERRORS.USER_ALREADY_EXIST);
+        // if user exist and is verified
+        if (user && !user.token.mail?.token) return next(ERRORS.USER_ALREADY_EXIST);
+        // if existing user is not verified, just delete him
         if (user) await User.remove(user);
 
         // use old (overwrite) or create new user
@@ -30,7 +33,7 @@ async function register(req, res, next) {
         const savedUser = await newUser.save();
 
         // Send the email to user
-        await sendVerification(savedUser.token, savedUser.local.email);
+        await sendVerification(savedUser.token.mail, savedUser.local.email);
 
         const token = jwt.sign(user.getUserJWT(), JWT_SECRET);
 

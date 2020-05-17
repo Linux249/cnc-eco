@@ -6,10 +6,20 @@ const userSchema = Schema({
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
     token: {
-        type: {type: String, enum: ['name', 'mail', 'reset']},
+        type: { type: String, enum: ['name', 'reset'] },
         token: { type: String, required: true, default: generateToken, unique: true },
         name: String,
-        createdAt: { type: Date, required: true, default: Date.now},
+        createdAt: { type: Date, required: true, default: Date.now },
+        mail: {
+            token: {
+                type: String,
+                default: generateToken,
+                unique: true,
+                index: true,
+                sparse: true,
+            },
+            createdAt: { type: Date, required: true, default: Date.now },
+        },
     },
     player: {
         type: String,
@@ -46,9 +56,9 @@ userSchema.methods.getUserJWT = function() {
         id: this._id,
         player: this.player,
         worlds: this.worlds,
-        isVerified: this.isVerified,
+        isVerified: !this.token.mail.token,
         role: this.role,
-    }
+    };
 };
 
 // create the model for users and expose it to our app

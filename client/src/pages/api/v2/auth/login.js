@@ -5,6 +5,7 @@ import ERRORS from '../../../../lib/api/errors';
 import { JWT_SECRET } from '../../../../config/index';
 
 async function login(req, res, next) {
+    if (req.method !== 'POST') return next(ERRORS.API.WRONG_METHOD);
     const { email, password } = req.body;
 
     // produce ui error message
@@ -15,7 +16,7 @@ async function login(req, res, next) {
 
         if (!user) return next(ERRORS.AUTH.USER_NOT_EXIST);
         if (!user.validPassword(password)) return next(ERRORS.AUTH.WRONG_PASSWORD);
-        if (!user.isVerified) return next(ERRORS.AUTH.NOT_VERIFIED);
+        if (user.token.mail?.token) return next(ERRORS.AUTH.NOT_VERIFIED);
 
         // all is well, return user
         const token = jwt.sign(user.getUserJWT(), JWT_SECRET);

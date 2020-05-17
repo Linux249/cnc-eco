@@ -19,10 +19,26 @@ export const AUTH_ERRORS = {
         status: 404,
         message: 'E-Mail not verified',
     },
+    EMAIL_TOKEN_MISSING: {
+        status: 404,
+        message: 'E-Mail verification failed. Token missing',
+    },
+    TOKEN_INVALID: {
+        status: 404,
+        message: 'Token validation failed. Get a new token please.',
+    },
 };
+
+export const API_ERRORS = {
+    WRONG_METHOD: {
+        status: 404,
+        message: 'wrong http method',
+    },
+}
 
 export const ERRORS = {
     AUTH: AUTH_ERRORS,
+    API: API_ERRORS,
 };
 
 export default ERRORS;
