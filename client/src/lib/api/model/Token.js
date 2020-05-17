@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import generateToken from '../utils/generateToken';
+import generateToken from '../../../util/generateToken';
 
 /**
  * token types:

@@ -20,7 +20,7 @@ export const middleware = (handler, options = {}) => async (req, res) => {
             if (!db) db = await connectDB();
             req.db = db
         } catch (e) {
-            return next(res)({status: 666, message: "Fehler", error: e})
+            return next(res)({status: e.status || 666, message: e.message || "unhandled error", error: e})
         }
     }
 

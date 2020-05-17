@@ -1,6 +1,6 @@
 import World from '../model/World';
 import Alliance from '../model/Alliance';
-import Token from '../model/Token';
+import Token from '../../../../client/src/lib/api/model/Token';
 
 /**
  *

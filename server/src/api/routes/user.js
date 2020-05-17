@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import User from '../model/User';
-import Token from '../model/Token';
+import User from '../../../../client/src/lib/api/model/User';
+import Token from '../../../../client/src/lib/api/model/Token';
 import World from '../model/World';
 
 const router = Router();

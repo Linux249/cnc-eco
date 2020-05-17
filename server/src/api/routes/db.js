@@ -1,7 +1,7 @@
 import { layoutStats } from '../utils/layout';
 import { Router } from 'express';
 import { createReport } from '../service/report';
-import User from '../model/User';
+import User from '../../../../client/src/lib/api/model/User';
 import World from '../model/World';
 
 const router = Router();

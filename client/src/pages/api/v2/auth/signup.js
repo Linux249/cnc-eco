@@ -1,0 +1,43 @@
+import jwt from 'jsonwebtoken';
+import { sendVerification } from '../../../../lib/api/mail';
+import { middleware } from '../../../../lib/api/middleware';
+import User from '../../../../lib/api/model/User';
+import ERRORS from '../../../../lib/api/errors';
+import { JWT_SECRET } from '../../../../config/index';
+
+async function register(req, res, next) {
+    let { email, password } = req.body;
+
+    // produce ui error message
+    if (!email || !password) return next(ERRORS.AUTH.MISS_CREDENTIALS);
+
+    // Use lower-case e-mails to avoid case-sensitive e-mail matching
+    email = email.toLowerCase();
+
+    try {
+        const user = await User.findOne({ email: email });
+
+        // if user exist but is not verify create a new account and do as if a new user
+        if (user && user.isVerified) return next(ERRORS.USER_ALREADY_EXIST);
+        if (user) await User.remove(user);
+
+        // use old (overwrite) or create new user
+        const newUser = new User();
+
+        newUser.email = email;
+        newUser.password = newUser.generateHash(password);
+
+        const savedUser = await newUser.save();
+
+        // Send the email to user
+        await sendVerification(savedUser.token, savedUser.local.email);
+
+        const token = jwt.sign(user.getUserJWT(), JWT_SECRET);
+
+        return res.json({ user, token });
+    } catch (e) {
+        return next(e);
+    }
+}
+
+export default middleware(register, { db: true });
