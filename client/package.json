@@ -43,11 +43,13 @@
   },
   "scripts": {
     "dev": "next",
-    "start": "react-scripts start",
+    "build": "next build && next export",
+    "start": "next start",
+    "start:react-sripts": "react-scripts start",
     "start:db": "mongod",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
+    "build:react-sripts": "react-scripts build",
+    "test:react-sripts": "react-scripts test --env=jsdom",
+    "eject:react-sripts": "react-scripts eject",
     "server": "nodemon ./app.js --exec babel-node",
     "cypress:open": "npx cypress open"
   },

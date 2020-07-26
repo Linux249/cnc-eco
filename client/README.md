@@ -1,8 +1,6 @@
 
 
 
-
-
 LineChart_G
 - [x] add buttons to line chart
 - [x] bind buttons to components state
