@@ -12,25 +12,29 @@ export default async (req, res, next) => {
         if (headers['content-type'].includes('text')) body = JSON.parse(body);
         console.log(body);
 
-        const layouts = Object.values(body).filter(e => e.name !== 'Festung').map(base => {
-            const { x, y, level } = base;
-            const layoutString = base.layout.slice(0, 72);
-            const { tib, cris, power, powerLayout } = layoutStats(layoutString);
-            return {
-                x: +x,
-                y: +y,
-                level: +level,
-                alliance: +a,
-                // world: +w,
-                player: pl,
-                layout: layoutString,
-                time: new Date(),
-                tib,
-                cris,
-                power,
-                powerLayout,
-            };
-        });
+        const layouts = Object.values(body)
+            // todo the type (name:) of scanned object is existing in en + de (Fortress/Festung) => check script
+            // remove x:0 , y:0 cause this is the fortress
+            .filter(e => e.x || e.y)
+            .map(base => {
+                const { x, y, level } = base;
+                const layoutString = base.layout.slice(0, 72);
+                const { tib, cris, power, powerLayout } = layoutStats(layoutString);
+                return {
+                    x: +x,
+                    y: +y,
+                    level: +level,
+                    alliance: +a,
+                    // world: +w,
+                    player: pl,
+                    layout: layoutString,
+                    time: new Date(),
+                    tib,
+                    cris,
+                    power,
+                    powerLayout,
+                };
+            });
         const collection = db.collection(`layouts_${w}`);
         console.log(`UPDATE LAYOUTS: ${layouts.length}# from ${pl}(${a}) on ${w}`);
 
