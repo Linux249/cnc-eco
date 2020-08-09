@@ -1,7 +1,7 @@
 import { MongoClient } from 'mongodb';
 import mongoose from 'mongoose';
 
-export const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+export const MONGO_URI = process.env.MONGODB_URI;
 
 let mongooseConnection;
 /**

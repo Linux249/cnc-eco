@@ -3,7 +3,6 @@ import { sendVerification } from '../../../../lib/api/mail';
 import { middleware } from '../../../../lib/api/middleware';
 import User from '../../../../lib/api/model/User';
 import ERRORS from '../../../../lib/api/errors';
-import { JWT_SECRET } from '../../../../config/index';
 
 async function register(req, res, next) {
     if (req.method !== 'POST') return next(ERRORS.API.WRONG_METHOD);
@@ -35,7 +34,7 @@ async function register(req, res, next) {
         // Send the email to user
         await sendVerification(savedUser.token.mail, savedUser.local.email);
 
-        const token = jwt.sign(user.getUserJWT(), JWT_SECRET);
+        const token = jwt.sign(user.getUserJWT(), process.env.JWT_SECRET);
 
         return res.json({ user, token });
     } catch (e) {

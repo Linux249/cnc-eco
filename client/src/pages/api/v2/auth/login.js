@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken';
 import { middleware } from '../../../../lib/api/middleware';
 import User from '../../../../lib/api/model/User.js';
 import ERRORS from '../../../../lib/api/errors';
-import { JWT_SECRET } from '../../../../config/index';
 
 async function login(req, res, next) {
     if (req.method !== 'POST') return next(ERRORS.API.WRONG_METHOD);
@@ -19,7 +18,7 @@ async function login(req, res, next) {
         if (user.token.mail?.token) return next(ERRORS.AUTH.NOT_VERIFIED);
 
         // all is well, return user
-        const token = jwt.sign(user.getUserJWT(), JWT_SECRET);
+        const token = jwt.sign(user.getUserJWT(), process.env.JWT_SECRET);
         return res.json({ user, token });
     } catch (err) {
         return next(err);
