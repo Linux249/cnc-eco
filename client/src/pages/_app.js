@@ -1,5 +1,6 @@
 import App from 'next/app';
 import { Provider } from 'react-redux';
+import { Provider as AuthProvider } from 'next-auth/client';
 import { ThemeProvider } from 'styled-components';
 import Footer from '../components/Footer';
 import BaseHeader from '../containers/BaseHeader.js';
@@ -25,24 +26,26 @@ export default class MyApp extends App {
     render() {
         const { Component, pageProps } = this.props;
         return (
-            <Provider store={store}>
-                <ThemeProvider theme={theme}>
-                    <AppS>
-                        <BaseHeader />
-                        <LoadingLine />
-                        <Column center>
-                            <Info>
-                                This side is still in Development. Be aware that all data may be
-                                deleted while in beta/before release.{' '}
-                            </Info>
-                        </Column>
+            <AuthProvider session={pageProps.session}>
+                <Provider store={store}>
+                    <ThemeProvider theme={theme}>
+                        <AppS>
+                            <BaseHeader />
+                            <LoadingLine />
+                            <Column center>
+                                <Info>
+                                    This side is still in Development. Be aware that all data may be
+                                    deleted while in beta/before release.{' '}
+                                </Info>
+                            </Column>
 
-                        <Component {...pageProps} />
+                            <Component {...pageProps} />
 
-                        <Footer />
-                    </AppS>
-                </ThemeProvider>
-            </Provider>
+                            <Footer />
+                        </AppS>
+                    </ThemeProvider>
+                </Provider>
+            </AuthProvider>
         );
     }
 }
