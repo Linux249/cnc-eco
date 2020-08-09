@@ -1,5 +1,6 @@
 // protect routes with user authentication
 
+import jwt from 'next-auth/jwt';
 import { connectDB } from './db';
 
 let db;
@@ -35,4 +36,17 @@ export const middleware = (handler, options = {}) => async (req, res) => {
     return handler(req, res, next(res));
 };
 
+const secret = process.env.JWT_SECRET;
+
+export const authMiddleware = handler => async (req, res) => {
+    const token = await jwt.getToken({ req, secret });
+    if (token) {
+        req.user = token;
+        handler(req, res);
+    } else {
+        // todo Not Signed in
+        res.status(401);
+        res.end();
+    }
+};
 export default middleware;
