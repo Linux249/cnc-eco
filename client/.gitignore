@@ -6,14 +6,15 @@ node_modules
 # testing
 coverage
 
-# production
+# builds
 build
+.next
 
 # misc
 .DS_Store
 .env
 npm-debug.log
 
-# irgendwas
+# webstorm
 .idea
 

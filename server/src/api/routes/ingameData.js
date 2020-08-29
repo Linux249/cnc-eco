@@ -2,6 +2,47 @@ import World from '../model/World';
 import Alliance from '../model/Alliance';
 import Token from '../model/Token';
 
+// path: user/name
+
+// 1. Player post send name from ingame
+// 2. Server send token back
+// 3. Player see link to open from server
+// 4.
+
+/**
+ * best way:
+ * 1. ingame we get the e-mail adresse.
+ * 2. the adress is send to the server, here we generate a account with server and player name
+ * 3. send an login link via mail
+ * 4. the user can now use this way every time to login in
+ * 5. he also can log in via e-mail but new user can only be generated via ingame button :)
+ */
+
+/**
+ * second best:
+ * 1. user add e-mail ingame via input
+ * 2. userscript take e-mail and username and send them to server
+ * 3. player get informed that he will become a e-mail soon from (no-reply@cnc-eco.de)
+ * 3. rest see above
+ * -> even there is a ea-api for getting the e-mail our api itself could be used with bot data anyway so it has to check the orgin somehow
+ * -> even the origin is maybe manipulate
+ * -> try to send as mutch information as possible - a return value is not nessecary ingame?
+ * -> how to change e-mail adresse? just delete the account and register new
+ * -> someone with substitution make the first account? He has to delete the account first
+ *
+ * story:
+ * - user has a "open cnc-eco" and "register" button ingame
+ * - user has a "login" button on page (that will also genereate a account when not known but after login he only see a info to use the register button ingame)
+ *
+ */
+/**
+ * 1. player open link from ingame to a server url: cnc-eco.de/api/user/name?player=linux249
+ * 2. the server can verify it through the origin? maybe some ea cookies are send also to verify them?
+ * 3. the server redirect to page with name included -> name inside token so it cannot be ausgetauscht here
+ * 4. the page make a request to add the name to account if logedin -> post to server with token and cookies
+ * - after register user always get redirected to page with information: 1. load the scripe 2. press the "add user" button
+ */
+
 /**
  *
  * @param req the express request
@@ -13,9 +54,9 @@ export default async (req, ...rest) => {
     if (query.update && +query.update === 1) update(req, ...rest);
     else if (query.get_token) getToken(req, ...rest);
     else {
-        console.warn('IngameData unhandled - query:', query)
-        rest[0].send()
-    };
+        console.warn('IngameData unhandled - query:', query);
+        rest[0].send();
+    }
 };
 
 async function getToken(req, res, next) {
@@ -25,9 +66,9 @@ async function getToken(req, res, next) {
     try {
         let token =
             (await Token.findOne({ type: 'name', name: player })) ||
-            await new Token({ type: 'name', name: player }).save();
+            (await new Token({ type: 'name', name: player }).save());
         // await token.save();
-        console.log(token)
+        console.log(token);
         return res.send('token=' + token.token);
     } catch (e) {
         return next(e);
