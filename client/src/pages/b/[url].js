@@ -14,6 +14,8 @@ export function B() {
     const { url } = router.query;
 
     async function load() {
+        console.log('Init URL to base', url, router);
+        if (!url) return;
         try {
             const base = urlToBase(url);
             store.dispatch(replaceAllBase(base));
@@ -35,11 +37,11 @@ export function B() {
                         },
                         body: JSON.stringify(body),
                     }).then(r => r.json());
-
                     console.log(data);
                     setLoaded(true);
                 } catch (e) {
-                    setError(e);
+                    console.warn('failed to ', e);
+                    setError(e.message);
                 }
             } catch (e) {
                 console.warn(e);
@@ -52,8 +54,8 @@ export function B() {
     }
 
     useEffect(() => {
-        load();
-    }, []);
+        if (url) load().then();
+    }, [url]);
 
     return (
         <Body>

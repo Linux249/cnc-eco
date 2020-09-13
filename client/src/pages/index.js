@@ -1,14 +1,14 @@
 import React from 'react';
-import BuildingMenu from '../../containers/BuildingMenu';
-import Share from '../../components/Share';
-import Base from '../../components/Base';
-import Column from '../../style/Column';
-import Body from '../../style/Body';
-import Army from '../../components/Army';
-import Defense from '../../components/Defense';
-import ResetArea from '../../containers/ResetArea';
-import Message from '../../components/Message';
-import ProductionInfo from '../../containers/ProductionInfo';
+import BuildingMenu from '../containers/BuildingMenu';
+import Share from '../components/Share';
+import Base from '../components/Base';
+import Column from '../style/Column';
+import Body from '../style/Body';
+import Army from '../components/Army';
+import Defense from '../components/Defense';
+import ResetArea from '../containers/ResetArea';
+import Message from '../components/Message';
+import ProductionInfo from '../containers/ProductionInfo';
 import Backend from 'react-dnd-html5-backend-cjs';
 import { DndProvider } from 'react-dnd-cjs';
 
