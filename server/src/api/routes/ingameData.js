@@ -243,7 +243,7 @@ async function update(req, res, next) {
         player._updated = new Date();
 
         // find or create && overwrite or insert document
-        await collection.update({ name: currentplayerName }, player, { upsert: true });
+        await collection.replaceOne({ name: currentplayerName }, player, { upsert: true });
 
         // update or create world
         // TODO save the world where the plaer has a "player"

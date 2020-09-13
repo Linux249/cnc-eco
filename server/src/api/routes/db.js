@@ -128,7 +128,7 @@ router.get('/repairLayouts', async (req, res, next) => {
                         );
                         layout.tib = tib;
                         layout.cris = cris;
-                        collection.updateOne(
+                        collection.replaceOne(
                             { x: layout.x, y: layout.y },
                             layout,
                             { upsert: true },

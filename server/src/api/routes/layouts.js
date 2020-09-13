@@ -41,7 +41,7 @@ export default async (req, res, next) => {
         await layouts.forEach(layout => {
             const filter = { x: +layout.x, y: +layout.y, alliance: +a };
             if (+a === 0) filter.player = pl;
-            collection.updateOne(filter, layout, { upsert: true }, err => {
+            collection.replaceOne(filter, layout, { upsert: true }, err => {
                 if (err) next(err);
                 // console.log(result.result);
             });
