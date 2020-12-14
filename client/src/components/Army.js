@@ -10,8 +10,8 @@ const slots = [0, 1, 2, 3].map(function(y) {
     });
 });
 
-export default () => (
-    <Area>
-        <Grid rows={4}>{slots}</Grid>
-    </Area>
-);
+const Army = () => <Area>
+    <Grid rows={4}>{slots}</Grid>
+</Area>;
+
+export default Army;

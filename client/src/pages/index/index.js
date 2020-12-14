@@ -12,25 +12,25 @@ import ProductionInfo from '../../containers/ProductionInfo';
 import Backend from 'react-dnd-html5-backend-cjs'
 import { DndProvider } from 'react-dnd-cjs'
 
-export default () => (
-    <Column center>
-        <DndProvider backend={Backend}>
-            <Body large>
-                <BuildingMenu area="buildings" />
-                <Base />
-                <div>
-                    <ProductionInfo />
-                    <Share />
-                    <ResetArea />
-                    {/*<UrlLoader />*/}
-                    <Message />
-                </div>
-                <BuildingMenu area="defense" />
-                <Defense />
-                <div />
-                <BuildingMenu area="army" />
-                <Army />
-            </Body>
-        </DndProvider>
-    </Column>
-);
+const Index = () => <Column center>
+    <DndProvider backend={Backend}>
+        <Body large>
+            <BuildingMenu area="buildings" />
+            <Base />
+            <div>
+                <ProductionInfo />
+                <Share />
+                <ResetArea />
+                {/*<UrlLoader />*/}
+                <Message />
+            </div>
+            <BuildingMenu area="defense" />
+            <Defense />
+            <div />
+            <BuildingMenu area="army" />
+            <Army />
+        </Body>
+    </DndProvider>
+</Column>;
+
+export default Index;
