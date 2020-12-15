@@ -13,7 +13,7 @@ const slots = [0, 1, 2, 3, 4, 5, 6, 7].map(function(y) {
     });
 });
 
-export default () => {
+const Base = () => {
     // If pressed key is our target key then set to true
     function downHandler({ key }) {
         if (key === 'Shift' && !store.getState().menu.shift) {
@@ -48,3 +48,5 @@ export default () => {
         </Area>
     );
 };
+
+export default Base;

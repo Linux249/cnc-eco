@@ -128,7 +128,7 @@ router.get('/repairLayouts', async (req, res, next) => {
                         );
                         layout.tib = tib;
                         layout.cris = cris;
-                        collection.updateOne(
+                        collection.replaceOne(
                             { x: layout.x, y: layout.y },
                             layout,
                             { upsert: true },
@@ -203,7 +203,7 @@ router.get('/getFooterStats', async (req, res, next) => {
             .collection('reports')
             .findOne({}, {}, { sort: { createdAt: -1 } });
         const stats = await req.db.stats({ scale: 1048576 }); // MB
-        res.json({ worlds, users, report, size: stats.fileSize || stats.storageSize });
+        res.json({ worlds, users, report, size: Math.round(stats.storageSize) });
     } catch (e) {
         return next(e);
     }

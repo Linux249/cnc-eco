@@ -14,17 +14,13 @@ import setAuthRout from './routes/auth';
 let DB;
 
 // configuration ===============================================================
-MongoClient.connect(
-    mongoURI,
-    { useNewUrlParser: true },
-    (err, db) => {
-        DB = db;
-        const j = schedule.scheduleJob({ hour: 0, minute: 32 }, () => {
-            console.log('SCHEUDLER');
-            createReport(DB);
-        });
-    }
-);
+MongoClient.connect(mongoURI, { useNewUrlParser: true }, (err, client) => {
+    DB = client.db('heroku_0ghkd985');
+    const j = schedule.scheduleJob({ hour: 0, minute: 32 }, () => {
+        console.log('SCHEUDLER');
+        createReport(DB);
+    });
+});
 
 mongoose.Promise = global.Promise;
 mongoose.connect(mongoURI);
@@ -73,7 +69,7 @@ app.use((req, res, next) => {
 // zeigt verschiedene logs in der Console an
 // app.use(logger("dev"))
 // nutzt den body parser
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.text());
 
@@ -122,7 +118,7 @@ app.use((req, res, next) => {
 // Error Handler - Server error
 app.use((err, req, res, next) => {
     console.warn(err.message);
-    console.error(err)
+    console.error(err);
     res.status(err.status || 500); // falls irgendwo? next(err) aufgerufne wurde hat es wie oben eine status bekommen
     res.json({
         error: {

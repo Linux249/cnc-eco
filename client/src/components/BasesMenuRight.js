@@ -8,7 +8,7 @@ import Share from './Share';
 import ProductionInfo from '../containers/ProductionInfo';
 import Column from '../style/Column';
 
-export default () => {
+const BasesMenuRight = () => {
     const [showChart, toggleShowChart] = useState(false);
     const [showUpgrade, toggleShowUpgrade] = useState(true);
 
@@ -33,3 +33,5 @@ export default () => {
         </Column>
     );
 };
+
+export default BasesMenuRight;

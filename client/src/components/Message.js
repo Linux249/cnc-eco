@@ -13,12 +13,12 @@ const Container = styled(ContainerRaw)`
     background: bisque;
 `;
 
-export default () => (
-    <Container>
-        <Text>
-            <Link href="/register"><a>Register</a></Link> and install the CnC-Eco{' '}
-            <Link href="/scripts"><a>script</a></Link> to see your bases, all seen layouts (in the last 14
-            days) and alliance (members have to use the script also)
-        </Text>
-    </Container>
-);
+const Message = () => <Container>
+    <Text>
+        <Link href="/register"><a>Register</a></Link> and install the CnC-Eco{' '}
+        <Link href="/scripts"><a>script</a></Link> to see your bases, all seen layouts (in the last 14
+        days) and alliance (members have to use the script also)
+    </Text>
+</Container>;
+
+export default Message;
