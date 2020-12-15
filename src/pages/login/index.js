@@ -26,9 +26,10 @@ function Login(props) {
         e.preventDefault();
         signIn('email', {
             email,
-            username: 'test',
-            image: 'img',
-            profil: 'ähm',
+            username: 'test username',
+            image: 'img test',
+            profile: 'test profile',
+            callbackUrl: 'http://localhost:3000/foo'
         });
     }
 
