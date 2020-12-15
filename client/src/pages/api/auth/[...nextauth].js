@@ -9,14 +9,14 @@ const options = {
                 username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
             },
             server: {
-                host: process.env.EMAIL_SERVER_HOST,
-                port: process.env.EMAIL_SERVER_PORT,
+                host: 'smtp.cnc-eco.de',
+                port: 587,
                 auth: {
                     user: process.env.EMAIL_SERVER_USER,
                     pass: process.env.EMAIL_SERVER_PASSWORD,
                 },
             },
-            from: process.env.EMAIL_FROM,
+            from: 'noreply@cnc-eco.de',
             sendVerificationRequest,
         }),
     ],
