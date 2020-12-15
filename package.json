@@ -1,14 +1,8 @@
 {
   "name": "cnc-eco",
-  "version": "2.3.3",
+  "version": "2.4.0",
   "private": false,
-  "description": "a full stack web app for C&C TA",
-  "scripts": {
-    "start": "cd server && npm start",
-    "install": " cd client && npm i && cd ../server && npm i",
-    "build": "cd client && npm run build && cd ../server && npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "A full stack app for C&C TA",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Linux249/cnc-eco.git"
@@ -19,8 +13,55 @@
     "url": "https://github.com/Linux249/cnc-eco/issues"
   },
   "homepage": "https://github.com/Linux249/cnc-eco#readme",
-  "engines": {
-    "node": "10.3.0"
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "start:db": "mongod"
   },
-  "cacheDirectories": ["client/node_modules", "server/node_modules"]
+  "devDependencies": {
+    "@svgr/webpack": "^5.5.0",
+    "@types/node": "^14.14.13",
+    "@types/react": "^17.0.0",
+    "babel-plugin-styled-components": "^1.12.0",
+    "file-loader": "^6.2.0",
+    "prettier": "^2.2.1",
+    "redux-logger": "^3.0.6",
+    "why-did-you-update": "1.0.8"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^7.4.0",
+    "bcrypt": "^5.0.0",
+    "connected-react-router": "^6.8.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.11.8",
+    "next": "^10.0.3",
+    "next-auth": "^3.1.0",
+    "prop-types": "^15.7.2",
+    "query-string": "^6.13.7",
+    "react": "^17.0.1",
+    "react-dnd": "^10.0.2",
+    "react-dnd-cjs": "^9.5.1",
+    "react-dnd-html5-backend": "^10.0.2",
+    "react-dnd-html5-backend-cjs": "^9.5.1",
+    "react-dom": "^17.0.1",
+    "react-google-charts": "^1.6.6",
+    "react-redux": "^7.2.2",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-tippy": "^1.4.0",
+    "react-trend": "^1.2.5",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "socket.io-client": "^3.0.4",
+    "styled-components": "^5.2.1",
+    "swr": "^0.3.9"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

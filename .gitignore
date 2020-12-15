@@ -1,3 +1,32 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+
+# testing
+coverage
+
+# builds
+build
+.next
+
+# misc
+.DS_Store
+.env
+npm-debug.log
+
+# webstorm
 .idea
 
-NEW.md
+# next.js
+/.next/
+/out/
+
+# vercel
+.vercel
+
+# local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

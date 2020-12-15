@@ -2,7 +2,6 @@
 //const withImages = require('next-images');
 
 module.exports = {
-    distDir: 'build',
     webpack: (config, { isServer }) => {
         config.module.rules.push(
             {
