@@ -3,6 +3,7 @@
 import jwt from 'next-auth/jwt';
 import { connectDB } from './db';
 
+
 let db;
 
 /**
@@ -42,11 +43,10 @@ export const authMiddleware = handler => async (req, res) => {
     const token = await jwt.getToken({ req, secret });
     if (token) {
         req.user = token;
-        handler(req, res);
+        return handler(req, res);
     } else {
         // todo Not Signed in
-        res.status(401);
-        res.end();
+        return res.redirect(401, '/login');
     }
 };
 export default middleware;

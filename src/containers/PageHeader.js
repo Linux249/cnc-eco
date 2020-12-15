@@ -18,12 +18,13 @@ const A = Button.withComponent(styled('a')`
         background: ${baseColor} !important;
         transition: background 0.1s linear;
     }
+
     &.active {
         background-color: ${baseColor} !important;
     }
 `);
 
-function BaseHeader() {
+function PageHeader() {
     const [session, loading] = useSession();
     // todo add loading
     const isAuthenticated = !!session;
@@ -54,20 +55,21 @@ function BaseHeader() {
                     <A>Scripte</A>
                 </Link>
                 {/*<Link href="/demo">
-                        Demo
-                    </Link>*/}
+                 Demo
+                 </Link>*/}
                 {isAuthenticated ? (
                     <>
-                        <Link href="/feedback">Feedback</Link>
-                        <Link href="/user">{name || 'Add a player name first'}</Link>
+                        <Link href="/feedback">
+                            <A>Feedback</A>
+                        </Link>
+                        <Link href="/user">
+                            <A>{name || 'Add Player first'}</A>
+                        </Link>
                     </>
                 ) : (
                     <Fragment>
                         <Link href="/login">
                             <A>Login</A>
-                        </Link>
-                        <Link href="/register">
-                            <A>Sign up</A>
                         </Link>
                     </Fragment>
                 )}
@@ -76,4 +78,4 @@ function BaseHeader() {
     );
 }
 
-export default BaseHeader;
+export default PageHeader;

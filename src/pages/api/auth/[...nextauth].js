@@ -36,7 +36,7 @@ const options = {
          * @return {boolean}         Return `true` (or a modified JWT) to allow sign in
          *                           Return `false` to deny access
          */
-        signIn: async (user, account, profile) => {
+        /*  signIn: async (user, account, profile) => {
             // console.log('SIGN IN 1-2', user, account, profile);
 
             const isAllowedToSignIn = true;
@@ -49,19 +49,20 @@ const options = {
                 // return Promise.reject(new Error('error message')) // Redirect to error page
                 return Promise.reject('/user'); // Redirect to a URL
             }
-        },
-        session: async (session, user) => {
-            // console.log('SESSION', session, user);
-            return Promise.resolve(session);
-        },
+        },*/
+        // session: async (session, user) => {
+        //     // console.log('SESSION', session, user);
+        //     return Promise.resolve(session);
+        // },
         jwt: async (token, user, account, profile, isNewUser) => {
             // console.log('JWT', token, user, account, profile, isNewUser);
+            token.player = user?.name || null; // todo attribute player is not visible in client
             return Promise.resolve(token);
         },
-        redirect: async (url, baseUrl) => {
-            // console.log('REDIRECT', url, baseUrl);
-            return url.startsWith(baseUrl) ? Promise.resolve(url) : Promise.resolve(baseUrl);
-        },
+        // redirect: async (url, baseUrl) => {
+        //     // console.log('REDIRECT', url, baseUrl);
+        //     return url.startsWith(baseUrl) ? Promise.resolve(url) : Promise.resolve(baseUrl);
+        // },
     },
     debug: true,
 };

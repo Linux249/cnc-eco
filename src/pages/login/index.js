@@ -29,7 +29,7 @@ function Login(props) {
             username: 'test username',
             image: 'img test',
             profile: 'test profile',
-            callbackUrl: 'http://localhost:3000/foo'
+            callbackUrl: '/user'
         });
     }
 
@@ -52,7 +52,7 @@ function Login(props) {
                     <InputGroup>
                         <Submit type="submit" value="Login" />
                     </InputGroup>
-                    After entering your adresse we will send you an mail with a link to login.
+                    After submitting your email we will send you an mail with a link to login.
                 </Form>
             </Container>
         </Center>

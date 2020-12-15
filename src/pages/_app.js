@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { Provider as AuthProvider } from 'next-auth/client';
 import { ThemeProvider } from 'styled-components';
 import Footer from '../components/Footer';
-import BaseHeader from '../containers/BaseHeader.js';
+import PageHeader from '@/containers/PageHeader.js';
 import AppS from '../style/App';
 import '../style/index.css';
 import '../style/Details.css';
@@ -30,7 +30,7 @@ export default class MyApp extends App {
                 <Provider store={store}>
                     <ThemeProvider theme={theme}>
                         <AppS>
-                            <BaseHeader />
+                            <PageHeader />
                             <LoadingLine />
                             <Column center>
                                 <Info>
