@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { Provider as AuthProvider } from 'next-auth/client';
 import { ThemeProvider } from 'styled-components';
 import Footer from '../components/Footer';
-import PageHeader from '@/containers/PageHeader.js';
+import PageHeader from '@/components/PageHeader.js';
 import AppS from '../style/App';
 import '../style/index.css';
 import '../style/Details.css';

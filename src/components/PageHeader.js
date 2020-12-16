@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
 import Link from 'next/link';
-import Header from '../style/BaseHeader';
-import Title from '../style/AppName';
-import Button from '../style/Button';
-import Row from '../style/Row';
 import styled from 'styled-components';
-import WorldsMenu from './WorldsMenu';
-import { baseColor } from '../style/constants';
+import Header from '@/style/BaseHeader';
+import Title from '@/style/AppName';
+import Button from '@/style/Button';
+import Row from '@/style/Row';
+import { baseColor } from '@/style/constants';
+import WorldsMenu from '../containers/WorldsMenu';
 import { useSession } from 'next-auth/client';
 
 const A = Button.withComponent(styled('a')`
