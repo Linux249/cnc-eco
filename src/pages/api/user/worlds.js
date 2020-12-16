@@ -14,7 +14,7 @@ const worlds = async (req, res) => {
     const { user } = req;
     if (!user) throw Error('fatal auth error, the middleware should protect this');
     const { name, email } = user;
-    console.log('Req: /api/user/worlds', req.method, user, name);
+    console.log(req.method, 'Req: /api/user/worlds', user, name);
 
     const db = await connectDB().then(async (client) => await client.db());
 
