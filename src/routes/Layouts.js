@@ -1,3 +1,4 @@
+/*
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -29,17 +30,17 @@ const Body = styled(BodyRaw)`
 function Layouts(props) {
     const { worldInUrl, w } = props;
 
-    /** list of layouts loaded from API*/
+    /!** list of layouts loaded from API*!/
     const [layouts, setLayouts] = useState([]);
-    /** sort: tib, kris, cris, time - set carefully while be used on DB query*/
+    /!** sort: tib, kris, cris, time - set carefully while be used on DB query*!/
     const [sort, setSort] = useState('tib');
-    /** like limit, skip*/
+    /!** like limit, skip*!/
     const [limit, setLimit] = useState(200);
-    /** How many are loaded? response to user/from API*/
+    /!** How many are loaded? response to user/from API*!/
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
 
-    /** update layouts on load ond if player change world*/
+    /!** update layouts on load ond if player change world*!/
     useEffect(() => {
         console.log('USE EFFECT', +w, +worldInUrl);
         // only load if there is no world param in route
@@ -165,3 +166,4 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(Layouts);
+*/

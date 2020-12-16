@@ -27,7 +27,7 @@ router.get('/layout', (req, res, next) => {
  */
 
 router.get('/layouts', async (req, res, next) => {
-    let { w, skip, limit, sort, a } = req.query;
+   /* let { w, skip, limit, sort, a } = req.query;
     const { player } = req.user;
     limit = limit ? +limit : 50;
     skip = skip ? +skip : 0;
@@ -50,7 +50,7 @@ router.get('/layouts', async (req, res, next) => {
     } catch (err) {
         console.log({ err });
         next(err);
-    }
+    }*/
 });
 
 export default router;
