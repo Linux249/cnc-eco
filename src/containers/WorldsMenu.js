@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { changeBase, changeWorld } from '../store/actions/player';
 import Area from '../style/Area';
-import { baseColor } from '../style/constants';
+import { baseColor } from '@/style/constants';
 
 const ButtonHeader = styled(Button)`
     background-color: ${({ active }) => (active ? baseColor : 'inherit')};

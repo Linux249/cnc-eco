@@ -19,10 +19,16 @@ function UpdateWorlds({ user }) {
         </div>
     );
 }
+function useAllWorlds() {
+    const { data, error } = useSWR('/api/user/worlds?name=linux249', fetcher);
+    return [data, error]
+}
 
 export const User = () => {
     const { data, error } = useSWR('/api/user?name=linux249&email=jl@nuuk.de', fetcher);
     const [session, loading] = useSession();
+    const [worlds] = useAllWorlds()
+    console.log(worlds)
     // todo add loading
 
     // https://www.cnc-eco.de/user?token=ikpoei5w2tatcqguk4nk6l5o9o9ew54ygaapk2fwp41b

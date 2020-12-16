@@ -11,35 +11,26 @@ let db;
  * @param res
  * @return {function(*=): *}
  */
-const next = res => err => res.json(err);
+const next = (res) => (err) => res.json(err);
 
-export const middleware = (handler, options = {}) => async (req, res) => {
+export const middleware = (handler) => async (req, res) => {
     console.log('API:   ', req.method, req.url, req.query, req.body);
-
-    // return handler(req, res, next(res));
-    if (options.db) {
-        try {
-            if (!db) db = await connectDB();
-            req.db = db;
-        } catch (e) {
-            return next(res)({
-                status: e.status || 666,
-                message: e.message || 'unhandled error',
-                error: e,
-            });
-        }
-    }
-
-    if (options.auth) {
-    }
-    if (options.cors) {
+    try {
+        if (!db) db = await connectDB();
+        req.db = db;
+    } catch (e) {
+        return next(res)({
+            status: e.status || 666,
+            message: e.message || 'unhandled error',
+            error: e,
+        });
     }
     return handler(req, res, next(res));
 };
 
 const secret = process.env.JWT_SECRET;
 
-export const authMiddleware = handler => async (req, res) => {
+export const authMiddleware = (handler) => async (req, res) => {
     const token = await jwt.getToken({ req, secret });
     if (token) {
         req.user = token;

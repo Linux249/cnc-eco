@@ -5,4 +5,4 @@ const worldSchema = new Schema({
     worldName: { type: String, required: true, index: true },
 });
 
-export default mongoose.model('World', worldSchema);
+export default mongoose.models.World || mongoose.model('World', worldSchema);
