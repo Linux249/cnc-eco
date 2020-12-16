@@ -1,28 +1,26 @@
-/*
+import { useRouter } from 'next/router';
 import React, { Fragment, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { changeLoading  as actionChangeLoading } from '../store/actions/player';
-import { api_url } from '../config';
-import { shortenNumber } from '../util/service';
-import tib from '../img/icon/tib_small.png';
-import cris from '../img/icon/cris_small.png';
-import power from '../img/icon/power_small.png';
-import credits from '../img/icon/credits_small.png';
-import researchPoints from '../img/icon/research_points.png';
-import supplyPoints from '../img/icon/supply_points.png';
-import funds from '../img/icon/funds.png';
-import commandoPoints from '../img/icon/commando_points.png';
-import offenseRepair from '../img/icon/offense_repair.png';
-import BodyRaw from '../style/Body';
-import Row from '../style/Row';
-import Button from '../style/Button';
+import useAlliance from '../../hooks/alliance';
+import { shortenNumber } from '../../util/service';
+import tib from '../../img/icon/tib_small.png';
+import cris from '../../img/icon/cris_small.png';
+import power from '../../img/icon/power_small.png';
+import credits from '../../img/icon/credits_small.png';
+import researchPoints from '../../img/icon/research_points.png';
+import supplyPoints from '../../img/icon/supply_points.png';
+import funds from '../../img/icon/funds.png';
+import commandoPoints from '../../img/icon/commando_points.png';
+import offenseRepair from '../../img/icon/offense_repair.png';
+import BodyRaw from '@/style/Body';
+import Row from '@/style/Row';
+import Button from '@/style/Button';
 import styled from 'styled-components';
-import { msToTime } from '../util/secToTime';
-import Column from '../style/Column';
-import { baseLight, border, borderRadius } from '../style/constants';
-import Container from '../style/Container';
-import Title from '../style/Title';
-
+import { msToTime } from '../../util/secToTime';
+import Column from '@/style/Column';
+import { baseLight, border, borderRadius } from '@/style/constants';
+import Container from '@/style/Container';
+import Title from '@/style/Title';
+import { mutate } from 'swr';
 // TODO show last update in table
 
 const Grid = styled.div`
@@ -42,23 +40,23 @@ const AllianceS = styled.div`
 
     font-weight: 600;
 
-    /!*
+    /*
     Custom scrollbar style
-    *!/
-    /!* width *!/
+    */
+    /* width */
     ::-webkit-scrollbar {
         width: 0.5rem;
         height: 0.5rem;
     }
-     /!* Track *!/
+     /* Track */
     ::-webkit-scrollbar-track {
         background: #f1f1f1;
     }
-     /!* Handle *!/
+     /* Handle */
     ::-webkit-scrollbar-thumb {
         background: #888;
     }
-     /!* Handle on hover *!/
+     /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
         background: #555;
         width: 0.7rem;
@@ -77,7 +75,7 @@ const Cell = styled.div`
     border-color: ${baseLight};
     margin: 1px;
 
-    ${p => (p.active ? 'background-color: ' + baseLight : '')};
+    ${(p) => (p.active ? 'background-color: ' + baseLight : '')};
 `;
 
 const Icon = styled.img`
@@ -91,39 +89,38 @@ const Body = styled(BodyRaw)`
     grid-template-columns: minmax(100px, 90%) 1fr;
 `;
 
-function Alliance({ allianceId, changeLoading, w, token } ) {
-    /!** array for the members data after fetch*!/
+function Alliance() {
+    /** array for the members data after fetch*/
     const [members, setMembers] = useState([]);
-    /!** sort type, s cause the name sort is already the function name *!/
+    /** sort type, s cause the name sort is already the function name */
     const [s, setS] = useState('rank');
-    /!** alliance name, set after loading ally data*!/
+    /** alliance name, set after loading ally data*/
     const [allianceName, setAllianceName] = useState('');
-    /!** count members after loading data*!/
+    /** count members after loading data*/
     const [count, setCount] = useState(0);
 
-    async function getAlliance() {
-        changeLoading(true);
-        const url = `${api_url}/alliance?world=${w}&alliance=${allianceId}`;
-        const alliance = await fetch(url, {
-            headers: {
-                Authorization: 'Bearer  ' + token,
-            },
-        }).then(res => res.json());
-        console.log({ alliance });
-        setAllianceName(alliance.name);
-        setCount(alliance.count);
-        setMembers(alliance.members.sort((a, b) => +b.rank || 0 - +a.rank || 0));
-        changeLoading(false);
-    }
+    const router = useRouter();
+    const { id } = router.query;
+    const [alliance] = useAlliance(id);
+    console.log('alliance/', id, alliance);
 
+    function updateAlliance() {
+        return mutate(`/api/alliance/${id}`);
+    }
     useEffect(() => {
-        if (allianceId) getAlliance();
-    }, [allianceId]);
+        console.log('Effect: ', id, alliance);
+        if (alliance) {
+            setAllianceName(alliance.name);
+            setCount(alliance.count);
+            setMembers(alliance.members.sort((a, b) => +b.rank || 0 - +a.rank || 0));
+        }
+    }, [alliance]);
 
     function sort(s) {
         console.log('SORT');
         console.log(s);
         setS(s);
+        console.log([...members.sort((a, b) => +b[s] || 0 - +a[s] || 0)])
         setMembers([...members.sort((a, b) => +b[s] || 0 - +a[s] || 0)]);
     }
 
@@ -213,7 +210,7 @@ function Alliance({ allianceId, changeLoading, w, token } ) {
                         time
                     </Cell>
 
-                    {members.map(member => {
+                    {members.map((member) => {
                         // member = members[0]
                         return member.data ? (
                             <Fragment key={member.name}>
@@ -308,7 +305,7 @@ function Alliance({ allianceId, changeLoading, w, token } ) {
                 <Container center>
                     <Title>{allianceName + ' (' + count + ')'}</Title>
                     <Row>
-                        <Button onClick={getAlliance}>update</Button>
+                        <Button onClick={updateAlliance}>update</Button>
                     </Row>
                 </Container>
             </Column>
@@ -316,19 +313,4 @@ function Alliance({ allianceId, changeLoading, w, token } ) {
     );
 }
 
-function mapStateToProps(state) {
-    return {
-        w: state.player.w,
-        allianceId: state.player.allianceId,
-        // worlds: state.player.worlds,
-        token: state.auth.token,
-    };
-}
-
-const mapDispatchToProps = { changeLoading: actionChangeLoading };
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Alliance);
-*/
+export default Alliance;

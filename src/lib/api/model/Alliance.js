@@ -1,4 +1,3 @@
-/*
 import mongoose, { Schema } from 'mongoose';
 
 const allianceSchema = new Schema({
@@ -15,5 +14,4 @@ const allianceSchema = new Schema({
     date: { type: Date, default: Date.now },
 });
 
-export default mongoose.model('Alliance', allianceSchema);
-*/
+export default mongoose.models.Alliance || mongoose.model('Alliance', allianceSchema);

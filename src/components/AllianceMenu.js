@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import useWorlds from '../hooks/worlds';
+import useAlliancess from '../hooks/worlds';
 import Row from '@/style/Row';
 import Button from '@/style/Button';
 import React, { useEffect, useState } from 'react';
@@ -31,34 +31,34 @@ const DropDownArea = styled(Area)`
     transition: height 0.25s linear 0.1s;
 `;
 
-function WorldsMenu() {
+function AllianceMenu() {
     const router = useRouter();
-    const [worlds, loadingWorlds, error] = useWorlds();
-    const [showWorld, setShowWorld] = useState(false);
-    const [selectedWorld, setSelectedWorld] = useState();
+    const [worlds, loadingAlliances, error] = useAlliancess();
+    const [showAlliances, setShowAlliances] = useState(false);
+    const [selectedAlliances, setSelectedAlliances] = useState();
 
     useEffect(() => {
-        if (worlds.length) setSelectedWorld(0);
+        if (worlds.length) setSelectedAlliances(0);
     }, [worlds]);
 
-    function selectWorld(index) {
-        setSelectedWorld(index);
-        router.push(`/world/${worlds[index].id}`);
+    function selectAlliances(index) {
+        setSelectedAlliances(index);
+        router.push(`/alliance/${worlds[index].id}`);
     }
 
-    const worldName = worlds && worlds[selectedWorld]?.name;
+    const allianceName = worlds && worlds[selectedAlliances]?.name;
 
     return (
         <>
             <Row>
                 <DropDownAnchor>
-                    <ButtonHeader onClick={() => setShowWorld(!showWorld)} active={showWorld}>
-                        {loadingWorlds ? 'loading' : worldName || 'nop world name'}
+                    <ButtonHeader onClick={() => setShowAlliances(!showAlliances)} active={showAlliances}>
+                        {loadingAlliances ? 'loading' : allianceName || 'nop alliance name'}
                     </ButtonHeader>
-                    {showWorld && (
+                    {showAlliances && (
                         <DropDownArea small>
                             {worlds.map((w, i) => (
-                                <Button onClick={() => selectWorld(i)} key={w.id}>
+                                <Button onClick={() => selectAlliances(i)} key={w.id}>
                                     {w.name}
                                 </Button>
                             ))}
@@ -70,7 +70,4 @@ function WorldsMenu() {
     );
 }
 
-// export default connect(mapStateToProps, { selectWorld: changeWorld, selectBase: changeBase })(
-//     WorldsMenu
-// );
-export default WorldsMenu;
+export default AllianceMenu;

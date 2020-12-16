@@ -1,3 +1,4 @@
+import AllianceMenu from '@/components/AllianceMenu';
 import React, { Fragment } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -43,9 +44,7 @@ function PageHeader() {
                         <Link href={'/layouts'}>
                             <A>Layouts</A>
                         </Link>
-                        <Link href="/alliance">
-                            <A>Alliance</A>
-                        </Link>
+                        <AllianceMenu />
                     </>
                 )}
                 <Link href="/scripts">
