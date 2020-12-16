@@ -6,7 +6,7 @@ import Title from '@/style/AppName';
 import Button from '@/style/Button';
 import Row from '@/style/Row';
 import { baseColor } from '@/style/constants';
-import WorldsMenu from '../containers/WorldsMenu';
+import WorldsMenu from './WorldsMenu';
 import { useSession } from 'next-auth/client';
 
 const A = Button.withComponent(styled('a')`
@@ -40,9 +40,6 @@ function PageHeader() {
                 {isAuthenticated && name && (
                     <>
                         <WorldsMenu />
-                        <Link href="/bases">
-                            <A>Basen</A>
-                        </Link>
                         <Link href={'/layouts'}>
                             <A>Layouts</A>
                         </Link>

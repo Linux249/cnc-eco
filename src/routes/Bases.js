@@ -1,9 +1,10 @@
+/*
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Base from '../components/Base.js';
 import BasesMenuRight from '../components/BasesMenuRight';
 import BuildingMenu from '../containers/BuildingMenu';
-import BasesMenu from '../containers/BasesMenu';
+import BasesMenu from '@/components/BasesMenu';
 import Body from '../style/Body';
 import Column from '../style/Column';
 import Defense from '../components/Defense';
@@ -47,7 +48,7 @@ export const Bases =  (props) => {
                 <Army />
                 <div />
                 <div />
-                {/*<BestBuildingsToUpgrade />*/}
+                {/!*<BestBuildingsToUpgrade />*!/}
             </Body>
         </Column>
     );
@@ -65,3 +66,4 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Bases)
+*/

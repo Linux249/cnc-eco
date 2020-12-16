@@ -1,12 +1,12 @@
+import { useRouter } from 'next/router';
 import useWorlds from '../hooks/worlds';
-import Row from '../style/Row';
-import Button from '../style/Button';
-import React, { Component, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import Row from '@/style/Row';
+import Button from '@/style/Button';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { changeBase, changeWorld } from '../store/actions/player';
-import Area from '../style/Area';
+import Area from '@/style/Area';
 import { baseColor } from '@/style/constants';
+
 
 const ButtonHeader = styled(Button)`
     background-color: ${({ active }) => (active ? baseColor : 'inherit')};
@@ -32,6 +32,7 @@ const DropDownArea = styled(Area)`
 `;
 
 function WorldsMenu() {
+    const router = useRouter();
     const [worlds, loadingWorlds, error] = useWorlds();
     const [showWorld, setShowWorld] = useState(false);
     const [selectedWorld, setSelectedWorld] = useState();
@@ -42,6 +43,7 @@ function WorldsMenu() {
 
     function selectWorld(world) {
         setSelectedWorld(world);
+        router.push(`/world/${worlds[world].id}`);
     }
 
     const worldName = worlds && worlds[selectedWorld]?.name;
@@ -68,14 +70,7 @@ function WorldsMenu() {
     );
 }
 
-const mapStateToProps = (state) => {
-    return {
-        worlds: state.player.worlds,
-        worldName: state.player.worldName,
-        w: state.player.w,
-    };
-};
-
-export default connect(mapStateToProps, { selectWorld: changeWorld, selectBase: changeBase })(
-    WorldsMenu
-);
+// export default connect(mapStateToProps, { selectWorld: changeWorld, selectBase: changeBase })(
+//     WorldsMenu
+// );
+export default WorldsMenu;
