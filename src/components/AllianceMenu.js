@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import Area from '@/style/Area';
 import { baseColor } from '@/style/constants';
 
-
 const ButtonHeader = styled(Button)`
     background-color: ${({ active }) => (active ? baseColor : 'inherit')};
     color: white;
@@ -35,30 +34,36 @@ function AllianceMenu() {
     const router = useRouter();
     const [worlds, loadingAlliances, error] = useAlliancess();
     const [showAlliances, setShowAlliances] = useState(false);
-    const [selectedAlliances, setSelectedAlliances] = useState();
+    const [selectedAlliance, setSelectedAlliance] = useState();
 
     useEffect(() => {
-        if (worlds.length) setSelectedAlliances(0);
+        if (worlds.length && !(selectedAlliance >= 0)) setSelectedAlliance(0);
     }, [worlds]);
 
     function selectAlliances(index) {
-        setSelectedAlliances(index);
+        setSelectedAlliance(index);
         router.push(`/alliance/${worlds[index].id}`);
+        setShowAlliances(false);
     }
-
-    const allianceName = worlds && worlds[selectedAlliances]?.name;
 
     return (
         <>
             <Row>
                 <DropDownAnchor>
-                    <ButtonHeader onClick={() => setShowAlliances(!showAlliances)} active={showAlliances}>
-                        {loadingAlliances ? 'loading' : allianceName || 'nop alliance name'}
+                    <ButtonHeader
+                        onClick={() => setShowAlliances(!showAlliances)}
+                        active={showAlliances}
+                    >
+                        {loadingAlliances ? 'loading' : 'Alliance' + selectedAlliance}
                     </ButtonHeader>
                     {showAlliances && (
                         <DropDownArea small>
                             {worlds.map((w, i) => (
-                                <Button onClick={() => selectAlliances(i)} key={w.id}>
+                                <Button
+                                    active={selectedAlliance === i}
+                                    onClick={() => selectAlliances(i)}
+                                    key={w.id}
+                                >
                                     {w.name}
                                 </Button>
                             ))}

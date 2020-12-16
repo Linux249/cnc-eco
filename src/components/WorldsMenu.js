@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import Area from '@/style/Area';
 import { baseColor } from '@/style/constants';
 
-
 const ButtonHeader = styled(Button)`
     background-color: ${({ active }) => (active ? baseColor : 'inherit')};
     color: white;
@@ -46,19 +45,21 @@ function WorldsMenu() {
         router.push(`/world/${worlds[index].id}`);
     }
 
-    const worldName = worlds && worlds[selectedWorld]?.name;
-
     return (
         <>
             <Row>
                 <DropDownAnchor>
                     <ButtonHeader onClick={() => setShowWorld(!showWorld)} active={showWorld}>
-                        {loadingWorlds ? 'loading' : worldName || 'nop world name'}
+                        {loadingWorlds ? 'loading' : 'Bases'}
                     </ButtonHeader>
                     {showWorld && (
                         <DropDownArea small>
                             {worlds.map((w, i) => (
-                                <Button onClick={() => selectWorld(i)} key={w.id}>
+                                <Button
+                                    active={i === selectedWorld}
+                                    onClick={() => selectWorld(i)}
+                                    key={w.id}
+                                >
                                     {w.name}
                                 </Button>
                             ))}
@@ -70,7 +71,4 @@ function WorldsMenu() {
     );
 }
 
-// export default connect(mapStateToProps, { selectWorld: changeWorld, selectBase: changeBase })(
-//     WorldsMenu
-// );
 export default WorldsMenu;
