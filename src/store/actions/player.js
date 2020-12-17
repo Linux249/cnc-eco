@@ -102,10 +102,8 @@ export function changeLoading(loading) {
     };
 }
 
-export function changeBase(i) {
+export function changeBase(base, i) {
     return (dispatch, getStore) => {
-        const { bases } = getStore().player;
-        const base = bases[i];
         dispatch({
             type: PLAYER_CHANGE_SELECTED_BASE,
             i,
