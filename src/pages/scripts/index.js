@@ -8,7 +8,7 @@ import Title from '../../style/Title';
 
 
 const Description = styled.div`
-    font-weight: 300;
+    font-weight: 400;
     font-size: 1rem;
     margin: 5px;
 `;
