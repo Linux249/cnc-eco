@@ -31,6 +31,7 @@ export const getUser = async (req) => await jwt.getToken({ req, secret: process.
 
 export const authMiddleware = (handler) => async (req, res) => {
     const token = await getUser(req);
+        console.log('api:authMiddleware',token);
     if (token) {
         req.user = token;
         return handler(req, res);

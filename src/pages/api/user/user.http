@@ -1,0 +1,19 @@
+# will error when missing name in user account
+GET http://localhost:3000/api/user/worlds
+Accept: */*
+Cookie: next-auth.session-token={{token}}
+
+###
+
+
+PUT http://localhost:3000/api/user/worlds
+Content-Type: application/json
+Cookie: next-auth.session-token={{token}}
+
+
+###
+GET http://localhost:3000/api/user/worlds
+Accept: application/json
+
+###
+

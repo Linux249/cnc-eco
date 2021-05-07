@@ -13,8 +13,8 @@ import { authMiddleware } from '../../../lib/api/middleware';
 const worlds = async (req, res) => {
     const { user } = req;
     if (!user) throw Error('fatal auth error, the middleware should protect this');
-    const { name, email } = user;
-    console.log(req.method, 'Req: /api/user/worlds', user, name);
+    const { name, email, player } = user;
+    console.log(req.method, 'Req: /api/user/worlds', user, name, player);
 
     const db = await connectDB().then(async (client) => await client.db());
 
@@ -22,12 +22,14 @@ const worlds = async (req, res) => {
     if (req.method === 'GET') {
         const users = await db.collection('users');
         const { worlds } = await users.findOne({ email }, { projection: { _id: 0, worlds: 1 } });
+        console.log({ worlds });
         return res.json({ worlds });
     }
     // update with scan through lookup all player collections
     if (req.method === 'PUT') {
+        if(!name) return res.status(400).json({message: 'Add a player name fist!'})
         const World = (await import('../../../lib/api/model/World')).default;
-        console.log(World);
+        // console.log({ World });
         const worlds = await World.find();
         const worldsWherePlayerExist = [];
         await Promise.all(
