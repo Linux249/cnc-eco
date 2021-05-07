@@ -90,38 +90,27 @@ const Body = styled(BodyRaw)`
 `;
 
 function Alliance() {
-    /** array for the members data after fetch*/
-    const [members, setMembers] = useState([]);
+    const router = useRouter();
+
     /** sort type, s cause the name sort is already the function name */
     const [s, setS] = useState('rank');
-    /** alliance name, set after loading ally data*/
-    const [allianceName, setAllianceName] = useState('');
-    /** count members after loading data*/
-    const [count, setCount] = useState(0);
-
-    const router = useRouter();
     const { id } = router.query;
     const [alliance] = useAlliance(id);
-    console.log('alliance/', id, alliance);
+
+    const count = alliance?.count || 0
+    const allianceName = alliance?.name ||''
+    const members = alliance?.members.sort((a, b) => +b.rank || 0 - +a.rank || 0) || []
+    console.log('r:alliance', id, alliance);
 
     function updateAlliance() {
         return mutate(`/api/alliance/${id}`);
     }
-    useEffect(() => {
-        console.log('Effect: ', id, alliance);
-        if (alliance) {
-            setAllianceName(alliance.name);
-            setCount(alliance.count);
-            setMembers(alliance.members.sort((a, b) => +b.rank || 0 - +a.rank || 0));
-        }
-    }, [alliance]);
 
     function sort(s) {
         console.log('SORT');
         console.log(s);
         setS(s);
         console.log([...members.sort((a, b) => +b[s] || 0 - +a[s] || 0)])
-        setMembers([...members.sort((a, b) => +b[s] || 0 - +a[s] || 0)]);
     }
 
     return (
