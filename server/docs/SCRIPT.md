@@ -11,7 +11,7 @@ List of Request the [Script](https://greasyfork.org/en/scripts/33978-cnc-cnc-eco
 - POST     /ingameData?update=1
   - body: see "send BaseData"
   
-### Ingame Script on User Interaction @cnc-eco.herokuapp.com/api/v1
+### Ingame Script on Index Interaction @cnc-eco.herokuapp.com/api/v1
 
 #### scan layouts
 - POST /layouts?pl=linux249&world=373&a=126

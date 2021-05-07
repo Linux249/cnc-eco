@@ -30,3 +30,12 @@ Include:
 
 ### Other
 - Replace routing
+
+
+### CNC releated
+
+##### Java Bot
+https://github.com/SebHeuze/cnc-bot/
+
+##### Login client
+https://www.npmjs.com/package/@cncta/client/v/2.2.0
