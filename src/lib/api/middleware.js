@@ -3,7 +3,6 @@
 import jwt from 'next-auth/jwt';
 import { connectDB } from './db';
 
-
 let db;
 
 /**
@@ -28,10 +27,10 @@ export const middleware = (handler) => async (req, res) => {
     return handler(req, res, next(res));
 };
 
-const secret = process.env.JWT_SECRET;
+export const getUser = async (req) => await jwt.getToken({ req, secret: process.env.JWT_SECRET });
 
 export const authMiddleware = (handler) => async (req, res) => {
-    const token = await jwt.getToken({ req, secret });
+    const token = await getUser(req);
     if (token) {
         req.user = token;
         return handler(req, res);

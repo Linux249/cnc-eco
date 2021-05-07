@@ -1,7 +1,6 @@
 import Button from '@/style/Button';
 import Column from '@/style/Column';
 import Container from '@/style/Container';
-import Info from '@/style/Info';
 import LoadingPoints from '@/style/LoadingPoints';
 import Title from '@/style/Title';
 import useSWR from 'swr';
@@ -9,7 +8,7 @@ import { InfoText } from '@/style/InfoText';
 import React from 'react';
 import { useSession, signOut } from 'next-auth/client';
 import Link from 'next/link';
-import useWorlds from '../hooks/worlds';
+import useWorlds from '../../hooks/worlds';
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 

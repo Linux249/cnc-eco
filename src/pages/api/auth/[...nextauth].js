@@ -54,10 +54,12 @@ const options = {
         //     // console.log('SESSION', session, user);
         //     return Promise.resolve(session);
         // },
-        jwt: async (token, user, account, profile, isNewUser) => {
-            // console.log('JWT', token, user, account, profile, isNewUser);
+        async jwt(token, user, account, profile, isNewUser) {
+            console.log('JWT', token, user, account, profile, isNewUser);
+            // todo remove double save name in player later
             token.player = user?.name || null; // todo attribute player is not visible in client
-            return Promise.resolve(token);
+
+            return token;
         },
         // redirect: async (url, baseUrl) => {
         //     // console.log('REDIRECT', url, baseUrl);
