@@ -5,7 +5,7 @@ import { store } from '../pages/_app';
 import { api_url } from '../config';
 import Input from '../style/Input';
 import Alert from '../style/Alert';
-import ShareIcon from '../icons/Share.svg';
+import ShareIcon from '../icons/Share.tsx';
 import Title from '../style/Title';
 import Container from '../style/Container';
 import styled from 'styled-components';

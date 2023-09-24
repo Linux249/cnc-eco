@@ -12,7 +12,6 @@ import io from 'socket.io-client';
 const socketURL = `http://cnc-eco.herokuapp.com`;
 const socket = io(socketURL);
 
-// import './../style/Details.css'
 const ListItem = styled.div`
     display: flex;
     justify-content: space-around;

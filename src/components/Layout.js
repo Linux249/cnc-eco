@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import AreaRaw from '../style/Area';
 import styled from 'styled-components';
 import { baseColor } from '../style/constants';
@@ -110,7 +109,4 @@ const Layout = ({ layout }) => {
     );
 };
 
-Layout.propTypes = {
-    layout: PropTypes.object.isRequired,
-};
 export default Layout;
