@@ -28,6 +28,8 @@ import Column from './style/Column';
 import Info from './style/Info';
 import Footer from './components/Footer';
 import Reports from './routes/Reports';
+import HTML5Backend from "react-dnd-html5-backend";
+import {store} from "./index";
 
 class App extends Component {
     componentWillMount() {
@@ -41,6 +43,8 @@ class App extends Component {
     render() {
         const { auth, name, token } = this.props;
         return (
+            <DndProvider backend={HTML5Backend}>
+                <Provider store={store}>
             <Router>
                 <AppS>
                     <BaseHeader />
@@ -80,6 +84,8 @@ class App extends Component {
                     <Footer />
                 </AppS>
             </Router>
+                </Provider>
+            </DndProvider>
         );
     }
 }
