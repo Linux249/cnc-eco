@@ -42,7 +42,7 @@ export function S() {
     );
 }
 
-import { store } from '../_app';
+import { store } from '../old_app';
 
 import { API_URL } from "../../lib/const";
 

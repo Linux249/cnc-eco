@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Router, { useRouter } from 'next/router';
 import urlToBase from '../../util/parseurl';
-import { store } from '../_app';
+import { store } from '../old_app';
 import { replaceAllBase } from '../../store/actions/base';
 import Alert from '../../style/Alert';
 import Body from '@/style/Body';

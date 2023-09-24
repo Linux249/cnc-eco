@@ -1,10 +1,12 @@
+"use client"
+
 import '../style/index.css';
 import '../style/Details.css';
 import 'react-tippy/dist/tippy.css';
 import { Open_Sans } from 'next/font/google';
-import { AppProvider } from '@/components/misc/AllProvider';
-import PageHeader from '@/components/PageHeader.js';
+import { AppProvider } from '@/components/misc/AppProvider';
 import AppS from '../style/App';
+import PageHeader from '@/components/PageHeader.js';
 
 
 import LoadingLine from '@/style/LoadingLine';

@@ -1,5 +1,5 @@
 import {sendVerificationRequest} from "@/util/mail";
-import {dbUri, ERRORS, JWT_SECRET} from "@/lib/const";
+import {dbUri, JWT_SECRET} from "@/lib/const";
 import EmailProvider from "next-auth/providers/email"
 import type {GetServerSidePropsContext, NextApiRequest, NextApiResponse} from "next"
 import type {NextAuthOptions as NextAuthConfig} from "next-auth"
@@ -7,6 +7,7 @@ import {getServerSession} from "next-auth"
 import log from "./logger";
 import clientPromise from "@/lib/api/mongodb";
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
+import { ERRORS } from "@/lib/const/errors";
 
 // Read more at: https://next-auth.js.org/getting-started/typescript#module-augmentation
 declare module "next-auth/jwt" {

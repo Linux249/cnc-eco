@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { parseToURL } from '../util/parseurl';
 import Button from '../style/Button';
-import { store } from '../pages/_app';
+import { store } from '../pages/old_app';
 import Input from '../style/Input';
 import Alert from '../style/Alert';
 import ShareIcon from '../icons/Share.tsx';

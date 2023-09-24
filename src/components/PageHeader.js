@@ -1,7 +1,6 @@
 'use client';
 
 import Area from '@/style/Area';
-import { useRouter } from 'next/router';
 import React, { Fragment, useEffect, useState } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -57,8 +56,6 @@ function PageHeader() {
     // todo add loading
     const isAuthenticated = !!session;
     const name = session?.user.name;
-
-    const router = useRouter();
 
     const [worlds, loadingWorlds, error] = useWorlds();
     const [showWorld, setShowWorld] = useState(false);

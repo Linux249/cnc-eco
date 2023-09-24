@@ -3,9 +3,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import React, { FunctionComponent, ReactNode } from 'react';
 import { SessionProvider } from 'next-auth/react';
-import Footer from '@/components/Footer';
 import configureStore from '@/store/configureStore';
-import type { Session } from "next-auth";
 
 export const store = configureStore();
 
@@ -21,11 +19,8 @@ export const AppProvider: FunctionComponent<{
     return (
         <SessionProvider>
             <ReduxProvider store={store}>
-                <ThemeProvider theme={theme}>
-                    {children}
-                    <Footer />
-                </ThemeProvider>
-            </ReduxProvider>{' '}
+                <ThemeProvider theme={theme}>{children}</ThemeProvider>
+            </ReduxProvider>
         </SessionProvider>
     );
 };
