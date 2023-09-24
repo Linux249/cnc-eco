@@ -11,7 +11,7 @@ import { baseColor } from '@/style/constants';
 import useWorlds from '../hooks/worlds';
 import { useSession } from 'next-auth/client';
 
-const A = Button.withComponent(styled('a')`
+const StyledLink = Button.withComponent(styled('a')`
     color: white !important;
     //background-color: inherit;
     border: none !important;
@@ -81,7 +81,7 @@ function PageHeader() {
         <Header>
             <Title>
                 <Link href="/">
-                    <a>CNC-ECO</a>
+                    <>CNC-ECO</>
                 </Link>
             </Title>
             <Row wrap>
@@ -113,20 +113,20 @@ function PageHeader() {
                         {worldId && (
                             <>
                                 <Link href={'/world/' + worldId}>
-                                    <A>Bases</A>
+                                    <StyledLink>Bases</StyledLink>
                                 </Link>
                                 <Link href={'/layouts/' + worldId}>
-                                    <A>Layouts</A>
+                                    <StyledLink>Layouts</StyledLink>
                                 </Link>
                                 <Link href={'/alliance/' + worldId}>
-                                    <A>Alliance</A>
+                                    <StyledLink>Alliance</StyledLink>
                                 </Link>
                             </>
                         )}
                     </>
                 )}
                 <Link href="/scripts">
-                    <A>Scripte</A>
+                    <StyledLink>Scripte</StyledLink>
                 </Link>
                 {/*<Link href="/demo">
                  Demo
@@ -134,16 +134,16 @@ function PageHeader() {
                 {isAuthenticated ? (
                     <>
                         <Link href="/feedback">
-                            <A>Feedback</A>
+                            <StyledLink>Feedback</StyledLink>
                         </Link>
                         <Link href="/user">
-                            <A>{name || 'Add Player first'}</A>
+                            <StyledLink>{name || 'Add Player first'}</StyledLink>
                         </Link>
                     </>
                 ) : (
                     <Fragment>
                         <Link href="/login">
-                            <A>Login</A>
+                            <StyledLink>Login</StyledLink>
                         </Link>
                     </Fragment>
                 )}

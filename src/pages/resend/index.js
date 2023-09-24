@@ -50,7 +50,7 @@ function Login(props) {
                     </InputGroup>
                     No account?{' '}
                     <Link href="/register">
-                        <a>Create one</a>
+                        <>Create one</>
                     </Link>
                 </Form>
             </Container>

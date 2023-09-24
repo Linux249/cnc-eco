@@ -15,8 +15,8 @@ const Container = styled(ContainerRaw)`
 
 const Message = () => <Container>
     <Text>
-        <Link href="/register"><a>Register</a></Link> and install the CnC-Eco{' '}
-        <Link href="/scripts"><a>script</a></Link> to see your bases, all seen layouts (in the last 14
+        <Link href="/register"><>Register</></Link> and install the CnC-Eco{' '}
+        <Link href="/scripts"><>script</></Link> to see your bases, all seen layouts (in the last 14
         days) and alliance (members have to use the script also)
     </Text>
 </Container>;

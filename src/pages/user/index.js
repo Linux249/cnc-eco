@@ -71,9 +71,9 @@ export const User = () => {
                 <>
                     <InfoText>
                         <Link href="/scripts">
-                            <a>
+                            <>
                                 <b>cnc-eco script</b>
-                            </a>
+                            </>
                         </Link>
                         &#160; must be installed first
                     </InfoText>
