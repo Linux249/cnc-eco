@@ -5,7 +5,7 @@ import { Open_Sans } from 'next/font/google';
 import { AppProvider } from '@/components/misc/AllProvider';
 import PageHeader from '@/components/PageHeader.js';
 import AppS from '../style/App';
-import React from 'react';
+
 
 import LoadingLine from '@/style/LoadingLine';
 import Column from '@/style/Column';

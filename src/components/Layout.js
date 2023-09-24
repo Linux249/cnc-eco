@@ -1,4 +1,4 @@
-import React from 'react';
+
 import AreaRaw from '../style/Area';
 import styled from 'styled-components';
 import { baseColor } from '../style/constants';

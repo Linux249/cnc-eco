@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Grid from '../style/Grid';
 import Slot from '../containers/Slot';
 import Area from '../style/Area';

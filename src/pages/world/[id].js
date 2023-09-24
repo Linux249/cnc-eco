@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+
 import { DndProvider } from 'react-dnd-cjs';
 import Backend from 'react-dnd-html5-backend-cjs';
 import Base from '../../components/Base.js';

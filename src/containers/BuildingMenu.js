@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { connect } from 'react-redux';
 import { changeBaseLvl, changeFraction } from '../store/actions/base';
 import keys from '../util/keys';

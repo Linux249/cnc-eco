@@ -1,7 +1,7 @@
 import '../style/index.css';
 import '../style/Details.css';
 import 'react-tippy/dist/tippy.css';
-import React from 'react';
+
 import { AppProvider } from '@/components/misc/AllProvider';
 import { AppLayout } from '@/components/misc/AppLayout';
 
