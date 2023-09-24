@@ -7,8 +7,8 @@ import BasesMenuRight from '../../components/BasesMenuRight';
 import BuildingMenu from '../../containers/BuildingMenu';
 import BasesMenu from '@/components/BasesMenu';
 import usePlayer from '../../hooks/player';
-import Body from '../../style/Body';
-import Column from '../../style/Column';
+import Body from '@/style/Body';
+import Column from '@/style/Column';
 import Defense from '../../components/Defense';
 import Army from '../../components/Army';
 

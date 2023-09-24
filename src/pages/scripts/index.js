@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { InfoText } from '@/style/InfoText';
-import Body from '../../style/Body';
+import Body from '@/style/Body';
 import Area from '../../style/Area';
 import Title from '../../style/Title';
 

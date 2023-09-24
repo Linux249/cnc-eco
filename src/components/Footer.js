@@ -9,7 +9,7 @@ const FooterStyle = styled(Area)`
     justify-content: space-around;
     width: calc(100% - 16px);
     margin: 0;
-    
+
     font-weight: 800;
     font-size: 10px;
     color: #000000d4;
@@ -32,27 +32,27 @@ export function Footer({ token }) {
                     'Content-Type': 'application/json; charset=utf-8',
                     Authorization: 'Bearer  ' + token,
                 },
-            }).then(res => res.json());
-            setUsers(data.users)
-            setWorlds(data.worlds)
-            setSize(data.size)
-            let countLayouts = 0
-            let countPlayers = 0
-            let countReports = 0
-            for(let i = 0; i < data.report.layouts.length; i += 1) {
-                countLayouts += data.report.layouts[i].count
+            }).then((res) => res.json());
+            setUsers(data.users);
+            setWorlds(data.worlds);
+            setSize(data.size);
+            let countLayouts = 0;
+            let countPlayers = 0;
+            let countReports = 0;
+            for (let i = 0; i < data.report.layouts.length; i += 1) {
+                countLayouts += data.report.layouts[i].count;
             }
-            for(let i = 0; i < data.report.players.length; i += 1) {
-                countPlayers += data.report.players[i].count
+            for (let i = 0; i < data.report.players.length; i += 1) {
+                countPlayers += data.report.players[i].count;
             }
-            for(let i = 0; i < data.report.reports.length; i += 1) {
-                countReports += data.report.reports[i].count
+            for (let i = 0; i < data.report.reports.length; i += 1) {
+                countReports += data.report.reports[i].count;
             }
-            setLayouts(countLayouts)
-            setPlayers(countPlayers)
-            setReports(countReports)
-
+            setLayouts(countLayouts);
+            setPlayers(countPlayers);
+            setReports(countReports);
         }
+
         token && getStats();
     }, [token]); // Empty array ensures that effect is only run on mount and unmount
 
@@ -68,6 +68,6 @@ export function Footer({ token }) {
     );
 }
 
-const mapStateToProps = state => ({ token: state.auth.token });
+const mapStateToProps = (state) => ({ token: state.auth.token });
 
 export default connect(mapStateToProps)(Footer);

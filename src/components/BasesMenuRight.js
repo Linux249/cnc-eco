@@ -6,7 +6,7 @@ import Button from '../style/Button';
 import { InfoText } from '../style/InfoText';
 import Share from './Share';
 import ProductionInfo from '../containers/ProductionInfo';
-import Column from '../style/Column';
+import Column from '@/style/Column';
 
 const BasesMenuRight = () => {
     const [showChart, toggleShowChart] = useState(false);

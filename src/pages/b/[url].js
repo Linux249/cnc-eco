@@ -5,7 +5,7 @@ import { store } from '../_app';
 import { replaceAllBase } from '../../store/actions/base';
 import { api_url } from '../../config';
 import Alert from '../../style/Alert';
-import Body from '../../style/Body';
+import Body from '@/style/Body';
 
 export function B() {
     const [err, setError] = useState(null);

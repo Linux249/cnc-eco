@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Body from '../style/Body';
+import Body from '@/style/Body';
 import { connect } from 'react-redux';
 import { api_url } from '../config';
 import Area from '../style/Area';
-import Column from '../style/Column';
+import Column from '@/style/Column';
 import Title from '../style/Title';
 
 export function Reports({ token, playerId, world }) {

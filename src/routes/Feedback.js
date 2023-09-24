@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import Body from '../style/Body';
+import Body from '@/style/Body';
 import styled from 'styled-components';
 import Area from '../style/Area';
 import Title from '../style/Title';
-import Column from '../style/Column';
+import Column from '@/style/Column';
 import Button from '../style/Button';
 import { api_url } from '../config';
 import Input from '../style/Input';

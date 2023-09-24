@@ -10,7 +10,7 @@ import Title from '../style/Title';
 import Label from '../style/Label';
 import { InfoText } from '../style/InfoText';
 import Row from '../style/Row';
-import Body from '../style/Body';
+import Body from '@/style/Body';
 import Container from '../style/Container';
 import Alert from '../style/Alert';
 import BodySide from '../style/BodySide';
@@ -18,7 +18,7 @@ import Info from '../style/Info';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { sizes } from '../style/constants';
-import Column from '../style/Column';
+import Column from '@/style/Column';
 
 const PlayerName = styled.div`
     font-weight: 600;

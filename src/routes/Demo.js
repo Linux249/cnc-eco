@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import Body from '../style/Body';
-import Column from '../style/Column';
+import Body from '@/style/Body';
+import Column from '@/style/Column';
 import DemoMenu from '../containers/DemoMenu';
 import BuildingMenu from '../containers/BuildingMenu';
 import ProductionInfo from '../containers/DemoProductionInfo';

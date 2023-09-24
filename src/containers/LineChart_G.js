@@ -4,7 +4,7 @@ import ButtonOrg from './../style/Button';
 import { backgroundColor } from './../style/constants';
 import Row from './../style/Row';
 import ChartS from './../style/LineChart';
-import Column from './../style/Column';
+import Column from '@/style/Column';
 import { connect } from 'react-redux';
 import { shortenNumber } from '../util/service';
 import { Chart } from 'react-google-charts';
