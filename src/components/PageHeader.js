@@ -11,7 +11,7 @@ import { baseColor } from '@/style/constants';
 import useWorlds from '../hooks/worlds';
 import { useSession } from 'next-auth/client';
 
-const StyledLink = Button.withComponent(styled('a')`
+const StyledLink = Button.withComponent(styled('span')`
     color: white !important;
     //background-color: inherit;
     border: none !important;
@@ -84,7 +84,7 @@ function PageHeader() {
                     <>CNC-ECO</>
                 </Link>
             </Title>
-            <Row wrap>
+            <Row wrap="true">
                 {isAuthenticated && name && (
                     <>
                         <Row>

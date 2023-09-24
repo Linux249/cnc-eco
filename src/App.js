@@ -1,17 +1,5 @@
 import React, { Component } from 'react';
-//import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import ProtectedRoute from './components/ProtectedRoute';
-// import Bases from './routes/Bases';
-// import Scripts from './routes/Scripts';
-// import Layouts from './routes/Layouts';
-// import Login from './routes/Login';
-// import Register from './routes/Register';
-// import Alliance from './routes/Alliance';
-// import User from './routes/User';
-// import Home from './routes/Home';
-// import { S } from './routes/S';
-// import { B } from './routes/B';
 import { updatePlayer } from './store/actions/player';
 import { receiveLogin } from './store/actions/auth';
 import { LOCAL_STORE } from './config';

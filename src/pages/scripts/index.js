@@ -13,7 +13,7 @@ const Description = styled.div`
     margin: 5px;
 `;
 
-const A = styled.a`
+const StyledLink = styled.span`
     margin: 0.5rem;
     font-weight: 600;
 `;
@@ -40,7 +40,7 @@ const Index = () => <Body>
                 {e.text}
             </Description>
             <Link href={e.href}>
-                <A target='_blank'>{e.href}</A>
+                <StyledLink target='_blank'>{e.href}</StyledLink>
             </Link>
             <InfoText>{e.info}</InfoText>
         </Area>)}
