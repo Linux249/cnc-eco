@@ -1,3 +1,5 @@
+'use client';
+
 import PageHeader from '@/components/PageHeader.js';
 import AppS from '../../style/App';
 import React, { FunctionComponent, ReactNode } from 'react';

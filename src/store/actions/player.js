@@ -6,8 +6,9 @@ import {
     // PLAYER_UPDATE_ALLIANCE_ID,
     PLAYER_CHANGE_SELECTED_BASE,
 } from '../constants/actionTypes';
-import { LOCAL_STORE } from '../../config';
 import { replaceBaseFromUrl } from './base';
+
+import { LOCAL_STORE } from "../../lib/const";
 
 // export function changeWorld(world) {
 //     return async (dispatch) => {

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Body from '@/style/Body';
 import { connect } from 'react-redux';
-import { api_url } from '../config';
 import Area from '../style/Area';
 import Column from '@/style/Column';
 import Title from '../style/Title';
+
+import { API_URL } from "../lib/const";
 
 export function Reports({ token, playerId, world }) {
     console.log({ token });
@@ -16,7 +17,7 @@ export function Reports({ token, playerId, world }) {
     useEffect(() => {
         async function getStats() {
             console.log('load reports');
-            const data = await fetch(api_url + '/reports/off/' + world + '/' + playerId, {
+            const data = await fetch(API_URL + '/reports/off/' + world + '/' + playerId, {
                 headers: {
                     // 'Content-Type': 'application/json; charset=utf-8',
                     Authorization: 'Bearer  ' + token,

@@ -3,9 +3,10 @@ import Router, { useRouter } from 'next/router';
 import urlToBase from '../../util/parseurl';
 import { store } from '../_app';
 import { replaceAllBase } from '../../store/actions/base';
-import { api_url } from '../../config';
 import Alert from '../../style/Alert';
 import Body from '@/style/Body';
+
+import { API_URL } from "../../lib/const";
 
 export function B() {
     const [err, setError] = useState(null);
@@ -30,7 +31,7 @@ export function B() {
                     await Router.push('/');
 
                     // Post base to short url server and get Url - currently useless
-                    const data = await fetch(api_url + '/baseToUrl', {
+                    const data = await fetch(API_URL + '/baseToUrl', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json; charset=utf-8',

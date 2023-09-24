@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import qs from 'query-string';
 import { connect } from 'react-redux';
-import { api_url } from '../config';
 import { changeWorld, updatePlayer } from '../store/actions/player';
 import { logout } from '../store/actions/auth';
 import Button from '../style/Button';
@@ -19,6 +18,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { sizes } from '../style/constants';
 import Column from '@/style/Column';
+
+import { API_URL } from "../lib/const";
 
 const PlayerName = styled.div`
     font-weight: 600;
@@ -49,7 +50,7 @@ function User(props) {
             console.log('add player');
             setLoading(true);
 
-            const res = await fetch(api_url + '/user/addPlayerName', {
+            const res = await fetch(API_URL + '/user/addPlayerName', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8',
@@ -78,7 +79,7 @@ function User(props) {
         if (!deleteSecure) return setDeleteSecure(true);
         setLoading(true);
 
-        const res = await fetch(api_url + '/user/' + _id, {
+        const res = await fetch(API_URL + '/user/' + _id, {
             method: 'Delete',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
@@ -105,7 +106,7 @@ function User(props) {
         setLoading(true);
         setSuccess('');
 
-        const res = await fetch(api_url + '/user/updateWorlds', {
+        const res = await fetch(API_URL + '/user/updateWorlds', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',

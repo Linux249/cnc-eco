@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { api_url } from '../config';
 import { updatePlayer } from '../store/actions/player';
 import { logout } from '../store/actions/auth';
 import Button from '../style/Button';
@@ -17,6 +16,8 @@ import BodySide from '../style/BodySide';
 import Info from '../style/Info';
 import { Link } from 'react-router-dom';
 import qs from 'query-string';
+
+import { API_URL } from "../lib/const";
 
 class User extends Component {
     constructor(props) {
@@ -56,7 +57,7 @@ class User extends Component {
             worldId: world,
         };
 
-        const res = await fetch(api_url + '/user/addWorld', {
+        const res = await fetch(API_URL + '/user/addWorld', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
@@ -90,7 +91,7 @@ class User extends Component {
             worldId: world,
         };
 
-        const player = await fetch(api_url + '/user/removeWorld', {
+        const player = await fetch(API_URL + '/user/removeWorld', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
@@ -117,7 +118,7 @@ class User extends Component {
         const { token, _id } = this.props;
         this.startLoading();
 
-        const res = await fetch(api_url + '/user/' + _id, {
+        const res = await fetch(API_URL + '/user/' + _id, {
             method: 'Delete',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
@@ -145,7 +146,7 @@ class User extends Component {
         this.setState({ worlds: [] });
         if (!name) return this.setState({ error: 'Ingame name missing' });
         this.startLoading();
-        const url = `${api_url}/worlds?name=${name}`;
+        const url = `${API_URL}/worlds?name=${name}`;
         const data = await fetch(url, {
             headers: {
                 Authorization: 'Bearer  ' + token,
@@ -163,7 +164,7 @@ class User extends Component {
         const { name } = this.state;
         this.startLoading();
 
-        const res = await fetch(api_url + '/user/requestedPlayer', {
+        const res = await fetch(API_URL + '/user/requestedPlayer', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
@@ -194,7 +195,7 @@ class User extends Component {
             token: tokenServer,
         };
 
-        const res = await fetch(api_url + '/user/addPlayer', {
+        const res = await fetch(API_URL + '/user/addPlayer', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',

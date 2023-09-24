@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import Button from '../style/Button';
 import { store } from '../index';
-import { api_url } from '../config';
 import Alert from '../style/Alert';
 import { replaceSlot } from '../store/actions/base';
 import Row from '../style/Row';
 import styled from 'styled-components';
+
+import { API_URL } from "../lib/const";
 
 const Img = styled.img`
     height: 30px;
@@ -26,7 +27,7 @@ function BestBuildingsToUpgrade() {
 
         setError(false);
         setLoading(true);
-        const item = await fetch(api_url + '/performance/base', {
+        const item = await fetch(API_URL + '/performance/base', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',

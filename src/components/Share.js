@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { parseToURL } from '../util/parseurl';
 import Button from '../style/Button';
 import { store } from '../pages/_app';
-import { api_url } from '../config';
 import Input from '../style/Input';
 import Alert from '../style/Alert';
 import ShareIcon from '../icons/Share.tsx';
 import Title from '../style/Title';
 import Container from '../style/Container';
 import styled from 'styled-components';
+
+import { API_URL } from "../lib/const";
 
 const Row = styled.div`
     display: flex;
@@ -39,7 +40,7 @@ const Share = () => {
         };
         // Post base to short url server and get Url
         try {
-            const data = await fetch(api_url + '/baseToUrl', {
+            const data = await fetch(API_URL + '/baseToUrl', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8',

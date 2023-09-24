@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Trend from 'react-trend';
 import Body from '@/style/Body';
 import { connect } from 'react-redux';
-import { api_url } from '../config';
 import Area from '../style/Area';
 import Column from '@/style/Column';
 import Title from '../style/Title';
+
+import { API_URL } from "../lib/const";
 
 export function Footer({ token }) {
     const [reports, setReports] = useState([]);
@@ -16,7 +17,7 @@ export function Footer({ token }) {
     useEffect(() => {
         async function getStats() {
             console.log('load footer stats');
-            const data = await fetch(api_url + '/db/reports', {
+            const data = await fetch(API_URL + '/db/reports', {
                 headers: {
                     // 'Content-Type': 'application/json; charset=utf-8',
                     Authorization: 'Bearer  ' + token,

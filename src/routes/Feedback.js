@@ -6,12 +6,13 @@ import Area from '../style/Area';
 import Title from '../style/Title';
 import Column from '@/style/Column';
 import Button from '../style/Button';
-import { api_url } from '../config';
 import Input from '../style/Input';
 import Info from '../style/Info';
 import Alert from '../style/Alert';
 import { InfoText } from '../style/InfoText';
 import Row from '../style/Row';
+
+import { API_URL } from "../lib/const";
 
 const Middle = styled.div``;
 
@@ -35,7 +36,7 @@ function Feedback(props) {
         async function getAll() {
             console.log('Load all user feedback');
             setloading(true);
-            const url = `${api_url}/feedback/all`;
+            const url = `${API_URL}/feedback/all`;
             const res = await fetch(url, {
                 headers: {
                     Authorization: 'Bearer  ' + props.token,
@@ -56,7 +57,7 @@ function Feedback(props) {
         if (!title) return setError('Title missing');
         if (!text) return setError('Text missing');
 
-        const url = `${api_url}/feedback/new`;
+        const url = `${API_URL}/feedback/new`;
         try {
             const data = await fetch(url, {
                 headers: {

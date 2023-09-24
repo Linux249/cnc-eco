@@ -11,7 +11,7 @@ import LoadingLine from '@/style/LoadingLine';
 import Column from '@/style/Column';
 import Info from '@/style/Info';
 import Footer from '@/components/Footer';
-
+import StyledComponentsRegistry from '@/lib/registry';
 
 const font = Open_Sans({
     subsets: ['latin'],
@@ -38,7 +38,7 @@ export default function RootLayout({
                                 deleted while in beta/before release.{' '}
                             </Info>
                         </Column>
-                        {children}
+                        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
                         <Footer />
                     </AppS>
                 </AppProvider>

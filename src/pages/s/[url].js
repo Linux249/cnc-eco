@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Router, { useRouter } from 'next/router';
-import { api_url } from '../../config';
 import { replaceAllBase } from '../../store/actions/base';
 import Alert from '../../style/Alert';
 import urlToBase from '../../util/parseurl';
@@ -11,7 +10,7 @@ export function S() {
     const { url } = router.query;
 
     async function load() {
-        const item = await fetch(`${api_url}/urlToBase/${url}`)
+        const item = await fetch(`${API_URL}/urlToBase/${url}`)
             .then(r => r.json())
             .catch(e => {
                 console.log('ERROR', e);
@@ -44,5 +43,7 @@ export function S() {
 }
 
 import { store } from '../_app';
+
+import { API_URL } from "../../lib/const";
 
 export default S;

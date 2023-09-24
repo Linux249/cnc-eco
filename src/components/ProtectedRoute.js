@@ -1,6 +1,8 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { LOCAL_STORE } from '../config';
+
+
+import { LOCAL_STORE } from "../lib/const";
 
 const ProtectedRoute = props => {
     let { auth, name, component: Component, ...rest } = props;

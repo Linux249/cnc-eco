@@ -1,8 +1,11 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { api_url } from '../config';
 import Area from '../style/Area';
+
+import { API_URL } from "@/lib/const";
 
 const FooterStyle = styled(Area)`
     display: flex;
@@ -27,7 +30,7 @@ export function Footer({ token }) {
     useEffect(() => {
         async function getStats() {
             console.log('load footer stats');
-            const data = await fetch(api_url + '/db/getFooterStats', {
+            const data = await fetch(API_URL + '/db/getFooterStats', {
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8',
                     Authorization: 'Bearer  ' + token,

@@ -6,15 +6,15 @@ import {
     START_ASYNC_AUTH,
     AUTH_LOGOUT,
 } from '../constants/actionTypes';
-import { api_url, LOCAL_STORE } from '../../config';
 import { updatePlayer } from './player';
+import { API_URL, LOCAL_STORE } from "../../lib/const";
 
 export const requestLogin = () => {
     return async (dispatch, getState) => {
         dispatch({ type: START_ASYNC_AUTH });
         const { email, password } = getState().auth;
         const body = JSON.stringify({ email, password });
-        const resp = await fetch(api_url + '/local/login', {
+        const resp = await fetch(API_URL + '/local/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
@@ -45,7 +45,7 @@ export const requestRegister = () => {
         const { email, password } = getState().auth;
         const body = JSON.stringify({ email, password });
 
-        const resp = await fetch(api_url + '/local/signup', {
+        const resp = await fetch(API_URL + '/local/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
@@ -77,7 +77,7 @@ export const requestResendToken = () => {
         const { email } = getState().auth;
         const body = JSON.stringify({ email });
 
-        const resp = await fetch(api_url + '/local/resendMailToken', {
+        const resp = await fetch(API_URL + '/local/resendMailToken', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
@@ -110,7 +110,7 @@ export const requestEmail = () => {
         const { email } = getState().auth;
         const body = JSON.stringify({ email });
 
-        const resp = await fetch(api_url + '/local/requestPasswordReset', {
+        const resp = await fetch(API_URL + '/local/requestPasswordReset', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
@@ -142,7 +142,7 @@ export const resetPassword = token => {
         const { password } = getState().auth;
         const body = JSON.stringify({ password, token });
 
-        const resp = await fetch(api_url + '/local/resetPassword', {
+        const resp = await fetch(API_URL + '/local/resetPassword', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
