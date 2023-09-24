@@ -6,7 +6,7 @@ import Title from '@/style/Title';
 import useSWR from 'swr';
 import { InfoText } from '@/style/InfoText';
 import React from 'react';
-import { useSession, signOut } from 'next-auth/client';
+import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import useWorlds from '../../hooks/worlds';
 

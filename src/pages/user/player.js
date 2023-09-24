@@ -3,7 +3,7 @@ import Column from '@/style/Column';
 import Container from '@/style/Container';
 import LoadingPoints from '@/style/LoadingPoints';
 import Title from '@/style/Title';
-import { useSession } from 'next-auth/client';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import useSWR from 'swr';

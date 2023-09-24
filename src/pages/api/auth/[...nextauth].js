@@ -2,6 +2,8 @@ import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
 import { sendVerificationRequest } from '../../../util/mail';
 
+import { dbUri } from '../../../lib/const';
+
 const options = {
     providers: [
         Providers.Email({
@@ -22,7 +24,7 @@ const options = {
     ],
 
     // A database is optional, but required to persist accounts in a database
-    database: process.env.MONGODB_URI,
+    database: dbUri,
     secret: process.env.JWT_SECRET,
     session: { jwt: true },
     jwt: {

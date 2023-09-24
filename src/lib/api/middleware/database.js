@@ -1,10 +1,8 @@
 import { MongoClient } from 'mongodb';
 import nextConnect from 'next-connect';
+import clientPromise from "../mongodb";
 
-const client = new MongoClient('{YOUR-MONGODB-CONNECTION-STRING}', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+const client = await clientPromise
 
 async function database(req, res, next) {
     if (!client.isConnected()) await client.connect();

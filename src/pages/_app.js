@@ -1,6 +1,4 @@
-import App from 'next/app';
 import { Provider } from 'react-redux';
-import { Provider as AuthProvider } from 'next-auth/client';
 import { ThemeProvider } from 'styled-components';
 import Footer from '../components/Footer';
 import PageHeader from '@/components/PageHeader.js';
@@ -13,6 +11,7 @@ import LoadingLine from '../style/LoadingLine';
 import React from 'react';
 import Column from '../style/Column';
 import Info from '../style/Info';
+import { SessionProvider } from 'next-auth/react';
 
 export const store = configureStore();
 
@@ -22,30 +21,27 @@ const theme = {
     },
 };
 
-export default class MyApp extends App {
-    render() {
-        const { Component, pageProps } = this.props;
-        return (
-            <AuthProvider session={pageProps.session}>
-                <Provider store={store}>
-                    <ThemeProvider theme={theme}>
-                        <AppS>
-                            <PageHeader />
-                            <LoadingLine />
-                            <Column center>
-                                <Info>
-                                    This side is still in Development. Be aware that all data may be
-                                    deleted while in beta/before release.{' '}
-                                </Info>
-                            </Column>
+export default function App({ Component, pageProps: { session, ...pageProps } }) {
+    return (
+        <SessionProvider session={session}>
+            <Provider store={store}>
+                <ThemeProvider theme={theme}>
+                    <AppS>
+                        <PageHeader />
+                        <LoadingLine />
+                        <Column center>
+                            <Info>
+                                This side is still in Development. Be aware that all data may be
+                                deleted while in beta/before release.{' '}
+                            </Info>
+                        </Column>
 
-                            <Component {...pageProps} />
+                        <Component {...pageProps} />
 
-                            <Footer />
-                        </AppS>
-                    </ThemeProvider>
-                </Provider>
-            </AuthProvider>
-        );
-    }
+                        <Footer />
+                    </AppS>
+                </ThemeProvider>
+            </Provider>{' '}
+        </SessionProvider>
+    );
 }

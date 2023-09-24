@@ -1,3 +1,5 @@
+'use client';
+
 import Area from '@/style/Area';
 import { useRouter } from 'next/router';
 import React, { Fragment, useEffect, useState } from 'react';
@@ -9,7 +11,7 @@ import Button from '@/style/Button';
 import Row from '@/style/Row';
 import { baseColor } from '@/style/constants';
 import useWorlds from '../hooks/worlds';
-import { useSession } from 'next-auth/client';
+import { useSession } from "next-auth/react"
 
 const StyledLink = Button.withComponent(styled('span')`
     color: white !important;
@@ -50,7 +52,8 @@ const DropDownArea = styled(Area)`
 `;
 
 function PageHeader() {
-    const [session, loading] = useSession();
+    const { data: session, status } = useSession()
+
     // todo add loading
     const isAuthenticated = !!session;
     const name = session?.user.name;
@@ -81,7 +84,7 @@ function PageHeader() {
         <Header>
             <Title>
                 <Link href="/">
-                    <>CNC-ECO</>
+                    CNC-ECO
                 </Link>
             </Title>
             <Row wrap="true">
