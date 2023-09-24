@@ -5,6 +5,8 @@ import type {GetServerSidePropsContext, NextApiRequest, NextApiResponse} from "n
 import type {NextAuthOptions as NextAuthConfig} from "next-auth"
 import {getServerSession} from "next-auth"
 import log from "./logger";
+import clientPromise from "@/lib/api/mongodb";
+import { MongoDBAdapter } from "@auth/mongodb-adapter"
 
 // Read more at: https://next-auth.js.org/getting-started/typescript#module-augmentation
 declare module "next-auth/jwt" {
@@ -19,6 +21,7 @@ export const authOptions = {
         strategy: "jwt"
     },
     debug: true,
+    adapter: MongoDBAdapter(clientPromise),
     providers: [
         EmailProvider({
             // credentials: {
@@ -41,54 +44,23 @@ export const authOptions = {
          * If called by the CredentialsProvider the authorized method will be called before!
          * @param params
          */
-        // async signIn(params) {
-        //     const { profile, email, credentials } = params;
-        //     // const user = params.user ? (params.user as User) : undefined;
-        //     const user = params.user ? params.user : undefined;
-        //     log.auth("signIn", user, email, credentials);
-        //
-        //     // Credentials only exist if the user has signed in with credentials
-        //     if (credentials) {
-        //         if (!user) {
-        //             // don't think this happens/next-auth will only call signIn if user exist
-        //             return false;
-        //         }
-        //         log.auth("credentials:signIn", credentials);
-        //         // @ts-ignore
-        //         if (user.error === UserAlreadyExist) {
-        //             return `/auth/register?error=${ERRORS.AUTH.UserAlreadyExist}`;
-        //         }
-        //         /**
-        //          * Check if credentials user has verified his email
-        //          * The e-mail provider update the "emailVerified" property on the user object AFTER this call so we have to check if this is a credentials user
-        //          */
-        //         if (!user.emailVerified) {
-        //             log.auth("credentials:signIn", "email nor verified", user);
-        //             // @ts-ignore
-        //             if (user.error === EmailNotVerified) {
-        //                 return `/auth/verify?error=${ERRORS.AUTH.EmailNotVerified}`;
-        //             }
-        //             return `/auth/verify`;
-        //         }
-        //         // todo we maybe should inform the user in special case: E-mail logged in before and now using credentials provider for the first time
-        //         // if we don't want this feature we have to tell him he has to log in with email provider first to set a password inside the app
-        //     }
-        //
-        //     /**
-        //      * the e-mail provider has an email object with a verificationRequest property set to true on the first login
-        //      * docs: https://next-auth.js.org/configuration/callbacks#sign-in-callback
-        //      */
-        //     if (email?.verificationRequest) {
-        //         // todo remove logging later, it's just here cause i want to know if this is still called
-        //         log.auth("email:signIn:verificationRequest", params);
-        //         return true;
-        //     }
-        //
-        //     // maybe update user here? signIn
-        //
-        //     // default
-        //     return true;
-        // },
+        async signIn(params) {
+            const { profile, email, credentials } = params;
+            // const user = params.user ? (params.user as User) : undefined;
+            const user = params.user ? params.user : undefined;
+            log.auth("signIn", user, email, credentials);
+
+            /**
+             * the e-mail provider has an email object with a verificationRequest property set to true on the first login
+             * docs: https://next-auth.js.org/configuration/callbacks#sign-in-callback
+             */
+            if (email?.verificationRequest) {
+                // log.auth("email:signIn:verificationRequest", params);
+                return true;
+            }
+            // default
+            return true;
+        },
         async redirect({ url, baseUrl }) {
             // Allows relative callback URLs
             if (url.startsWith("/")) return `${baseUrl}${url}`;
