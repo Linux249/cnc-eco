@@ -1,38 +1,59 @@
 import nodemailer from 'nodemailer';
+import { SendVerificationRequestParams } from 'next-auth/providers/email';
 
-export const sendVerificationRequest = ({ identifier: email, url, token, baseUrl, provider }) => {
-    console.log({ identifier: email, url, token, baseUrl, provider });
-    return new Promise((resolve, reject) => {
+export async function sendVerificationRequest(
+    params: SendVerificationRequestParams
+) {
+    const { identifier: email, url, token, url: baseUrl, provider } = params;
+
+    // const { identifier, url, provider, theme } = params
+    // const { host } = new URL(url)
+    // // NOTE: You are not required to use `nodemailer`, use whatever you want.
+    // const transport = createTransport(provider.server)
+    // const result = await transport.sendMail({
+    //     to: identifier,
+    //     from: provider.from,
+    //     subject: `Sign in to ${host}`,
+    //     text: text({ url, host }),
+    //     html: html({ url, host, theme }),
+    // })
+    // const failed = result.rejected.concat(result.pending).filter(Boolean)
+    // if (failed.length) {
+    //     throw new Error(`Email(s) (${failed.join(", ")}) could not be sent`)
+    // }
+    return new Promise<void>((resolve, reject) => {
         const { server, from } = provider;
         // Strip protocol from URL and use domain as site name
         const site = baseUrl.replace(/^https?:\/\//, '');
 
-        nodemailer.createTransport({
-            tls: {
-                rejectUnauthorized: false
-            },
-            ...server
-        }).sendMail(
-            {
-                to: email,
-                from,
-                subject: `Sign in to ${site}`,
-                text: text({ url, site, email }),
-                html: html({ url, site, email }),
-            },
-            error => {
-                if (error) {
-                    console.error('SEND_VERIFICATION_EMAIL_ERROR', email, error);
-                    return reject(new Error('SEND_VERIFICATION_EMAIL_ERROR', error));
+        nodemailer
+            .createTransport({
+                tls: {
+                    rejectUnauthorized: false,
+                },
+                ...server,
+            })
+            .sendMail(
+                {
+                    to: email,
+                    from,
+                    subject: `Sign in to ${site}`,
+                    text: text({ url, site, email }),
+                    html: html({ url, site, email }),
+                },
+                (error: ErrorOptions | undefined) => {
+                    if (error) {
+                        console.error('SEND_VERIFICATION_EMAIL_ERROR', email, error);
+                        return reject(new Error('SEND_VERIFICATION_EMAIL_ERROR', error));
+                    }
+                    return resolve();
                 }
-                return resolve();
-            }
-        );
+            );
     });
 };
 
 // Email HTML body
-const html = ({ url, site, email }) => {
+const html = ({ url, site, email }: { url: string; site: string; email: string }) => {
     // Insert invisible space into domains and email address to prevent both the
     // email address and the domain from being turned into a hyperlink by email
     // clients like Outlook and Apple mail, as this is confusing because it seems
@@ -84,4 +105,5 @@ const html = ({ url, site, email }) => {
 };
 
 // Email text body – fallback for email clients that don't render HTML
-const text = ({ url, site }) => `Sign in to ${site}\n${url}\n\n`;
+const text = ({ url, site, email }: { url: string; site: string; email: string }) =>
+    `Sign in to ${site}\n${url}\n\n`;
