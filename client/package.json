@@ -4,7 +4,7 @@
   "devDependencies": {
     "prettier": "^1.18.2",
     "redux-logger": "^3.0.6",
-    "why-did-you-update": "0.0.8"
+    "why-did-you-update": "1.0.8"
   },
   "dependencies": {
     "connected-react-router": "^6.5.2",
